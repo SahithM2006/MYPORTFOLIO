@@ -367,3 +367,224 @@ export const PALETTES = [
     }
   }
 ];
+
+export function getSkillsForProject(projectId) {
+  const cleanId = projectId.replace(/^prj-/, '');
+  return SKILLS.filter((s) => s.projectIds && s.projectIds.includes(cleanId));
+}
+
+export function getProjectsForSkill(skillId) {
+  const skill = SKILLS.find((s) => s.id === skillId);
+  if (!skill || !skill.projectIds) return [];
+  return PROJECTS.filter((p) => skill.projectIds.includes(p.id));
+}
+
+export const CERTIFICATIONS = [
+  {
+    id: 'pytorch-spec',
+    title: 'PyTorch Ultimate 2024 - From Basics to Cutting-Edge',
+    platform: 'Coursera',
+    issuer: 'Packt',
+    category: 'coursera',
+    discipline: 'ai',
+    date: 'May 16, 2026',
+    credentialId: 'VTCGQEZ4DMMV',
+    verifyUrl: 'https://coursera.org/verify/specialization/VTCGQEZ4DMMV',
+    fileUrl: '/certs/pytorch-specialization-coursera.pdf',
+    badge: 'Specialization (3 Courses)',
+    highlight: true,
+    desc: 'Comprehensive specialization covering PyTorch fundamentals, deep learning neural network architectures, CNNs, RNNs, and GANs with hands-on coding implementations.'
+  },
+  {
+    id: 'pytorch-nn',
+    title: 'Building and Training Neural Networks with PyTorch',
+    platform: 'Coursera',
+    issuer: 'Packt',
+    category: 'coursera',
+    discipline: 'ai',
+    date: 'May 14, 2026',
+    credentialId: 'CZUBDK9IM63E',
+    verifyUrl: 'https://coursera.org/verify/CZUBDK9IM63E',
+    fileUrl: '/certs/pytorch-neural-networks-coursera.pdf',
+    badge: 'Course Certificate',
+    desc: 'Applied neural network architecture design, loss optimization, backpropagation dynamics, and evaluation workflows in PyTorch.'
+  },
+  {
+    id: 'pytorch-adv',
+    title: 'Advanced PyTorch Techniques and Applications',
+    platform: 'Coursera',
+    issuer: 'Packt',
+    category: 'coursera',
+    discipline: 'ai',
+    date: 'May 16, 2026',
+    credentialId: 'HR0NIDR3EHJM',
+    verifyUrl: 'https://coursera.org/verify/HR0NIDR3EHJM',
+    fileUrl: '/certs/pytorch-advanced-coursera.pdf',
+    badge: 'Course Certificate',
+    desc: 'Advanced model architectures, custom loss functions, transfer learning pipelines, and production inference optimization.'
+  },
+  {
+    id: 'pytorch-foundations',
+    title: 'Foundations and Core Concepts of PyTorch',
+    platform: 'Coursera',
+    issuer: 'Packt',
+    category: 'coursera',
+    discipline: 'ai',
+    date: 'May 14, 2026',
+    credentialId: 'NAKO1OC3M76Q',
+    verifyUrl: 'https://coursera.org/verify/NAKO1OC3M76Q',
+    fileUrl: '/certs/pytorch-foundations-coursera.pdf',
+    badge: 'Course Certificate',
+    desc: 'Tensor operations, autograd computational graphs, data loaders, and foundational GPU acceleration routines.'
+  },
+  {
+    id: 'cloud-sec-skillup',
+    title: 'Introduction to Cloud Security',
+    platform: 'Simplilearn SkillUp',
+    issuer: 'Simplilearn',
+    category: 'skillup',
+    discipline: 'security',
+    date: '16th May 2025',
+    credentialId: '1303770',
+    verifyUrl: null,
+    fileUrl: '/certs/cloud-security-simplilearn-skillup.pdf',
+    badge: 'SkillUp Certificate',
+    highlight: true,
+    desc: 'Principles of enterprise cloud security architecture, identity and access management (IAM), encryption at rest/transit, and cloud compliance frameworks.'
+  },
+  {
+    id: 'rnn-infosys',
+    title: 'Build & Train RNNs: Neural Network Components',
+    platform: 'Infosys Springboard',
+    issuer: 'Infosys Limited',
+    category: 'industry',
+    discipline: 'ai',
+    date: 'September 26, 2025',
+    credentialId: 'Issued: Oct 15, 2025',
+    verifyUrl: 'https://verify.onwingspan.com',
+    fileUrl: '/certs/rnns-infosys-springboard.pdf',
+    badge: 'Industry Credential',
+    desc: 'Sequential data modeling, recurrent neural network hidden states, vanishing gradients, LSTM/GRU memory cell architectures, and time-series forecasting.'
+  },
+  {
+    id: 'dbms-scaler',
+    title: 'DBMS Course - Master the Fundamentals and Advanced Concepts',
+    platform: 'Scaler Topics',
+    issuer: 'Scaler',
+    category: 'industry',
+    discipline: 'data',
+    date: '31 August 2025',
+    credentialId: '74 Modules • 16 Challenges',
+    verifyUrl: null,
+    fileUrl: '/certs/dbms-scaler-topics.pdf',
+    badge: 'Excellence Certificate',
+    desc: 'Relational database schema modeling, ER diagrams, complex SQL subqueries, B-tree indexing mechanics, ACID transaction guarantees, and normal forms (1NF–BCNF).'
+  },
+  {
+    id: 'ibm-prog',
+    title: 'Programming for Beginners: Hello World in 11 Languages',
+    platform: 'CognitiveClass.ai / IBM SkillsNetwork',
+    issuer: 'IBM SkillsNetwork',
+    category: 'industry',
+    discipline: 'programming',
+    date: 'Course Progress: 100%',
+    credentialId: 'GPXX0D58EN',
+    verifyUrl: null,
+    fileUrl: '/certs/ibm-skillsnetwork-programming.png',
+    badge: 'SkillsNetwork Course',
+    desc: 'Multi-paradigm programming syntax foundations, compilation vs interpretation, execution environments, and procedural control flows across 11 programming languages.'
+  }
+];
+
+export const RESUME_DATA = {
+  name: 'Sahith M',
+  headline: 'Artificial Intelligence & Data Science | B.Tech Undergraduate',
+  location: 'Chennai, Tamil Nadu, India',
+  email: 'sahithm2006@gmail.com',
+  linkedin: 'https://linkedin.com/in/sahith-m-sahith518',
+  github: 'https://github.com/SahithM2006',
+  pdfUrl: '/Sahith_M_Placement_Resume.pdf',
+  pdfFilename: 'Sahith_M_Placement_Resume.pdf',
+  education: {
+    institution: 'Saveetha Engineering College (Autonomous)',
+    degree: 'B.Tech in Artificial Intelligence and Data Science',
+    period: '2024 – 2028',
+    status: '3rd Year',
+    cgpa: '7.5 / 10',
+    schooling: [
+      { standard: 'Class XII (Higher Secondary)', score: '80%' },
+      { standard: 'Class X (Secondary School)', score: '85%' }
+    ]
+  },
+  skills: {
+    languages: ['Python', 'C', 'SQL'],
+    aiData: ['Machine Learning', 'Deep Learning', 'Data Analysis', 'EDA', 'Feature Engineering'],
+    libraries: ['PyTorch', 'NumPy', 'Pandas', 'Matplotlib', 'Scikit-learn', 'OpenCV'],
+    backendDev: ['FastAPI', 'REST APIs', 'PostgreSQL', 'Docker'],
+    tools: ['Jupyter Notebook', 'Google Colab', 'Git', 'GitHub'],
+    domains: ['Computer Vision', 'Generative AI', 'IoT', 'Cybersecurity']
+  },
+  projects: [
+    {
+      title: 'AEGIS-TWIN — Autonomous Digital Twin for Adversarial Path Simulation',
+      domain: 'Cybersecurity • Digital Twin • Hackathon Prototype',
+      points: [
+        'Designed a cybersecurity-focused digital twin for modelling enterprise assets and simulating adversarial attack paths.',
+        'Developed workflows to identify potential lateral-movement routes and support defensive decision-making.',
+        'Architected and prototyped the solution as part of a national-level hackathon.'
+      ]
+    },
+    {
+      title: 'HealthBridge AI — Healthcare Data Interoperability Platform',
+      domain: 'Healthcare AI • Data Interoperability • Prototype',
+      points: [
+        'Developed a prototype interoperability platform for transforming and validating heterogeneous clinical data.',
+        'Applied FHIR-aligned structures and structured validation to support standardized healthcare data exchange.',
+        'Designed AI-assisted processing workflows to improve interoperability between healthcare systems.'
+      ]
+    },
+    {
+      title: 'Probe360 — Agentless Vulnerability Assessment Platform',
+      domain: 'Cybersecurity • Vulnerability Assessment • Hackathon',
+      points: [
+        'Designed an agentless security platform for asset discovery, network-based vulnerability assessment, and centralized risk intelligence.',
+        'Proposed continuous monitoring and AI-assisted deception capabilities to improve enterprise security visibility.',
+        'Developed the solution architecture and prototype workflow as a hackathon project.'
+      ]
+    },
+    {
+      title: 'VisionTraffic AI — Intelligent Traffic Monitoring & Analytics',
+      domain: 'Computer Vision • Machine Learning • Traffic Analytics',
+      points: [
+        'Developed a computer-vision based traffic monitoring prototype for vehicle detection and traffic analysis.',
+        'Integrated concepts for vehicle counting, emergency-vehicle identification, accident detection, and traffic-density analysis.',
+        'Designed the solution to support data-driven traffic monitoring and management.'
+      ]
+    },
+    {
+      title: 'AI Carbon Intelligence Platform — Sustainable Supply Chain',
+      domain: 'Artificial Intelligence • Data Analysis • Sustainability',
+      points: [
+        'Designed an AI-driven decision-support platform for analysing carbon emissions across supply-chain operations.',
+        'Proposed data-driven identification of emission hotspots and sustainability insights.',
+        'Developed the solution concept as a hackathon-focused project for sustainable decision-making.'
+      ]
+    }
+  ],
+  achievements: [
+    'Won 3rd Prize in the Software Category at a National-Level Hackathon.',
+    'Shortlisted among the Top 15 teams in a competitive hackathon.',
+    'Participated in National-Level Hackathons and developed AI/software prototypes under time constraints.'
+  ],
+  coursework: [
+    'Data Structures & Algorithms',
+    'Database Management Systems',
+    'Data Science',
+    'Machine Learning',
+    'Deep Learning',
+    'Cloud Computing',
+    'IoT',
+    'Cybersecurity'
+  ]
+};
+

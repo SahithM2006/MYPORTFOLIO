@@ -26,6 +26,8 @@ export function initScrollEngine() {
   const aboutSec = document.getElementById('about');
   const skillsSec = document.getElementById('skills');
   const projectsSec = document.getElementById('projects');
+  const certSec = document.getElementById('certifications');
+  const resumeSec = document.getElementById('resume');
   const contactSec = document.getElementById('contact');
 
   let cachedGeometry = {
@@ -35,7 +37,9 @@ export function initScrollEngine() {
     about: { top: 900, height: 1000 },
     skills: { top: 2000, height: 1000 },
     projects: { top: 3100, height: 1800 },
-    contact: { top: 5200, height: 800 },
+    certifications: { top: 5000, height: 1200 },
+    resume: { top: 6200, height: 1200 },
+    contact: { top: 7400, height: 800 },
     cards: []
   };
 
@@ -56,6 +60,8 @@ export function initScrollEngine() {
     cachedGeometry.about = getMetrics(aboutSec);
     cachedGeometry.skills = getMetrics(skillsSec);
     cachedGeometry.projects = getMetrics(projectsSec);
+    cachedGeometry.certifications = getMetrics(certSec);
+    cachedGeometry.resume = getMetrics(resumeSec);
     cachedGeometry.contact = getMetrics(contactSec);
 
     const projectCards = document.querySelectorAll('.project-narrative-entry, .project-card');
@@ -105,6 +111,8 @@ export function initScrollEngine() {
     const aboutProgress = clamp01((scrollTop - cachedGeometry.about.top + winH * 0.45) / (cachedGeometry.about.height || 1));
     const skillsProgress = clamp01((scrollTop - cachedGeometry.skills.top + winH * 0.45) / (cachedGeometry.skills.height || 1));
     const projectsProgress = clamp01((scrollTop - cachedGeometry.projects.top + winH * 0.45) / (cachedGeometry.projects.height || 1));
+    const certProgress = clamp01((scrollTop - cachedGeometry.certifications.top + winH * 0.45) / (cachedGeometry.certifications.height || 1));
+    const resumeProgress = clamp01((scrollTop - cachedGeometry.resume.top + winH * 0.45) / (cachedGeometry.resume.height || 1));
     const contactProgress = clamp01((scrollTop - cachedGeometry.contact.top + winH * 0.6) / (cachedGeometry.contact.height || 1));
 
     const rootStyle = document.documentElement.style;
@@ -113,16 +121,24 @@ export function initScrollEngine() {
     rootStyle.setProperty('--about-scroll', aboutProgress.toFixed(4));
     rootStyle.setProperty('--skills-scroll', skillsProgress.toFixed(4));
     rootStyle.setProperty('--projects-scroll', projectsProgress.toFixed(4));
+    rootStyle.setProperty('--cert-scroll', certProgress.toFixed(4));
+    rootStyle.setProperty('--resume-scroll', resumeProgress.toFixed(4));
     rootStyle.setProperty('--contact-scroll', contactProgress.toFixed(4));
 
-    // Active Chapter Badge (01 HERO -> 02 ESSAY -> 03 SKILLS -> 04 EXHIBITS -> 05 DISPATCH)
+    // Active Chapter Badge (01 HERO -> 02 ESSAY -> 03 SKILLS -> 04 EXHIBITS -> 05 CERTS -> 06 RESUME -> 07 DISPATCH)
     const focusY = scrollTop + winH * 0.45;
     let currentChapter = '01 HERO';
     let chapterColor = '#c8ff4d';
 
     if (focusY >= cachedGeometry.contact.top - 140) {
-      currentChapter = '05 DISPATCH';
+      currentChapter = '07 DISPATCH';
       chapterColor = '#c8ff4d';
+    } else if (focusY >= cachedGeometry.resume.top - 140) {
+      currentChapter = '06 RESUME';
+      chapterColor = '#10b981';
+    } else if (focusY >= cachedGeometry.certifications.top - 140) {
+      currentChapter = '05 CERTS';
+      chapterColor = '#f59e0b';
     } else if (focusY >= cachedGeometry.projects.top - 120) {
       currentChapter = '04 EXHIBITS';
       chapterColor = lastActiveCardId ? (projectColorMap[lastActiveCardId] || '#00e5ff') : '#00e5ff';
@@ -205,7 +221,7 @@ export function initScrollEngine() {
   // Section Observer for .is-in-view transitions
   let motionObserver = null;
   const observedElements = document.querySelectorAll(
-    '.about-section, .skills-section, .projects-section, .contact-section, .project-card, .project-narrative-entry'
+    '.about-section, .skills-section, .projects-section, .certifications-section, .resume-section, .contact-section, .project-card, .project-narrative-entry'
   );
 
   if ('IntersectionObserver' in window && observedElements.length) {

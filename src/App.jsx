@@ -6,6 +6,8 @@ import Hero from './components/Hero.jsx';
 import About from './components/About.jsx';
 import Skills from './components/Skills.jsx';
 import Projects from './components/Projects.jsx';
+import Certifications from './components/Certifications.jsx';
+import Resume from './components/Resume.jsx';
 import Contact from './components/Contact.jsx';
 import Footer from './components/Footer.jsx';
 import { initScrollEngine } from './scroll-engine.js';
@@ -58,6 +60,8 @@ export default function App() {
           selectedSkillId={selectedSkillId}
           onSelectSkill={setSelectedSkillId}
         />
+        <Certifications />
+        <Resume />
         <Contact />
         <Footer />
       </main>
