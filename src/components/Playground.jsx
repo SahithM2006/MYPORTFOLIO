@@ -483,7 +483,7 @@ export default function Playground() {
                     >
                       ↺ Reset Generative Pattern
                     </button>
-                    <a href="#prj-jarvis" className="lab-project-link">Connects with Jarvis Assistant &rarr;</a>
+                    <a href="#prj-aegis" className="lab-project-link">Connects with AEGIS-TWIN &rarr;</a>
                   </div>
                 </div>
                 <div className="lab-visual-col">

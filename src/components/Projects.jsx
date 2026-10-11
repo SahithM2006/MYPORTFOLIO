@@ -74,6 +74,115 @@ class IngestionPayload(BaseModel):
 }`
 };
 
+const AEGIS_STEPS = [
+  { id: 'vuln', label: '01. Vulnerability', short: 'Vuln' },
+  { id: 'attack', label: '02. Attack Path', short: 'Attack' },
+  { id: 'risk', label: '03. Risk Impact', short: 'Risk' },
+  { id: 'fix', label: '04. Optimal Fix', short: 'Fix' },
+  { id: 'resim', label: '05. Re-simulation', short: 'Re-sim' }
+];
+
+const AEGIS_DATA = {
+  vuln: {
+    title: 'Vulnerability Ingestion & Asset Topology',
+    status: 'CVE TELEMETRY INGESTED',
+    riskScore: '9.4',
+    riskClass: 'val-crit',
+    hopCount: '3 Hops',
+    blastRadius: '4 Nodes Exposed',
+    defenseStatus: 'Vulnerabilities Unpatched',
+    edgeState: 'dormant',
+    code: `// [STAGE 1: ASSET TOPOLOGY & CVE/CVSS INGESTION (FastAPI)]
+[*] NetworkX Directed Graph: G = nx.DiGraph()
+[+] Node 1: Attacker (External Vector 198.51.100.24)
+[+] Node 2: Nginx Web Ingress (10.0.1.5)
+    ├── [CVE-2023-38606] CVSS 9.8 (Critical) | Port 443 RCE
+[+] Node 3: FastAPI App Cluster (10.0.2.14)
+    ├── [CVE-2024-21413] CVSS 8.8 (High) | NTLM Credential Relay
+[+] Node 4: Domain Controller DC-01 (10.0.3.2)
+    └── [CROWN JEWEL] Kerberos Domain Admin (Port 389/88)
+[!] Topology graph initialized. Attack surface ready for simulation.`
+  },
+  attack: {
+    title: 'Adversarial Lateral Path Traversal',
+    status: 'MITRE ATT&CK TRAVERSAL SIMULATED',
+    riskScore: '9.8',
+    riskClass: 'val-crit',
+    hopCount: '3 Hops (Direct)',
+    blastRadius: 'Crown Jewels Targeted',
+    defenseStatus: 'Lateral Path Active',
+    edgeState: 'attacking',
+    code: `// [STAGE 2: ADVERSARIAL PATH SIMULATION (MITRE ATT&CK)]
+[*] Traversal Algorithm: Dijkstra Shortest Vulnerability Path
+[>] HOP 1: Attacker ──> Nginx Web Ingress
+    ├── Technique: T1190 (Exploit Public-Facing Application)
+    └── Vector: Reverse shell established via CVE-2023-38606
+[>] HOP 2: Nginx Web ──> App Cluster
+    ├── Technique: T1550.002 (Pass-the-Hash / Alternate Auth)
+    └── Vector: Pivoting over internal SSH tunnel to Port 8000
+[>] HOP 3: App Cluster ──> Domain Controller DC-01
+    ├── Technique: T1003 (OS Credential Dumping)
+    └── Vector: Golden Ticket forged via Kerberos compromise
+[!] CRITICAL: Full compromise path verified from External to DC-01.`
+  },
+  risk: {
+    title: 'Multi-Hop Blast Radius & Impact Quantifier',
+    status: 'BLAST RADIUS EVALUATED',
+    riskScore: '9.8',
+    riskClass: 'val-crit',
+    hopCount: '3 Hops',
+    blastRadius: '100% Crown Jewels Exposed',
+    defenseStatus: 'Immediate Cut Required',
+    edgeState: 'attacking',
+    code: `// [STAGE 3: RISK IMPACT & BLAST RADIUS METRICS]
+[*] NetworkX Graph Centrality & Exposure Analysis:
+    ├── Composite CVSS Risk Index : 9.8 / 10.0 [EXTREME RISK]
+    ├── Critical Lateral Hop Depth: 3 Hops (Zero Segmentation)
+    ├── Mean Time-to-Compromise   : 3.8 minutes
+    ├── Domain Controller Reach   : EXPOSED (100% Likelihood)
+    └── Business Impact Rating    : Tier-1 Catastrophic Exposure
+[!] Optimization Directive: Synthesize minimum-cost defense policy.`
+  },
+  fix: {
+    title: 'Optimal Defense Policy Synthesis',
+    status: 'OPTIMAL CUT COMPUTED',
+    riskScore: '3.2',
+    riskClass: 'val-safe',
+    hopCount: '0 Valid Paths',
+    blastRadius: 'Attack Trajectory Severed',
+    defenseStatus: 'Zero-Trust ACL-901 Applied',
+    edgeState: 'severed',
+    code: `// [STAGE 4: OPTIMAL DEFENSE ORCHESTRATION (Minimum-Cut Heuristic)]
+[*] Graph Cut Evaluation:
+    ├── Option A: Patch both CVEs (Downtime: 48h | Feasibility: 34%)
+    └── Option B (OPTIMAL): Microsegmentation Rule ACL-901
+        ├── Action: Sever lateral bridge between DMZ & App (Port 8000)
+        ├── Action: Enforce mTLS & Ephemeral Kerberos Guardrails
+        ├── Operational Downtime: 0 seconds (Cost Score: 1.2 pts)
+        └── Attack Path Disruption: 100% of adversarial flow severed
+[✓] Optimal Remediation Action Pushed to Network Twin.`
+  },
+  resim: {
+    title: 'Digital Twin Verification & Posture Re-simulation',
+    status: 'RE-SIMULATION VERIFIED',
+    riskScore: '1.2',
+    riskClass: 'val-safe',
+    hopCount: '0 Paths (Cut)',
+    blastRadius: '1 Node Contained (DMZ)',
+    defenseStatus: 'Crown Jewels Protected ✓',
+    edgeState: 'severed',
+    code: `// [STAGE 5: DIGITAL TWIN RE-SIMULATION & VERIFICATION]
+[*] Executing: nx.has_path(G, source='Attacker', target='DC-01')
+    └── Result: False (No adversarial path exists!)
+[*] Residual Enterprise Posture:
+    ├── Active Lateral Attack Paths: 0
+    ├── Residual Risk Index        : 1.2 / 10.0 [CONTAINED]
+    ├── Crown Jewel (DC-01)        : ISOLATED & SECURE
+    └── MITRE ATT&CK Mitigation    : M1030 (Network Segmentation) Verified
+[✓] Posture validation complete: Hackathon prototype verified.`
+  }
+};
+
 export default function Projects({
   activeProjectId = 'prj-probe360',
   onSelectProject,
@@ -96,12 +205,8 @@ export default function Projects({
   const [renewable, setRenewable] = useState(30);
   const [volume, setVolume] = useState(2500);
 
-  // Exhibit 4: Jarvis state
-  const [terminalLines, setTerminalLines] = useState([
-    '[JARVIS KERNEL INITIALIZED]',
-    'Type "help" or click any command chip above to query daemon state.'
-  ]);
-  const [terminalInput, setTerminalInput] = useState('');
+  // Exhibit 4: AEGIS-TWIN state
+  const [aegisStep, setAegisStep] = useState('vuln');
 
   // Sync with prop if provided
   useEffect(() => {
@@ -141,59 +246,12 @@ export default function Projects({
   const scope3 = Math.round(distance * 0.065 + volume * 0.015);
   const totalCo2 = scope1 + scope2 + scope3;
 
-  // Exhibit 4: Jarvis command execution
-  const executeJarvisCommand = (cmdText) => {
-    const cleanCmd = cmdText.trim().toLowerCase();
-    let response = '';
-
-    switch (cleanCmd) {
-      case 'help':
-        response = `Available commands:
-  - status    : Query service daemon uptime & background memory
-  - telemetry : Sample live CPU, RAM, and Disk utilization probes
-  - specs     : Inspect Python runtime & OS kernel hook specifications
-  - skills    : List connected technical dependencies
-  - clear     : Flush the terminal buffer`;
-        break;
-      case 'status':
-        response = `[SERVICE DAEMON STATUS: ACTIVE]
-  - Uptime          : 18h 42m 11s
-  - Daemon Mode     : Local Event Loop (Zero Cloud Telemetry)
-  - Memory Footprint: 26.4 MB RSS
-  - Active Hotkeys  : Win+Shift+J, Ctrl+Alt+Space`;
-        break;
-      case 'telemetry':
-        response = `[KERNEL HARDWARE TELEMETRY]
-  - CPU Usage       : 4.2% across 8 logical cores
-  - RAM In-Use      : 8.1 GB / 16.0 GB (50.6%)
-  - Disk Activity   : Read 1.2 MB/s • Write 0.4 MB/s
-  - Battery/Thermal : 42°C [Nominal]`;
-        break;
-      case 'specs':
-        response = `[JARVIS ARCHITECTURE SPECIFICATIONS]
-  - Runtime   : Python 3.11 (Asynchronous Event Loop)
-  - Libraries : psutil, pywin32, ctypes, keyboard hooks
-  - IPC       : Named pipes for secure sub-process dispatch`;
-        break;
-      case 'skills':
-        response = `[CONNECTED SKILL MATRIX]
-  - Python (Core Service) • OS Automation • psutil • Windows APIs • Procedural C`;
-        break;
-      case 'clear':
-        setTerminalLines([]);
-        return;
-      default:
-        response = `Command "${cleanCmd}" not recognized. Type "help" or click a quick command chip.`;
-    }
-
-    setTerminalLines((prev) => [...prev, `jarvis@sec-lab:~$ ${cleanCmd}`, response]);
-  };
-
-  const handleTerminalSubmit = (e) => {
-    e.preventDefault();
-    if (!terminalInput.trim()) return;
-    executeJarvisCommand(terminalInput);
-    setTerminalInput('');
+  // Exhibit 4: AEGIS-TWIN step next helper
+  const handleAegisStepNext = () => {
+    const stepIds = AEGIS_STEPS.map((s) => s.id);
+    const currentIdx = stepIds.indexOf(aegisStep);
+    const nextIdx = (currentIdx + 1) % stepIds.length;
+    setAegisStep(stepIds[nextIdx]);
   };
 
   // Keyboard navigation [1..4] to jump to exhibits
@@ -204,7 +262,7 @@ export default function Projects({
         '1': 'prj-probe360',
         '2': 'prj-healthbridge',
         '3': 'prj-carbon',
-        '4': 'prj-jarvis'
+        '4': 'prj-aegis'
       };
       const targetId = keyMap[e.key];
       if (targetId) {
@@ -222,6 +280,9 @@ export default function Projects({
   // Filter projects list (4 projects)
   const filteredProjects = useMemo(() => {
     if (activeFilter === 'all') return PROJECTS;
+    if (activeFilter === 'security') {
+      return PROJECTS.filter((p) => p.category === 'security' || p.id === 'aegis');
+    }
     return PROJECTS.filter((p) => p.category === activeFilter);
   }, [activeFilter]);
 
@@ -428,54 +489,219 @@ export default function Projects({
           </div>
         );
 
-      case 'prj-jarvis':
+      case 'prj-aegis': {
+        const currData = AEGIS_DATA[aegisStep] || AEGIS_DATA.vuln;
+        const isSevered = aegisStep === 'fix' || aegisStep === 'resim';
+
         return (
-          <div className="project-interactive-exhibit exhibit-box-jarvis">
+          <div className="project-interactive-exhibit exhibit-box-aegis">
             <div className="exhibit-header">
-              <span className="exhibit-label">✦ JARVIS CLI TERMINAL SANDBOX</span>
+              <span className="exhibit-label">✦ AEGIS-TWIN ADVERSARIAL PATH SIMULATOR</span>
               <button
                 type="button"
                 className="btn-copy-snippet"
-                onClick={() => copyTextToClipboard(terminalLines.join('\n'), 'jarvis')}
-                aria-label="Copy terminal buffer"
+                onClick={() => copyTextToClipboard(currData.code, 'aegis')}
+                aria-label="Copy simulation report"
               >
-                {copiedSnippetId === 'jarvis' ? 'Copied ✓' : 'Copy Buffer'}
+                {copiedSnippetId === 'aegis' ? 'Copied ✓' : 'Copy Report'}
               </button>
             </div>
-            <div className="jarvis-quick-chips">
-              <span className="quick-chips-label">Commands:</span>
-              {['status', 'telemetry', 'specs', 'skills', 'help', 'clear'].map((cmd) => (
+
+            {/* Core Workflow Stepper (Vulnerability -> Attack Path -> Risk Impact -> Optimal Fix -> Re-simulation) */}
+            <div className="aegis-workflow-nav" role="tablist" aria-label="AEGIS-TWIN 5-step workflow">
+              <span className="aegis-workflow-label">Workflow:</span>
+              {AEGIS_STEPS.map((s) => (
                 <button
-                  key={cmd}
-                  className="jarvis-cmd-chip"
+                  key={s.id}
+                  className={`aegis-step-chip ${aegisStep === s.id ? 'active' : ''}`}
+                  role="tab"
+                  aria-selected={aegisStep === s.id}
                   type="button"
-                  onClick={() => executeJarvisCommand(cmd)}
+                  onClick={() => setAegisStep(s.id)}
                 >
-                  {cmd}
+                  <span className="aegis-step-num">{s.label.split('.')[0]}</span>
+                  <span>{s.short}</span>
                 </button>
               ))}
             </div>
-            <div className="jarvis-terminal-window">
-              <div className="jarvis-terminal-body">
-                {terminalLines.map((line, idx) => (
-                  <div key={idx} className="term-line term-response">
-                    {line}
-                  </div>
-                ))}
-              </div>
-              <form className="jarvis-terminal-input-bar" onSubmit={handleTerminalSubmit}>
-                <span className="term-user-prompt">jarvis@sec-lab:~$</span>
-                <input
-                  type="text"
-                  className="jarvis-terminal-input"
-                  placeholder="Type command (e.g. status, telemetry)..."
-                  value={terminalInput}
-                  onChange={(e) => setTerminalInput(e.target.value)}
+
+            {/* Cybersecurity Network Graph / Digital Twin Visual */}
+            <div className="aegis-twin-viewport">
+              <svg viewBox="0 0 500 170" className="aegis-graph-svg" aria-label="AEGIS-TWIN Cybersecurity Network Graph">
+                <defs>
+                  <linearGradient id="cyberGrid" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stopColor="#040e16" />
+                    <stop offset="100%" stopColor="#081b26" />
+                  </linearGradient>
+                  <filter id="cyanGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                  </filter>
+                  <filter id="redGlow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feGaussianBlur stdDeviation="3" result="blur" />
+                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                  </filter>
+                  <marker id="arrowRed" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 8 5 L 0 9 z" fill="#f43f5e" />
+                  </marker>
+                  <marker id="arrowCyan" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 8 5 L 0 9 z" fill="#00f5d4" />
+                  </marker>
+                  <marker id="arrowMuted" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1 L 8 5 L 0 9 z" fill="#475569" />
+                  </marker>
+                </defs>
+
+                {/* Background Grid Pattern */}
+                <rect width="500" height="170" fill="url(#cyberGrid)" />
+                <line x1="0" y1="42" x2="500" y2="42" stroke="rgba(0, 245, 212, 0.05)" strokeDasharray="4,4" />
+                <line x1="0" y1="128" x2="500" y2="128" stroke="rgba(0, 245, 212, 0.05)" strokeDasharray="4,4" />
+
+                {/* Network Edge 1: Attacker -> DMZ */}
+                <line
+                  x1="88"
+                  y1="85"
+                  x2="152"
+                  y2="85"
+                  stroke={aegisStep === 'vuln' ? '#475569' : '#f43f5e'}
+                  strokeWidth={aegisStep === 'vuln' ? '1.5' : '2.5'}
+                  strokeDasharray={aegisStep === 'attack' || aegisStep === 'risk' ? '4,3' : 'none'}
+                  markerEnd={aegisStep === 'vuln' ? 'url(#arrowMuted)' : 'url(#arrowRed)'}
                 />
-              </form>
+
+                {/* Network Edge 2: DMZ -> App Cluster (The Critical Bridge!) */}
+                {isSevered ? (
+                  <>
+                    <line x1="228" y1="85" x2="252" y2="85" stroke="#f43f5e" strokeWidth="2" strokeDasharray="3,3" />
+                    {/* Severed Barrier / Shield */}
+                    <g transform="translate(262, 85)">
+                      <circle r="14" fill="#06151f" stroke="#00f5d4" strokeWidth="2" filter="url(#cyanGlow)" />
+                      <text textAnchor="middle" dy="4" fill="#00f5d4" fontSize="11" fontFamily="var(--font-mono)">🛡️</text>
+                    </g>
+                    <line x1="272" y1="85" x2="312" y2="85" stroke="#334155" strokeWidth="1.5" strokeDasharray="2,2" markerEnd="url(#arrowMuted)" />
+                    <text x="262" y="112" textAnchor="middle" fill="#00f5d4" fontSize="8" fontFamily="var(--font-mono)" fontWeight="bold">SEVERED [ACL-901]</text>
+                  </>
+                ) : (
+                  <line
+                    x1="228"
+                    y1="85"
+                    x2="312"
+                    y2="85"
+                    stroke={aegisStep === 'attack' || aegisStep === 'risk' ? '#f43f5e' : '#475569'}
+                    strokeWidth={aegisStep === 'attack' || aegisStep === 'risk' ? '2.5' : '1.5'}
+                    strokeDasharray={aegisStep === 'attack' || aegisStep === 'risk' ? '4,3' : 'none'}
+                    markerEnd={aegisStep === 'attack' || aegisStep === 'risk' ? 'url(#arrowRed)' : 'url(#arrowMuted)'}
+                  />
+                )}
+
+                {/* Network Edge 3: App Cluster -> Domain Controller */}
+                <line
+                  x1="388"
+                  y1="85"
+                  x2="418"
+                  y2="85"
+                  stroke={isSevered ? '#10b981' : (aegisStep === 'attack' || aegisStep === 'risk' ? '#f43f5e' : '#475569')}
+                  strokeWidth={aegisStep === 'attack' || aegisStep === 'risk' ? '2.5' : '1.5'}
+                  strokeDasharray={!isSevered && (aegisStep === 'attack' || aegisStep === 'risk') ? '4,3' : 'none'}
+                  markerEnd={isSevered ? 'url(#arrowCyan)' : (aegisStep === 'attack' || aegisStep === 'risk' ? 'url(#arrowRed)' : 'url(#arrowMuted)')}
+                />
+
+                {/* Node 1: External Attacker */}
+                <g transform="translate(52, 85)">
+                  <circle r="22" fill="#180b12" stroke="#f43f5e" strokeWidth="2" filter={aegisStep !== 'vuln' ? 'url(#redGlow)' : ''} />
+                  <text textAnchor="middle" dy="4" fill="#f43f5e" fontSize="12" fontFamily="var(--font-mono)">⚔️</text>
+                  <text x="0" y="32" textAnchor="middle" fill="#f43f5e" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">Attacker</text>
+                  <text x="0" y="42" textAnchor="middle" fill="#94a3b8" fontSize="7.5" fontFamily="var(--font-mono)">External Vector</text>
+                </g>
+
+                {/* Node 2: DMZ Web Ingress */}
+                <g transform="translate(190, 85)">
+                  <circle r="22" fill="#1f1408" stroke="#f97316" strokeWidth="2" />
+                  <text textAnchor="middle" dy="4" fill="#f97316" fontSize="12" fontFamily="var(--font-mono)">🌐</text>
+                  <text x="0" y="32" textAnchor="middle" fill="#f97316" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">DMZ Ingress</text>
+                  <text x="0" y="42" textAnchor="middle" fill="#f87171" fontSize="7.5" fontFamily="var(--font-mono)">CVE-2023-38606</text>
+                </g>
+
+                {/* Node 3: App Cluster */}
+                <g transform="translate(350, 85)">
+                  <circle r="22" fill="#160e22" stroke={isSevered ? '#10b981' : '#a855f7'} strokeWidth="2" />
+                  <text textAnchor="middle" dy="4" fill={isSevered ? '#10b981' : '#a855f7'} fontSize="12" fontFamily="var(--font-mono)">⚙️</text>
+                  <text x="0" y="32" textAnchor="middle" fill={isSevered ? '#10b981' : '#c084fc'} fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">App Cluster</text>
+                  <text x="0" y="42" textAnchor="middle" fill="#94a3b8" fontSize="7.5" fontFamily="var(--font-mono)">{isSevered ? 'Zero-Trust mTLS' : 'T1550 Pivot'}</text>
+                </g>
+
+                {/* Node 4: Crown Jewel DC-01 */}
+                <g transform="translate(452, 85)">
+                  <circle r="22" fill="#041f1a" stroke={isSevered ? '#00f5d4' : (aegisStep === 'risk' || aegisStep === 'attack' ? '#f43f5e' : '#00f5d4')} strokeWidth="2" filter={isSevered ? 'url(#cyanGlow)' : ''} />
+                  <text textAnchor="middle" dy="4" fill="#00f5d4" fontSize="12" fontFamily="var(--font-mono)">👑</text>
+                  <text x="0" y="32" textAnchor="middle" fill={isSevered ? '#00f5d4' : (aegisStep === 'risk' ? '#f87171' : '#00f5d4')} fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">Domain Controller</text>
+                  <text x="0" y="42" textAnchor="middle" fill={isSevered ? '#34d399' : '#f87171'} fontSize="7.5" fontFamily="var(--font-mono)">{isSevered ? 'SECURED ✓' : 'Crown Jewel'}</text>
+                </g>
+
+                {/* Top Badge: Active Phase */}
+                <g transform="translate(16, 20)">
+                  <rect width="210" height="18" rx="4" fill="rgba(0, 245, 212, 0.08)" stroke="rgba(0, 245, 212, 0.25)" />
+                  <text x="8" y="13" fill="#00f5d4" fontSize="8" fontFamily="var(--font-mono)" fontWeight="bold">
+                    TWIN STATE: {currData.status}
+                  </text>
+                </g>
+              </svg>
+            </div>
+
+            {/* Metrics Strip */}
+            <div className="aegis-metrics-strip">
+              <div className="aegis-metric-pill">
+                <span className="aegis-metric-kicker">CVSS Impact</span>
+                <span className={`aegis-metric-val ${currData.riskClass}`}>{currData.riskScore}</span>
+                <span className="aegis-metric-sub">Composite index</span>
+              </div>
+              <div className="aegis-metric-pill">
+                <span className="aegis-metric-kicker">Lateral Path</span>
+                <span className="aegis-metric-val">{currData.hopCount}</span>
+                <span className="aegis-metric-sub">Dijkstra shortest</span>
+              </div>
+              <div className="aegis-metric-pill">
+                <span className="aegis-metric-kicker">Defense Posture</span>
+                <span className={`aegis-metric-val ${isSevered ? 'val-safe' : 'val-crit'}`}>{isSevered ? 'SEVERED' : 'EXPOSED'}</span>
+                <span className="aegis-metric-sub">{currData.defenseStatus}</span>
+              </div>
+            </div>
+
+            {/* Controls Row */}
+            <div className="aegis-controls-row">
+              <span className="aegis-flow-status">
+                <span className={`aegis-flow-dot ${isSevered ? '' : 'dot-alert'}`} />
+                {currData.title}
+              </span>
+              <div className="aegis-action-btn-group">
+                <button
+                  type="button"
+                  className="btn-aegis-action"
+                  onClick={handleAegisStepNext}
+                >
+                  Next Stage →
+                </button>
+                <button
+                  type="button"
+                  className="btn-aegis-action btn-fix"
+                  onClick={() => setAegisStep(isSevered ? 'attack' : 'resim')}
+                >
+                  {isSevered ? '⚡ Re-run Attack' : '🛡️ Deploy Fix & Re-sim'}
+                </button>
+              </div>
+            </div>
+
+            {/* NetworkX Telemetry Console Window */}
+            <div className="aegis-console-window">
+              <div className="aegis-console-bar">
+                <span>✦ NETWORKX &amp; FASTAPI DIGITAL TWIN LOGS</span>
+                <span>PYTHON 3.11</span>
+              </div>
+              <pre className="aegis-console-body">{currData.code}</pre>
             </div>
           </div>
         );
+      }
 
       default:
         return null;
@@ -490,7 +716,7 @@ export default function Projects({
         <div className="projects-header-block">
           <h2 className="projects-title" id="projects-title">Project Gallery Exhibition</h2>
           <p className="projects-subtitle">
-            An interactive showcase of engineering projects spanning agentless security telemetry, healthcare interoperability, sustainability forecasting, and localized OS automation.
+            An interactive showcase of engineering projects spanning agentless security telemetry, healthcare interoperability, sustainability forecasting, and autonomous cybersecurity digital twins.
           </p>
 
           {/* Filter Category Tabs */}
@@ -500,7 +726,7 @@ export default function Projects({
               { id: 'security', label: 'Cybersecurity' },
               { id: 'backend', label: 'Healthcare' },
               { id: 'ai', label: 'AI & Models' },
-              { id: 'automation', label: 'Automation' }
+              { id: 'automation', label: 'Cyber Digital Twin' }
             ].map((f) => (
               <button
                 key={f.id}

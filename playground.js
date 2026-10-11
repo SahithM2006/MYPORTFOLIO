@@ -551,8 +551,8 @@ function initProjectExhibits() {
   // EXHIBIT 3: AI Carbon Intelligence Scenario Forecaster
   initCarbonExhibit();
 
-  // EXHIBIT 4: Jarvis Desktop Assistant Safe Terminal Playground
-  initJarvisTerminalExhibit();
+  // EXHIBIT 4: AEGIS-TWIN Cyber Digital Twin Simulator
+  initAegisExhibit();
 
   // EXHIBIT 5: DIP Real Client-Side Image Processing Canvas
   initDipCanvasExhibit();
@@ -730,86 +730,11 @@ function initCarbonExhibit() {
 }
 
 /**
- * Exhibit 4: Jarvis Desktop Assistant Safe Terminal Playground
+ * Exhibit 4: AEGIS-TWIN Cyber Digital Twin Simulator
  */
-function initJarvisTerminalExhibit() {
-  const termBody = document.getElementById('jarvis-terminal-body');
-  const termInput = document.getElementById('jarvis-terminal-input');
-  const chips = document.querySelectorAll('.jarvis-cmd-chip');
-
-  if (!termBody || !termInput) return;
-
-  const SAFE_COMMANDS = {
-    help: `Available commands:
-  • status     : View active daemon state & telemetry
-  • telemetry  : Sample CPU, RAM, and Disk metrics via psutil
-  • specs      : Inspect background service architecture
-  • skills     : View primary runtime dependencies
-  • clear      : Clear console output`,
-
-    status: `[JARVIS SERVICE STATE]
-  • Service PID    : 8192 [Python 3.11 Subprocess]
-  • State          : ACTIVE / LISTENING
-  • IPC Socket     : NamedPipe //./pipe/jarvis_cmd
-  • Hotkey Daemon  : Hooked [Alt + Space]
-  • Gaze Link      : Synchronized with 360° Hero Canvas`,
-
-    telemetry: `[LOCAL HARDWARE PROBE TELEMETRY]
-  • CPU Load       : 14.2% across 8 cores [psutil.cpu_percent]
-  • Memory Usage   : 4.8 GB / 16.0 GB (30%) [psutil.virtual_memory]
-  • Disk Latency   : 1.2 ms [I/O Queue: Nominal]
-  • Thermal State  : 41.5°C [Kernel Sensor Query]`,
-
-    specs: `[SYSTEM ARCHITECTURE]
-  • Core Runtime   : Python 3.11 + psutil + win32gui
-  • Execution Model: Asyncio event loop with non-blocking worker threads
-  • Security Model : Sandboxed command dispatcher with strict regex whitelist`,
-
-    skills: `[ASSOCIATED SKILLSET]
-  • Python • C Primitives • Windows APIs • OS Automation • psutil`
-  };
-
-  function executeCommand(cmdText) {
-    const cleanCmd = cmdText.trim().toLowerCase();
-    if (!cleanCmd) return;
-
-    if (cleanCmd === 'clear') {
-      termBody.innerHTML = '';
-      return;
-    }
-
-    const promptLine = document.createElement('div');
-    promptLine.className = 'term-line term-prompt';
-    promptLine.innerHTML = `<span class="term-user">jarvis@sec-lab:~$</span> <span class="term-cmd">${escapeHtml(cmdText)}</span>`;
-    termBody.appendChild(promptLine);
-
-    const responseLine = document.createElement('div');
-    responseLine.className = 'term-line term-response';
-
-    if (SAFE_COMMANDS[cleanCmd]) {
-      responseLine.textContent = SAFE_COMMANDS[cleanCmd];
-    } else {
-      responseLine.innerHTML = `<span class="term-err">Command not recognized: "${escapeHtml(cmdText)}". Type "help" for safe commands.</span>`;
-    }
-
-    termBody.appendChild(responseLine);
-    termBody.scrollTop = termBody.scrollHeight;
-  }
-
-  termInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      const val = termInput.value;
-      termInput.value = '';
-      executeCommand(val);
-    }
-  });
-
-  chips.forEach((chip) => {
-    chip.addEventListener('click', () => {
-      const cmd = chip.getAttribute('data-cmd');
-      if (cmd) executeCommand(cmd);
-    });
-  });
+function initAegisExhibit() {
+  const chips = document.querySelectorAll('.aegis-step-chip');
+  if (!chips.length) return;
 }
 
 /**
@@ -1388,7 +1313,7 @@ function initMotionDesign() {
     'prj-probe360': '#00e5ff',
     'prj-healthbridge': '#10b981',
     'prj-carbon': '#f59e0b',
-    'prj-jarvis': '#a855f7',
+    'prj-aegis': '#00f5d4',
     'prj-dip': '#ec4899'
   };
 

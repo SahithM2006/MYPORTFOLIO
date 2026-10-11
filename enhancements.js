@@ -20,7 +20,7 @@ const SKILL_DETAILS = {
       { name: 'Probe360', id: 'prj-probe360' },
       { name: 'Healthbridge EHR', id: 'prj-healthbridge' },
       { name: 'AI Carbon Intelligence', id: 'prj-carbon' },
-      { name: 'Jarvis Assistant', id: 'prj-jarvis' },
+      { name: 'AEGIS-TWIN Digital Twin', id: 'prj-aegis' },
       { name: 'DIP Experiments', id: 'prj-dip' }
     ]
   },
@@ -71,9 +71,7 @@ const SKILL_DETAILS = {
     category: 'PROGRAMMING &bull; SYSTEMS PRIMITIVES',
     title: 'C',
     desc: 'Procedural fundamentals, memory pointers, low-level data structures, and algorithmic logic underlying operating systems architecture.',
-    projects: [
-      { name: 'Jarvis Assistant', id: 'prj-jarvis' }
-    ]
+    projects: []
   },
   'sql': {
     category: 'PROGRAMMING &bull; RELATIONAL DATABASES',
@@ -120,8 +118,7 @@ const SKILL_DETAILS = {
     title: 'Windows Administration',
     desc: 'Registry management, PowerShell execution policies, system service control, and security event log inspection.',
     projects: [
-      { name: 'Probe360', id: 'prj-probe360' },
-      { name: 'Jarvis Assistant', id: 'prj-jarvis' }
+      { name: 'Probe360', id: 'prj-probe360' }
     ]
   },
   'vuln-assessment': {
@@ -137,7 +134,7 @@ const SKILL_DETAILS = {
     title: 'OS Automation',
     desc: 'System event dispatching, desktop window manipulation, background process cleanup, and automated administrative routines.',
     projects: [
-      { name: 'Jarvis Assistant', id: 'prj-jarvis' },
+      { name: 'AEGIS-TWIN Digital Twin', id: 'prj-aegis' },
       { name: 'Probe360', id: 'prj-probe360' }
     ]
   },
@@ -145,9 +142,7 @@ const SKILL_DETAILS = {
     category: 'AUTOMATION &bull; SHELL & PYTHON',
     title: 'Scripting',
     desc: 'Cross-platform task orchestration, automated telemetry parsing, and unattended command dispatch scripts.',
-    projects: [
-      { name: 'Jarvis Assistant', id: 'prj-jarvis' }
-    ]
+    projects: []
   },
   'workflow-automation': {
     category: 'AUTOMATION &bull; INTEROPERABILITY',
@@ -179,12 +174,12 @@ const INTEREST_DATA = {
     projectId: '#prj-probe360'
   },
   'automation': {
-    tag: 'DOMAIN // SYSTEMS &amp; OS ORCHESTRATION',
-    title: 'Localized OS Automation & Task Workflows',
-    desc: 'Building event-driven Python background agents for desktop automation, hardware telemetry polling via psutil, and hotkey command dispatching.',
-    tools: 'Python &bull; psutil &bull; Windows Shell APIs &bull; Event Loops',
-    projectText: 'Jarvis Desktop Assistant &rarr;',
-    projectId: '#prj-jarvis'
+    tag: 'DOMAIN // ADVERSARIAL SIMULATION &amp; DIGITAL TWINS',
+    title: 'Autonomous Digital Twin & Risk Orchestration',
+    desc: 'Simulating multi-hop adversarial attack paths with NetworkX, identifying lateral-movement risks across enterprise assets, and orchestrating optimal defensive remediations.',
+    tools: 'Python &bull; NetworkX &bull; FastAPI &bull; MITRE ATT&CK &bull; CVSS',
+    projectText: 'AEGIS-TWIN Digital Twin &rarr;',
+    projectId: '#prj-aegis'
   },
   'software': {
     tag: 'DOMAIN // HIGH-THROUGHPUT BACKENDS &amp; APIS',

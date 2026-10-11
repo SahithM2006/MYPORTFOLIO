@@ -5,7 +5,7 @@ const PROJECT_MAP = {
   probe360: { name: 'Probe360 Agentless Security', id: 'prj-probe360' },
   healthbridge: { name: 'Healthbridge EHR Interoperability', id: 'prj-healthbridge' },
   carbon: { name: 'AI Carbon Intelligence', id: 'prj-carbon' },
-  jarvis: { name: 'Jarvis Desktop Assistant', id: 'prj-jarvis' }
+  aegis: { name: 'AEGIS-TWIN Cyber Digital Twin', id: 'prj-aegis' }
 };
 
 const CATEGORY_CLASS_MAP = {
@@ -31,8 +31,8 @@ const CATEGORY_BADGE_MAP = {
   winrm: 'AGENTLESS',
   'windows-admin': 'REGISTRY',
   'vuln-assessment': 'CVE BASE',
-  'os-automation': 'DISPATCH',
-  scripting: 'POWERSHELL',
+  networkx: 'GRAPH TWIN',
+  'mitre-attack': 'TACTICS',
   'workflow-automation': 'PIPELINES',
   git: 'BRANCHING'
 };

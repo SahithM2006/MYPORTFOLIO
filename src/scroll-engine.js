@@ -12,7 +12,7 @@ const projectColorMap = {
   'prj-probe360': '#00e5ff',
   'prj-healthbridge': '#10b981',
   'prj-carbon': '#f59e0b',
-  'prj-jarvis': '#a855f7'
+  'prj-aegis': '#00f5d4'
 };
 
 export function initScrollEngine() {

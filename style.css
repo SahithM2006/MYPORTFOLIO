@@ -129,7 +129,7 @@ body {
 #prj-probe360,
 #prj-healthbridge,
 #prj-carbon,
-#prj-jarvis,
+#prj-aegis,
 #prj-dip {
   scroll-margin-top: 88px;
 }
@@ -239,7 +239,7 @@ button,
 .footer-status-beacon,
 .easter-egg-badge,
 .kinetic-word-btn,
-.jarvis-cmd-chip,
+.aegis-step-chip,
 .social-chip,
 .btn-copy-email,
 .btn-scroll-top,
@@ -2043,9 +2043,10 @@ input[type="range"] {
   border: 1px solid rgba(200, 255, 77, 0.3);
 }
 
-.exhibit-box-jarvis {
-  background: #160e22;
-  border: 1px solid rgba(168, 85, 247, 0.3);
+.exhibit-box-aegis {
+  background: #06151f;
+  border: 1px solid rgba(0, 245, 212, 0.35);
+  box-shadow: 0 10px 30px rgba(0, 245, 212, 0.08);
 }
 
 .exhibit-header {
@@ -2215,104 +2216,214 @@ input[type="range"] {
   margin-top: 4px;
 }
 
-/* Jarvis Terminal Exhibit */
-.jarvis-quick-chips {
+/* AEGIS-TWIN Cyber Digital Twin Exhibit */
+.aegis-workflow-nav {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.aegis-workflow-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-subtle);
+  margin-right: 4px;
+}
+
+.aegis-step-chip {
+  background: rgba(0, 245, 212, 0.08);
+  border: 1px solid rgba(0, 245, 212, 0.25);
+  color: #70fce3;
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  padding: 5px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.aegis-step-chip:hover {
+  background: rgba(0, 245, 212, 0.2);
+  color: var(--text-white);
+  border-color: rgba(0, 245, 212, 0.5);
+}
+
+.aegis-step-chip.active {
+  background: #00f5d4;
+  color: #06151f;
+  border-color: #00f5d4;
+  font-weight: 700;
+  box-shadow: 0 0 14px rgba(0, 245, 212, 0.4);
+}
+
+.aegis-step-num {
+  font-weight: 800;
+  opacity: 0.85;
+}
+
+.aegis-twin-viewport {
+  background: #040e16;
+  border: 1px solid rgba(0, 245, 212, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  position: relative;
+}
+
+.aegis-graph-svg {
+  width: 100%;
+  height: auto;
+  min-height: 170px;
+  max-height: 220px;
+  display: block;
+}
+
+.aegis-metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 8px;
   margin-bottom: 12px;
 }
 
-.quick-chips-label {
+.aegis-metric-pill {
+  background: rgba(0, 245, 212, 0.05);
+  border: 1px solid rgba(0, 245, 212, 0.15);
+  border-radius: 8px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.aegis-metric-kicker {
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  color: var(--color-lavender);
+  text-transform: uppercase;
+}
+
+.aegis-metric-val {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #00f5d4;
+}
+
+.aegis-metric-val.val-crit {
+  color: #f43f5e;
+}
+
+.aegis-metric-val.val-safe {
+  color: #10b981;
+}
+
+.aegis-metric-sub {
+  font-size: 0.68rem;
   color: var(--text-subtle);
 }
 
-.jarvis-cmd-chip {
-  background: rgba(168, 85, 247, 0.15);
-  border: 1px solid rgba(168, 85, 247, 0.4);
-  color: #c084fc;
+.aegis-controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.aegis-flow-status {
   font-family: var(--font-mono);
   font-size: 0.74rem;
-  padding: 4px 10px;
+  color: #a7f3d0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.aegis-flow-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #00f5d4;
+  box-shadow: 0 0 8px #00f5d4;
+  display: inline-block;
+  animation: pulse-dot 2s infinite ease-in-out;
+}
+
+.aegis-flow-dot.dot-alert {
+  background: #f43f5e;
+  box-shadow: 0 0 8px #f43f5e;
+}
+
+.aegis-action-btn-group {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-aegis-action {
+  background: rgba(0, 245, 212, 0.12);
+  border: 1px solid rgba(0, 245, 212, 0.35);
+  color: #00f5d4;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 5px 12px;
   border-radius: 6px;
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
-.jarvis-cmd-chip:hover {
-  background: var(--color-violet);
-  color: var(--text-white);
+.btn-aegis-action:hover {
+  background: #00f5d4;
+  color: #040e16;
 }
 
-.jarvis-terminal-window {
-  background: #0d0614;
-  border: 1px solid rgba(168, 85, 247, 0.25);
-  border-radius: 12px;
+.btn-aegis-action.btn-fix {
+  background: rgba(16, 185, 129, 0.15);
+  border-color: rgba(16, 185, 129, 0.45);
+  color: #34d399;
+}
+
+.btn-aegis-action.btn-fix:hover {
+  background: #10b981;
+  color: #040e16;
+}
+
+.aegis-console-window {
+  background: #02080d;
+  border: 1px solid rgba(0, 245, 212, 0.18);
+  border-radius: 10px;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
 }
 
-.jarvis-terminal-body {
-  padding: 16px;
-  min-height: 160px;
-  max-height: 200px;
-  overflow-y: auto;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  line-height: 1.5;
-  color: #e9d5ff;
-}
-
-.term-line {
-  margin-bottom: 8px;
-  white-space: pre-wrap;
-}
-
-.term-prompt {
-  color: var(--color-lime);
-}
-
-.term-user {
-  color: var(--color-violet);
-  font-weight: 700;
-}
-
-.term-cmd {
-  color: var(--text-white);
-}
-
-.term-err {
-  color: #f87171;
-}
-
-.jarvis-terminal-input-bar {
+.aegis-console-bar {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: rgba(0, 0, 0, 0.4);
-  border-top: 1px solid rgba(168, 85, 247, 0.2);
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: rgba(0, 245, 212, 0.05);
+  border-bottom: 1px solid rgba(0, 245, 212, 0.12);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--color-lavender);
 }
 
-.term-user-prompt {
+.aegis-console-body {
+  padding: 12px 14px;
+  max-height: 160px;
+  overflow-y: auto;
   font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--color-violet);
-  font-weight: 700;
-}
-
-.jarvis-terminal-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  color: var(--text-white);
-  outline: none;
+  font-size: 0.77rem;
+  line-height: 1.5;
+  color: #d1fae5;
+  white-space: pre-wrap;
+  margin: 0;
 }
 
 /* Project Tags & Accordion Drawer */

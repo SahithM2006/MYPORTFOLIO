@@ -8,8 +8,8 @@ export const SKILL_CATEGORIES = [
   { id: 'ai', label: 'AI & Data Science', count: 6, color: '#C8FF4D' },
   { id: 'programming', label: 'Programming', count: 2, color: '#FF8A45' },
   { id: 'backend', label: 'Backend Development', count: 3, color: '#38BDF8' },
-  { id: 'security', label: 'Security & Systems', count: 3, color: '#10B981' },
-  { id: 'automation', label: 'Automation & Tools', count: 4, color: '#8157FF' }
+  { id: 'security', label: 'Security & Systems', count: 4, color: '#10B981' },
+  { id: 'automation', label: 'Automation & Graphs', count: 3, color: '#8157FF' }
 ];
 
 export const SKILLS = [
@@ -20,7 +20,7 @@ export const SKILLS = [
     category: 'ai',
     title: 'Python',
     desc: 'Primary language for high-throughput backend services, remote telemetry collection via WinRM, automated OS interaction, and Scikit-learn/OpenCV scientific pipelines.',
-    projectIds: ['probe360', 'healthbridge', 'carbon', 'jarvis']
+    projectIds: ['probe360', 'healthbridge', 'carbon', 'aegis']
   },
   {
     id: 'numpy',
@@ -74,7 +74,7 @@ export const SKILLS = [
     category: 'programming',
     title: 'C',
     desc: 'Procedural fundamentals, memory pointers, low-level data structures, and algorithmic logic underlying operating systems architecture.',
-    projectIds: ['jarvis']
+    projectIds: []
   },
   {
     id: 'sql',
@@ -92,7 +92,7 @@ export const SKILLS = [
     category: 'backend',
     title: 'FastAPI',
     desc: 'High-throughput asynchronous Python web framework providing typed REST endpoints and automatic OpenAPI documentation.',
-    projectIds: ['healthbridge']
+    projectIds: ['healthbridge', 'aegis']
   },
   {
     id: 'rest-apis',
@@ -101,7 +101,7 @@ export const SKILLS = [
     category: 'backend',
     title: 'REST APIs',
     desc: 'Stateless HTTP service design, structured error payloads, JSON serialization, and status code discipline.',
-    projectIds: ['healthbridge']
+    projectIds: ['healthbridge', 'aegis']
   },
   {
     id: 'pydantic',
@@ -128,7 +128,7 @@ export const SKILLS = [
     category: 'security',
     title: 'Windows Administration',
     desc: 'Registry management, PowerShell execution policies, system service control, and security event log inspection.',
-    projectIds: ['probe360', 'jarvis']
+    projectIds: ['probe360']
   },
   {
     id: 'vuln-assessment',
@@ -136,26 +136,26 @@ export const SKILLS = [
     number: '14',
     category: 'security',
     title: 'Vulnerability Assessment',
-    desc: 'Auditing remote unquoted service paths, missing security patches, and comparing installed package versions to CVE catalogs.',
-    projectIds: ['probe360']
+    desc: 'Auditing remote unquoted service paths, CVE/CVSS threat baseline correlation, and multi-hop attack path risk modeling.',
+    projectIds: ['probe360', 'aegis']
   },
   {
-    id: 'os-automation',
-    symbol: 'Osa',
+    id: 'networkx',
+    symbol: 'Nx',
     number: '15',
     category: 'automation',
-    title: 'OS Automation',
-    desc: 'System event dispatching, desktop window manipulation, background process cleanup, and automated administrative routines.',
-    projectIds: ['jarvis', 'probe360']
+    title: 'NetworkX Graph Modeling',
+    desc: 'Complex network topology graphing, directed adversarial path exploration, betweenness centrality, and lateral-movement graph simulation.',
+    projectIds: ['aegis']
   },
   {
-    id: 'scripting',
-    symbol: 'Scr',
+    id: 'mitre-attack',
+    symbol: 'Atk',
     number: '16',
-    category: 'automation',
-    title: 'Scripting',
-    desc: 'Cross-platform task orchestration, automated telemetry parsing, and unattended command dispatch scripts.',
-    projectIds: ['jarvis']
+    category: 'security',
+    title: 'MITRE ATT&CK',
+    desc: 'Adversarial tactic and technique taxonomy mapping across Initial Access, Lateral Movement, Privilege Escalation, and Defense Evasion.',
+    projectIds: ['aegis']
   },
   {
     id: 'workflow-automation',
@@ -164,7 +164,7 @@ export const SKILLS = [
     category: 'automation',
     title: 'Workflow Automation',
     desc: 'End-to-end data pipeline automation, schema harmonization queues, and event-driven trigger architectures.',
-    projectIds: ['healthbridge', 'probe360']
+    projectIds: ['healthbridge', 'probe360', 'aegis']
   },
   {
     id: 'git',
@@ -173,7 +173,7 @@ export const SKILLS = [
     category: 'automation',
     title: 'Git & GitHub',
     desc: 'Version control branch workflows, atomic commits, repository documentation, and CI/CD automation foundations.',
-    projectIds: ['probe360', 'jarvis', 'healthbridge', 'carbon']
+    projectIds: ['probe360', 'aegis', 'healthbridge', 'carbon']
   }
 ];
 
@@ -224,19 +224,19 @@ export const PROJECTS = [
     architecture: 'Aggregates heterogeneous logistics logs, energy consumption records, and supplier emissions metrics. Fits cross-validated regression models and random forests to project enterprise emissions trajectory curves with 95% uncertainty confidence intervals.'
   },
   {
-    id: 'jarvis',
+    id: 'aegis',
     number: '04',
     category: 'automation',
-    categoryLabel: 'OS Automation',
-    title: 'Jarvis Desktop Assistant',
-    themeColor: '#A855F7',
-    status: 'Prototype • Implemented',
-    statusType: 'implemented',
-    lead: 'A localized desktop assistant exploring natural-language command dispatch, local file operations, application control, and real-time hardware telemetry monitoring.',
-    implementedSpec: 'Asynchronous intent parsing for rapid application execution, hotkey triggers, and kernel hardware probe sampling via psutil.',
-    plannedSpec: 'Local quantized small language model execution with offline push-to-talk voice dispatch.',
-    skills: ['python', 'c', 'windows-admin', 'os-automation', 'scripting', 'git'],
-    architecture: 'Executes as an asynchronous Python background service with lightweight system hotkey hooks. Coordinates desktop window tiling, dispatches operating system shell primitives, and continuously samples CPU and memory states using low-overhead kernel APIs.'
+    categoryLabel: 'Cyber Digital Twin',
+    title: 'AEGIS-TWIN — Autonomous Digital Twin for Adversarial Path Simulation & Optimal Defense Orchestration',
+    themeColor: '#00F5D4',
+    status: 'Hackathon Prototype • Shortlisted',
+    statusType: 'concept',
+    lead: 'A cybersecurity digital twin developed for the VIT Vellore national-level hackathon (shortlisted for the next round). Models enterprise network assets, simulates adversarial attack paths, identifies lateral-movement risks, and prioritizes defensive actions based on risk reduction.',
+    implementedSpec: 'NetworkX directed graph topology modeling, MITRE ATT&CK technique mapping, CVSS-weighted risk scoring, and dynamic attack path simulation via FastAPI.',
+    plannedSpec: 'Real-time telemetry graph ingestion from live firewalls and reinforcement learning for automated adaptive countermeasure deployment.',
+    skills: ['python', 'networkx', 'fastapi', 'mitre-attack', 'vuln-assessment', 'git'],
+    architecture: 'Models enterprise network infrastructure as a weighted directed graph using NetworkX. Ingests vulnerability inventories (CVE/CVSS) and maps viable exploit chains against MITRE ATT&CK tactics (Initial Access → Lateral Movement → Credential Dumping). Employs graph centrality heuristics to evaluate minimum-cut defense strategies, computing optimal firewall and isolation policies that maximize risk reduction while minimizing operational downtime, followed by automated graph re-simulation. Shortlisted for the next round at the VIT Vellore national-level hackathon as an advanced proof-of-concept prototype.'
   }
 ];
 
@@ -260,13 +260,13 @@ export const INTERESTS = {
     relatedSkillIds: ['winrm', 'windows-admin', 'vuln-assessment', 'python']
   },
   automation: {
-    tag: 'DOMAIN // SYSTEMS & OS ORCHESTRATION',
-    title: 'Localized OS Automation & Task Workflows',
-    desc: 'Building event-driven Python background agents for desktop automation, hardware telemetry polling via psutil, and hotkey command dispatching.',
-    tools: 'Python • C • psutil • Windows Shell APIs • Event Loops',
-    projectId: 'jarvis',
-    projectName: 'Jarvis Desktop Assistant →',
-    relatedSkillIds: ['os-automation', 'scripting', 'windows-admin', 'c']
+    tag: 'DOMAIN // ADVERSARIAL SIMULATION & DIGITAL TWINS',
+    title: 'Autonomous Digital Twin & Risk Orchestration',
+    desc: 'Simulating multi-hop adversarial attack paths with NetworkX, identifying lateral-movement risks across enterprise assets, and orchestrating optimal defensive remediations.',
+    tools: 'Python • NetworkX • FastAPI • MITRE ATT&CK • CVSS',
+    projectId: 'aegis',
+    projectName: 'AEGIS-TWIN Digital Twin →',
+    relatedSkillIds: ['networkx', 'python', 'mitre-attack', 'fastapi']
   },
   software: {
     tag: 'DOMAIN // HIGH-THROUGHPUT BACKENDS & APIS',
