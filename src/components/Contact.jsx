@@ -31,11 +31,11 @@ export default function Contact() {
     if (!validate()) return;
 
     setIsSubmitting(true);
-    setFormStatus('Dispatching message payload...');
+    setFormStatus('Sending message...');
 
     setTimeout(() => {
       setIsSubmitting(false);
-      setFormStatus('✓ Message dispatched successfully! Thank you for reaching out.');
+      setFormStatus('✓ Message sent successfully! Thank you for reaching out.');
       setFormData({ name: '', email: '', message: '' });
       setTimeout(() => setFormStatus(''), 5000);
     }, 800);
@@ -66,7 +66,7 @@ export default function Contact() {
 
             {/* 1-Click Copy Email Card */}
             <div className="copy-email-card">
-              <span className="card-kicker">DIRECT EMAIL DISPATCH</span>
+              <span className="card-kicker">DIRECT EMAIL</span>
               <div className="email-action-row">
                 <span className="email-string" id="email-address">sahith.developer.sec@gmail.com</span>
                 <button
@@ -90,7 +90,7 @@ export default function Contact() {
                 <span>Saveetha Engineering College (Autonomous), Chennai</span>
               </div>
               <div className="social-links-row">
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="social-chip" title="Explore GitHub">
+                <a href="https://github.com/SahithM2006" target="_blank" rel="noopener noreferrer" className="social-chip" title="Explore Sahith's GitHub Profile">
                   <span>GitHub</span>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
@@ -98,7 +98,7 @@ export default function Contact() {
                     <line x1="10" y1="14" x2="21" y2="3"></line>
                   </svg>
                 </a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="social-chip" title="Connect on LinkedIn">
+                <a href="https://linkedin.com/in/sahith-m-sahith518" target="_blank" rel="noopener noreferrer" className="social-chip" title="Connect with Sahith on LinkedIn">
                   <span>LinkedIn</span>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                     <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
@@ -157,7 +157,7 @@ export default function Contact() {
                 </div>
 
                 <button type="submit" className="btn btn-primary btn-submit-full" id="btn-submit-message" disabled={isSubmitting}>
-                  <span>{isSubmitting ? 'Dispatching...' : 'Dispatch Message'}</span>
+                  <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <line x1="22" y1="2" x2="11" y2="13"></line>
                     <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>

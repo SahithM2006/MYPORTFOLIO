@@ -9,16 +9,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const projectColorMap = {
-  'prj-probe360': '#00e5ff',
-  'prj-healthbridge': '#10b981',
-  'prj-carbon': '#f59e0b',
-  'prj-aegis': '#00f5d4'
+  'prj-probe360': '#8fa89b',
+  'prj-csi-origin': '#6c8ea4',
+  'prj-carbon': '#b8a9c9',
+  'prj-aegis': '#8fa89b'
 };
 
 export function initScrollEngine() {
   const progressBar = document.getElementById('scroll-progress-bar');
-  const spineThumb = document.getElementById('scroll-spine-thumb');
-  const spineLabel = document.getElementById('scroll-spine-label');
   const auraOrbit1 = document.querySelector('.aura-orbit-1');
   const auraOrbit2 = document.querySelector('.aura-orbit-2');
 
@@ -26,6 +24,7 @@ export function initScrollEngine() {
   const aboutSec = document.getElementById('about');
   const skillsSec = document.getElementById('skills');
   const projectsSec = document.getElementById('projects');
+  const expSec = document.getElementById('experience');
   const certSec = document.getElementById('certifications');
   const resumeSec = document.getElementById('resume');
   const contactSec = document.getElementById('contact');
@@ -37,9 +36,10 @@ export function initScrollEngine() {
     about: { top: 900, height: 1000 },
     skills: { top: 2000, height: 1000 },
     projects: { top: 3100, height: 1800 },
-    certifications: { top: 5000, height: 1200 },
-    resume: { top: 6200, height: 1200 },
-    contact: { top: 7400, height: 800 },
+    experience: { top: 4400, height: 1000 },
+    certifications: { top: 5500, height: 1200 },
+    resume: { top: 6700, height: 1200 },
+    contact: { top: 7900, height: 800 },
     cards: []
   };
 
@@ -60,6 +60,7 @@ export function initScrollEngine() {
     cachedGeometry.about = getMetrics(aboutSec);
     cachedGeometry.skills = getMetrics(skillsSec);
     cachedGeometry.projects = getMetrics(projectsSec);
+    cachedGeometry.experience = getMetrics(expSec);
     cachedGeometry.certifications = getMetrics(certSec);
     cachedGeometry.resume = getMetrics(resumeSec);
     cachedGeometry.contact = getMetrics(contactSec);
@@ -73,7 +74,7 @@ export function initScrollEngine() {
         el: card,
         top,
         height: rect.height || card.offsetHeight || 1,
-        color: projectColorMap[card.id] || '#c8ff4d'
+        color: projectColorMap[card.id] || '#8fa89b'
       };
     });
   }
@@ -93,10 +94,6 @@ export function initScrollEngine() {
       progressBar.style.transform = `scaleX(${progress})`;
     }
 
-    if (spineThumb) {
-      spineThumb.style.transform = `translate(-50%, ${progress * 156}px)`;
-    }
-
     if (auraOrbit1) {
       auraOrbit1.style.transform = `rotate(${progress * 360}deg)`;
     }
@@ -111,6 +108,7 @@ export function initScrollEngine() {
     const aboutProgress = clamp01((scrollTop - cachedGeometry.about.top + winH * 0.45) / (cachedGeometry.about.height || 1));
     const skillsProgress = clamp01((scrollTop - cachedGeometry.skills.top + winH * 0.45) / (cachedGeometry.skills.height || 1));
     const projectsProgress = clamp01((scrollTop - cachedGeometry.projects.top + winH * 0.45) / (cachedGeometry.projects.height || 1));
+    const expProgress = clamp01((scrollTop - cachedGeometry.experience.top + winH * 0.45) / (cachedGeometry.experience.height || 1));
     const certProgress = clamp01((scrollTop - cachedGeometry.certifications.top + winH * 0.45) / (cachedGeometry.certifications.height || 1));
     const resumeProgress = clamp01((scrollTop - cachedGeometry.resume.top + winH * 0.45) / (cachedGeometry.resume.height || 1));
     const contactProgress = clamp01((scrollTop - cachedGeometry.contact.top + winH * 0.6) / (cachedGeometry.contact.height || 1));
@@ -121,41 +119,12 @@ export function initScrollEngine() {
     rootStyle.setProperty('--about-scroll', aboutProgress.toFixed(4));
     rootStyle.setProperty('--skills-scroll', skillsProgress.toFixed(4));
     rootStyle.setProperty('--projects-scroll', projectsProgress.toFixed(4));
+    rootStyle.setProperty('--experience-scroll', expProgress.toFixed(4));
     rootStyle.setProperty('--cert-scroll', certProgress.toFixed(4));
     rootStyle.setProperty('--resume-scroll', resumeProgress.toFixed(4));
     rootStyle.setProperty('--contact-scroll', contactProgress.toFixed(4));
 
-    // Active Chapter Badge (01 HERO -> 02 ESSAY -> 03 SKILLS -> 04 EXHIBITS -> 05 CERTS -> 06 RESUME -> 07 DISPATCH)
     const focusY = scrollTop + winH * 0.45;
-    let currentChapter = '01 HERO';
-    let chapterColor = '#c8ff4d';
-
-    if (focusY >= cachedGeometry.contact.top - 140) {
-      currentChapter = '07 DISPATCH';
-      chapterColor = '#c8ff4d';
-    } else if (focusY >= cachedGeometry.resume.top - 140) {
-      currentChapter = '06 RESUME';
-      chapterColor = '#10b981';
-    } else if (focusY >= cachedGeometry.certifications.top - 140) {
-      currentChapter = '05 CERTS';
-      chapterColor = '#f59e0b';
-    } else if (focusY >= cachedGeometry.projects.top - 120) {
-      currentChapter = '04 EXHIBITS';
-      chapterColor = lastActiveCardId ? (projectColorMap[lastActiveCardId] || '#00e5ff') : '#00e5ff';
-    } else if (focusY >= cachedGeometry.skills.top - 120) {
-      currentChapter = '03 SKILLS';
-      chapterColor = '#8157ff';
-    } else if (focusY >= cachedGeometry.about.top - 120) {
-      currentChapter = '02 ESSAY';
-      chapterColor = '#ff8a45';
-    }
-
-    if (spineLabel && currentChapter !== lastChapter) {
-      spineLabel.textContent = currentChapter;
-      spineLabel.style.color = chapterColor;
-      if (spineThumb) spineThumb.style.background = chapterColor;
-      lastChapter = currentChapter;
-    }
 
     // Active Project Spotlight Tracking in Exhibition
     if (cachedGeometry.cards.length > 0 && focusY >= cachedGeometry.projects.top - 200 && focusY <= cachedGeometry.contact.top) {
@@ -221,7 +190,7 @@ export function initScrollEngine() {
   // Section Observer for .is-in-view transitions
   let motionObserver = null;
   const observedElements = document.querySelectorAll(
-    '.about-section, .skills-section, .projects-section, .certifications-section, .resume-section, .contact-section, .project-card, .project-narrative-entry'
+    '.about-section, .skills-section, .projects-section, .experience-section, .certifications-section, .resume-section, .contact-section, .project-card, .project-narrative-entry'
   );
 
   if ('IntersectionObserver' in window && observedElements.length) {
@@ -245,7 +214,7 @@ export function initScrollEngine() {
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!prefersReduced) {
     const headlines = document.querySelectorAll(
-      '.skills-title, .projects-title, .contact-headline'
+      '.skills-title, .projects-title, .experience-title, .contact-headline'
     );
     headlines.forEach((title) => {
       gsap.fromTo(

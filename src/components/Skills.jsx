@@ -3,7 +3,7 @@ import { SKILLS, SKILL_CATEGORIES } from '../data-store.js';
 
 const PROJECT_MAP = {
   probe360: { name: 'Probe360 Agentless Security', id: 'prj-probe360' },
-  healthbridge: { name: 'Healthbridge EHR Interoperability', id: 'prj-healthbridge' },
+  'csi-origin': { name: 'CSI Origin — HELM Agent', id: 'prj-csi-origin' },
   carbon: { name: 'AI Carbon Intelligence', id: 'prj-carbon' },
   aegis: { name: 'AEGIS-TWIN Cyber Digital Twin', id: 'prj-aegis' }
 };
@@ -221,7 +221,7 @@ export default function Skills({
             <div className="context-drawer-inner">
               <div className="drawer-header">
                 <span className="drawer-tag" id="drawer-cat-name">
-                  {selectedSkill.category.toUpperCase()} &bull; {selectedSkill.symbol} [{selectedSkill.number}]
+                  {selectedSkill.category.toUpperCase()} &bull; {selectedSkill.symbol}
                 </span>
                 <h4 className="drawer-skill-title" id="drawer-skill-name">{selectedSkill.title}</h4>
               </div>

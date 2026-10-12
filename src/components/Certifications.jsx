@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { CERTIFICATIONS } from '../data-store.js';
 
 export default function Certifications() {
@@ -6,6 +6,16 @@ export default function Certifications() {
   const [searchQuery, setSearchQuery] = useState('');
   const [previewCert, setPreviewCert] = useState(null);
   const [copiedId, setCopiedId] = useState(null);
+
+  // Close modal on Escape key
+  useEffect(() => {
+    if (!previewCert) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setPreviewCert(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [previewCert]);
 
   const categories = [
     { id: 'all', label: 'All Certifications', count: CERTIFICATIONS.length },
@@ -208,9 +218,9 @@ export default function Certifications() {
                           href={cert.fileUrl}
                           download
                           className="cert-link-action download-link"
-                          title="Download certificate PDF"
+                          title={cert.fileUrl.endsWith('.png') ? 'Download certificate Image' : 'Download certificate PDF'}
                         >
-                          <span>Download PDF</span>
+                          <span>{cert.fileUrl.endsWith('.png') ? 'Download Image' : 'Download PDF'}</span>
                           <span className="cert-link-arrow">↓</span>
                         </a>
                       )}

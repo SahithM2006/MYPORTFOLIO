@@ -10,7 +10,6 @@ const KINETIC_WORDS = ['THINK', 'ADAPT', 'DISCOVER', 'PROTECT', 'ORCHESTRATE'];
 export default function Hero() {
   const [wordIdx, setWordIdx] = useState(0);
   const [isWordTransitioning, setIsWordTransitioning] = useState(false);
-  const [isEasterEggOpen, setIsEasterEggOpen] = useState(false);
   const headlineRef = useRef(null);
   const heroContainerRef = useRef(null);
 
@@ -108,15 +107,6 @@ export default function Hero() {
               <span className="badge-dot" aria-hidden="true"></span>
               <span>CREATIVE TECHNOLOGIST &bull; CHENNAI, IN</span>
             </div>
-            <button
-              className="easter-egg-badge"
-              id="easter-egg-trigger"
-              title="Inspect system protocol"
-              type="button"
-              onClick={() => setIsEasterEggOpen(true)}
-            >
-              <span>✦ 64-FRAME GAZE ACTIVE</span>
-            </button>
           </div>
 
           <h1 className="hero-headline" id="hero-headline" ref={headlineRef}>
@@ -177,35 +167,6 @@ export default function Hero() {
           <div className="flow-stem"></div>
         </div>
       </div>
-
-      {/* Easter Egg Modal */}
-      {isEasterEggOpen && (
-        <div className="easter-egg-modal visible" id="easter-egg-modal" role="dialog" aria-modal="true" aria-labelledby="egg-title">
-          <div className="easter-egg-content">
-            <div className="egg-header">
-              <span className="egg-icon">👾</span>
-              <h3 className="egg-title" id="egg-title">Creative Technologist Protocol</h3>
-              <button
-                className="egg-close-btn"
-                id="easter-egg-close"
-                aria-label="Close dialog"
-                type="button"
-                onClick={() => setIsEasterEggOpen(false)}
-              >
-                &times;
-              </button>
-            </div>
-            <p className="egg-body">
-              You found the hidden telemetry node! This portfolio runs with <strong>0 persistent background daemons</strong>, full client-side execution, a <strong>64-frame 360° gaze renderer</strong>, and interactive labs built with pure HTML5 Canvas and SVG.
-            </p>
-            <div className="egg-status-strip">
-              <span>Status: 100% Curious</span>
-              <span>Memory: Zero Leak</span>
-              <span>Mode: Experimental</span>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }

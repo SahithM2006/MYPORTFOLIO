@@ -5,7 +5,7 @@ export default function Playground() {
   const [activeLab, setActiveLab] = useState('lab-colour');
 
   // LAB 1: Colour Lab state
-  const [activePaletteId, setActivePaletteId] = useState('aubergine-lime');
+  const [activePaletteId, setActivePaletteId] = useState('aubergine-sage');
 
   // LAB 2: Data Playground state
   const [sampleN, setSampleN] = useState(40);
@@ -36,7 +36,7 @@ export default function Playground() {
   };
 
   const resetPalette = () => {
-    handlePaletteChange('aubergine-lime');
+    handlePaletteChange('aubergine-sage');
   };
 
   // Lab 2 Data calculation
@@ -84,19 +84,19 @@ export default function Playground() {
     canvas.width = w;
     canvas.height = h;
 
-    ctx.fillStyle = '#160b1f';
+    ctx.fillStyle = '#140C1C';
     ctx.fillRect(0, 0, w, h);
 
     // Draw base graphic
-    ctx.fillStyle = '#c8ff4d';
+    ctx.fillStyle = '#8FA89B';
     ctx.beginPath();
     ctx.arc(w * 0.5, h * 0.5, 60, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.fillStyle = '#8157ff';
+    ctx.fillStyle = '#B8A9C9';
     ctx.fillRect(w * 0.25, h * 0.25, 70, 70);
 
-    ctx.fillStyle = '#ff8a45';
+    ctx.fillStyle = '#6C8EA4';
     ctx.fillRect(w * 0.55, h * 0.45, 65, 65);
 
     try {
@@ -143,7 +143,7 @@ export default function Playground() {
     canvas.width = w;
     canvas.height = h;
 
-    ctx.fillStyle = '#160b1f';
+    ctx.fillStyle = '#140C1C';
     ctx.fillRect(0, 0, w, h);
 
     const cx = w / 2;
@@ -167,7 +167,7 @@ export default function Playground() {
       }
       ctx.closePath();
 
-      ctx.strokeStyle = ring % 2 === 0 ? '#c8ff4d' : '#8157ff';
+      ctx.strokeStyle = ring % 2 === 0 ? '#8FA89B' : '#B8A9C9';
       ctx.lineWidth = 1.2;
       ctx.stroke();
     }
@@ -328,7 +328,7 @@ export default function Playground() {
                     <svg id="data-playground-svg" className="data-playground-svg" viewBox="0 0 560 240">
                       <path d={pathD} fill="none" stroke="var(--color-lime)" strokeWidth="2.5" />
                       {dataPoints.map((p, idx) => (
-                        <circle key={idx} cx={p.x} cy={p.y} r="3.5" fill="var(--color-violet)" stroke="#fff" strokeWidth="1" />
+                        <circle key={idx} cx={p.x} cy={p.y} r="3.5" fill="var(--color-violet)" stroke="rgba(184, 169, 201, 0.4)" strokeWidth="1" />
                       ))}
                     </svg>
                     <div className="data-metrics-row">

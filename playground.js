@@ -545,8 +545,8 @@ function initProjectExhibits() {
   // EXHIBIT 1: Probe360 WinRM Telemetry Inspector
   initProbe360Exhibit();
 
-  // EXHIBIT 2: Healthbridge FHIR Transformation Sequence
-  initHealthbridgeExhibit();
+  // EXHIBIT 2: CSI Origin Working-Capital Agent Exhibit
+  initCsiOriginExhibit();
 
   // EXHIBIT 3: AI Carbon Intelligence Scenario Forecaster
   initCarbonExhibit();
@@ -611,55 +611,29 @@ function initProbe360Exhibit() {
 }
 
 /**
- * Exhibit 2: Healthbridge FHIR Transformation Sequence
+ * Exhibit 2: CSI Origin Working-Capital Agent Exhibit
  */
-function initHealthbridgeExhibit() {
-  const steps = document.querySelectorAll('.fhir-step-btn');
-  const codeView = document.getElementById('fhir-pipeline-code');
+function initCsiOriginExhibit() {
+  const steps = document.querySelectorAll('.csi-step-btn');
+  const codeView = document.getElementById('csi-pipeline-code');
   if (!codeView) return;
 
   const PIPELINE_STEPS = {
-    raw: `// STAGE 1: RAW LEGACY HOSPITAL JSON (Ingestion Buffer)
-{
-  "hospital_code": "SEC_HOSP_08",
-  "patient_ref": "PT-94821",
-  "pt_full_name": "Arun Kumar",
-  "dob": "1994-06-12",
-  "diagnosis_code": "E11.9",
-  "coverage_policy": "NHCX-POL-7718"
-}`,
+    forecast: `// [STAGE 1: 90-DAY VECTORIZED MONTE CARLO CASH FORECAST]
+[*] Horizon: 90 Days | 10,000 Iterations | Deployable Cash: ₹18,50,000
+[+] Quantiles: P10: ₹14.20L | P50: ₹22.80L | P90: ₹31.40L
+[!] Binding Day: Sim Day 42 (Quarterly tax & vendor wave)`,
 
-    pydantic: `// STAGE 2: STRICT PYDANTIC MODEL NORMALIZATION
-class ClinicalClaimPayload(BaseModel):
-    hospital_id: constr(regex=r"^SEC_HOSP_\\d{2}$")
-    patient_uuid: UUID4
-    diagnosis_icd10: str = Field(..., regex=r"^[A-Z]\\d{2}(\\.\\d+)?$")
-    nhcx_policy: str
-    timestamp_utc: datetime = Field(default_factory=datetime.utcnow)
+    optimizer: `// [STAGE 2: SCENARIO MILP OPTIMIZER (PuLP/CBC)]
+[*] Open Invoices: 3 Claims | Solved in 142ms via CBC
+[+] INV-2041: PAY_EARLY_DISCOUNT (+₹21,000 discount captured)
+[+] INV-2042: HOLD (Preserve buffer until RCV-0004 settles)
+[+] INV-2043: FINANCE_SUPPLIER (Overdraft Line draw)`,
 
-# [✓] Validation Result: SUCCESS (0 Schema Violations)`,
-
-    fhir: `// STAGE 3: HL7 FHIR R4 & NHCX COMPLIANT BUNDLE
-{
-  "resourceType": "Bundle",
-  "type": "collection",
-  "entry": [
-    {
-      "resource": {
-        "resourceType": "Patient",
-        "id": "e4a2d8e1-9f22",
-        "name": [{ "family": "Kumar", "given": ["Arun"] }],
-        "birthDate": "1994-06-12"
-      }
-    },
-    {
-      "resource": {
-        "resourceType": "Condition",
-        "code": { "coding": [{ "system": "http://hl7.org/fhir/sid/icd-10", "code": "E11.9" }] }
-      }
-    }
-  ]
-}`
+    shock: `// [STAGE 3: CHAOS SHOCK INJECTION & RE-OPTIMIZATION]
+[!] EVENT: GST Emergency Demand ₹9,00,000 in 5 days
+[⟳] Re-solve triggered in 118ms → Deployable cash: ₹9,50,000
+[!] ACTION FLIP: INV-2041 flipped from DISCOUNT to HOLD to protect tax floor.`
   };
 
   steps.forEach((step) => {
@@ -667,8 +641,8 @@ class ClinicalClaimPayload(BaseModel):
       steps.forEach((s) => s.classList.remove('active'));
       step.classList.add('active');
 
-      const stage = step.getAttribute('data-stage') || 'raw';
-      codeView.textContent = PIPELINE_STEPS[stage] || PIPELINE_STEPS.raw;
+      const stage = step.getAttribute('data-stage') || 'forecast';
+      codeView.textContent = PIPELINE_STEPS[stage] || PIPELINE_STEPS.forecast;
     });
   });
 }
@@ -1311,7 +1285,7 @@ function initMotionDesign() {
 
   const projectColorMap = {
     'prj-probe360': '#00e5ff',
-    'prj-healthbridge': '#10b981',
+    'prj-csi-origin': '#2dd4a7',
     'prj-carbon': '#f59e0b',
     'prj-aegis': '#00f5d4',
     'prj-dip': '#ec4899'

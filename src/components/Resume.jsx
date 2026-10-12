@@ -1,9 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RESUME_DATA } from '../data-store.js';
 
 export default function Resume() {
   const [showPdfModal, setShowPdfModal] = useState(false);
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'pdf'
+
+  // Close modal on Escape key
+  useEffect(() => {
+    if (!showPdfModal) return;
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') setShowPdfModal(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [showPdfModal]);
 
   return (
     <section className="resume-section" id="resume" aria-labelledby="resume-title">

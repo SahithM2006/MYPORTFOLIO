@@ -18,7 +18,7 @@ const SKILL_DETAILS = {
     desc: 'Primary language for high-throughput backend services, remote systems telemetry collection via WinRM, automated OS interaction, and Scikit-learn/OpenCV scientific pipelines.',
     projects: [
       { name: 'Probe360', id: 'prj-probe360' },
-      { name: 'Healthbridge EHR', id: 'prj-healthbridge' },
+      { name: 'CSI Origin', id: 'prj-csi-origin' },
       { name: 'AI Carbon Intelligence', id: 'prj-carbon' },
       { name: 'AEGIS-TWIN Digital Twin', id: 'prj-aegis' },
       { name: 'DIP Experiments', id: 'prj-dip' }
@@ -38,8 +38,7 @@ const SKILL_DETAILS = {
     title: 'Pandas',
     desc: 'Data wrangling engine for cleaning high-dimensional time-series emissions data, evaluating feature correlations, and transforming clinical record matrices.',
     projects: [
-      { name: 'AI Carbon Intelligence', id: 'prj-carbon' },
-      { name: 'Healthbridge EHR', id: 'prj-healthbridge' }
+      { name: 'AI Carbon Intelligence', id: 'prj-carbon' }
     ]
   },
   'matplotlib': {
@@ -76,9 +75,9 @@ const SKILL_DETAILS = {
   'sql': {
     category: 'PROGRAMMING &bull; RELATIONAL DATABASES',
     title: 'SQL',
-    desc: 'Declarative queries, relational schema design, indexing strategies, and transactional data integrity for clinical and enterprise record storage.',
+    desc: 'Declarative queries, relational schema design, indexing strategies, and transactional data integrity across Postgres financial ledgers and system stores.',
     projects: [
-      { name: 'Healthbridge EHR', id: 'prj-healthbridge' }
+      { name: 'CSI Origin', id: 'prj-csi-origin' }
     ]
   },
   'fastapi': {
@@ -86,7 +85,7 @@ const SKILL_DETAILS = {
     title: 'FastAPI',
     desc: 'High-throughput asynchronous Python web framework providing typed REST endpoints and automatic OpenAPI documentation.',
     projects: [
-      { name: 'Healthbridge EHR', id: 'prj-healthbridge' }
+      { name: 'CSI Origin', id: 'prj-csi-origin' }
     ]
   },
   'rest-apis': {
@@ -94,15 +93,15 @@ const SKILL_DETAILS = {
     title: 'REST APIs',
     desc: 'Stateless HTTP service design, structured error payloads, JSON serialization, and status code discipline.',
     projects: [
-      { name: 'Healthbridge EHR', id: 'prj-healthbridge' }
+      { name: 'CSI Origin', id: 'prj-csi-origin' }
     ]
   },
   'pydantic': {
     category: 'BACKEND &bull; SCHEMA VALIDATION',
     title: 'Pydantic',
-    desc: 'Strict runtime data validation and serialization ensuring clinical records conform to HL7 FHIR specifications.',
+    desc: 'Strict runtime data validation, frozen Pydantic contracts, and serialization boundaries between autonomous optimization engines and APIs.',
     projects: [
-      { name: 'Healthbridge EHR', id: 'prj-healthbridge' }
+      { name: 'CSI Origin', id: 'prj-csi-origin' }
     ]
   },
   'winrm': {
@@ -149,7 +148,7 @@ const SKILL_DETAILS = {
     title: 'Workflow Automation',
     desc: 'End-to-end data pipeline automation, schema harmonization queues, and event-driven trigger architectures.',
     projects: [
-      { name: 'Healthbridge EHR', id: 'prj-healthbridge' },
+      { name: 'CSI Origin', id: 'prj-csi-origin' },
       { name: 'Probe360', id: 'prj-probe360' }
     ]
   }
@@ -182,12 +181,12 @@ const INTEREST_DATA = {
     projectId: '#prj-aegis'
   },
   'software': {
-    tag: 'DOMAIN // HIGH-THROUGHPUT BACKENDS &amp; APIS',
-    title: 'Interoperability Gateways & Microservices',
-    desc: 'Designing asynchronous FastAPI microservices with strict Pydantic runtime schema validation conforming to HL7 FHIR standards and NHCX protocols.',
-    tools: 'FastAPI &bull; Pydantic &bull; PostgreSQL &bull; HL7 FHIR',
-    projectText: 'Healthbridge EHR &rarr;',
-    projectId: '#prj-healthbridge'
+    tag: 'DOMAIN // AUTONOMOUS AGENTS &amp; TREASURY OPTIMIZATION',
+    title: 'Constrained Optimization & Decision Systems',
+    desc: 'Engineering autonomous decision systems pairing 90-day Monte Carlo cash simulations with scenario MILP optimization and numerically grounded plain-English explanations.',
+    tools: 'Python &bull; FastAPI &bull; PuLP (MILP) &bull; NumPy',
+    projectText: 'CSI Origin Treasury Agent &rarr;',
+    projectId: '#prj-csi-origin'
   }
 };
 

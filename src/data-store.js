@@ -5,11 +5,11 @@
 
 export const SKILL_CATEGORIES = [
   { id: 'all', label: 'All Disciplines', count: 18 },
-  { id: 'ai', label: 'AI & Data Science', count: 6, color: '#C8FF4D' },
-  { id: 'programming', label: 'Programming', count: 2, color: '#FF8A45' },
-  { id: 'backend', label: 'Backend Development', count: 3, color: '#38BDF8' },
-  { id: 'security', label: 'Security & Systems', count: 4, color: '#10B981' },
-  { id: 'automation', label: 'Automation & Graphs', count: 3, color: '#8157FF' }
+  { id: 'ai', label: 'AI & Data Science', count: 6, color: '#8fa89b' },
+  { id: 'programming', label: 'Programming', count: 2, color: '#b8a9c9' },
+  { id: 'backend', label: 'Backend Development', count: 3, color: '#6c8ea4' },
+  { id: 'security', label: 'Security & Systems', count: 4, color: '#8fa89b' },
+  { id: 'automation', label: 'Automation & Graphs', count: 3, color: '#b8a9c9' }
 ];
 
 export const SKILLS = [
@@ -20,7 +20,7 @@ export const SKILLS = [
     category: 'ai',
     title: 'Python',
     desc: 'Primary language for high-throughput backend services, remote telemetry collection via WinRM, automated OS interaction, and Scikit-learn/OpenCV scientific pipelines.',
-    projectIds: ['probe360', 'healthbridge', 'carbon', 'aegis']
+    projectIds: ['probe360', 'csi-origin', 'carbon', 'aegis']
   },
   {
     id: 'numpy',
@@ -29,7 +29,7 @@ export const SKILLS = [
     category: 'ai',
     title: 'NumPy',
     desc: 'High-performance N-dimensional array processing powering pixel matrix convolutions, Fourier frequency transforms, and mathematical vector calculations.',
-    projectIds: ['carbon']
+    projectIds: ['carbon', 'csi-origin']
   },
   {
     id: 'pandas',
@@ -37,8 +37,8 @@ export const SKILLS = [
     number: '03',
     category: 'ai',
     title: 'Pandas',
-    desc: 'Data wrangling engine for cleaning high-dimensional time-series emissions data, evaluating feature correlations, and transforming clinical record matrices.',
-    projectIds: ['carbon', 'healthbridge']
+    desc: 'Data wrangling engine for cleaning high-dimensional time-series emissions data, evaluating feature correlations, and structuring statistical datasets.',
+    projectIds: ['carbon']
   },
   {
     id: 'matplotlib',
@@ -82,8 +82,8 @@ export const SKILLS = [
     number: '08',
     category: 'programming',
     title: 'SQL',
-    desc: 'Declarative queries, relational schema design, indexing strategies, and transactional data integrity for clinical and enterprise record storage.',
-    projectIds: ['healthbridge']
+    desc: 'Declarative queries, relational schema design, indexing strategies, and transactional data integrity across Postgres financial ledgers and system stores.',
+    projectIds: ['csi-origin']
   },
   {
     id: 'fastapi',
@@ -92,7 +92,7 @@ export const SKILLS = [
     category: 'backend',
     title: 'FastAPI',
     desc: 'High-throughput asynchronous Python web framework providing typed REST endpoints and automatic OpenAPI documentation.',
-    projectIds: ['healthbridge', 'aegis']
+    projectIds: ['csi-origin', 'aegis']
   },
   {
     id: 'rest-apis',
@@ -101,7 +101,7 @@ export const SKILLS = [
     category: 'backend',
     title: 'REST APIs',
     desc: 'Stateless HTTP service design, structured error payloads, JSON serialization, and status code discipline.',
-    projectIds: ['healthbridge', 'aegis']
+    projectIds: ['csi-origin', 'aegis']
   },
   {
     id: 'pydantic',
@@ -109,8 +109,8 @@ export const SKILLS = [
     number: '11',
     category: 'backend',
     title: 'Pydantic',
-    desc: 'Strict runtime data validation and serialization ensuring clinical records conform to HL7 FHIR specifications.',
-    projectIds: ['healthbridge']
+    desc: 'Strict runtime data validation, frozen Pydantic contracts, and serialization boundaries between autonomous optimization engines and APIs.',
+    projectIds: ['csi-origin']
   },
   {
     id: 'winrm',
@@ -164,7 +164,7 @@ export const SKILLS = [
     category: 'automation',
     title: 'Workflow Automation',
     desc: 'End-to-end data pipeline automation, schema harmonization queues, and event-driven trigger architectures.',
-    projectIds: ['healthbridge', 'probe360', 'aegis']
+    projectIds: ['csi-origin', 'probe360', 'aegis']
   },
   {
     id: 'git',
@@ -173,7 +173,7 @@ export const SKILLS = [
     category: 'automation',
     title: 'Git & GitHub',
     desc: 'Version control branch workflows, atomic commits, repository documentation, and CI/CD automation foundations.',
-    projectIds: ['probe360', 'aegis', 'healthbridge', 'carbon']
+    projectIds: ['probe360', 'aegis', 'csi-origin', 'carbon']
   }
 ];
 
@@ -184,7 +184,7 @@ export const PROJECTS = [
     category: 'security',
     categoryLabel: 'Cybersecurity Platform',
     title: 'Probe360 — Agentless Security Platform',
-    themeColor: '#10B981',
+    themeColor: '#8fa89b',
     status: 'Prototype • Implemented',
     statusType: 'implemented',
     lead: 'Agentless Windows asset discovery, remote credential verification, software inventorying, and vulnerability-baseline checks designed to eliminate persistent daemon footprint vulnerabilities on endpoints.',
@@ -194,19 +194,19 @@ export const PROJECTS = [
     architecture: 'Probe360 coordinates credentialed, TLS-encrypted WinRM sessions into target Windows endpoints without deploying intrusive binary daemons. It queries CIM/WMI classes for installed MSI packages, checks registry run-keys for insecure binary paths, audits service permission DACLs, and maps findings to national vulnerability databases.'
   },
   {
-    id: 'healthbridge',
+    id: 'csi-origin',
     number: '02',
     category: 'backend',
-    categoryLabel: 'Healthcare Interoperability',
-    title: 'Healthbridge EHR',
-    themeColor: '#38BDF8',
-    status: 'Architecture Concept',
+    categoryLabel: 'Autonomous Treasury Agent',
+    title: 'CSI Origin — HELM: Autonomous Working-Capital Management Agent',
+    themeColor: '#6c8ea4',
+    status: 'Hackathon Prototype • CSI ORIGIN 2026',
     statusType: 'concept',
-    lead: 'Healthcare interoperability and schema transformation architecture aligning fragmented hospital electronic records with HL7 FHIR standards and India\'s NHCX-aligned workflows.',
-    implementedSpec: 'Standards Harmonization converting unstructured clinical payloads into FHIR R4 Patient and Claim bundles with strict Pydantic runtime validation.',
-    plannedSpec: 'Direct ABDM health repository connector and zero-knowledge claim verification audit trail.',
-    skills: ['fastapi', 'rest-apis', 'pydantic', 'sql', 'workflow-automation', 'git'],
-    architecture: 'Acts as a high-integrity transformation buffer between hospital management systems and regulatory clearinghouses. Ingestion endpoints parse legacy schemas into strictly validated Pydantic models, convert them to standard FHIR R4 JSON-LD representations, and prepare signed packages for the National Health Claims Exchange (NHCX).'
+    lead: 'Autonomous treasury agent engineered for CSI ORIGIN 2026 (Problem Statement 4, Team XYRUS). Replaces static corporate payment rules with 90-day Monte Carlo cash forecasting, scenario-constrained MILP optimization, and numerically grounded plain-English decision narratives.',
+    implementedSpec: 'NumPy vectorized 90-day Monte Carlo cash simulation (P10/P50/P90 quantile forecasting), scenario MILP optimizer (PuLP/CBC with a 2-second greedy fallback), and deterministic plain-English decision explainer with numeric grounding checks.',
+    plannedSpec: 'Real-time ERP ledger event streaming via WebSockets and automated multi-bank line credit facility orchestration.',
+    skills: ['python', 'fastapi', 'numpy', 'pydantic', 'sql', 'git'],
+    architecture: 'HELM is engineered as a pure-function decision engine over State rather than a passive BI dashboard. For every daily state, it computes deployable_cash via 90-day Monte Carlo cash-flow simulations over receivable delays, financing costs, and obligations. A scenario Mixed-Integer Linear Program (MILP via PuLP/CBC with a 2s greedy fallback) evaluates every open invoice (PAY_EARLY_DISCOUNT, HOLD, FINANCE_SUPPLIER), capturing discounts while maintaining mandatory liquidity safety floors. The decision object is narrated in plain English by an explainer verified against strict numeric grounding to prevent hallucinations, while a Chaos Shock panel simulates real-time GST notices and supplier distress.'
   },
   {
     id: 'carbon',
@@ -214,7 +214,7 @@ export const PROJECTS = [
     category: 'ai',
     categoryLabel: 'Sustainability Analytics',
     title: 'AI Carbon Intelligence',
-    themeColor: '#C8FF4D',
+    themeColor: '#b8a9c9',
     status: 'Research Concept',
     statusType: 'concept',
     lead: 'A sustainability-focused concept for analysing industrial supply-chain emissions, pinpointing operational carbon hotspots, and evaluating cost-optimal mitigation pathways.',
@@ -229,7 +229,7 @@ export const PROJECTS = [
     category: 'automation',
     categoryLabel: 'Cyber Digital Twin',
     title: 'AEGIS-TWIN — Autonomous Digital Twin for Adversarial Path Simulation & Optimal Defense Orchestration',
-    themeColor: '#00F5D4',
+    themeColor: '#8fa89b',
     status: 'Hackathon Prototype • Shortlisted',
     statusType: 'concept',
     lead: 'A cybersecurity digital twin developed for the VIT Vellore national-level hackathon (shortlisted for the next round). Models enterprise network assets, simulates adversarial attack paths, identifies lateral-movement risks, and prioritizes defensive actions based on risk reduction.',
@@ -242,7 +242,7 @@ export const PROJECTS = [
 
 export const INTERESTS = {
   ai: {
-    tag: 'DOMAIN // MACHINE LEARNING & MODELS',
+    tag: 'Machine Learning & Models',
     title: 'Predictive Intelligence & Vision Pipelines',
     desc: 'Developing multivariate regression algorithms for supply-chain forecasting, multidimensional array operations with NumPy/Pandas, and mathematical spatial convolutions with OpenCV.',
     tools: 'Python • Scikit-learn • OpenCV • Pandas • NumPy',
@@ -251,7 +251,7 @@ export const INTERESTS = {
     relatedSkillIds: ['python', 'numpy', 'pandas', 'scikit-learn', 'opencv']
   },
   security: {
-    tag: 'DOMAIN // AGENTLESS TELEMETRY & AUDITING',
+    tag: 'Agentless Security & Auditing',
     title: 'Remote Vulnerability & Asset Discovery',
     desc: 'Executing credentialed discovery over WinRM, auditing Windows registries, and mapping installed packages to national vulnerability baselines without installing client daemons.',
     tools: 'WinRM • Python • Windows Administration • CVE DBs',
@@ -260,7 +260,7 @@ export const INTERESTS = {
     relatedSkillIds: ['winrm', 'windows-admin', 'vuln-assessment', 'python']
   },
   automation: {
-    tag: 'DOMAIN // ADVERSARIAL SIMULATION & DIGITAL TWINS',
+    tag: 'Adversarial Simulation & Digital Twins',
     title: 'Autonomous Digital Twin & Risk Orchestration',
     desc: 'Simulating multi-hop adversarial attack paths with NetworkX, identifying lateral-movement risks across enterprise assets, and orchestrating optimal defensive remediations.',
     tools: 'Python • NetworkX • FastAPI • MITRE ATT&CK • CVSS',
@@ -269,13 +269,13 @@ export const INTERESTS = {
     relatedSkillIds: ['networkx', 'python', 'mitre-attack', 'fastapi']
   },
   software: {
-    tag: 'DOMAIN // HIGH-THROUGHPUT BACKENDS & APIS',
-    title: 'Interoperability Gateways & Microservices',
-    desc: 'Designing asynchronous FastAPI microservices with strict Pydantic runtime schema validation conforming to HL7 FHIR standards and NHCX protocols.',
-    tools: 'FastAPI • Pydantic • SQL • HL7 FHIR • REST APIs',
-    projectId: 'healthbridge',
-    projectName: 'Healthbridge EHR →',
-    relatedSkillIds: ['fastapi', 'rest-apis', 'pydantic', 'sql']
+    tag: 'Optimization & Decision Systems',
+    title: 'Constrained Optimization & Decision Systems',
+    desc: 'Engineering autonomous decision systems pairing 90-day Monte Carlo cash simulations with scenario MILP optimization and numerically grounded plain-English explanations.',
+    tools: 'Python • FastAPI • PuLP (MILP) • NumPy • PostgreSQL',
+    projectId: 'csi-origin',
+    projectName: 'CSI Origin Treasury Agent →',
+    relatedSkillIds: ['python', 'fastapi', 'numpy', 'pydantic', 'sql']
   }
 };
 
@@ -303,52 +303,52 @@ export const TIMELINE_MILESTONES = [
   },
   {
     step: '04',
-    period: 'INTEROPERABILITY',
-    title: 'Typed Microservices & Clinical Standards',
-    desc: 'Architected async FastAPI pipelines with strict Pydantic models converting heterogeneous payloads to HL7 FHIR and NHCX specs.',
-    tag: 'Software Engineering'
+    period: 'OPTIMIZATION & AGENTS',
+    title: 'Autonomous Decision Systems & MILP',
+    desc: 'Engineered autonomous agents combining 90-day Monte Carlo cash forecasts with scenario-constrained MILP optimization and plain-English narratives.',
+    tag: 'Autonomous Systems'
   }
 ];
 
 export const PALETTES = [
   {
-    id: 'aubergine-lime',
-    name: 'Aubergine & Lime (Original)',
+    id: 'aubergine-sage',
+    name: 'Aubergine & Soft Sage (Default)',
     colors: {
-      '--color-lime': '#C8FF4D',
-      '--color-violet': '#8157FF',
-      '--color-tangerine': '#FF8A45',
-      '--color-aubergine-border-hover': 'rgba(200, 255, 77, 0.4)'
+      '--color-lime': '#8FA89B',
+      '--color-violet': '#B8A9C9',
+      '--color-tangerine': '#6C8EA4',
+      '--color-aubergine-border-hover': 'rgba(143, 168, 155, 0.4)'
     }
   },
   {
-    id: 'cyberpunk-cyan',
-    name: 'Cyberpunk Midnight & Cyan',
+    id: 'aubergine-lavender',
+    name: 'Aubergine & Muted Lavender',
     colors: {
-      '--color-lime': '#00F5D4',
-      '--color-violet': '#7B2CBF',
-      '--color-tangerine': '#F72585',
-      '--color-aubergine-border-hover': 'rgba(0, 245, 212, 0.45)'
+      '--color-lime': '#B8A9C9',
+      '--color-violet': '#6C8EA4',
+      '--color-tangerine': '#8FA89B',
+      '--color-aubergine-border-hover': 'rgba(184, 169, 201, 0.4)'
     }
   },
   {
-    id: 'editorial-coral',
-    name: 'Warm Plum & Sunset Coral',
+    id: 'aubergine-dusty-blue',
+    name: 'Aubergine & Dusty Blue',
     colors: {
-      '--color-lime': '#FF6B6B',
-      '--color-violet': '#9D4EDD',
-      '--color-tangerine': '#FFD166',
-      '--color-aubergine-border-hover': 'rgba(255, 107, 107, 0.45)'
+      '--color-lime': '#6C8EA4',
+      '--color-violet': '#B8A9C9',
+      '--color-tangerine': '#8FA89B',
+      '--color-aubergine-border-hover': 'rgba(108, 142, 164, 0.4)'
     }
   },
   {
-    id: 'bio-emerald',
-    name: 'Deep Forest & Bio-Emerald',
+    id: 'aubergine-plum',
+    name: 'Aubergine & Restrained Plum',
     colors: {
-      '--color-lime': '#10B981',
-      '--color-violet': '#6366F1',
-      '--color-tangerine': '#F59E0B',
-      '--color-aubergine-border-hover': 'rgba(16, 185, 129, 0.45)'
+      '--color-lime': '#8FA89B',
+      '--color-violet': '#B37583',
+      '--color-tangerine': '#6C8EA4',
+      '--color-aubergine-border-hover': 'rgba(179, 117, 131, 0.4)'
     }
   }
 ];
@@ -520,12 +520,12 @@ export const RESUME_DATA = {
       ]
     },
     {
-      title: 'HealthBridge AI — Healthcare Data Interoperability Platform',
-      domain: 'Healthcare AI • Data Interoperability • Prototype',
+      title: 'CSI Origin (HELM) — Autonomous Working-Capital Management Agent',
+      domain: 'Autonomous Decision Systems • Optimization • Hackathon Prototype',
       points: [
-        'Developed a prototype interoperability platform for transforming and validating heterogeneous clinical data.',
-        'Applied FHIR-aligned structures and structured validation to support standardized healthcare data exchange.',
-        'Designed AI-assisted processing workflows to improve interoperability between healthcare systems.'
+        'Engineered an autonomous agent replacing static corporate treasury rules with 90-day Monte Carlo liquidity forecasts and scenario MILP optimization.',
+        'Formulated multi-scenario invoice action optimization (discounts vs. holding vs. financing) using PuLP/CBC with guaranteed 2-second fallback algorithms.',
+        'Designed an explainability pipeline with numeric grounding verification to narrate payment decisions and shock responses in plain English without hallucination.'
       ]
     },
     {
@@ -571,6 +571,47 @@ export const RESUME_DATA = {
     'IoT',
     'Cybersecurity'
   ]
+};
+
+/**
+ * Professional Experience Data Store
+ * Structured vertical timeline schema for industry positions, internships, and research tenures.
+ * Use only verified details; populate as real positions are confirmed.
+ *
+ * Example item schema:
+ * {
+ *   id: 'exp-1',
+ *   role: 'AI / ML Engineering Intern',
+ *   organization: 'Company or Lab Name',
+ *   employmentType: 'Internship', // 'Full-time' | 'Part-time' | 'Internship' | 'Contract' | 'Research'
+ *   location: 'Chennai, India / Remote',
+ *   period: 'Jun 2025 – Aug 2025',
+ *   duration: '3 mos',
+ *   responsibilities: [
+ *     'Engineered high-throughput machine learning inference pipelines...',
+ *     'Implemented FastAPI microservices with strict schema validation...'
+ *   ],
+ *   skills: ['Python', 'FastAPI', 'PyTorch']
+ * }
+ */
+export const EXPERIENCES = [];
+
+export const CAREER_STATUS = {
+  standing: 'B.Tech in Artificial Intelligence & Data Science (3rd Year)',
+  institution: 'Saveetha Engineering College (Autonomous), Chennai',
+  academicPeriod: '2024 – 2028',
+  statusBadge: 'Pre-Professional • In Progress',
+  cgpa: '7.5 / 10',
+  currentFocus: 'Applied Deep Learning, Remote Systems Telemetry & Distributed Backends',
+  targetRoles: [
+    'AI & Machine Learning Engineer Intern',
+    'Backend Developer (Python / FastAPI)',
+    'Cybersecurity & Systems Analyst'
+  ],
+  availability: 'Summer & Fall 2025 / Placement Drive',
+  location: 'Chennai, Tamil Nadu, India (Open to Remote / Relocation)',
+  statement:
+    'Currently completing undergraduate coursework and developing national-level hackathon prototypes (AEGIS-TWIN, Probe360, CSI Origin). Actively seeking summer/fall technical internships and entry-level engineering roles. Verified corporate roles and technical positions will be indexed in this timeline as they commence.'
 };
 
 

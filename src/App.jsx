@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import ScrollProgress from './components/ScrollProgress.jsx';
-import ScrollSpine from './components/ScrollSpine.jsx';
 import Header from './components/Header.jsx';
 import Hero from './components/Hero.jsx';
 import About from './components/About.jsx';
 import Skills from './components/Skills.jsx';
 import Projects from './components/Projects.jsx';
+import Experience from './components/Experience.jsx';
 import Certifications from './components/Certifications.jsx';
 import Resume from './components/Resume.jsx';
 import Contact from './components/Contact.jsx';
 import Footer from './components/Footer.jsx';
 import { initScrollEngine } from './scroll-engine.js';
+import { initMobileReadiness } from './mobile-readiness.js';
 import { getSkillsForProject, getProjectsForSkill } from './data-store.js';
 
 export default function App() {
@@ -25,9 +26,13 @@ export default function App() {
 
   useEffect(() => {
     const cleanupScroll = initScrollEngine();
+    const cleanupMobile = initMobileReadiness();
     return () => {
       if (typeof cleanupScroll === 'function') {
         cleanupScroll();
+      }
+      if (typeof cleanupMobile === 'function') {
+        cleanupMobile();
       }
     };
   }, []);
@@ -43,7 +48,6 @@ export default function App() {
   return (
     <>
       <ScrollProgress />
-      <ScrollSpine />
       <Header />
       <main className="page-main" id="main-content">
         <Hero />
@@ -60,6 +64,7 @@ export default function App() {
           selectedSkillId={selectedSkillId}
           onSelectSkill={setSelectedSkillId}
         />
+        <Experience />
         <Certifications />
         <Resume />
         <Contact />
