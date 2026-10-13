@@ -5,6 +5,7 @@ import Hero from './components/Hero.jsx';
 import About from './components/About.jsx';
 import Skills from './components/Skills.jsx';
 import Projects from './components/Projects.jsx';
+import TechnicalArchitecture from './components/TechnicalArchitecture.jsx';
 import Experience from './components/Experience.jsx';
 import Certifications from './components/Certifications.jsx';
 import Resume from './components/Resume.jsx';
@@ -63,6 +64,10 @@ export default function App() {
           onSelectProject={setActiveProjectId}
           selectedSkillId={selectedSkillId}
           onSelectSkill={setSelectedSkillId}
+        />
+        <TechnicalArchitecture
+          activeProjectId={activeProjectId}
+          onSelectProject={setActiveProjectId}
         />
         <Experience />
         <Certifications />

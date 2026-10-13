@@ -24,6 +24,7 @@ export function initScrollEngine() {
   const aboutSec = document.getElementById('about');
   const skillsSec = document.getElementById('skills');
   const projectsSec = document.getElementById('projects');
+  const archSec = document.getElementById('architecture');
   const expSec = document.getElementById('experience');
   const certSec = document.getElementById('certifications');
   const resumeSec = document.getElementById('resume');
@@ -36,10 +37,11 @@ export function initScrollEngine() {
     about: { top: 900, height: 1000 },
     skills: { top: 2000, height: 1000 },
     projects: { top: 3100, height: 1800 },
-    experience: { top: 4400, height: 1000 },
-    certifications: { top: 5500, height: 1200 },
-    resume: { top: 6700, height: 1200 },
-    contact: { top: 7900, height: 800 },
+    architecture: { top: 4400, height: 1600 },
+    experience: { top: 6000, height: 1000 },
+    certifications: { top: 7100, height: 1200 },
+    resume: { top: 8300, height: 1200 },
+    contact: { top: 9500, height: 800 },
     cards: []
   };
 
@@ -60,6 +62,7 @@ export function initScrollEngine() {
     cachedGeometry.about = getMetrics(aboutSec);
     cachedGeometry.skills = getMetrics(skillsSec);
     cachedGeometry.projects = getMetrics(projectsSec);
+    cachedGeometry.architecture = getMetrics(archSec);
     cachedGeometry.experience = getMetrics(expSec);
     cachedGeometry.certifications = getMetrics(certSec);
     cachedGeometry.resume = getMetrics(resumeSec);
@@ -108,6 +111,7 @@ export function initScrollEngine() {
     const aboutProgress = clamp01((scrollTop - cachedGeometry.about.top + winH * 0.45) / (cachedGeometry.about.height || 1));
     const skillsProgress = clamp01((scrollTop - cachedGeometry.skills.top + winH * 0.45) / (cachedGeometry.skills.height || 1));
     const projectsProgress = clamp01((scrollTop - cachedGeometry.projects.top + winH * 0.45) / (cachedGeometry.projects.height || 1));
+    const archProgress = clamp01((scrollTop - cachedGeometry.architecture.top + winH * 0.45) / (cachedGeometry.architecture.height || 1));
     const expProgress = clamp01((scrollTop - cachedGeometry.experience.top + winH * 0.45) / (cachedGeometry.experience.height || 1));
     const certProgress = clamp01((scrollTop - cachedGeometry.certifications.top + winH * 0.45) / (cachedGeometry.certifications.height || 1));
     const resumeProgress = clamp01((scrollTop - cachedGeometry.resume.top + winH * 0.45) / (cachedGeometry.resume.height || 1));
@@ -119,6 +123,7 @@ export function initScrollEngine() {
     rootStyle.setProperty('--about-scroll', aboutProgress.toFixed(4));
     rootStyle.setProperty('--skills-scroll', skillsProgress.toFixed(4));
     rootStyle.setProperty('--projects-scroll', projectsProgress.toFixed(4));
+    rootStyle.setProperty('--architecture-scroll', archProgress.toFixed(4));
     rootStyle.setProperty('--experience-scroll', expProgress.toFixed(4));
     rootStyle.setProperty('--cert-scroll', certProgress.toFixed(4));
     rootStyle.setProperty('--resume-scroll', resumeProgress.toFixed(4));
@@ -196,7 +201,7 @@ export function initScrollEngine() {
   // Section Observer for .is-in-view transitions
   let motionObserver = null;
   const observedElements = document.querySelectorAll(
-    '.about-section, .skills-section, .projects-section, .experience-section, .certifications-section, .resume-section, .contact-section, .project-card, .project-narrative-entry'
+    '.about-section, .skills-section, .projects-section, .architecture-section, .experience-section, .certifications-section, .resume-section, .contact-section, .project-card, .project-narrative-entry'
   );
 
   if ('IntersectionObserver' in window && observedElements.length) {
