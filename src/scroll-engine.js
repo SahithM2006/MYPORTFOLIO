@@ -124,6 +124,12 @@ export function initScrollEngine() {
     rootStyle.setProperty('--resume-scroll', resumeProgress.toFixed(4));
     rootStyle.setProperty('--contact-scroll', contactProgress.toFixed(4));
 
+    // Dynamic Experience Timeline Progress Fill
+    const expTop = cachedGeometry.experience.top;
+    const expHeight = cachedGeometry.experience.height;
+    const expFill = clamp01((scrollTop - expTop + winH * 0.35) / (expHeight * 0.75));
+    rootStyle.setProperty('--exp-line-progress', expFill.toFixed(3));
+
     const focusY = scrollTop + winH * 0.45;
 
     // Active Project Spotlight Tracking in Exhibition
@@ -133,9 +139,10 @@ export function initScrollEngine() {
 
       for (let i = 0; i < cachedGeometry.cards.length; i++) {
         const c = cachedGeometry.cards[i];
-        if (c.el.style.display === 'none') continue;
-        const cardCenter = c.top + c.height * 0.35;
-        const dist = Math.abs(focusY - cardCenter);
+        if (!c.el || c.el.style.display === 'none') continue;
+        const rect = c.el.getBoundingClientRect();
+        const cardCenterY = rect.top + (rect.height || c.height) * 0.35;
+        const dist = Math.abs(cardCenterY - winH * 0.45);
         if (dist < minDistance) {
           minDistance = dist;
           closestCard = c;
@@ -157,10 +164,8 @@ export function initScrollEngine() {
           node.setAttribute('aria-current', match ? 'true' : 'false');
         });
 
-        if (spineLabel && currentChapter === '04 EXHIBITS') {
-          spineLabel.style.color = closestCard.color;
-          if (spineThumb) spineThumb.style.background = closestCard.color;
-        }
+        // Notify React components of active spotlight update
+        window.dispatchEvent(new CustomEvent('project-spotlight-sync', { detail: { projectId: closestCard.id } }));
       }
     }
 
@@ -185,6 +190,7 @@ export function initScrollEngine() {
   const initTimeout = setTimeout(() => {
     updateGeometry();
     onScrollTick();
+    ScrollTrigger.refresh();
   }, 100);
 
   // Section Observer for .is-in-view transitions
@@ -210,28 +216,332 @@ export function initScrollEngine() {
     observedElements.forEach((el) => el.classList.add('is-in-view'));
   }
 
-  // GSAP ScrollTrigger reveals (respecting prefers-reduced-motion)
+  // Section-specific GSAP ScrollTrigger choreography (respecting prefers-reduced-motion)
+  let gsapCtx = null;
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!prefersReduced) {
-    const headlines = document.querySelectorAll(
-      '.skills-title, .projects-title, .experience-title, .contact-headline'
-    );
-    headlines.forEach((title) => {
-      gsap.fromTo(
-        title,
-        { y: 16, opacity: 0.88 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.65,
-          ease: 'power2.out',
+    gsapCtx = gsap.context(() => {
+      // 1. About section: directional bio entrance & lifted focus column
+      const bioCol = document.querySelector('.about-bio-column');
+      if (bioCol) {
+        gsap.fromTo(
+          bioCol,
+          { x: -24, opacity: 0.35 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.7,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: bioCol,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      const focusCol = document.querySelector('.about-focus-column');
+      if (focusCol) {
+        gsap.fromTo(
+          focusCol,
+          { y: 24, opacity: 0.35 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.75,
+            delay: 0.08,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: focusCol,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      // 2. Skills section: header & Interactive Skill Constellation progressive reveal
+      const skillsHeader = document.querySelector('.skills-header');
+      if (skillsHeader) {
+        gsap.fromTo(
+          skillsHeader,
+          { y: 20, opacity: 0.35 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: skillsHeader,
+              start: 'top 88%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      const constellationWrapper = document.querySelector('.constellation-wrapper');
+      const constellationLines = document.querySelectorAll('.constellation-line');
+      const constellationNodes = document.querySelectorAll('.constellation-node');
+      const clusterLabels = document.querySelectorAll('.cluster-moniker');
+      const skillDrawer = document.querySelector('.skill-context-drawer');
+
+      if (constellationWrapper) {
+        const skillsTl = gsap.timeline({
           scrollTrigger: {
-            trigger: title,
-            start: 'top 88%',
+            trigger: constellationWrapper,
+            start: 'top 84%',
             toggleActions: 'play none none reverse'
           }
+        });
+
+        // Delicate entrance for constellation wrapper
+        skillsTl.fromTo(
+          constellationWrapper,
+          { opacity: 0.3, y: 16 },
+          { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' },
+          0
+        );
+
+        if (clusterLabels.length) {
+          skillsTl.fromTo(
+            clusterLabels,
+            { opacity: 0 },
+            { opacity: 0.35, duration: 0.8, stagger: 0.08, ease: 'power1.out' },
+            0.1
+          );
         }
-      );
+
+        // Delicate connecting lines fade & draw in
+        if (constellationLines.length) {
+          skillsTl.fromTo(
+            constellationLines,
+            { opacity: 0, scale: 0.96, transformOrigin: 'center center' },
+            { opacity: 1, scale: 1, duration: 0.7, stagger: { amount: 0.35, from: 'random' }, ease: 'power2.out' },
+            0.15
+          );
+        }
+
+        // Nodes expand smoothly from center ecosystem
+        if (constellationNodes.length) {
+          skillsTl.fromTo(
+            constellationNodes,
+            { opacity: 0, scale: 0.5, transformOrigin: 'center center' },
+            { opacity: 1, scale: 1, duration: 0.55, stagger: { amount: 0.45, from: 'center' }, ease: 'back.out(1.4)' },
+            0.2
+          );
+        }
+
+        if (skillDrawer) {
+          skillsTl.fromTo(
+            skillDrawer,
+            { opacity: 0.4, y: 20 },
+            { opacity: 1, y: 0, duration: 0.65, ease: 'power2.out' },
+            0.4
+          );
+        }
+      }
+
+      // 3. Projects section: header & narrative card reveals
+      const projectsHeader = document.querySelector('.projects-header-block');
+      if (projectsHeader) {
+        gsap.fromTo(
+          projectsHeader,
+          { y: 20, opacity: 0.35 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.65,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: projectsHeader,
+              start: 'top 88%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      const projectEntries = document.querySelectorAll('.project-narrative-entry');
+      projectEntries.forEach((entry) => {
+        gsap.fromTo(
+          entry,
+          { y: 28, opacity: 0.35 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.65,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: entry,
+              start: 'top 84%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
+      // 4. Experience section: header & sequential timeline items with node illumination
+      const expHeader = document.querySelector('.exp-header-block') || document.querySelector('.experience-title');
+      if (expHeader) {
+        gsap.fromTo(
+          expHeader,
+          { y: 20, opacity: 0.35 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: expHeader,
+              start: 'top 88%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      const expItems = document.querySelectorAll('.exp-timeline-item');
+      expItems.forEach((item) => {
+        gsap.fromTo(
+          item,
+          { x: 20, opacity: 0.35 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.6,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: item,
+              start: 'top 82%',
+              toggleActions: 'play none none reverse',
+              onEnter: () => item.classList.add('in-view'),
+              onEnterBack: () => item.classList.add('in-view'),
+              onLeaveBack: () => item.classList.remove('in-view')
+            }
+          }
+        );
+      });
+
+      // 5. Certifications section: header & horizontal timeline row cascades
+      const certHeader = document.querySelector('.certifications-header') || document.querySelector('#certifications-title');
+      if (certHeader) {
+        gsap.fromTo(
+          certHeader,
+          { y: 20, opacity: 0.35 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: certHeader,
+              start: 'top 88%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      const certList = document.querySelector('.cert-timeline-list');
+      const certRows = document.querySelectorAll('.cert-timeline-row');
+      if (certList && certRows.length) {
+        gsap.fromTo(
+          certRows,
+          { x: -18, opacity: 0.35 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.45,
+            ease: 'power2.out',
+            stagger: 0.04,
+            scrollTrigger: {
+              trigger: certList,
+              start: 'top 84%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      // 6. Resume section: dual-column entrance
+      const resumeColPrimary = document.querySelector('.resume-col-primary');
+      const resumeColSecondary = document.querySelector('.resume-col-secondary');
+      if (resumeColPrimary) {
+        gsap.fromTo(
+          resumeColPrimary,
+          { x: -20, opacity: 0.35 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.65,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: resumeColPrimary,
+              start: 'top 84%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+      if (resumeColSecondary) {
+        gsap.fromTo(
+          resumeColSecondary,
+          { x: 20, opacity: 0.35 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.65,
+            delay: 0.06,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: resumeColSecondary,
+              start: 'top 84%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      // 7. Contact section: invitation & form entrance
+      const contactIntro = document.querySelector('.contact-intro-col');
+      const contactForm = document.querySelector('.contact-form-col') || document.querySelector('.contact-form-wrapper');
+      if (contactIntro) {
+        gsap.fromTo(
+          contactIntro,
+          { x: -24, opacity: 0.35 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.7,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: contactIntro,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+      if (contactForm) {
+        gsap.fromTo(
+          contactForm,
+          { y: 24, opacity: 0.35 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.7,
+            delay: 0.08,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: contactForm,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
     });
   }
 
@@ -240,6 +550,6 @@ export function initScrollEngine() {
     window.removeEventListener('resize', onResize);
     window.removeEventListener('scroll', onScroll);
     if (motionObserver) motionObserver.disconnect();
-    ScrollTrigger.getAll().forEach((t) => t.kill());
+    if (gsapCtx) gsapCtx.revert();
   };
 }

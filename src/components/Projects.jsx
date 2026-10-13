@@ -417,17 +417,32 @@ export default function Projects({
     }
   }, [activeFilter, filteredProjects]);
 
-  // Scroll synchronization: Observer detects which card is centered in viewport
+  // Scroll synchronization: Listen for high-precision scroll engine spotlight updates
+  useEffect(() => {
+    const handleSync = (e) => {
+      const prjId = e.detail && e.detail.projectId;
+      if (prjId && prjId !== activeSpotlight) {
+        setActiveSpotlight(prjId);
+        if (onSelectProject) {
+          onSelectProject(prjId);
+        }
+      }
+    };
+    window.addEventListener('project-spotlight-sync', handleSync);
+    return () => window.removeEventListener('project-spotlight-sync', handleSync);
+  }, [activeSpotlight, onSelectProject]);
+
+  // Fallback IntersectionObserver for direct viewport detection
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+          if (entry.isIntersecting) {
             handleSpotlightChange(entry.target.id);
           }
         });
       },
-      { rootMargin: '-15% 0px -25% 0px', threshold: [0.4, 0.7] }
+      { rootMargin: '-20% 0px -35% 0px', threshold: 0.15 }
     );
 
     const cards = document.querySelectorAll('.project-narrative-entry');
