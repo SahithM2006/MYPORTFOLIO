@@ -3800,43 +3800,9 @@ input[type="range"] {
   padding-top: 12px;
 }
 
-/* Continuous Transition Motif: Projects -> Contact */
+/* Continuous Transition Motif: Projects -> Architecture */
 .projects-to-contact-flow {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 48px 0 24px;
-  overflow: visible;
-}
-
-.flow-ambient-glow {
-  position: absolute;
-  width: 320px;
-  height: 120px;
-  background: radial-gradient(ellipse at center, rgba(184, 169, 201, 0.2) 0%, rgba(143, 168, 155, 0.1) 50%, transparent 75%);
-  filter: blur(36px);
-  pointer-events: none;
-}
-
-.flow-connector-line {
-  width: 2px;
-  height: 80px;
-  background: linear-gradient(180deg, rgba(184, 169, 201, 0.5) 0%, rgba(143, 168, 155, 0.5) 60%, transparent 100%);
-  border-radius: 999px;
-  position: relative;
-}
-
-.flow-connector-line::after {
-  content: '✦';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 0.75rem;
-  color: var(--color-sage);
-  filter: drop-shadow(0 0 6px var(--color-sage));
+  display: none;
 }
 
 /* ==========================================================================
@@ -5168,6 +5134,7 @@ input[type="range"] {
   border: 1px solid rgba(148, 185, 214, 0.25);
   border-radius: 10px;
   padding: 4px;
+  flex-wrap: wrap;
 }
 
 .arch-mode-btn {

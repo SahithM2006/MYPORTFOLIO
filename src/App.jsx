@@ -65,10 +65,7 @@ export default function App() {
           selectedSkillId={selectedSkillId}
           onSelectSkill={setSelectedSkillId}
         />
-        <TechnicalArchitecture
-          activeProjectId={activeProjectId}
-          onSelectProject={setActiveProjectId}
-        />
+        <TechnicalArchitecture />
         <Experience />
         <Certifications />
         <Resume />

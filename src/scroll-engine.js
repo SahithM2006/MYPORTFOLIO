@@ -137,8 +137,12 @@ export function initScrollEngine() {
 
     const focusY = scrollTop + winH * 0.45;
 
-    // Active Project Spotlight Tracking in Exhibition
-    if (cachedGeometry.cards.length > 0 && focusY >= cachedGeometry.projects.top - 200 && focusY <= cachedGeometry.contact.top) {
+    // Active Project Spotlight Tracking in Exhibition (strictly bounded within Projects section)
+    const projectsTop = cachedGeometry.projects.top;
+    const projectsHeight = cachedGeometry.projects.height || 1800;
+    const projectsEnd = projectsTop + projectsHeight;
+
+    if (cachedGeometry.cards.length > 0 && focusY >= projectsTop - 200 && focusY <= projectsEnd + 60) {
       let closestCard = null;
       let minDistance = Infinity;
 

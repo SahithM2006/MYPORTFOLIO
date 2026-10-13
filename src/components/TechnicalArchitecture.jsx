@@ -2,33 +2,14 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { ARCHITECTURE_PROJECTS, getArchitectureProject } from '../architecture-data.js';
 import TechIcon from './TechIcons.jsx';
 
-export default function TechnicalArchitecture({
-  activeProjectId = 'prj-probe360',
-  onSelectProject
-}) {
-  // Normalize current project ID
-  const initialProjectId = activeProjectId ? activeProjectId.replace(/^prj-/, '') : 'probe360';
-  const [selectedProjId, setSelectedProjId] = useState(initialProjectId);
+export default function TechnicalArchitecture() {
+  const [selectedProjId, setSelectedProjId] = useState('probe360');
   const [activeLayerFilter, setActiveLayerFilter] = useState('all');
   const [activeViewMode, setActiveViewMode] = useState('flow'); // 'flow' | 'layers' | 'audit'
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [activeStepIdx, setActiveStepIdx] = useState(0);
   const [hoveredNodeId, setHoveredNodeId] = useState(null);
   const [selectedTechObj, setSelectedTechObj] = useState(null);
-
-  // Sync when activeProjectId changes from outside
-  useEffect(() => {
-    if (activeProjectId) {
-      const clean = activeProjectId.replace(/^prj-/, '');
-      if (clean !== selectedProjId) {
-        setSelectedProjId(clean);
-        setActiveLayerFilter('all');
-        setSelectedNodeId(null);
-        setSelectedTechObj(null);
-        setActiveStepIdx(0);
-      }
-    }
-  }, [activeProjectId]);
 
   // Current active project data
   const currentProject = useMemo(() => {
@@ -42,9 +23,6 @@ export default function TechnicalArchitecture({
     setSelectedNodeId(null);
     setSelectedTechObj(null);
     setActiveStepIdx(0);
-    if (onSelectProject) {
-      onSelectProject(`prj-${projId}`);
-    }
   };
 
   // Filtered layers for the selected project
@@ -274,19 +252,33 @@ export default function TechnicalArchitecture({
                         className={`arch-flow-node-card ${isSelected ? 'selected' : ''} ${isHovered ? 'hovered' : ''} ${isLinked ? 'connected-link' : ''} layer-${node.layer}`}
                         tabIndex={0}
                         onClick={() => {
-                          setSelectedNodeId(isSelected ? null : node.id);
-                          // Select matching tech object
-                          const match = allProjectTechs.find(
-                            (t) => t.id.includes(node.id.replace('n-', '')) || node.tech.toLowerCase().includes(t.name.toLowerCase().split(' ')[0])
-                          );
-                          if (match) setSelectedTechObj(match);
+                          if (isSelected) {
+                            setSelectedNodeId(null);
+                            setSelectedTechObj(null);
+                          } else {
+                            setSelectedNodeId(node.id);
+                            // Select matching tech object
+                            const match = allProjectTechs.find(
+                              (t) => t.id.includes(node.id.replace('n-', '')) || node.tech.toLowerCase().includes(t.name.toLowerCase().split(' ')[0])
+                            );
+                            if (match) setSelectedTechObj(match);
+                          }
                         }}
                         onMouseEnter={() => setHoveredNodeId(node.id)}
                         onMouseLeave={() => setHoveredNodeId(null)}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
-                            setSelectedNodeId(isSelected ? null : node.id);
+                            if (isSelected) {
+                              setSelectedNodeId(null);
+                              setSelectedTechObj(null);
+                            } else {
+                              setSelectedNodeId(node.id);
+                              const match = allProjectTechs.find(
+                                (t) => t.id.includes(node.id.replace('n-', '')) || node.tech.toLowerCase().includes(t.name.toLowerCase().split(' ')[0])
+                              );
+                              if (match) setSelectedTechObj(match);
+                            }
                           }
                         }}
                         role="button"
@@ -460,7 +452,7 @@ export default function TechnicalArchitecture({
 
                             <div className="tech-card-footer">
                               <span className="inspect-cta">
-                                {isSelected ? 'Currently Selected in Inspector ✓' : 'Click to inspect component &rarr;'}
+                                {isSelected ? 'Currently Selected in Inspector ✓' : 'Click to inspect component →'}
                               </span>
                             </div>
                           </article>
