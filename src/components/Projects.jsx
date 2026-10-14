@@ -315,6 +315,16 @@ export default function Projects({
   const [openDrawers, setOpenDrawers] = useState({});
   const [activeSpotlight, setActiveSpotlight] = useState(activeProjectId);
   const [copiedSnippetId, setCopiedSnippetId] = useState(null);
+  const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth <= 992 : false));
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mql = window.matchMedia('(max-width: 992px)');
+    const onChange = (e) => setIsMobile(e.matches);
+    setIsMobile(mql.matches);
+    mql.addEventListener('change', onChange);
+    return () => mql.removeEventListener('change', onChange);
+  }, []);
 
   // Exhibit 1: Probe360 state
   const [probeView, setProbeView] = useState('discovery');
@@ -445,40 +455,6 @@ export default function Projects({
       handleSpotlightChange(`prj-${filteredProjects[0].id}`);
     }
   }, [activeFilter, filteredProjects]);
-
-  // Scroll synchronization: Listen for high-precision scroll engine spotlight updates
-  useEffect(() => {
-    const handleSync = (e) => {
-      const prjId = e.detail && e.detail.projectId;
-      if (prjId && prjId !== activeSpotlight) {
-        setActiveSpotlight(prjId);
-        if (onSelectProject) {
-          onSelectProject(prjId);
-        }
-      }
-    };
-    window.addEventListener('project-spotlight-sync', handleSync);
-    return () => window.removeEventListener('project-spotlight-sync', handleSync);
-  }, [activeSpotlight, onSelectProject]);
-
-  // Fallback IntersectionObserver for direct viewport detection
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            handleSpotlightChange(entry.target.id);
-          }
-        });
-      },
-      { rootMargin: '-20% 0px -35% 0px', threshold: 0.15 }
-    );
-
-    const cards = document.querySelectorAll('.project-narrative-entry');
-    cards.forEach((c) => observer.observe(c));
-
-    return () => observer.disconnect();
-  }, [filteredProjects]);
 
   const handleStepperClick = (e, prjId) => {
     e.preventDefault();
@@ -1246,7 +1222,6 @@ export default function Projects({
                   className={`project-narrative-entry ${isSpotlight ? 'active-spotlight' : ''} ${isLinkedToSelectedSkill ? 'skill-connected-highlight' : ''}`}
                   data-category={project.category}
                   tabIndex={0}
-                  onMouseEnter={() => handleSpotlightChange(prjId)}
                   onClick={() => handleSpotlightChange(prjId)}
                 >
                   <div className="project-card-header">
@@ -1281,9 +1256,11 @@ export default function Projects({
                     </div>
 
                     {/* Mobile Only: Inline Exhibit (hidden on desktop where sticky preview stage lives) */}
-                    <div className="mobile-exhibit-container">
-                      {renderInteractiveExhibit(prjId)}
-                    </div>
+                    {isMobile && (
+                      <div className="mobile-exhibit-container">
+                        {renderInteractiveExhibit(prjId)}
+                      </div>
+                    )}
 
                     {/* Interactive Connected Skills Row */}
                     <div className="project-tags-row">
@@ -1343,34 +1320,36 @@ export default function Projects({
           </div>
 
           {/* Column 2: Bounded Sticky Interactive Preview Stage (Desktop Only) */}
-          <aside className="projects-sticky-column" aria-label="Interactive Project Preview Stage">
-            <div className="sticky-exhibit-card">
-              <div className="sticky-stage-topbar">
-                <div className="stage-topbar-info">
-                  <span className="stage-kicker">
-                    Project {activeProjectObj.number} &bull; {activeProjectObj.categoryLabel}
-                  </span>
-                  <h4 className="stage-title">{activeProjectObj.title.split('—')[0].trim()}</h4>
+          {!isMobile && (
+            <aside className="projects-sticky-column" aria-label="Interactive Project Preview Stage">
+              <div className="sticky-exhibit-card">
+                <div className="sticky-stage-topbar">
+                  <div className="stage-topbar-info">
+                    <span className="stage-kicker">
+                      Project {activeProjectObj.number} &bull; {activeProjectObj.categoryLabel}
+                    </span>
+                    <h4 className="stage-title">{activeProjectObj.title.split('—')[0].trim()}</h4>
+                  </div>
+                  <div className="stage-topbar-badge">
+                    <span className={`status-badge-mini ${activeProjectObj.statusType === 'implemented' ? 'status-live' : 'status-proto'}`}>
+                      {activeProjectObj.statusType === 'implemented' ? 'Interactive Demo' : 'Simulation'}
+                    </span>
+                  </div>
                 </div>
-                <div className="stage-topbar-badge">
-                  <span className={`status-badge-mini ${activeProjectObj.statusType === 'implemented' ? 'status-live' : 'status-proto'}`}>
-                    {activeProjectObj.statusType === 'implemented' ? 'Interactive Demo' : 'Simulation'}
+
+                {/* Dynamic Exhibit Renderer */}
+                <div className="sticky-stage-content">
+                  {renderInteractiveExhibit(activeSpotlight)}
+                </div>
+
+                <div className="sticky-stage-footer">
+                  <span className="stage-hint">
+                    Scroll through entries or press <kbd className="kbd-mini">1</kbd> to <kbd className="kbd-mini">4</kbd> to navigate exhibits.
                   </span>
                 </div>
               </div>
-
-              {/* Dynamic Exhibit Renderer */}
-              <div className="sticky-stage-content">
-                {renderInteractiveExhibit(activeSpotlight)}
-              </div>
-
-              <div className="sticky-stage-footer">
-                <span className="stage-hint">
-                  Scroll through entries or press <kbd className="kbd-mini">1</kbd> to <kbd className="kbd-mini">4</kbd> to navigate exhibits.
-                </span>
-              </div>
-            </div>
-          </aside>
+            </aside>
+          )}
         </div>
 
         {/* Dynamic Transitional Motif leading smoothly from the final project into Contact */}

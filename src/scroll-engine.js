@@ -106,36 +106,6 @@ export function initScrollEngine() {
     }
 
     const winH = cachedGeometry.winH;
-    const clamp01 = (v) => Math.min(Math.max(v, 0), 1);
-
-    const heroProgress = clamp01(scrollTop / (cachedGeometry.hero.height || 1));
-    const aboutProgress = clamp01((scrollTop - cachedGeometry.about.top + winH * 0.45) / (cachedGeometry.about.height || 1));
-    const skillsProgress = clamp01((scrollTop - cachedGeometry.skills.top + winH * 0.45) / (cachedGeometry.skills.height || 1));
-    const projectsProgress = clamp01((scrollTop - cachedGeometry.projects.top + winH * 0.45) / (cachedGeometry.projects.height || 1));
-    const archProgress = clamp01((scrollTop - cachedGeometry.architecture.top + winH * 0.45) / (cachedGeometry.architecture.height || 1));
-    const expProgress = clamp01((scrollTop - cachedGeometry.experience.top + winH * 0.45) / (cachedGeometry.experience.height || 1));
-    const certProgress = clamp01((scrollTop - cachedGeometry.certifications.top + winH * 0.45) / (cachedGeometry.certifications.height || 1));
-    const resumeProgress = clamp01((scrollTop - cachedGeometry.resume.top + winH * 0.45) / (cachedGeometry.resume.height || 1));
-    const contactProgress = clamp01((scrollTop - cachedGeometry.contact.top + winH * 0.6) / (cachedGeometry.contact.height || 1));
-
-    const rootStyle = document.documentElement.style;
-    rootStyle.setProperty('--scroll-progress', progress.toFixed(4));
-    rootStyle.setProperty('--hero-scroll', heroProgress.toFixed(4));
-    rootStyle.setProperty('--about-scroll', aboutProgress.toFixed(4));
-    rootStyle.setProperty('--skills-scroll', skillsProgress.toFixed(4));
-    rootStyle.setProperty('--projects-scroll', projectsProgress.toFixed(4));
-    rootStyle.setProperty('--architecture-scroll', archProgress.toFixed(4));
-    rootStyle.setProperty('--experience-scroll', expProgress.toFixed(4));
-    rootStyle.setProperty('--cert-scroll', certProgress.toFixed(4));
-    rootStyle.setProperty('--resume-scroll', resumeProgress.toFixed(4));
-    rootStyle.setProperty('--contact-scroll', contactProgress.toFixed(4));
-
-    // Dynamic Experience Timeline Progress Fill
-    const expTop = cachedGeometry.experience.top;
-    const expHeight = cachedGeometry.experience.height;
-    const expFill = clamp01((scrollTop - expTop + winH * 0.35) / (expHeight * 0.75));
-    rootStyle.setProperty('--exp-line-progress', expFill.toFixed(3));
-
     const focusY = scrollTop + winH * 0.45;
 
     // Active Project Spotlight Tracking in Exhibition (strictly bounded within Projects section)
@@ -150,8 +120,7 @@ export function initScrollEngine() {
       for (let i = 0; i < cachedGeometry.cards.length; i++) {
         const c = cachedGeometry.cards[i];
         if (!c.el || c.el.style.display === 'none') continue;
-        const rect = c.el.getBoundingClientRect();
-        const cardCenterY = rect.top + (rect.height || c.height) * 0.35;
+        const cardCenterY = (c.top - scrollTop) + (c.height || 400) * 0.35;
         const dist = Math.abs(cardCenterY - winH * 0.45);
         if (dist < minDistance) {
           minDistance = dist;
@@ -161,7 +130,7 @@ export function initScrollEngine() {
 
       if (closestCard && closestCard.id !== lastActiveCardId) {
         lastActiveCardId = closestCard.id;
-        rootStyle.setProperty('--active-project-color', closestCard.color);
+        document.documentElement.style.setProperty('--active-project-color', closestCard.color);
 
         cachedGeometry.cards.forEach((c) => {
           c.el.classList.toggle('active-spotlight', c.id === closestCard.id);
@@ -173,9 +142,6 @@ export function initScrollEngine() {
           node.classList.toggle('active', match);
           node.setAttribute('aria-current', match ? 'true' : 'false');
         });
-
-        // Notify React components of active spotlight update
-        window.dispatchEvent(new CustomEvent('project-spotlight-sync', { detail: { projectId: closestCard.id } }));
       }
     }
 
@@ -203,17 +169,18 @@ export function initScrollEngine() {
     ScrollTrigger.refresh();
   }, 100);
 
-  // Section Observer for .is-in-view transitions
+  // Section Observer for .is-in-view transitions (unobserved once revealed)
   let motionObserver = null;
   const observedElements = document.querySelectorAll(
     '.about-section, .skills-section, .projects-section, .architecture-section, .experience-section, .certifications-section, .resume-section, .contact-section, .project-card, .project-narrative-entry'
   );
 
   if ('IntersectionObserver' in window && observedElements.length) {
-    motionObserver = new IntersectionObserver((entries) => {
+    motionObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-in-view');
+          observer.unobserve(entry.target);
         }
       });
     }, {
@@ -245,7 +212,7 @@ export function initScrollEngine() {
             scrollTrigger: {
               trigger: bioCol,
               start: 'top 85%',
-              toggleActions: 'play none none reverse'
+              toggleActions: 'play none none none', once: true
             }
           }
         );
@@ -265,7 +232,7 @@ export function initScrollEngine() {
             scrollTrigger: {
               trigger: focusCol,
               start: 'top 85%',
-              toggleActions: 'play none none reverse'
+              toggleActions: 'play none none none', once: true
             }
           }
         );
@@ -285,7 +252,7 @@ export function initScrollEngine() {
             scrollTrigger: {
               trigger: skillsHeader,
               start: 'top 88%',
-              toggleActions: 'play none none reverse'
+              toggleActions: 'play none none none', once: true
             }
           }
         );
@@ -302,7 +269,7 @@ export function initScrollEngine() {
           scrollTrigger: {
             trigger: constellationWrapper,
             start: 'top 84%',
-            toggleActions: 'play none none reverse'
+            toggleActions: 'play none none none', once: true
           }
         });
 
@@ -367,7 +334,7 @@ export function initScrollEngine() {
             scrollTrigger: {
               trigger: projectsHeader,
               start: 'top 88%',
-              toggleActions: 'play none none reverse'
+              toggleActions: 'play none none none', once: true
             }
           }
         );
@@ -386,7 +353,7 @@ export function initScrollEngine() {
             scrollTrigger: {
               trigger: entry,
               start: 'top 84%',
-              toggleActions: 'play none none reverse'
+              toggleActions: 'play none none none', once: true
             }
           }
         );
@@ -406,7 +373,7 @@ export function initScrollEngine() {
             scrollTrigger: {
               trigger: expHeader,
               start: 'top 88%',
-              toggleActions: 'play none none reverse'
+              toggleActions: 'play none none none', once: true
             }
           }
         );
@@ -425,7 +392,7 @@ export function initScrollEngine() {
             scrollTrigger: {
               trigger: item,
               start: 'top 82%',
-              toggleActions: 'play none none reverse',
+              toggleActions: 'play none none none', once: true,
               onEnter: () => item.classList.add('in-view'),
               onEnterBack: () => item.classList.add('in-view'),
               onLeaveBack: () => item.classList.remove('in-view')
@@ -448,7 +415,7 @@ export function initScrollEngine() {
             scrollTrigger: {
               trigger: certHeader,
               start: 'top 88%',
-              toggleActions: 'play none none reverse'
+              toggleActions: 'play none none none', once: true
             }
           }
         );
@@ -469,7 +436,7 @@ export function initScrollEngine() {
             scrollTrigger: {
               trigger: certList,
               start: 'top 84%',
-              toggleActions: 'play none none reverse'
+              toggleActions: 'play none none none', once: true
             }
           }
         );
@@ -490,7 +457,7 @@ export function initScrollEngine() {
             scrollTrigger: {
               trigger: resumeColPrimary,
               start: 'top 84%',
-              toggleActions: 'play none none reverse'
+              toggleActions: 'play none none none', once: true
             }
           }
         );
@@ -508,7 +475,7 @@ export function initScrollEngine() {
             scrollTrigger: {
               trigger: resumeColSecondary,
               start: 'top 84%',
-              toggleActions: 'play none none reverse'
+              toggleActions: 'play none none none', once: true
             }
           }
         );
@@ -529,7 +496,7 @@ export function initScrollEngine() {
             scrollTrigger: {
               trigger: contactIntro,
               start: 'top 85%',
-              toggleActions: 'play none none reverse'
+              toggleActions: 'play none none none', once: true
             }
           }
         );
@@ -547,7 +514,7 @@ export function initScrollEngine() {
             scrollTrigger: {
               trigger: contactForm,
               start: 'top 85%',
-              toggleActions: 'play none none reverse'
+              toggleActions: 'play none none none', once: true
             }
           }
         );

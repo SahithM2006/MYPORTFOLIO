@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { ARCHITECTURE_PROJECTS } from "../architecture-data.js";
 import TechIcon from "./TechIcons.jsx";
 
@@ -26,7 +26,7 @@ function StatusDot({ status }) {
   return <span className={`ca-status-dot ca-dot-${cls}`} />;
 }
 
-function TechPill({ tech }) {
+const TechPill = React.memo(function TechPill({ tech }) {
   return (
     <div className={`ca-tech-pill ca-pill-${tech.status}`}>
       <TechIcon name={tech.icon} size={14} />
@@ -34,9 +34,9 @@ function TechPill({ tech }) {
       <StatusDot status={tech.status} />
     </div>
   );
-}
+});
 
-function TechDetailCard({ tech, layerName }) {
+const TechDetailCard = React.memo(function TechDetailCard({ tech, layerName }) {
   const [open, setOpen] = useState(false);
   return (
     <div className={`ca-detail-card ${open ? "open" : ""}`}>
@@ -77,7 +77,7 @@ function TechDetailCard({ tech, layerName }) {
       )}
     </div>
   );
-}
+});
 
 function FlowDetail({ project }) {
   const { flow } = project;
@@ -192,10 +192,11 @@ function DetailPanel({ tabId, project }) {
 export default function TechnicalArchitecture() {
   const [selectedProjId, setSelectedProjId] = useState("probe360");
   const [openTabId, setOpenTabId] = useState(null);
-  const hoverTimerRef = useRef(null);
-
-  const currentProject = ARCHITECTURE_PROJECTS.find((p) => p.id === selectedProjId) || ARCHITECTURE_PROJECTS[0];
-  const compact = buildCompactData(currentProject);
+  const currentProject = useMemo(
+    () => ARCHITECTURE_PROJECTS.find((p) => p.id === selectedProjId) || ARCHITECTURE_PROJECTS[0],
+    [selectedProjId]
+  );
+  const compact = useMemo(() => buildCompactData(currentProject), [currentProject]);
 
   const handleProjectChange = useCallback((projId) => {
     if (projId === selectedProjId) return;
@@ -203,9 +204,9 @@ export default function TechnicalArchitecture() {
     setOpenTabId(null);
   }, [selectedProjId]);
 
-  const handleTabToggle = (tabId) => {
+  const handleTabToggle = useCallback((tabId) => {
     setOpenTabId((prev) => (prev === tabId ? null : tabId));
-  };
+  }, []);
 
   useEffect(() => {
     const keyMap = { "1": "probe360", "2": "mule-matrix", "3": "carbon", "4": "aegis" };
@@ -218,15 +219,18 @@ export default function TechnicalArchitecture() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [handleProjectChange]);
 
-  useEffect(() => () => { if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current); }, []);
-
-  const relevantTabs = DETAIL_TABS.filter((tab) => {
-    if (tab.id === "frontend") return true;
-    if (tab.id === "backend") return true;
-    if (tab.id === "data-ai") return compact.supportingLayers.some((l) =>
-      ["ai-ml", "graph", "lineage", "risk", "simulation", "data-processing", "analytics", "visualisation"].includes(l.id));
-    return true;
-  });
+  const relevantTabs = useMemo(() => {
+    return DETAIL_TABS.filter((tab) => {
+      if (tab.id === "frontend") return true;
+      if (tab.id === "backend") return true;
+      if (tab.id === "data-ai") {
+        return compact.supportingLayers.some((l) =>
+          ["ai-ml", "graph", "lineage", "risk", "simulation", "data-processing", "analytics", "visualisation"].includes(l.id)
+        );
+      }
+      return true;
+    });
+  }, [compact.supportingLayers]);
 
   return (
     <section

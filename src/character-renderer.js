@@ -155,10 +155,22 @@ export function initCharacterRenderer() {
   geo.needsRedraw = true;
   state.lastTime = performance.now();
 
+  let isHeroVisible = true;
+  let renderFrameId = null;
+
+  function wakeLoop() {
+    if (!state.isRendering || !isHeroVisible || document.hidden) return;
+    if (!renderFrameId) {
+      state.lastTime = performance.now();
+      renderFrameId = requestAnimationFrame(render);
+    }
+  }
+
   // Passive scroll position cache avoids synchronous layout reflows during RAF
   cachedScrollY = window.scrollY || 0;
   const onScroll = () => {
     cachedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+    wakeLoop();
   };
   window.addEventListener('scroll', onScroll, { passive: true });
 
@@ -193,6 +205,7 @@ export function initCharacterRenderer() {
     geo.faceCenterY = geo.drawY + geo.drawHeight * CONFIG.faceCenterInImage.y;
     geo.deadzoneRadius = Math.min(geo.width, geo.height) * CONFIG.deadzoneRadiusRatio;
     geo.needsRedraw = true;
+    wakeLoop();
   }
 
   let resizeFrameId = null;
@@ -207,19 +220,20 @@ export function initCharacterRenderer() {
   window.addEventListener('resize', onResize, { passive: true });
   updateGeometry();
 
-  // 4. Pointer Tracking with Subpixel Noise Deadband
+  // 4. Pointer Tracking with Subpixel Noise Deadband and Coalesced Wakeup
+  const deadbandSq = CONFIG.stationaryDeadbandPx * CONFIG.stationaryDeadbandPx;
   const onPointerMove = (e) => {
-    const dist = Math.hypot(e.clientX - state.cursor.x, e.clientY - state.cursor.y);
-    if (dist >= CONFIG.stationaryDeadbandPx) {
+    const dx = e.clientX - state.cursor.x;
+    const dy = e.clientY - state.cursor.y;
+    if (dx * dx + dy * dy >= deadbandSq) {
       state.cursor.x = e.clientX;
       state.cursor.y = e.clientY;
+      wakeLoop();
     }
   };
   window.addEventListener('pointermove', onPointerMove, { passive: true });
 
   // 5. Visibility Observer: Pauses canvas rendering when hero is scrolled out of view
-  let isHeroVisible = true;
-  let renderFrameId = null;
   const heroEl = document.getElementById('hero');
   let heroObserver = null;
 
@@ -230,10 +244,7 @@ export function initCharacterRenderer() {
         isHeroVisible = entry.isIntersecting;
         if (isHeroVisible && !wasVisible && state.isRendering) {
           geo.needsRedraw = true;
-          state.lastTime = performance.now();
-          if (!renderFrameId) {
-            renderFrameId = requestAnimationFrame(render);
-          }
+          wakeLoop();
         }
       });
     }, { threshold: 0.01 });
@@ -242,7 +253,7 @@ export function initCharacterRenderer() {
 
   // 6. High-Performance Render Loop with Time-Delta Angular Interpolation
   function render(timestamp) {
-    if (!state.isRendering) {
+    if (!state.isRendering || !isHeroVisible || document.hidden) {
       renderFrameId = null;
       return;
     }
@@ -250,30 +261,6 @@ export function initCharacterRenderer() {
     if (!timestamp) timestamp = performance.now();
     const dt = state.lastTime > 0 ? Math.min((timestamp - state.lastTime) / 1000, 0.1) : 0.01667;
     state.lastTime = timestamp;
-
-    // Subtle Custom Cursor Updates
-    if (isFinePointer && !prefersReducedMotion) {
-      if (cursorDot && (state.cursor.x !== state.prevCursor.x || state.cursor.y !== state.prevCursor.y)) {
-        cursorDot.style.transform = `translate3d(${state.cursor.x}px, ${state.cursor.y}px, 0) translate(-50%, -50%)`;
-        state.prevCursor.x = state.cursor.x;
-        state.prevCursor.y = state.cursor.y;
-      }
-
-      const ringDx = state.cursor.x - state.ringCursor.x;
-      const ringDy = state.cursor.y - state.ringCursor.y;
-      if (Math.abs(ringDx) > 0.05 || Math.abs(ringDy) > 0.05) {
-        state.ringCursor.x += ringDx * 0.22;
-        state.ringCursor.y += ringDy * 0.22;
-        if (cursorRing) {
-          cursorRing.style.transform = `translate3d(${state.ringCursor.x}px, ${state.ringCursor.y}px, 0) translate(-50%, -50%)`;
-        }
-      }
-    }
-
-    if (!isHeroVisible) {
-      renderFrameId = null;
-      return;
-    }
 
     const faceScreenX = geo.faceCenterX;
     const faceScreenY = geo.faceCenterY - cachedScrollY;
@@ -299,9 +286,11 @@ export function initCharacterRenderer() {
 
     // Time-based smooth exponential decay
     const angleDiff = shortestAngleDiff(state.currentAngle, state.targetAngle);
+    let isAngleSettled = false;
     if (Math.abs(angleDiff) < 0.003) {
       // Micro-angular threshold lock to eliminate stationary floating
       state.currentAngle = state.targetAngle;
+      isAngleSettled = true;
     } else {
       const lerpFactor = 1.0 - Math.exp(-CONFIG.angularResponsiveness * dt);
       state.currentAngle += angleDiff * lerpFactor;
@@ -336,15 +325,23 @@ export function initCharacterRenderer() {
     }
 
     // Only redraw canvas if image changed or geometry requires it
+    let redrawn = false;
     if (ctx && (imageToDraw !== state.lastDrawnImage || geo.needsRedraw)) {
       if (imageToDraw && imageToDraw.complete && imageToDraw.naturalWidth > 0) {
         ctx.drawImage(imageToDraw, geo.drawX, geo.drawY, geo.drawWidth, geo.drawHeight);
         state.lastDrawnImage = imageToDraw;
         geo.needsRedraw = false;
+        redrawn = true;
       } else if (!state.lastDrawnImage) {
         ctx.fillStyle = CONFIG.backgroundColor;
         ctx.fillRect(0, 0, geo.width, geo.height);
       }
+    }
+
+    // Pause RAF loop once character has settled and frame is drawn
+    if (isAngleSettled && !geo.needsRedraw && !redrawn) {
+      renderFrameId = null;
+      return;
     }
 
     renderFrameId = requestAnimationFrame(render);
@@ -352,25 +349,23 @@ export function initCharacterRenderer() {
 
   const onVisibilityChange = () => {
     if (document.hidden) {
-      state.isRendering = false;
       if (renderFrameId) {
         cancelAnimationFrame(renderFrameId);
         renderFrameId = null;
       }
     } else {
-      if (!state.isRendering) {
-        state.isRendering = true;
-        state.lastTime = performance.now();
-        if (!renderFrameId) {
-          renderFrameId = requestAnimationFrame(render);
-        }
-      }
+      geo.needsRedraw = true;
+      wakeLoop();
     }
   };
   document.addEventListener('visibilitychange', onVisibilityChange);
 
-  preloadAssets();
-  renderFrameId = requestAnimationFrame(render);
+  // Hook preload completion to waking the loop
+  preloadAssets().then(() => {
+    geo.needsRedraw = true;
+    wakeLoop();
+  });
+  wakeLoop();
 
   // Return cleanup function for React Strict Mode / component unmount
   return () => {

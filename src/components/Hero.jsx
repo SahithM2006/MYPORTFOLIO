@@ -30,6 +30,12 @@ export default function Hero() {
   }, [wordIdx]);
 
   const cycleWord = () => {
+    if (document.hidden) return;
+    const heroEl = document.getElementById('hero');
+    if (heroEl) {
+      const rect = heroEl.getBoundingClientRect();
+      if (rect.bottom < 0 || rect.top > (window.innerHeight || 800)) return;
+    }
     setIsWordTransitioning(true);
     setTimeout(() => {
       setWordIdx((prev) => (prev + 1) % KINETIC_WORDS.length);

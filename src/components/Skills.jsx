@@ -64,6 +64,27 @@ export default function Skills({
   const [hoveredSkillId, setHoveredSkillId] = useState(null);
   const [focusedSkillId, setFocusedSkillId] = useState(null);
   const searchInputRef = useRef(null);
+  const hoverTimeoutRef = useRef(null);
+
+  const handleNodeMouseEnter = useCallback((skillId) => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredSkillId(skillId);
+    }, 60);
+  }, []);
+
+  const handleNodeMouseLeave = useCallback(() => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredSkillId(null);
+    }, 60);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    };
+  }, []);
 
   const selectedSkillId = propSelectedSkillId || internalSelectedSkillId;
   const activeSkillId = hoveredSkillId || focusedSkillId || selectedSkillId;
@@ -399,8 +420,8 @@ export default function Skills({
                     aria-label={`Skill: ${skill.title} (${skill.groupLabel}). ${isAnchor ? 'Core Anchor.' : ''} Press Enter to inspect.`}
                     aria-pressed={isSelected}
                     onClick={() => handleSelectSkill(skill.id)}
-                    onMouseEnter={() => setHoveredSkillId(skill.id)}
-                    onMouseLeave={() => setHoveredSkillId(null)}
+                    onMouseEnter={() => handleNodeMouseEnter(skill.id)}
+                    onMouseLeave={handleNodeMouseLeave}
                     onFocus={() => setFocusedSkillId(skill.id)}
                     onBlur={() => setFocusedSkillId(null)}
                     onKeyDown={(e) => handleNodeKeyDown(e, skill)}

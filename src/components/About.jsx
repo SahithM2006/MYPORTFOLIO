@@ -17,6 +17,7 @@ export default function About({ onSelectSkill, onSelectProject }) {
   const [isPanelMorphing, setIsPanelMorphing] = useState(false);
   const sectionRef = useRef(null);
   const headlineRef = useRef(null);
+  const photoRef = useRef(null);
 
   // Scroll-driven expressive headline wipe via GSAP ScrollTrigger
   useEffect(() => {
@@ -39,6 +40,26 @@ export default function About({ onSelectSkill, onSelectProject }) {
           }
         }
       );
+
+      if (photoRef.current) {
+        gsap.fromTo(
+          photoRef.current,
+          { opacity: 0, y: 24, scale: 0.97 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.85,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: photoRef.current,
+              start: 'top 88%',
+              toggleActions: 'play none none none',
+              once: true
+            }
+          }
+        );
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -86,80 +107,107 @@ export default function About({ onSelectSkill, onSelectProject }) {
           </h2>
         </div>
 
-        {/* Compact 2-Column Responsive Layout */}
-        <div className="about-streamlined-grid">
-          {/* Left Column: Focused Bio & Compact Education Detail */}
-          <div className="about-bio-column">
-            <p className="about-intro-paragraph">
-              I am <strong>Sahith M.</strong>, an AI &amp; Data Science technologist pursuing my B.Tech at{' '}
-              <strong>Saveetha Engineering College (Autonomous), Chennai</strong>. I build clean architectures connecting machine learning models, agentless security telemetry, and systems automation.
-            </p>
+        {/* Portrait + Bio Row */}
+        <div className="about-portrait-row">
 
-            <div className="about-compact-education" aria-label="Academic details">
-              <span className="edu-tag-icon" aria-hidden="true">🎓</span>
-              <div className="edu-details-text">
-                <span className="edu-degree-text">B.Tech in AI &amp; Data Science (3rd Year)</span>
-                <span className="edu-divider">&bull;</span>
-                <span className="edu-college-text">Saveetha Engineering College (Autonomous)</span>
-                <span className="edu-divider">&bull;</span>
-                <span className="edu-timeline-text">2022 &ndash; 2026</span>
+          {/* Real Photograph */}
+          <div className="about-portrait-col" ref={photoRef}>
+            <div className="about-portrait-frame">
+              <div className="about-portrait-inner">
+                <img
+                  src="./user_photo.jpg"
+                  alt="Sahith M. — AI & Data Science student, Saveetha Engineering College, Chennai"
+                  className="about-portrait-img"
+                  loading="eager"
+                  decoding="async"
+                  width="480"
+                  height="640"
+                />
               </div>
-            </div>
-
-            <div className="about-interaction-hint">
-              <span className="hint-indicator">✦</span>
-              <span>Select a focus area on the right to inspect technical scope and connected projects.</span>
+              <div className="about-portrait-badge" aria-hidden="true">
+                <span className="portrait-badge-dot"></span>
+                <span>Sahith M.</span>
+              </div>
             </div>
           </div>
 
-          {/* Right Column: Compact Category Selector & Single Shared Description Panel */}
-          <div className="about-focus-column">
-            {/* Compact Category Tabs */}
-            <div className="focus-category-tabs" role="tablist" aria-label="Technical focus areas">
-              {CATEGORIES.map((cat) => {
-                const isActive = activeCategoryKey === cat.key;
-                return (
-                  <button
-                    key={cat.key}
-                    className={`focus-pill-btn ${isActive ? 'active' : ''}`}
-                    role="tab"
-                    aria-selected={isActive}
-                    type="button"
-                    onClick={() => handleSelectCategory(cat.key)}
+          {/* Right: Bio + Focus Panel */}
+          <div className="about-bio-main-col">
+
+            {/* Bio */}
+            <div className="about-bio-column">
+              <p className="about-intro-paragraph">
+                I am <strong>Sahith M.</strong>, an AI &amp; Data Science technologist pursuing my B.Tech at{' '}
+                <strong>Saveetha Engineering College (Autonomous), Chennai</strong>. I build clean architectures connecting machine learning models, agentless security telemetry, and systems automation.
+              </p>
+
+              <div className="about-compact-education" aria-label="Academic details">
+                <span className="edu-tag-icon" aria-hidden="true">🎓</span>
+                <div className="edu-details-text">
+                  <span className="edu-degree-text">B.Tech in AI &amp; Data Science (3rd Year)</span>
+                  <span className="edu-divider">&bull;</span>
+                  <span className="edu-college-text">Saveetha Engineering College (Autonomous)</span>
+                  <span className="edu-divider">&bull;</span>
+                  <span className="edu-timeline-text">2022 &ndash; 2026</span>
+                </div>
+              </div>
+
+              <div className="about-interaction-hint">
+                <span className="hint-indicator">✦</span>
+                <span>Select a focus area below to inspect technical scope and connected projects.</span>
+              </div>
+            </div>
+
+            {/* Focus Column */}
+            <div className="about-focus-column">
+              {/* Category Tabs */}
+              <div className="focus-category-tabs" role="tablist" aria-label="Technical focus areas">
+                {CATEGORIES.map((cat) => {
+                  const isActive = activeCategoryKey === cat.key;
+                  return (
+                    <button
+                      key={cat.key}
+                      className={`focus-pill-btn ${isActive ? 'active' : ''}`}
+                      role="tab"
+                      aria-selected={isActive}
+                      type="button"
+                      onClick={() => handleSelectCategory(cat.key)}
+                    >
+                      <span className="pill-glyph">{cat.icon}</span>
+                      <span>{cat.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Shared Description Panel */}
+              <div
+                className={`about-shared-card ${isPanelMorphing ? 'morphing' : ''}`}
+                id="about-shared-panel"
+                aria-live="polite"
+              >
+                <div className="shared-card-header">
+                  <span className="shared-card-tag">{currentFocus.tag}</span>
+                  <a
+                    href={`#prj-${currentFocus.projectId}`}
+                    className="shared-project-link"
+                    onClick={(e) => handleJumpToProject(e, currentFocus.projectId)}
+                    title={`Jump to ${currentFocus.projectName}`}
                   >
-                    <span className="pill-glyph">{cat.icon}</span>
-                    <span>{cat.label}</span>
-                  </button>
-                );
-              })}
-            </div>
+                    <span>Project: {currentFocus.projectName}</span>
+                  </a>
+                </div>
 
-            {/* Single Shared Description Panel */}
-            <div
-              className={`about-shared-card ${isPanelMorphing ? 'morphing' : ''}`}
-              id="about-shared-panel"
-              aria-live="polite"
-            >
-              <div className="shared-card-header">
-                <span className="shared-card-tag">{currentFocus.tag}</span>
-                <a
-                  href={`#prj-${currentFocus.projectId}`}
-                  className="shared-project-link"
-                  onClick={(e) => handleJumpToProject(e, currentFocus.projectId)}
-                  title={`Jump to ${currentFocus.projectName}`}
-                >
-                  <span>Project: {currentFocus.projectName}</span>
-                </a>
-              </div>
+                <h3 className="shared-card-title">{currentFocus.title}</h3>
+                <p className="shared-card-description">{currentFocus.desc}</p>
 
-              <h3 className="shared-card-title">{currentFocus.title}</h3>
-              <p className="shared-card-description">{currentFocus.desc}</p>
-
-              <div className="shared-card-footer">
-                <span className="shared-stack-label">Core Stack:</span>
-                <span className="shared-stack-value">{currentFocus.tools}</span>
+                <div className="shared-card-footer">
+                  <span className="shared-stack-label">Core Stack:</span>
+                  <span className="shared-stack-value">{currentFocus.tools}</span>
+                </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>

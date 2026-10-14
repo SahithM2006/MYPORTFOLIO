@@ -282,7 +282,7 @@ export default function Certifications() {
             <div className="cert-modal-body">
               {previewCert.fileUrl.endsWith('.png') ? (
                 <div className="cert-modal-img-wrap">
-                  <img src={previewCert.fileUrl} alt={previewCert.title} className="cert-modal-img" />
+                  <img src={previewCert.fileUrl} alt={previewCert.title} className="cert-modal-img" loading="lazy" decoding="async" />
                 </div>
               ) : (
                 <iframe
