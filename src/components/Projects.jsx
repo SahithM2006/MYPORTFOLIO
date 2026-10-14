@@ -344,21 +344,23 @@ export default function Projects({
   const [isSimulating, setIsSimulating] = useState(false);
 
   const handleRunAttack = () => {
+    if (isSimulating) return;
     setIsSimulating(true);
     setAegisStep('attack');
     setTimeout(() => {
       setAegisStep('risk');
       setIsSimulating(false);
-    }, 650);
+    }, 1200);
   };
 
   const handleApplyFix = () => {
+    if (isSimulating) return;
     setIsSimulating(true);
     setAegisStep('fix');
     setTimeout(() => {
       setAegisStep('resim');
       setIsSimulating(false);
-    }, 650);
+    }, 1200);
   };
 
   const handleResetAegis = () => {
@@ -380,6 +382,53 @@ export default function Projects({
       onSelectProject(prjId);
     }
   };
+
+  // Continuous Scroll-linked Synchronization with Exhibition Engine
+  useEffect(() => {
+    const handleProjectFocus = (e) => {
+      if (e.detail && e.detail.projectId && e.detail.projectId !== activeSpotlight) {
+        setActiveSpotlight(e.detail.projectId);
+        if (onSelectProject) {
+          onSelectProject(e.detail.projectId);
+        }
+      }
+    };
+    window.addEventListener('project-focus-change', handleProjectFocus);
+    return () => window.removeEventListener('project-focus-change', handleProjectFocus);
+  }, [activeSpotlight, onSelectProject]);
+
+  // Direct IntersectionObserver for smooth project card focal alignment
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
+    const entries = document.querySelectorAll('.project-narrative-entry');
+    if (!entries.length) return;
+
+    const observer = new IntersectionObserver(
+      (observed) => {
+        let bestEntry = null;
+        observed.forEach((entry) => {
+          if (entry.isIntersecting) {
+            if (!bestEntry || entry.intersectionRatio > bestEntry.intersectionRatio) {
+              bestEntry = entry;
+            }
+          }
+        });
+        if (bestEntry && bestEntry.target && bestEntry.target.id && bestEntry.target.id !== activeSpotlight) {
+          setActiveSpotlight(bestEntry.target.id);
+          if (onSelectProject) {
+            onSelectProject(bestEntry.target.id);
+          }
+        }
+      },
+      {
+        rootMargin: '-15% 0px -35% 0px',
+        threshold: [0.25, 0.5, 0.75]
+      }
+    );
+
+    entries.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [activeSpotlight, onSelectProject]);
 
   // Copy Snippet Helper
   const copyTextToClipboard = (text, id) => {
@@ -757,7 +806,7 @@ export default function Projects({
                 <span>Enterprise Network Topology &bull; Select any asset node to inspect vulnerability details</span>
               </div>
 
-              <svg viewBox="0 0 760 215" className="aegis-graph-svg" aria-label="AEGIS-TWIN Cybersecurity Network Graph">
+              <svg viewBox="0 0 760 220" className="aegis-graph-svg" aria-label="AEGIS-TWIN Cybersecurity Network Graph">
                 <defs>
                   <filter id="cyanGlow" x="-30%" y="-30%" width="160%" height="160%">
                     <feGaussianBlur stdDeviation="3.5" result="blur" />
@@ -783,7 +832,7 @@ export default function Projects({
                 </defs>
 
                 {/* Tactical Cyber Grid Background */}
-                <rect width="760" height="215" className="aegis-grid-canvas" rx="10" />
+                <rect width="760" height="220" className="aegis-grid-canvas" rx="10" />
                 <line x1="0" y1="52" x2="760" y2="52" className="aegis-grid-line" strokeDasharray="4,4" />
                 <line x1="0" y1="162" x2="760" y2="162" className="aegis-grid-line" strokeDasharray="4,4" />
 

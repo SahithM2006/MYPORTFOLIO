@@ -142,6 +142,12 @@ export function initScrollEngine() {
           node.classList.toggle('active', match);
           node.setAttribute('aria-current', match ? 'true' : 'false');
         });
+
+        window.dispatchEvent(
+          new CustomEvent('project-focus-change', {
+            detail: { projectId: closestCard.id }
+          })
+        );
       }
     }
 

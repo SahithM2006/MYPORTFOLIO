@@ -198,9 +198,18 @@ export default function Experience() {
                     <a
                       href={RESUME_DATA.pdfUrl}
                       download={RESUME_DATA.pdfFilename}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="exp-btn-action primary"
                       id="exp-download-resume-btn"
                       title="Download verified placement resume PDF"
+                      onClick={(e) => {
+                        // Ensure direct trigger if browser blocks attribute
+                        if (typeof window !== 'undefined' && window.navigator && window.navigator.msSaveOrOpenBlob) {
+                          e.preventDefault();
+                          window.open(RESUME_DATA.pdfUrl, '_blank');
+                        }
+                      }}
                     >
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
@@ -208,6 +217,19 @@ export default function Experience() {
                         <line x1="12" y1="15" x2="12" y2="3" />
                       </svg>
                       <span>Download Resume (PDF)</span>
+                    </a>
+
+                    <a
+                      href="#resume"
+                      className="exp-btn-action secondary exp-btn-view-resume"
+                      id="exp-view-resume-btn"
+                      title="Inspect full resume and document viewer"
+                    >
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                      <span>View Resume Document →</span>
                     </a>
 
                     <a

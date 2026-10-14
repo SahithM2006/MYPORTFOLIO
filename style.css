@@ -2458,24 +2458,23 @@ input[type="range"] {
 .projects-sticky-column {
   position: sticky;
   top: 88px;
-  height: calc(100vh - 108px);
-  min-height: 500px;
-  max-height: 760px;
   align-self: flex-start;
   z-index: 40;
   display: flex;
   flex-direction: column;
+  max-height: calc(100vh - 96px);
 }
 
 .sticky-exhibit-card {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  max-height: calc(100vh - 96px);
   background: #0A1626;
   border: 1px solid var(--border-projects);
   border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .sticky-stage-topbar {
@@ -2532,7 +2531,9 @@ input[type="range"] {
 .sticky-stage-content {
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(92, 135, 166, 0.25) transparent;
+  padding: 18px 20px;
 }
 
 .sticky-stage-content .project-interactive-exhibit {
@@ -3295,8 +3296,6 @@ input[type="range"] {
 .aegis-graph-svg {
   width: 100%;
   height: auto;
-  min-height: 200px;
-  max-height: 260px;
   display: block;
 }
 
@@ -4634,6 +4633,44 @@ input[type="range"] {
   background: var(--color-jade);
   color: #07101E;
   border-color: var(--color-jade);
+}
+
+.email-mailto-link {
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.email-mailto-link:hover {
+  color: var(--color-amber);
+}
+
+.email-buttons-cluster {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-open-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(45, 212, 191, 0.12);
+  border: 1px solid rgba(45, 212, 191, 0.35);
+  color: var(--color-teal);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-open-email:hover {
+  background: var(--color-teal);
+  color: #07101E;
+  transform: translateY(-2px);
 }
 
 .copy-feedback {

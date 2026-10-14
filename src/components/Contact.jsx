@@ -103,17 +103,36 @@ export default function Contact() {
             <div className="copy-email-card">
               <span className="card-kicker">DIRECT EMAIL</span>
               <div className="email-action-row">
-                <span className="email-string" id="email-address">sahithm2006@gmail.com</span>
-                <button
-                  className={`btn-copy-email ${isCopied ? 'copied' : ''}`}
-                  id="btn-copy-email"
-                  aria-label={isCopied ? 'Email address copied' : 'Copy email address to clipboard'}
-                  type="button"
-                  onClick={copyEmail}
+                <a
+                  href="mailto:sahithm2006@gmail.com"
+                  className="email-string email-mailto-link"
+                  id="email-address"
+                  title="Click to compose email to sahithm2006@gmail.com"
                 >
-                  <span className="copy-icon" aria-hidden="true">{isCopied ? '✓' : '📋'}</span>
-                  <span className="copy-text">{isCopied ? 'Copied!' : 'Copy'}</span>
-                </button>
+                  sahithm2006@gmail.com
+                </a>
+                <div className="email-buttons-cluster">
+                  <button
+                    className={`btn-copy-email ${isCopied ? 'copied' : ''}`}
+                    id="btn-copy-email"
+                    aria-label={isCopied ? 'Email address copied' : 'Copy email address to clipboard'}
+                    type="button"
+                    onClick={copyEmail}
+                  >
+                    <span className="copy-icon" aria-hidden="true">{isCopied ? '✓' : '📋'}</span>
+                    <span className="copy-text">{isCopied ? 'Copied!' : 'Copy'}</span>
+                  </button>
+                  <a
+                    href="mailto:sahithm2006@gmail.com"
+                    className="btn-open-email"
+                    id="btn-open-email"
+                    title="Open in your default email client"
+                    aria-label="Open email client"
+                  >
+                    <span className="open-icon" aria-hidden="true">↗</span>
+                    <span className="open-text">Send</span>
+                  </a>
+                </div>
               </div>
               {copyFeedback && <span className="copy-feedback" id="copy-feedback" aria-live="polite">{copyFeedback}</span>}
             </div>
