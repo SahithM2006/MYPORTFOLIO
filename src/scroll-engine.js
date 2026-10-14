@@ -108,48 +108,8 @@ export function initScrollEngine() {
     const winH = cachedGeometry.winH;
     const focusY = scrollTop + winH * 0.45;
 
-    // Active Project Spotlight Tracking in Exhibition (strictly bounded within Projects section)
-    const projectsTop = cachedGeometry.projects.top;
-    const projectsHeight = cachedGeometry.projects.height || 1800;
-    const projectsEnd = projectsTop + projectsHeight;
-
-    if (cachedGeometry.cards.length > 0 && focusY >= projectsTop - 200 && focusY <= projectsEnd + 60) {
-      let closestCard = null;
-      let minDistance = Infinity;
-
-      for (let i = 0; i < cachedGeometry.cards.length; i++) {
-        const c = cachedGeometry.cards[i];
-        if (!c.el || c.el.style.display === 'none') continue;
-        const cardCenterY = (c.top - scrollTop) + (c.height || 400) * 0.35;
-        const dist = Math.abs(cardCenterY - winH * 0.45);
-        if (dist < minDistance) {
-          minDistance = dist;
-          closestCard = c;
-        }
-      }
-
-      if (closestCard && closestCard.id !== lastActiveCardId) {
-        lastActiveCardId = closestCard.id;
-        document.documentElement.style.setProperty('--active-project-color', closestCard.color);
-
-        cachedGeometry.cards.forEach((c) => {
-          c.el.classList.toggle('active-spotlight', c.id === closestCard.id);
-        });
-
-        const stepperNodes = document.querySelectorAll('.stepper-node');
-        stepperNodes.forEach((node) => {
-          const match = node.getAttribute('data-project') === closestCard.id;
-          node.classList.toggle('active', match);
-          node.setAttribute('aria-current', match ? 'true' : 'false');
-        });
-
-        window.dispatchEvent(
-          new CustomEvent('project-focus-change', {
-            detail: { projectId: closestCard.id }
-          })
-        );
-      }
-    }
+    // Active Project Spotlight Tracking is handled authoritatively by Projects.jsx IntersectionObserver
+    // to avoid dual-observer fighting, stale geometry caching, and rapid state flapping.
 
     scrollTicking = false;
   }
