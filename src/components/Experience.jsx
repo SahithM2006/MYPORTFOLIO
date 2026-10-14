@@ -131,7 +131,7 @@ export default function Experience() {
                     <li className="exp-resp-item">
                       <span className="exp-resp-bullet" aria-hidden="true">▸</span>
                       <span>
-                        Academic coursework, competitive hackathon prototypes (AEGIS-TWIN, CSI Origin, Probe360), and professional certifications are curated in their dedicated sections to maintain strict fidelity between pre-professional education and verified industry employment.
+                        Academic coursework, competitive hackathon prototypes (AEGIS-TWIN, Mule Matrix, Probe360), and professional certifications are curated in their dedicated sections to maintain strict fidelity between pre-professional education and verified industry employment.
                       </span>
                     </li>
                     <li className="exp-resp-item">

@@ -18,7 +18,7 @@ const SKILL_DETAILS = {
     desc: 'Primary language for high-throughput backend services, remote systems telemetry collection via WinRM, automated OS interaction, and Scikit-learn/OpenCV scientific pipelines.',
     projects: [
       { name: 'Probe360', id: 'prj-probe360' },
-      { name: 'CSI Origin', id: 'prj-csi-origin' },
+      { name: 'Mule Matrix', id: 'prj-mule-matrix' },
       { name: 'AI Carbon Intelligence', id: 'prj-carbon' },
       { name: 'AEGIS-TWIN Digital Twin', id: 'prj-aegis' },
       { name: 'DIP Experiments', id: 'prj-dip' }
@@ -77,7 +77,7 @@ const SKILL_DETAILS = {
     title: 'SQL',
     desc: 'Declarative queries, relational schema design, indexing strategies, and transactional data integrity across Postgres financial ledgers and system stores.',
     projects: [
-      { name: 'CSI Origin', id: 'prj-csi-origin' }
+      { name: 'Mule Matrix', id: 'prj-mule-matrix' }
     ]
   },
   'fastapi': {
@@ -85,7 +85,7 @@ const SKILL_DETAILS = {
     title: 'FastAPI',
     desc: 'High-throughput asynchronous Python web framework providing typed REST endpoints and automatic OpenAPI documentation.',
     projects: [
-      { name: 'CSI Origin', id: 'prj-csi-origin' }
+      { name: 'Mule Matrix', id: 'prj-mule-matrix' }
     ]
   },
   'rest-apis': {
@@ -93,7 +93,7 @@ const SKILL_DETAILS = {
     title: 'REST APIs',
     desc: 'Stateless HTTP service design, structured error payloads, JSON serialization, and status code discipline.',
     projects: [
-      { name: 'CSI Origin', id: 'prj-csi-origin' }
+      { name: 'Mule Matrix', id: 'prj-mule-matrix' }
     ]
   },
   'pydantic': {
@@ -101,7 +101,7 @@ const SKILL_DETAILS = {
     title: 'Pydantic',
     desc: 'Strict runtime data validation, frozen Pydantic contracts, and serialization boundaries between autonomous optimization engines and APIs.',
     projects: [
-      { name: 'CSI Origin', id: 'prj-csi-origin' }
+      { name: 'Mule Matrix', id: 'prj-mule-matrix' }
     ]
   },
   'winrm': {
@@ -148,7 +148,7 @@ const SKILL_DETAILS = {
     title: 'Workflow Automation',
     desc: 'End-to-end data pipeline automation, schema harmonization queues, and event-driven trigger architectures.',
     projects: [
-      { name: 'CSI Origin', id: 'prj-csi-origin' },
+      { name: 'Mule Matrix', id: 'prj-mule-matrix' },
       { name: 'Probe360', id: 'prj-probe360' }
     ]
   }
@@ -181,12 +181,12 @@ const INTEREST_DATA = {
     projectId: '#prj-aegis'
   },
   'software': {
-    tag: 'DOMAIN // AUTONOMOUS AGENTS &amp; TREASURY OPTIMIZATION',
-    title: 'Constrained Optimization & Decision Systems',
-    desc: 'Engineering autonomous decision systems pairing 90-day Monte Carlo cash simulations with scenario MILP optimization and numerically grounded plain-English explanations.',
-    tools: 'Python &bull; FastAPI &bull; PuLP (MILP) &bull; NumPy',
-    projectText: 'CSI Origin Treasury Agent &rarr;',
-    projectId: '#prj-csi-origin'
+    tag: 'DOMAIN // FINANCIAL GRAPH INTELLIGENCE &amp; FRAUD ANALYTICS',
+    title: 'Financial Graph Intelligence & Mule Network Tracing',
+    desc: 'Combining simulated programmable CBDC/e₹ transaction lineage with temporal graph intelligence to trace suspicious multi-hop fund movements, identify money-mule networks, and highlight potential cash-out points.',
+    tools: 'Python &bull; NetworkX &bull; NumPy &bull; Pydantic &bull; SQL',
+    projectText: 'Mule Matrix &rarr;',
+    projectId: '#prj-mule-matrix'
   }
 };
 

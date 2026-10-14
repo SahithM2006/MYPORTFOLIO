@@ -259,168 +259,157 @@ export const ARCHITECTURE_PROJECTS = [
   },
 
   {
-    id: 'csi-origin',
-    projectId: 'prj-csi-origin',
+    id: 'mule-matrix',
+    projectId: 'prj-mule-matrix',
     number: '02',
-    name: 'CSI Origin (HELM)',
-    fullTitle: 'CSI Origin — HELM: Autonomous Working-Capital Management Agent',
-    category: 'Autonomous Treasury Agent',
-    accentColor: '#2DD4A7',
-    accentGlow: 'rgba(45, 212, 167, 0.35)',
-    status: 'Hackathon Prototype • CSI ORIGIN 2026',
-    statusType: 'hackathon',
-    lead: 'Autonomous treasury agent engineered for CSI ORIGIN 2026 (Problem Statement 4, Team XYRUS). Replaces static corporate payment rules with 90-day Monte Carlo cash forecasting, scenario-constrained MILP optimization, and numerically grounded plain-English decision narratives.',
-    summary: 'HELM is engineered as a pure-function decision engine over State. For every daily state, it computes deployable_cash via 90-day Monte Carlo cash-flow simulations over receivable delays, financing costs, and obligations. A scenario Mixed-Integer Linear Program (MILP via PuLP/CBC with a 2s greedy fallback) evaluates every open invoice (PAY_EARLY_DISCOUNT, HOLD, FINANCE_SUPPLIER), capturing discounts while maintaining mandatory liquidity safety floors. The decision object is narrated in plain English by an explainer verified against strict numeric grounding checks.',
+    name: 'Mule Matrix',
+    fullTitle: 'Mule Matrix — Intelligent Financial Fraud Detection & Money-Mule Network Tracing',
+    category: 'Financial Fraud Analytics',
+    accentColor: '#2DD4BF',
+    accentGlow: 'rgba(45, 212, 191, 0.35)',
+    status: 'Analytical Prototype • Graph Intelligence',
+    statusType: 'implemented',
+    lead: 'An analytical platform combining programmable CBDC/e₹ transaction lineage with temporal graph intelligence to trace suspicious fund movements, identify connected money-mule networks, and highlight potential cash-out points for investigation.',
+    summary: 'Mule Matrix is an analytical investigation platform designed to uncover multi-layered money laundering and money-mule networks within simulated programmable digital currency environments. By structuring simulated programmable e₹ token transfers as a temporal directed graph, the platform models accounts as nodes and timestamped transactions as directed edges. Recursive lineage tracing and NetworkX temporal graph heuristics reconstruct complex fund dispersal flows—from initial suspicious sources through rapid intermediary mule hops to potential cash-out endpoints. Every risk flag is generated as an explainable investigation finding with transparent transaction evidence, strictly distinguishing verified prototype graph algorithms from proposed future enterprise integrations without claiming live banking or RBI connections.',
     
-    // Only relevant layers for CSI Origin
+    // 5 Conceptual Architectural Layers
     layers: [
       {
-        id: 'frontend',
-        name: 'Frontend / Interface',
-        icon: 'layout',
-        roleSummary: 'Interactive corporate treasury dashboard displaying cash trajectories, MILP decisions, and chaos shock controls.',
-        technologies: [
-          {
-            id: 'treasury-dashboard',
-            name: 'Treasury Command Dashboard & Chaos Panel',
-            icon: 'layout',
-            status: 'implemented',
-            statusLabel: 'Verified Implemented',
-            role: 'Interactive web UI displaying deployable cash metrics, liquidity floor bounds, solver execution speed, and emergency shock triggers.',
-            whyUsed: 'Corporate treasurers require clear real-time visibility into solver trade-offs, invoice status, and the immediate financial impact of emergency shocks.',
-            connections: 'Invokes FastAPI backend endpoints (/forecast, /optimize, /chaos-shock, /explain) and renders plain-English decision narratives.',
-            codeSpecs: 'Interactive React components, metric pills, telemetry consoles, state controls.'
-          }
-        ]
-      },
-      {
-        id: 'backend',
-        name: 'Backend / API',
-        icon: 'server',
-        roleSummary: 'High-throughput asynchronous Python web framework providing typed REST routes and strict data validation contracts.',
-        technologies: [
-          {
-            id: 'fastapi-backend',
-            name: 'FastAPI Async Framework',
-            icon: 'fastapi',
-            status: 'implemented',
-            statusLabel: 'Verified Implemented',
-            role: 'Asynchronous HTTP microservice handling requests for cash forecasting, invoice optimization runs, and shock scenario injections.',
-            whyUsed: 'Provides ultra-fast async request handling (<150ms solver responses), automatic OpenAPI documentation, and native Pydantic type safety.',
-            connections: 'Exposes HTTP endpoints to frontend dashboard; delegates computation to NumPy Monte Carlo and PuLP MILP solvers.',
-            codeSpecs: 'FastAPI 0.100+, Async route handlers, OpenAPI / Swagger documentation.'
-          },
-          {
-            id: 'pydantic-contracts',
-            name: 'Pydantic Runtime Validation Contracts',
-            icon: 'check-circle',
-            status: 'implemented',
-            statusLabel: 'Verified Implemented',
-            role: 'Strict data validation models defining immutable corporate invoice schemas, cash balance states, and supplier credit terms.',
-            whyUsed: 'Prevents numeric anomalies and malformed state representations from propagating into the mathematical linear programming solver.',
-            connections: 'Validates raw incoming ledger inputs before passing them to the solver; enforces frozen schemas on decision outputs.',
-            codeSpecs: 'Pydantic v2 BaseModel, Field validators, strict typing schemas.'
-          }
-        ]
-      },
-      {
-        id: 'ai-ml',
-        name: 'AI / ML / Optimization Engines',
-        icon: 'cpu',
-        roleSummary: 'Vectorized Monte Carlo liquidity simulations, Mixed-Integer Linear Programming, and numerically grounded LLM explainability.',
-        technologies: [
-          {
-            id: 'numpy-monte-carlo',
-            name: 'NumPy 90-Day Monte Carlo Cash Forecaster',
-            icon: 'numpy',
-            status: 'implemented',
-            statusLabel: 'Verified Implemented',
-            role: 'Vectorized mathematical engine simulating 10,000 cash trajectory paths over 90-day horizon, computing P10/P50/P90 quantile bounds.',
-            whyUsed: 'NumPy vectorized C-bindings complete 10,000 90-day simulation iterations in 84ms, accurately discovering binding liquidity constraint dates.',
-            connections: 'Calculates deployable_cash above the mandatory ₹10.0L liquidity floor; feeds liquidity bounds to the MILP optimizer.',
-            codeSpecs: 'NumPy vectorized arrays, random distribution generators, quantile calculations (P10, P50, P90).'
-          },
-          {
-            id: 'pulp-milp-solver',
-            name: 'PuLP / COIN-OR CBC Scenario MILP Optimizer',
-            icon: 'cpu',
-            status: 'implemented',
-            statusLabel: 'Verified Implemented',
-            role: 'Formulates and solves Mixed-Integer Linear Programs across open invoices (PAY_EARLY_DISCOUNT, HOLD, FINANCE_SUPPLIER) to minimize working capital costs.',
-            whyUsed: 'Guarantees global mathematical optimality within 142ms; includes a deterministic 2-second greedy fallback algorithm if the solver ever exceeds timeout.',
-            connections: 'Receives deployable cash constraints from Monte Carlo; evaluates invoice terms; outputs optimal discrete action decisions.',
-            codeSpecs: 'PuLP Linear Programming library, COIN-OR CBC branch-and-cut solver, 2s greedy heuristic fallback.'
-          },
-          {
-            id: 'grounded-explainer',
-            name: 'Numerically Grounded LLM Decision Explainer',
-            icon: 'message',
-            status: 'implemented',
-            statusLabel: 'Verified Implemented',
-            role: 'Generates plain-English narrative justifications of solver decisions, audited against strict numeric grounding checks to prevent hallucination.',
-            whyUsed: 'Corporate treasurers must understand WHY an action was taken (e.g. why early discount was forfeited under GST shock) with 100% reconciled numbers.',
-            connections: 'Consumes MILP decisions and Monte Carlo metrics; verifies generated numbers match engine state; streams narratives to dashboard.',
-            codeSpecs: 'Groq API / deterministic rule-based template fallback, arithmetic reconciliation auditors.'
-          }
-        ]
-      },
-      {
-        id: 'database',
-        name: 'Database / Persistence',
+        id: 'simulation',
+        name: '1. Transaction Data & Simulation',
         icon: 'database',
-        roleSummary: 'Relational data store maintaining invoice registries, accounts payable/receivable ledgers, and immutable decision audit trails.',
+        roleSummary: 'Synthetic programmable e₹ transaction generator and ledger simulation modeling token metadata, wallet identities, and fund lineages.',
         technologies: [
           {
-            id: 'postgresql-ledger',
-            name: 'PostgreSQL Relational Ledger',
+            id: 'synthetic-tx-engine',
+            name: 'Synthetic e₹ Transaction Generator',
             icon: 'database',
             status: 'implemented',
             statusLabel: 'Verified Implemented',
-            role: 'Relational database schema storing invoice registers, historical liquidity snapshots, financing line terms, and audit decision logs.',
-            whyUsed: 'Provides ACID transactional guarantees essential for financial ledgers, preventing corrupted or incomplete treasury state.',
-            connections: 'Provides state persistence for FastAPI backend services; logs every decision diff and shock event.',
-            codeSpecs: 'PostgreSQL relational schemas, indexed invoice tables, transactional audit logs.'
+            role: 'Generates synthetic programmable e₹ transaction datasets, including wallet keys, transfer amounts, programmable condition tags, and temporal timestamps.',
+            whyUsed: 'Provides realistic multi-party fund flows for testing mule patterns without accessing private banking records or claiming live RBI/CBDC infrastructure connection.',
+            connections: 'Emits structured synthetic transaction streams into the Transaction Lineage Engine.',
+            codeSpecs: 'Python synthetic data generator, Pydantic transaction models, simulated e₹ parameter schemas.'
+          },
+          {
+            id: 'tx-metadata-store',
+            name: 'Transaction Metadata & Lineage Ledger',
+            icon: 'server',
+            status: 'implemented',
+            statusLabel: 'Verified Implemented',
+            role: 'In-memory relational schema recording transaction identifiers, sender/receiver wallet mappings, timestamps, and transfer amounts.',
+            whyUsed: 'Maintains immutable transaction histories essential for deterministic lineage reconstruction and chronological ordering.',
+            connections: 'Supplies raw transaction records to the lineage traversal algorithms and temporal graph builder.',
+            codeSpecs: 'Normalized transaction records, indexed wallet mapping tables.'
           }
         ]
       },
       {
-        id: 'infrastructure',
-        name: 'Infrastructure / External Integration',
+        id: 'lineage',
+        name: '2. Transaction Lineage Engine',
         icon: 'network',
-        roleSummary: 'Version control automation and planned real-time enterprise ERP and banking protocol adapters.',
+        roleSummary: 'Multi-hop fund tracking engine reconstructing end-to-end movement paths from origin sources through intermediary accounts to exit points.',
         technologies: [
           {
-            id: 'git-automation',
-            name: 'Git Version Control & CI/CD',
-            icon: 'git',
-            status: 'development',
-            statusLabel: 'Development Tooling',
-            role: 'Version control branch workflows, regression test suites, and hackathon prototype deployment pipelines.',
-            whyUsed: 'Ensures deterministic reproduction of optimization test cases across team members.',
-            connections: 'Repository version control and deployment pipeline.',
-            codeSpecs: 'Git version control, automated test scripts.'
-          },
-          {
-            id: 'erp-streaming',
-            name: 'Real-Time ERP Ledger WebSocket Streaming',
+            id: 'recursive-lineage-tracer',
+            name: 'Recursive Fund Flow Lineage Tracer',
             icon: 'network',
-            status: 'planned',
-            statusLabel: 'Roadmap / Planned',
-            role: 'Live WebSocket event ingestion from SAP / Oracle ERP systems to re-trigger optimization immediately upon invoice posting.',
-            whyUsed: 'Moves treasury management from batch-oriented daily runs to continuous event-driven optimization.',
-            connections: 'Will stream live invoice events directly into the FastAPI gateway.',
-            codeSpecs: 'WebSocket full-duplex protocol, ERP event-driven webhook connectors.'
+            status: 'implemented',
+            statusLabel: 'Verified Implemented',
+            role: 'Recursively walks parent-child transaction chains, tracking fund splits (fan-out), aggregations (fan-in), and multi-layer hop counts across wallets.',
+            whyUsed: 'Money mules systematically split and bounce funds across intermediary accounts; recursive tracing reconstructs complete provenance trails.',
+            connections: 'Transports reconstructed lineage paths and hop sequence metrics into the Temporal Graph Intelligence model.',
+            codeSpecs: 'Recursive graph traversal algorithms, transaction sequence preservation logic.'
+          }
+        ]
+      },
+      {
+        id: 'graph',
+        name: '3. Temporal Graph Intelligence',
+        icon: 'cpu',
+        roleSummary: 'Directed temporal multigraph engine modeling account clusters, velocity anomalies, and coordinated money-mule network topologies.',
+        technologies: [
+          {
+            id: 'networkx-temporal-graph',
+            name: 'NetworkX Directed Temporal Multigraph',
+            icon: 'cpu',
+            status: 'implemented',
+            statusLabel: 'Verified Implemented',
+            role: 'Models accounts as nodes and transactions as directed, timestamp-attributed edges; evaluates in/out degree ratios, betweenness centrality, and time deltas.',
+            whyUsed: 'Identifies coordinated network-level anomalies (e.g. rapid fan-out layering and pooling) that remain invisible when inspecting individual transactions in isolation.',
+            connections: 'Supplies detected mule cluster subgraphs and network anomaly vectors to the Risk Analysis Engine.',
+            codeSpecs: 'NetworkX directed multigraph, temporal sliding-window filters (<30 min), degree anomaly evaluators.'
           },
           {
-            id: 'bank-credit-api',
-            name: 'Multi-Bank Credit Facility API Orchestration',
-            icon: 'shield',
+            id: 'tgnn-embeddings',
+            name: 'Temporal Graph Neural Network (TGNN) Embeddings',
+            icon: 'radar',
             status: 'planned',
-            statusLabel: 'Roadmap / Planned',
-            role: 'Automated integration with open banking APIs to execute overdraft draws when FINANCE_SUPPLIER decisions are chosen.',
-            whyUsed: 'Automates the physical movement of funds based on optimization recommendations.',
-            connections: 'Will connect solver output actions to banking partner gateways.',
-            codeSpecs: 'Open Banking REST APIs, mutual TLS banking endpoints.'
+            statusLabel: 'Roadmap / Proposed',
+            role: 'Proposed dynamic graph embedding model to automatically classify evolving money-mule topologies without handcrafted heuristic thresholds.',
+            whyUsed: 'Planned direction to generalize network anomaly detection across unseen laundering topologies.',
+            connections: 'Planned pipeline to ingest temporal edge sequences and output cluster classification scores.',
+            codeSpecs: 'Proposed TGNN architecture (unspecified; requires framework confirmation prior to production).'
+          },
+          {
+            id: 'enterprise-graph-db',
+            name: 'Distributed Enterprise Graph Database',
+            icon: 'database',
+            status: 'planned',
+            statusLabel: 'Roadmap / Proposed',
+            role: 'Proposed persistent graph database layer (e.g., Neo4j / TigerGraph) to scale graph traversals to production enterprise transaction volumes.',
+            whyUsed: 'Scales analysis beyond in-memory prototypes to millions of concurrent banking transactions.',
+            connections: 'Planned backend persistence for high-throughput transactional edge queries.',
+            codeSpecs: 'Proposed graph database connector (unspecified; requires confirmation).'
+          }
+        ]
+      },
+      {
+        id: 'risk',
+        name: '4. Risk Analysis & Investigation',
+        icon: 'shield',
+        roleSummary: 'Explainable heuristic risk scoring and cash-out identification engine synthesizing evidence into transparent investigation findings.',
+        technologies: [
+          {
+            id: 'explainable-risk-scorer',
+            name: 'Explainable Anomaly & Risk Scorer',
+            icon: 'shield',
+            status: 'implemented',
+            statusLabel: 'Verified Implemented',
+            role: 'Evaluates transaction velocity, hop distances, rapid balance drains, and structural fan-out/in ratios to produce normalized risk scores with plain-text evidence.',
+            whyUsed: 'Treats alerts as actionable risk leads requiring human investigation rather than opaque black-box proof of criminal culpability.',
+            connections: 'Feeds structured risk findings and flagged wallet dossiers into the Visualisation Dashboard.',
+            codeSpecs: 'Weighted heuristic risk rules, explainable factor breakdowns, confidence-bounded severity scores.'
+          },
+          {
+            id: 'cashout-detector',
+            name: 'High-Risk Cash-Out Point Detector',
+            icon: 'radar',
+            status: 'implemented',
+            statusLabel: 'Verified Implemented',
+            role: 'Pinpoints terminal sink nodes where funds concentrate following multi-hop layering (e.g., ATM withdrawals, P2P off-ramps, high-velocity merchant transfers).',
+            whyUsed: 'Enables investigators to focus interventions directly on the critical cash-out exit points before funds leave the traceable network.',
+            connections: 'Highlights exit wallets on the network diagram and surfaces them in the investigation ledger.',
+            codeSpecs: 'Sink-node flow concentration heuristics, terminal node velocity checks.'
+          }
+        ]
+      },
+      {
+        id: 'visualisation',
+        name: '5. Visualisation & Reporting',
+        icon: 'layout',
+        roleSummary: 'Interactive compliance investigation dashboard displaying fund-flow lineages, account cluster topology, and structured case summaries.',
+        technologies: [
+          {
+            id: 'investigation-dashboard',
+            name: 'Interactive Investigation Console & Flow Visualizer',
+            icon: 'layout',
+            status: 'implemented',
+            statusLabel: 'Verified Implemented',
+            role: 'Interactive UI allowing compliance analysts to explore fund-flow lineage graphs, inspect flagged mule nodes, and view chronological transaction evidence.',
+            whyUsed: 'Provides intuitive visual evidence essential for compliance teams and financial intelligence units (FIUs) to review and escalate cases.',
+            connections: 'Renders output from the Risk Analysis Engine and NetworkX graph model.',
+            codeSpecs: 'React interactive canvas, topology visualizers, metric cards, telemetry consoles.'
           }
         ]
       }
@@ -429,122 +418,114 @@ export const ARCHITECTURE_PROJECTS = [
     flow: {
       nodes: [
         {
-          id: 'n-ledger-in',
-          title: 'ERP Ledger / Invoices',
-          subtitle: 'Accounts Payable State',
-          tech: 'PostgreSQL / JSON State',
-          layer: 'database',
+          id: 'n-sim-tx',
+          title: 'Synthetic e₹ Engine',
+          subtitle: 'Simulated Token Transfers',
+          tech: 'Python / Synthetic e₹ Environment',
+          layer: 'simulation',
           status: 'implemented'
         },
         {
-          id: 'n-api-gateway',
-          title: 'FastAPI Gateway',
-          subtitle: 'Typed Async Endpoints',
-          tech: 'FastAPI & Pydantic',
-          layer: 'backend',
+          id: 'n-lineage-tracer',
+          title: 'Transaction Lineage Engine',
+          subtitle: 'Multi-Hop Provenance Traversal',
+          tech: 'Recursive Lineage Walker',
+          layer: 'lineage',
           status: 'implemented'
         },
         {
-          id: 'n-monte-carlo',
-          title: 'Monte Carlo Engine',
-          subtitle: '10k Paths / 90-Day Quantiles',
-          tech: 'NumPy Vectorized (84ms)',
-          layer: 'ai-ml',
+          id: 'n-temporal-graph',
+          title: 'Temporal Graph Model',
+          subtitle: 'Nodes: Accounts | Edges: e₹ Transfers',
+          tech: 'NetworkX Directed Multigraph',
+          layer: 'graph',
           status: 'implemented'
         },
         {
-          id: 'n-milp-opt',
-          title: 'Scenario MILP Solver',
-          subtitle: 'Early Pay vs Hold vs Finance',
-          tech: 'PuLP / CBC Solver (142ms)',
-          layer: 'ai-ml',
+          id: 'n-cluster-detector',
+          title: 'Mule Cluster Analyzer',
+          subtitle: 'Coordinated Fan-Out / Fan-In',
+          tech: 'Temporal Window Clustering (<30m)',
+          layer: 'graph',
           status: 'implemented'
         },
         {
-          id: 'n-chaos-shock',
-          title: 'Chaos Shock Trigger',
-          subtitle: 'GST Notice / Liquidity Drain',
-          tech: 'Threshold Event Resolver',
-          layer: 'backend',
+          id: 'n-risk-findings',
+          title: 'Risk & Evidence Analyzer',
+          subtitle: 'Explainable Investigative Alerts',
+          tech: 'Rule-Based Anomaly Scorer',
+          layer: 'risk',
           status: 'implemented'
         },
         {
-          id: 'n-explainer',
-          title: 'Grounded Explainer',
-          subtitle: 'Reconciled Plain-English',
-          tech: 'Groq / Deterministic Audit',
-          layer: 'ai-ml',
-          status: 'implemented'
-        },
-        {
-          id: 'n-ui-dash',
-          title: 'Treasury Dashboard',
-          subtitle: 'Decision Diff & Metrics',
-          tech: 'Interactive React Console',
-          layer: 'frontend',
+          id: 'n-cashout-report',
+          title: 'Investigation Visualizer',
+          subtitle: 'Cash-Out Leads & Case Summary',
+          tech: 'Interactive Investigation Console',
+          layer: 'visualisation',
           status: 'implemented'
         }
       ],
       links: [
-        { from: 'n-ledger-in', to: 'n-api-gateway', label: 'Raw Invoice Ledgers', protocol: 'SQL Queries' },
-        { from: 'n-api-gateway', to: 'n-monte-carlo', label: 'Validated Treasury State', protocol: 'Pydantic Contracts' },
-        { from: 'n-monte-carlo', to: 'n-milp-opt', label: 'Deployable Cash & P10/P50/P90', protocol: 'Liquidity Floor Constraints' },
-        { from: 'n-chaos-shock', to: 'n-milp-opt', label: 'Emergency Shock Re-solve', protocol: 'Materiality Trigger (>0.4)' },
-        { from: 'n-milp-opt', to: 'n-explainer', label: 'Discrete Action Decisions', protocol: 'Solution Vectors' },
-        { from: 'n-explainer', to: 'n-ui-dash', label: 'Narrative & Metric Diffs', protocol: 'Audited Text Stream' }
+        { from: 'n-sim-tx', to: 'n-lineage-tracer', label: 'Synthetic e₹ Batches', protocol: 'Simulated Ledger Stream' },
+        { from: 'n-lineage-tracer', to: 'n-temporal-graph', label: 'Reconstructed Multi-Hop Paths', protocol: 'Chronological Directed Edges' },
+        { from: 'n-temporal-graph', to: 'n-cluster-detector', label: 'Graph Topology & Centrality', protocol: 'Adjacency & In/Out Ratios' },
+        { from: 'n-cluster-detector', to: 'n-risk-findings', label: 'Layering & Aggregation Subgraphs', protocol: 'Structural Anomaly Vectors' },
+        { from: 'n-risk-findings', to: 'n-cashout-report', label: 'Explainable Evidence & Cash-Out Leads', protocol: 'Investigation Summary Stream' }
       ],
       steps: [
         {
           num: '01',
-          name: 'Ledger Ingestion & Pydantic Validation',
-          desc: 'Current accounts payable, receivable schedules, and liquidity covenants are ingested via FastAPI and frozen into immutable Pydantic models.'
+          name: 'Synthetic Transaction & Lineage Ingestion',
+          desc: 'Simulated programmable digital currency (e₹) transactions are generated with token metadata, wallet identities, and timestamps without claiming live banking connections.'
         },
         {
           num: '02',
-          name: '90-Day Vectorized Monte Carlo Forecasting',
-          desc: 'NumPy executes 10,000 random-walk iterations in 84ms, projecting cash trajectories and computing deployable_cash above the ₹10.0L safety floor.'
+          name: 'Multi-Hop Fund Lineage Reconstruction',
+          desc: 'The lineage engine reconstructs sequential fund-movement paths, tracking parent-child transactions from source wallets through intermediary accounts.'
         },
         {
           num: '03',
-          name: 'Scenario Mixed-Integer Linear Optimization',
-          desc: 'PuLP/CBC evaluates discrete choices (Pay Early, Hold, Finance) per invoice in 142ms, maximizing captured discounts without breaching floors.'
+          name: 'Temporal Directed Graph Modeling',
+          desc: 'Accounts are structured as nodes and timestamped transactions as directed edges within NetworkX to capture time-window relationships (<30 minutes).'
         },
         {
           num: '04',
-          name: 'Chaos Shock Injection & Dynamic Action Flip',
-          desc: 'When an unexpected shock occurs (e.g. ₹9.0L GST notice), materiality triggers immediate re-solve, flipping decisions to protect mandatory solvency.'
+          name: 'Coordinated Mule Network Detection',
+          desc: 'Graph heuristics identify coordinated network-level anomalies such as rapid fan-out dispersion (layering) and subsequent fan-in pooling (aggregation).'
         },
         {
           num: '05',
-          name: 'Numerically Grounded Plain-English Narration',
-          desc: 'The explainer engine generates plain-English justification, audited against engine numbers to ensure zero arithmetic hallucinations.'
+          name: 'Explainable Risk Reporting & Cash-Out Highlighting',
+          desc: 'Potential cash-out points and suspicious transaction paths are synthesized into explainable investigative summaries for compliance review.'
         }
       ]
     },
 
     audit: {
       implemented: [
-        'NumPy vectorized 90-day Monte Carlo cash simulation (10,000 iterations, 84ms convergence)',
-        'Quantile calculations (P10 pessimistic, P50 median, P90 optimistic)',
-        'PuLP / COIN-OR CBC Mixed-Integer Linear Program optimizer with 2-second greedy fallback',
-        'Multi-scenario invoice actions: PAY_EARLY_DISCOUNT, HOLD, FINANCE_SUPPLIER',
-        'Dynamic Chaos Shock panel simulating GST notices and vendor distress with action flips',
-        'FastAPI asynchronous REST routes with strict Pydantic contract validation',
-        'Numerically grounded decision explainer with arithmetic verification check',
-        'PostgreSQL relational schema design for ledgers and audit snapshots'
+        'Synthetic programmable e₹ transaction generator with simulated wallet metadata',
+        'Multi-hop fund lineage reconstruction algorithm preserving transaction sequence and splits',
+        'NetworkX directed temporal multigraph (accounts as nodes, timestamped transfers as edges)',
+        'Coordinated mule network anomaly detection (rapid fan-out layering and fan-in aggregation)',
+        'Explainable heuristic risk scoring engine with transparent evidentiary factor breakdowns',
+        'High-risk terminal cash-out point identification for investigation prioritisation',
+        'Interactive compliance investigation visualizer with transaction telemetry console',
+        'Strict simulation fidelity: Zero claims of live RBI infrastructure or real banking integrations'
       ],
       development: [
-        'Git & GitHub for multi-developer hackathon version control and PR merges',
-        'Python virtual environments with deterministic dependencies (PuLP, NumPy, FastAPI)'
+        'Python scientific environment (NetworkX graph algorithms, NumPy vector processing)',
+        'Git & GitHub version control with synthetic test fixture pipelines'
       ],
       planned: [
-        'Real-time ERP ledger event streaming via WebSockets (SAP/Oracle connectors)',
-        'Automated multi-bank credit facility API orchestration for instant overdraft draws'
+        'Distributed enterprise graph database integration (e.g. Neo4j / TigerGraph - needs confirmation)',
+        'Temporal Graph Neural Network (TGNN) embeddings for automated mule cluster classification',
+        'Direct core-banking and CBDC regulatory sandbox connectors (pending formal banking partnership)'
       ],
       reviewerNotes: [
-        'Developed as Team XYRUS for CSI ORIGIN 2026 Problem Statement 4.',
-        'Engineered as a pure-function decision engine over state rather than a passive BI dashboard.',
-        'Guaranteed deterministic execution: CBC solver runtime is capped with a 2-second greedy heuristic fallback.'
+        'Platform concept: Combines programmable CBDC/e₹ transaction lineage with temporal graph intelligence for money-mule tracing.',
+        'Integrity boundary: The current implementation operates strictly on synthetic transaction data and prototype graph algorithms. No live RBI or banking integrations are claimed.',
+        'Investigation discipline: Alerts and cash-out highlights represent potential risks requiring investigation, not definitive proof of criminal activity.'
       ]
     }
   },

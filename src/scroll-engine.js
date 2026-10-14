@@ -10,7 +10,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const projectColorMap = {
   'prj-probe360': '#8fa89b',
-  'prj-csi-origin': '#6c8ea4',
+  'prj-mule-matrix': '#2dd4a7',
+  'prj-csi-origin': '#2dd4a7',
   'prj-carbon': '#b8a9c9',
   'prj-aegis': '#8fa89b'
 };

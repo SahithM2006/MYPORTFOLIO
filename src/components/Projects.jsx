@@ -31,95 +31,121 @@ const PROBE_OUTPUTS = {
 [+] Behavioral anomaly scoring model queued for training.`
 };
 
-const CSI_STAGES = {
-  forecast: {
-    id: 'forecast',
-    label: '01. Cash Forecast',
-    title: 'Monte Carlo 90-Day Liquidity Forecast',
-    code: `// [CSI ORIGIN // HELM: MONTE CARLO LIQUIDITY FORECAST (NumPy)]
-[*] Horizon: 90 Days | Iterations: 10,000 | Deterministic Seed: 0x9f4a12b
-[+] Starting Book Cash       : ₹28,50,000
-[+] Mandatory Liquidity Floor: ₹10,00,000 (Protected operating covenant)
-[+] 90-Day Cash Trajectory Distribution:
-    ├── P10 (Pessimistic - 90% Bound) : ₹14,20,000
-    ├── P50 (Expected Median Path)    : ₹22,80,000
-    └── P90 (Optimistic High Cash)    : ₹31,40,000
-[!] DEPLOYABLE CASH COMPUTED: ₹18,50,000
-    (Safe to allocate today without causing shortfall on any horizon day)
-[!] Binding Liquidity Date  : Sim Day 42 (Quarterly tax + vendor batch)
-[✓] Vectorized simulation completed in 84ms. Zero insolvency probability.`
+const MULE_STAGES = {
+  simulation: {
+    id: 'simulation',
+    label: '01. Tx Simulation',
+    title: 'Synthetic e₹ Token & Programmable Lineage Generator',
+    disclaimer: 'Offline Simulation Sandbox • No Live Banking / RBI Infrastructure',
+    metrics: [
+      { kicker: 'DATASET TYPE', val: 'Synthetic e₹ (CBDC)', cls: 'val-opt' },
+      { kicker: 'TX HOPS TRACED', val: '4 Intermediary Hops', cls: '' },
+      { kicker: 'ENGINE', val: 'Python / NetworkX', cls: 'val-cash' },
+      { kicker: 'RISK INDICATION', val: 'Potential Risk (Investigate)', cls: 'val-warn' }
+    ],
+    code: `// [MULE MATRIX // COMPONENT 1: SYNTHETIC e₹ TRANSACTION & LINEAGE SIMULATION]
+[*] Environment: Synthetic programmable CBDC / e₹ testbed (Offline Simulation Sandbox)
+[!] NOTICE: Simulation environment only; no connection to live banking or RBI infrastructure.
+[*] Token Specification: Programmable purpose-bound tokens with cryptographic lineage metadata
+
+[+] Genesis Ingestion Batch: 2,450 synthetic transaction records
+    ├── Origin Account: ACC_EXT_9921 (Simulated external off-ramp entry)
+    ├── Simulated Seed Amount: e₹ 4,80,000 (Time: 2026-03-12 04:12:00 IST)
+    └── Token Metadata: TokenID #eINR-9921-A ... #eINR-9921-Z [Programmable transfer flag: ENABLED]
+
+[+] Initial Fan-Out Dispersal (Layer 1 - Within 14 minutes):
+    ├── TX-88102 → ACC_MULE_101 : e₹ 1,20,000 (Δt = +04m 12s)
+    ├── TX-88103 → ACC_MULE_102 : e₹ 1,20,000 (Δt = +06m 45s)
+    ├── TX-88104 → ACC_MULE_103 : e₹ 1,20,000 (Δt = +09m 10s)
+    └── TX-88105 → ACC_MULE_104 : e₹ 1,20,000 (Δt = +13m 52s)
+
+[✓] Synthetic lineage stream verified. 100% token sequence and timestamp integrity preserved.`
   },
-  optimizer: {
-    id: 'optimizer',
-    label: '02. MILP Optimizer',
-    title: 'Scenario MILP Constrained Optimizer',
-    code: `// [CSI ORIGIN // HELM: SCENARIO MILP INVOICE OPTIMIZER (PuLP/CBC)]
-[*] Objective: Min Net Working Capital Cost (Financing + Penalties - Discounts)
-[*] Open Invoices Evaluated: 3 Active Claims (100% decision coverage)
+  lineage: {
+    id: 'lineage',
+    label: '02. Lineage Tracer',
+    title: 'Multi-Hop Fund Flow & Provenance Lineage Engine',
+    disclaimer: 'Recursive Provenance Traverser (Breadth/Depth Directed Lineage)',
+    metrics: [
+      { kicker: 'DISPERSAL RATE', val: '4 Splits → 8 Sub-paths', cls: 'val-opt' },
+      { kicker: 'LAYER DEPTH', val: '4 Intermediary Tiers', cls: '' },
+      { kicker: 'HOP VELOCITY', val: 'avg 6.2 min / hop', cls: 'val-cash' },
+      { kicker: 'PATTERN', val: 'Layering Scheme', cls: 'val-warn' }
+    ],
+    code: `// [MULE MATRIX // COMPONENT 2: MULTI-HOP FUND FLOW & LINEAGE TRACING ENGINE]
+[*] Algorithm: Recursive multi-hop lineage traversal across directed transaction DAG
+[*] Traversal Depth: Max 6 hops | Time window constraint: Δt ≤ 120 minutes
 
-[+] INV-2041 (Tata Steel B2B • ₹8,40,000 • Due: Day 10)
-    ├── ACTION: PAY_EARLY_DISCOUNT (2.5% 10-day early capture)
-    ├── Projected Benefit: +₹21,000 discount captured | Effective IRR: 32.4% APR
-    └── Rejected Alternatives:
-        ├── HOLD (Cost delta: +₹21,000 lost discount opportunity)
-        └── FINANCE (Cost delta: +₹7,200 financing interest drag)
+[+] Path Provenance Trace (Origin ACC_EXT_9921 → Destination Endpoints):
+    ├── HOP 0: ACC_EXT_9921 [e₹ 4,80,000]
+    ├── HOP 1 (Rapid Fan-Out Dispersal):
+    │   ├── Sub-split A: ACC_MULE_101 [e₹ 1,20,000] → Split to 2 sub-accounts in 8 mins
+    │   ├── Sub-split B: ACC_MULE_102 [e₹ 1,20,000] → Split to 2 sub-accounts in 11 mins
+    │   ├── Sub-split C: ACC_MULE_103 [e₹ 1,20,000] → Forwarded directly in 5 mins
+    │   └── Sub-split D: ACC_MULE_104 [e₹ 1,20,000] → Dormant account activated
+    ├── HOP 2 (Intermediary Layering):
+    │   └── Funds dispersed into 8 micro-transfers (avg e₹ 60,000 each)
+    └── HOP 3 (Re-aggregation Convergence / Pooling):
+        ├── 6 micro-transfers funnel into ACC_POOL_808 within 22 minutes (e₹ 3,60,000)
+        └── 2 micro-transfers routed to ACC_POS_MERCHANT_44 (e₹ 1,20,000)
 
-[+] INV-2042 (Logistics Fleet • ₹5,10,000 • Due: Day 18)
-    ├── ACTION: HOLD (Scheduled on standard due date)
-    ├── Rationale: Conserves cash buffer until RCV-0004 settles on Day 12
-    └── Penalty: ₹0 (No early discount terms offered)
-
-[+] INV-2043 (Cloud Infra • ₹3,80,000 • Due: Day 8)
-    ├── ACTION: FINANCE_SUPPLIER (Draw on 8.5% Overdraft Line)
-    └── Rationale: Protects deployable liquidity; interest cost ₹2,690
-
-[✓] Solved via CBC in 142ms. 2-second greedy fallback: NOT_TRIGGERED.
-[✓] Net Working Capital Cost: -₹38,400 (Net positive savings generated).`
+[✓] Full lineage path assembled: 14 directed edges, zero orphan transactions.`
   },
-  shock: {
-    id: 'shock',
-    label: '03. Chaos Shock',
-    title: 'Chaos Panel: Emergency Shock & Re-Optimization',
-    code: `// [CSI ORIGIN // HELM: CHAOS PANEL INJECTION & RE-OPTIMIZATION]
-[!] EVENT INGESTED: NEW_OBLIGATION (GST Emergency Notice ₹9,00,000 in 5 days)
-[⟳] Materiality Score: 0.88 > 0.40 threshold → Immediate Re-Solve Triggered!
-[!] DEPLOYABLE CASH IMPACT:
-    ├── Prior Deployable Cash: ₹18,50,000
-    ├── Statutory Tax Demand : -₹9,00,000
-    └── Revised Deployable   :  ₹9,50,000
+  graph: {
+    id: 'graph',
+    label: '03. Graph Intelligence',
+    title: 'Temporal Directed Multigraph & Mule Cluster Detection',
+    disclaimer: 'NetworkX Graph Analytics Engine • Dynamic Time-Associated Edges',
+    metrics: [
+      { kicker: 'GRAPH TOPOLOGY', val: '28 Nodes • 42 Edges', cls: 'val-opt' },
+      { kicker: 'FAN-IN RATIO', val: '6:1 Inflow Velocity', cls: '' },
+      { kicker: 'BURST DETECTED', val: '< 18 min Window', cls: 'val-cash' },
+      { kicker: 'CLUSTER STATE', val: 'Coordinated Ring', cls: 'val-warn' }
+    ],
+    code: `// [MULE MATRIX // COMPONENT 3: TEMPORAL GRAPH INTELLIGENCE & CLUSTER ANALYTICS]
+[*] Graph Structure: Directed Temporal Multigraph G = (V, E, T)
+[*] Node Attributes: AccountID, account_tenure, mean_historical_balance, in_degree, out_degree
+[*] Edge Attributes: tx_id, token_amount_e₹, timestamp_utc, latency_from_prev_tx
 
-[!] DYNAMIC ACTION FLIP DETECTED:
-    ├── Target Invoice: INV-2041 (Tata Steel • ₹8,40,000)
-    ├── PREVIOUS DECISION: PAY_EARLY_DISCOUNT (+₹21,000 discount)
-    ├── NEW DECISION     : HOLD (Forfeit discount, pay on standard due date)
-    └── OPTIMIZER PROOF:
-        Paying early would reduce cash to ₹1,10,000 on Day 5, severely breaching
-        the ₹10,00,000 liquidity floor once the ₹9,00,000 tax notice executes.
+[+] Network Topology & Anomaly Analysis:
+    ├── Rapid Fan-Out Velocity: In-degree 1 → Out-degree 4 within 14 min (Z-score: +4.2)
+    ├── Rapid Pooling (Fan-In): In-degree 6 → Out-degree 1 at ACC_POOL_808 (Concentration: 75%)
+    ├── Temporal Closeness Metric: 89.4% of total funds transferred across 3 hops in < 45 min
+    └── Account Profile Mismatch:
+        ├── ACC_MULE_101: 180-day dormant account suddenly handling 12x median volume
+        └── ACC_POOL_808: Registered personal wallet receiving 6 concurrent third-party flows
 
-[✓] CBC re-solve converged in 118ms. Statutory solvency 100% secured.`
+[!] Heuristic Flag: High-confidence money-mule layering & pooling cluster topology identified.
+[✓] Network anomaly cluster isolated for explainable risk assessment.`
   },
-  explainer: {
-    id: 'explainer',
-    label: '04. Grounded Explainer',
-    title: 'Numerically Grounded Decision Explainer',
-    code: `// [CSI ORIGIN // HELM: NUMERICALLY GROUNDED DECISION EXPLAINER]
-[*] Explainer Engine: Groq gpt-oss-120b (Fallback: Deterministic Templates)
-[*] Numeric Grounding Audit: PASSED (Every number reconciled against engine state)
---------------------------------------------------------------------------------
-"Today HELM evaluated ₹28.50L in treasury assets, determining ₹18.50L as safe
- deployable cash above the ₹10.00L mandatory liquidity floor.
+  findings: {
+    id: 'findings',
+    label: '04. Risk & Findings',
+    title: 'Explainable Risk Analysis & Cash-Out Point Investigation',
+    disclaimer: 'Potential Risk Indicators Requiring Human Investigation • Not Conclusive Proof',
+    metrics: [
+      { kicker: 'SUSPICIOUS FLOW', val: 'e₹ 4,80,000 Traced', cls: 'val-opt' },
+      { kicker: 'CASHOUT TARGETS', val: '2 Flagged Endpoints', cls: 'val-warn' },
+      { kicker: 'EVIDENCE ITEMS', val: '14 Correlated Txs', cls: 'val-cash' },
+      { kicker: 'INVESTIGATION', val: 'PRIORITY_HIGH', cls: 'val-warn' }
+    ],
+    code: `// [MULE MATRIX // COMPONENT 4 & 5: EXPLAINABLE RISK FINDINGS & INVESTIGATION REPORT]
+[*] Status: Suspicious transaction pattern flagged for human investigator review
+[!] CLASSIFICATION: POTENTIAL MONEY-MULE NETWORK (Requires formal compliance review)
+[*] Note: Indicators represent potential risk heuristics; definitive determination rests with investigators.
 
- The optimizer captured ₹21,000 in net savings by paying INV-2041 (Tata Steel)
- early at a 32.4% annualized return, while financing INV-2043 via the bank
- overdraft line to shield buffer volatility.
+[+] Summary of Investigation Findings:
+    ├── Potential Source of Suspicious Inflow: ACC_EXT_9921 (Simulated external transfer)
+    ├── Amount at Risk: e₹ 4,80,000 transferred via 4-hop layering scheme
+    ├── Primary Cash-Out Suspects:
+    │   ├── Endpoint A: ACC_POOL_808 (P2P wallet, e₹ 3,60,000 accumulated, withdrawal pending)
+    │   └── Endpoint B: ACC_POS_MERCHANT_44 (Point-of-Sale cash-equivalent voucher route, e₹ 1,20,000)
+    └── Supporting Forensic Evidence Chain:
+        • Evidence #1: 4 rapid split transactions originating < 15 min from genesis
+        • Evidence #2: Intermediary accounts exhibit zero balance retention (< 3 min dwell time)
+        • Evidence #3: Temporal multigraph in-degree burst exceeds baseline by 6.8x
 
- Under the ₹9.00L emergency GST tax notice shock, the agent immediately
- flipped INV-2041 from PAY_EARLY_DISCOUNT to HOLD, intentionally forfeiting the
- ₹21,000 discount to eliminate an insolvency shortfall on Day 5.
-
- WOULD CHANGE IF:
- • Customer receivable RCV-0004 (₹12.0L) clears 5 days ahead of schedule.
- • Bank facility APR drops below 7.20%."`
+[✓] Investigation dossier compiled with timestamped transaction lineage graph.`
   }
 };
 
@@ -293,8 +319,8 @@ export default function Projects({
   // Exhibit 1: Probe360 state
   const [probeView, setProbeView] = useState('discovery');
 
-  // Exhibit 2: CSI Origin state
-  const [csiStage, setCsiStage] = useState('forecast');
+  // Exhibit 2: Mule Matrix state
+  const [muleStage, setMuleStage] = useState('simulation');
 
   // Exhibit 3: Carbon state
   const [distance, setDistance] = useState(1200);
@@ -383,7 +409,7 @@ export default function Projects({
       if (['INPUT', 'TEXTAREA'].includes(e.target.tagName) || e.target.isContentEditable) return;
       const keyMap = {
         '1': 'prj-probe360',
-        '2': 'prj-csi-origin',
+        '2': 'prj-mule-matrix',
         '3': 'prj-carbon',
         '4': 'prj-aegis'
       };
@@ -405,6 +431,9 @@ export default function Projects({
     if (activeFilter === 'all') return PROJECTS;
     if (activeFilter === 'security') {
       return PROJECTS.filter((p) => p.category === 'security' || p.id === 'aegis');
+    }
+    if (activeFilter === 'fintech' || activeFilter === 'backend') {
+      return PROJECTS.filter((p) => p.category === 'fintech' || p.id === 'mule-matrix');
     }
     return PROJECTS.filter((p) => p.category === activeFilter);
   }, [activeFilter]);
@@ -500,59 +529,64 @@ export default function Projects({
           </div>
         );
 
-      case 'prj-csi-origin':
+      case 'prj-mule-matrix':
+      case 'prj-csi-origin': {
+        const currentStageObj = MULE_STAGES[muleStage] || MULE_STAGES.simulation;
         return (
-          <div className="project-interactive-exhibit exhibit-box-csi">
+          <div className="project-interactive-exhibit exhibit-box-mule exhibit-box-csi">
             <div className="exhibit-header">
-              <span className="exhibit-label">✦ Autonomous Treasury Decision System</span>
+              <span className="exhibit-label">✦ Synthetic e₹ Lineage &amp; Mule Tracing</span>
               <button
                 type="button"
                 className="btn-copy-snippet"
-                onClick={() => copyTextToClipboard(CSI_STAGES[csiStage].code, 'csi')}
-                aria-label="Copy optimization stage"
+                onClick={() => copyTextToClipboard(currentStageObj.code, 'mule')}
+                aria-label="Copy fraud investigation stage output"
               >
-                {copiedSnippetId === 'csi' ? 'Copied ✓' : 'Copy Output'}
+                {copiedSnippetId === 'mule' ? 'Copied ✓' : 'Copy Output'}
               </button>
             </div>
-            <div className="csi-steps-row" role="tablist">
-              {Object.values(CSI_STAGES).map((s) => (
+            <div className="csi-steps-row mule-steps-row" role="tablist">
+              {Object.values(MULE_STAGES).map((s) => (
                 <button
                   key={s.id}
-                  className={`csi-step-btn ${csiStage === s.id ? 'active' : ''}`}
+                  className={`csi-step-btn mule-step-btn ${muleStage === s.id ? 'active' : ''}`}
                   role="tab"
-                  aria-selected={csiStage === s.id}
+                  aria-selected={muleStage === s.id}
                   type="button"
-                  onClick={() => setCsiStage(s.id)}
+                  onClick={() => setMuleStage(s.id)}
                 >
                   {s.label}
                 </button>
               ))}
             </div>
-            <div className="csi-metrics-bar">
-              <div className="csi-metric-pill">
-                <span className="pill-kicker">DEPLOYABLE CASH</span>
-                <span className={`pill-val ${csiStage === 'shock' ? 'val-warn' : 'val-cash'}`}>
-                  {csiStage === 'shock' ? '₹9.50L (-₹9.0L)' : '₹18.50L'}
-                </span>
-              </div>
-              <div className="csi-metric-pill">
-                <span className="pill-kicker">LIQUIDITY FLOOR</span>
-                <span className="pill-val">₹10.00L</span>
-              </div>
-              <div className="csi-metric-pill">
-                <span className="pill-kicker">OPTIMIZER</span>
-                <span className="pill-val val-opt">CBC (142ms)</span>
-              </div>
-              <div className="csi-metric-pill">
-                <span className="pill-kicker">DECISION DIFF</span>
-                <span className={`pill-val ${csiStage === 'shock' ? 'val-warn' : 'val-opt'}`}>
-                  {csiStage === 'shock' ? '1 FLIP (HOLD)' : 'OPTIMAL'}
-                </span>
-              </div>
+            <div className="csi-metrics-bar mule-metrics-bar">
+              {currentStageObj.metrics.map((m, idx) => (
+                <div key={idx} className="csi-metric-pill mule-metric-pill">
+                  <span className="pill-kicker">{m.kicker}</span>
+                  <span className={`pill-val ${m.cls || ''}`}>{m.val}</span>
+                </div>
+              ))}
             </div>
-            <pre className="telemetry-console csi-console">{CSI_STAGES[csiStage].code}</pre>
+            <div className="mule-sandbox-notice" style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '6px',
+              padding: '6px 12px',
+              background: 'rgba(45, 212, 167, 0.08)',
+              border: '1px solid rgba(45, 212, 167, 0.2)',
+              borderRadius: '6px',
+              marginBottom: '10px',
+              fontSize: '0.68rem',
+              color: '#99f6e4',
+              fontFamily: 'var(--font-mono)'
+            }}>
+              <span>✦</span>
+              <span>{currentStageObj.disclaimer}</span>
+            </div>
+            <pre className="telemetry-console csi-console mule-console">{currentStageObj.code}</pre>
           </div>
         );
+      }
 
       case 'prj-carbon':
         return (
@@ -1144,7 +1178,7 @@ export default function Projects({
         <div className="projects-header-block">
           <h2 className="projects-title" id="projects-title">Project Gallery Exhibition</h2>
           <p className="projects-subtitle">
-            An interactive showcase of engineering projects spanning agentless security telemetry, autonomous working-capital management, sustainability forecasting, and autonomous cybersecurity digital twins.
+            An interactive showcase of engineering projects spanning agentless security telemetry, financial fraud detection &amp; money-mule tracing, sustainability forecasting, and autonomous cybersecurity digital twins.
           </p>
 
           {/* Filter Category Tabs */}
@@ -1152,7 +1186,7 @@ export default function Projects({
             {[
               { id: 'all', label: 'All Exhibits' },
               { id: 'security', label: 'Cybersecurity' },
-              { id: 'backend', label: 'Autonomous Treasury' },
+              { id: 'fintech', label: 'Fraud & Mule Tracing' },
               { id: 'ai', label: 'AI & Models' },
               { id: 'automation', label: 'Cyber Digital Twin' }
             ].map((f) => (

@@ -1,28 +1,49 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { ARCHITECTURE_PROJECTS, getArchitectureProject } from '../architecture-data.js';
+import { ARCHITECTURE_PROJECTS } from '../architecture-data.js';
 import TechIcon from './TechIcons.jsx';
 
 export default function TechnicalArchitecture() {
+  // 1. Project Selection State: Strictly stable. Updated ONLY by intentional click or [1-4] / arrow keys.
   const [selectedProjId, setSelectedProjId] = useState('probe360');
+
+  // 2. View Mode: 'flow' | 'layers' | 'audit'
+  const [activeViewMode, setActiveViewMode] = useState('flow');
+
+  // 3. Layer Filter in 'layers' mode
   const [activeLayerFilter, setActiveLayerFilter] = useState('all');
-  const [activeViewMode, setActiveViewMode] = useState('flow'); // 'flow' | 'layers' | 'audit'
+
+  // 4. Intentional Component Selection (Click or Enter/Space)
   const [selectedNodeId, setSelectedNodeId] = useState(null);
-  const [activeStepIdx, setActiveStepIdx] = useState(0);
-  const [hoveredNodeId, setHoveredNodeId] = useState(null);
   const [selectedTechObj, setSelectedTechObj] = useState(null);
+
+  // 5. Active Pipeline Lifecycle Stage in 'flow' mode
+  const [activeStepIdx, setActiveStepIdx] = useState(0);
+
+  // 6. Subtle Hover State (Debounced, does NOT change project/component selection or cause layout shifts)
+  const [hoveredNodeId, setHoveredNodeId] = useState(null);
+
+  // 7. Progressive Disclosure Toggles
+  const [showAllProtocols, setShowAllProtocols] = useState(false);
+  const [showReviewerNotes, setShowReviewerNotes] = useState(true);
+
+  // Refs for hover debounce and inspector scrolling
+  const hoverTimerRef = useRef(null);
+  const inspectorRef = useRef(null);
 
   // Current active project data
   const currentProject = useMemo(() => {
     return ARCHITECTURE_PROJECTS.find((p) => p.id === selectedProjId) || ARCHITECTURE_PROJECTS[0];
   }, [selectedProjId]);
 
-  // Handle project change
+  // Handle intentional project change
   const handleProjectChange = (projId) => {
+    if (projId === selectedProjId) return;
     setSelectedProjId(projId);
     setActiveLayerFilter('all');
     setSelectedNodeId(null);
     setSelectedTechObj(null);
     setActiveStepIdx(0);
+    setHoveredNodeId(null);
   };
 
   // Filtered layers for the selected project
@@ -31,7 +52,7 @@ export default function TechnicalArchitecture() {
     return currentProject.layers.filter((l) => l.id === activeLayerFilter);
   }, [currentProject, activeLayerFilter]);
 
-  // Find all technologies flattened for quick lookup
+  // Flattened technologies for quick lookup
   const allProjectTechs = useMemo(() => {
     const list = [];
     currentProject.layers.forEach((l) => {
@@ -42,37 +63,101 @@ export default function TechnicalArchitecture() {
     return list;
   }, [currentProject]);
 
-  // Handle component inspection
+  // Handle tech component selection (click or keyboard)
   const handleSelectTech = (tech) => {
-    setSelectedTechObj(tech);
-    // Also select corresponding node in diagram if any
-    const matchingNode = currentProject.flow.nodes.find(
-      (n) => n.id.includes(tech.id) || tech.id.includes(n.id.replace('n-', ''))
-    );
-    if (matchingNode) {
-      setSelectedNodeId(matchingNode.id);
+    if (selectedTechObj?.id === tech.id) {
+      // Toggle off if already selected
+      setSelectedTechObj(null);
+      setSelectedNodeId(null);
+    } else {
+      setSelectedTechObj(tech);
+      // Select corresponding flow node if any
+      const matchingNode = currentProject.flow.nodes.find(
+        (n) => n.id.includes(tech.id) || tech.id.includes(n.id.replace('n-', ''))
+      );
+      setSelectedNodeId(matchingNode ? matchingNode.id : null);
     }
   };
 
-  // Keyboard navigation for [1..4]
+  // Handle flow node selection (click or keyboard)
+  const handleSelectNode = (node) => {
+    if (selectedNodeId === node.id) {
+      setSelectedNodeId(null);
+      setSelectedTechObj(null);
+    } else {
+      setSelectedNodeId(node.id);
+      const match = allProjectTechs.find(
+        (t) => t.id.includes(node.id.replace('n-', '')) || node.tech.toLowerCase().includes(t.name.toLowerCase().split(' ')[0])
+      );
+      if (match) {
+        setSelectedTechObj(match);
+      } else {
+        // Fallback tech object if not directly mapped
+        setSelectedTechObj({
+          id: node.id,
+          name: node.title,
+          icon: 'server',
+          layerName: node.layer.toUpperCase(),
+          status: node.status,
+          statusLabel: node.status === 'implemented' ? 'Verified Implemented' : 'Concept / Prototype',
+          role: node.subtitle,
+          whyUsed: `Core architectural component in the ${currentProject.name} runtime pipeline.`,
+          connections: `Interacts via: ${node.tech}`,
+          codeSpecs: node.tech
+        });
+      }
+    }
+  };
+
+  // Debounced hover handlers: eliminates rapid flip-flopping and layout shifts
+  const handleNodeMouseEnter = (nodeId) => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+    }
+    hoverTimerRef.current = setTimeout(() => {
+      setHoveredNodeId(nodeId);
+    }, 60);
+  };
+
+  const handleNodeMouseLeave = () => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+    }
+    hoverTimerRef.current = setTimeout(() => {
+      setHoveredNodeId(null);
+    }, 80);
+  };
+
+  // Keyboard navigation: [1..4] for project switching, Escape to close inspector
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (['INPUT', 'TEXTAREA'].includes(e.target.tagName) || e.target.isContentEditable) return;
       const keyMap = {
         '1': 'probe360',
-        '2': 'csi-origin',
+        '2': 'mule-matrix',
         '3': 'carbon',
         '4': 'aegis'
       };
       if (keyMap[e.key]) {
+        e.preventDefault();
         handleProjectChange(keyMap[e.key]);
+      } else if (e.key === 'Escape') {
+        setSelectedTechObj(null);
+        setSelectedNodeId(null);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedProjId]);
+
+  // Cleanup hover timer on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+    };
   }, []);
 
-  // Compute active connection highlights for flow diagram
+  // Compute active connection highlights for flow diagram (strictly visual, zero layout shift)
   const activeHighlightedLinks = useMemo(() => {
     const targetId = hoveredNodeId || selectedNodeId;
     if (!targetId) return [];
@@ -80,6 +165,14 @@ export default function TechnicalArchitecture() {
       (l) => l.from === targetId || l.to === targetId
     );
   }, [hoveredNodeId, selectedNodeId, currentProject]);
+
+  // In flow mode: display first 3 protocols in compact overview unless expanded
+  const displayedLinks = useMemo(() => {
+    if (showAllProtocols || currentProject.flow.links.length <= 3) {
+      return currentProject.flow.links;
+    }
+    return currentProject.flow.links.slice(0, 3);
+  }, [currentProject, showAllProtocols]);
 
   return (
     <section
@@ -106,12 +199,12 @@ export default function TechnicalArchitecture() {
         </div>
 
         {/* Project Selector Tab Navigation */}
-        <div className="arch-project-tabs-wrap" role="tablist" aria-label="Select Project Architecture">
+        <div className="arch-project-tabs-wrap" role="region" aria-label="Select Project Architecture">
           <div className="arch-tabs-hint">
             <span className="arch-hint-kicker">PROJECT ARCHITECTURE EXPLORER:</span>
             <span className="arch-hint-shortcut">Press <kbd>1</kbd>–<kbd>4</kbd> to toggle</span>
           </div>
-          <div className="arch-project-tabs-grid">
+          <div className="arch-project-tabs-grid" role="tablist">
             {ARCHITECTURE_PROJECTS.map((proj) => {
               const isActive = proj.id === selectedProjId;
               return (
@@ -121,7 +214,23 @@ export default function TechnicalArchitecture() {
                   role="tab"
                   aria-selected={isActive}
                   type="button"
-                  onClick={() => handleProjectChange(proj.id)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleProjectChange(proj.id);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                      e.preventDefault();
+                      const currIdx = ARCHITECTURE_PROJECTS.findIndex((p) => p.id === proj.id);
+                      const nextProj = ARCHITECTURE_PROJECTS[(currIdx + 1) % ARCHITECTURE_PROJECTS.length];
+                      handleProjectChange(nextProj.id);
+                    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                      e.preventDefault();
+                      const currIdx = ARCHITECTURE_PROJECTS.findIndex((p) => p.id === proj.id);
+                      const prevProj = ARCHITECTURE_PROJECTS[(currIdx - 1 + ARCHITECTURE_PROJECTS.length) % ARCHITECTURE_PROJECTS.length];
+                      handleProjectChange(prevProj.id);
+                    }
+                  }}
                   style={{
                     '--tab-accent': proj.accentColor,
                     '--tab-glow': proj.accentGlow
@@ -199,11 +308,11 @@ export default function TechnicalArchitecture() {
                 <div className="ribbon-left">
                   <span className="ribbon-glyph">✦</span>
                   <span className="ribbon-text">
-                    <strong>Runtime Interaction Graph:</strong> Visualizing end-to-end request lifecycle, mathematical models, and service boundaries.
+                    <strong>Runtime Interaction Graph:</strong> Visualizing end-to-end request lifecycle, service boundaries, and data protocols.
                   </span>
                 </div>
                 <div className="ribbon-right">
-                  <span className="ribbon-tag">Hover or click nodes to inspect component connections</span>
+                  <span className="ribbon-tag">Click any node to inspect engineering specs &amp; protocols</span>
                 </div>
               </div>
 
@@ -239,7 +348,7 @@ export default function TechnicalArchitecture() {
               {/* Interactive Node Graph Viewport */}
               <div className="arch-flow-graph-viewport">
                 <div className="arch-nodes-flow-grid">
-                  {currentProject.flow.nodes.map((node, i) => {
+                  {currentProject.flow.nodes.map((node) => {
                     const isSelected = selectedNodeId === node.id;
                     const isHovered = hoveredNodeId === node.id;
                     const isLinked = activeHighlightedLinks.some(
@@ -251,34 +360,13 @@ export default function TechnicalArchitecture() {
                         key={node.id}
                         className={`arch-flow-node-card ${isSelected ? 'selected' : ''} ${isHovered ? 'hovered' : ''} ${isLinked ? 'connected-link' : ''} layer-${node.layer}`}
                         tabIndex={0}
-                        onClick={() => {
-                          if (isSelected) {
-                            setSelectedNodeId(null);
-                            setSelectedTechObj(null);
-                          } else {
-                            setSelectedNodeId(node.id);
-                            // Select matching tech object
-                            const match = allProjectTechs.find(
-                              (t) => t.id.includes(node.id.replace('n-', '')) || node.tech.toLowerCase().includes(t.name.toLowerCase().split(' ')[0])
-                            );
-                            if (match) setSelectedTechObj(match);
-                          }
-                        }}
-                        onMouseEnter={() => setHoveredNodeId(node.id)}
-                        onMouseLeave={() => setHoveredNodeId(null)}
+                        onClick={() => handleSelectNode(node)}
+                        onMouseEnter={() => handleNodeMouseEnter(node.id)}
+                        onMouseLeave={handleNodeMouseLeave}
                         onKeyDown={(e) => {
                           if (e.key === 'Enter' || e.key === ' ') {
                             e.preventDefault();
-                            if (isSelected) {
-                              setSelectedNodeId(null);
-                              setSelectedTechObj(null);
-                            } else {
-                              setSelectedNodeId(node.id);
-                              const match = allProjectTechs.find(
-                                (t) => t.id.includes(node.id.replace('n-', '')) || node.tech.toLowerCase().includes(t.name.toLowerCase().split(' ')[0])
-                              );
-                              if (match) setSelectedTechObj(match);
-                            }
+                            handleSelectNode(node);
                           }
                         }}
                         role="button"
@@ -288,20 +376,25 @@ export default function TechnicalArchitecture() {
                           <span className={`node-layer-pill pill-${node.layer}`}>
                             {node.layer.toUpperCase()}
                           </span>
-                          <span className={`node-status-indicator status-${node.status}`} title={node.status} />
+                          <div className="node-card-top-right">
+                            <span className={`node-link-pill ${isLinked ? 'active' : ''}`}>
+                              Stream Active
+                            </span>
+                            <span className={`node-status-indicator status-${node.status}`} title={node.status} />
+                          </div>
                         </div>
+
                         <h4 className="node-title">{node.title}</h4>
                         <div className="node-subtitle">{node.subtitle}</div>
                         <div className="node-tech-badge">
                           <code>{node.tech}</code>
                         </div>
 
-                        {/* Interactive Ingress/Egress Link Tag */}
-                        {isLinked && (
-                          <div className="node-active-flow-tag">
-                            Active Stream Attached
-                          </div>
-                        )}
+                        <div className="node-card-footer">
+                          <span className="node-inspect-hint">
+                            {isSelected ? 'Viewing in Inspector ✓' : 'Click to inspect specs →'}
+                          </span>
+                        </div>
                       </div>
                     );
                   })}
@@ -310,11 +403,27 @@ export default function TechnicalArchitecture() {
                 {/* Data Flow Link Descriptions */}
                 <div className="arch-flow-connections-summary">
                   <div className="connections-header">
-                    <span className="conn-dot" />
-                    <span className="conn-title">Component Interaction &amp; Request Protocols:</span>
+                    <div className="connections-header-left">
+                      <span className="conn-dot" />
+                      <span className="conn-title">Component Interaction &amp; Request Protocols:</span>
+                      <span className="conn-count-pill">
+                        {currentProject.flow.links.length} Active Streams
+                      </span>
+                    </div>
+                    {currentProject.flow.links.length > 3 && (
+                      <button
+                        type="button"
+                        className="btn-toggle-protocols"
+                        onClick={() => setShowAllProtocols((prev) => !prev)}
+                        aria-expanded={showAllProtocols}
+                      >
+                        {showAllProtocols ? 'Show Less Protocols ▴' : `Show All ${currentProject.flow.links.length} Protocols ▾`}
+                      </button>
+                    )}
                   </div>
+
                   <div className="connections-list">
-                    {currentProject.flow.links.map((link, idx) => {
+                    {displayedLinks.map((link, idx) => {
                       const isHighlight =
                         (hoveredNodeId && (link.from === hoveredNodeId || link.to === hoveredNodeId)) ||
                         (selectedNodeId && (link.from === selectedNodeId || link.to === selectedNodeId));
@@ -323,10 +432,8 @@ export default function TechnicalArchitecture() {
                         <div
                           key={idx}
                           className={`connection-item ${isHighlight ? 'active-highlight' : ''}`}
-                          onMouseEnter={() => {
-                            setHoveredNodeId(link.from);
-                          }}
-                          onMouseLeave={() => setHoveredNodeId(null)}
+                          onMouseEnter={() => handleNodeMouseEnter(link.from)}
+                          onMouseLeave={handleNodeMouseLeave}
                         >
                           <span className="conn-num">{String(idx + 1).padStart(2, '0')}</span>
                           <span className="conn-from">
@@ -347,7 +454,7 @@ export default function TechnicalArchitecture() {
             </div>
           )}
 
-          {/* VIEW 2: Architectural Layers & Tech Stack */}
+          {/* VIEW 2: Architectural Layers & Tech Stack (Progressive Disclosure) */}
           {activeViewMode === 'layers' && (
             <div className="arch-layers-view-container">
               {/* Layer Filter Toolbar */}
@@ -412,6 +519,8 @@ export default function TechnicalArchitecture() {
                                 handleSelectTech(tech);
                               }
                             }}
+                            role="button"
+                            aria-pressed={isSelected}
                           >
                             <div className="tech-card-header">
                               <div className="tech-icon-title-wrap">
@@ -428,31 +537,11 @@ export default function TechnicalArchitecture() {
                               </span>
                             </div>
 
-                            <div className="tech-details-body">
-                              <div className="tech-detail-row">
-                                <span className="detail-label">Specific Role in Project:</span>
-                                <p className="detail-value">{tech.role}</p>
-                              </div>
-
-                              <div className="tech-detail-row">
-                                <span className="detail-label">Why Used (Implementation Rationale):</span>
-                                <p className="detail-value rationale">{tech.whyUsed}</p>
-                              </div>
-
-                              <div className="tech-detail-row">
-                                <span className="detail-label">How It Connects:</span>
-                                <p className="detail-value connection-flow">{tech.connections}</p>
-                              </div>
-
-                              <div className="tech-code-specs-row">
-                                <span className="detail-label">Code / Protocol Reference:</span>
-                                <code className="tech-code-snippet">{tech.codeSpecs}</code>
-                              </div>
-                            </div>
+                            <p className="tech-role-preview">{tech.role}</p>
 
                             <div className="tech-card-footer">
                               <span className="inspect-cta">
-                                {isSelected ? 'Currently Selected in Inspector ✓' : 'Click to inspect component →'}
+                                {isSelected ? 'Viewing Specs in Inspector ▴' : 'Inspect Technical Details →'}
                               </span>
                             </div>
                           </article>
@@ -537,23 +626,35 @@ export default function TechnicalArchitecture() {
               {/* Reviewer / Technical Interviewer Notes */}
               <div className="audit-reviewer-callout">
                 <div className="callout-header">
-                  <span className="callout-glyph">📝</span>
-                  <span className="callout-heading">Verified Scope Notes for Technical Interviewers</span>
+                  <div className="callout-header-left">
+                    <span className="callout-glyph">📝</span>
+                    <span className="callout-heading">Verified Scope Notes for Technical Interviewers</span>
+                  </div>
+                  <button
+                    type="button"
+                    className="btn-toggle-notes"
+                    onClick={() => setShowReviewerNotes((prev) => !prev)}
+                    aria-expanded={showReviewerNotes}
+                  >
+                    {showReviewerNotes ? 'Collapse Notes ▴' : 'Expand Notes ▾'}
+                  </button>
                 </div>
-                <div className="callout-content">
-                  <ul className="reviewer-notes-list">
-                    {currentProject.audit.reviewerNotes.map((note, i) => (
-                      <li key={i}>{note}</li>
-                    ))}
-                  </ul>
-                </div>
+                {showReviewerNotes && (
+                  <div className="callout-content">
+                    <ul className="reviewer-notes-list">
+                      {currentProject.audit.reviewerNotes.map((note, i) => (
+                        <li key={i}>{note}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             </div>
           )}
 
-          {/* Component Deep Inspector Drawer (Active when any tech is clicked) */}
+          {/* Component Deep Inspector Drawer (Active when any tech or node is clicked) */}
           {selectedTechObj && (
-            <div className="arch-inspector-drawer" role="region" aria-label="Component Inspector">
+            <div className="arch-inspector-drawer" role="region" aria-label="Component Inspector" ref={inspectorRef}>
               <div className="inspector-top">
                 <div className="inspector-tech-title">
                   <span className="inspector-icon">
@@ -561,12 +662,12 @@ export default function TechnicalArchitecture() {
                   </span>
                   <div>
                     <h4 className="inspector-name">{selectedTechObj.name}</h4>
-                    <span className="inspector-layer-sub">{selectedTechObj.layerName}</span>
+                    <span className="inspector-layer-sub">{selectedTechObj.layerName || selectedTechObj.id}</span>
                   </div>
                 </div>
                 <div className="inspector-top-right">
                   <span className={`inspector-status-pill status-${selectedTechObj.status}`}>
-                    {selectedTechObj.statusLabel}
+                    {selectedTechObj.statusLabel || 'Verified'}
                   </span>
                   <button
                     type="button"
@@ -576,6 +677,7 @@ export default function TechnicalArchitecture() {
                       setSelectedNodeId(null);
                     }}
                     aria-label="Close Inspector"
+                    title="Close Inspector (Esc)"
                   >
                     ✕
                   </button>

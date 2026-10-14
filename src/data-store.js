@@ -24,7 +24,7 @@ export const SKILLS = [
     connections: ['numpy', 'pandas', 'scikit-learn', 'fastapi', 'c', 'sql', 'winrm', 'workflow-automation', 'git', 'networkx'],
     title: 'Python',
     desc: 'Primary language for high-throughput backend services, remote telemetry collection via WinRM, automated OS interaction, and Scikit-learn/OpenCV scientific pipelines.',
-    projectIds: ['probe360', 'csi-origin', 'carbon', 'aegis']
+    projectIds: ['probe360', 'mule-matrix', 'carbon', 'aegis']
   },
   {
     id: 'c',
@@ -50,7 +50,7 @@ export const SKILLS = [
     connections: ['python', 'pandas', 'fastapi', 'rest-apis'],
     title: 'SQL',
     desc: 'Declarative queries, relational schema design, indexing strategies, and transactional data integrity across Postgres financial ledgers and system stores.',
-    projectIds: ['csi-origin']
+    projectIds: ['mule-matrix']
   },
   {
     id: 'scikit-learn',
@@ -89,7 +89,7 @@ export const SKILLS = [
     connections: ['python', 'pandas', 'matplotlib', 'scikit-learn', 'opencv'],
     title: 'NumPy',
     desc: 'High-performance N-dimensional array processing powering pixel matrix convolutions, Fourier frequency transforms, and mathematical vector calculations.',
-    projectIds: ['carbon', 'csi-origin']
+    projectIds: ['carbon', 'mule-matrix']
   },
   {
     id: 'pandas',
@@ -128,7 +128,7 @@ export const SKILLS = [
     connections: ['python', 'rest-apis', 'pydantic', 'sql', 'workflow-automation'],
     title: 'FastAPI',
     desc: 'High-throughput asynchronous Python web framework providing typed REST endpoints and automatic OpenAPI documentation.',
-    projectIds: ['csi-origin', 'aegis']
+    projectIds: ['mule-matrix', 'aegis']
   },
   {
     id: 'rest-apis',
@@ -141,7 +141,7 @@ export const SKILLS = [
     connections: ['fastapi', 'pydantic', 'sql'],
     title: 'REST APIs',
     desc: 'Stateless HTTP service design, structured error payloads, JSON serialization, and status code discipline.',
-    projectIds: ['csi-origin', 'aegis']
+    projectIds: ['mule-matrix', 'aegis']
   },
   {
     id: 'pydantic',
@@ -154,7 +154,7 @@ export const SKILLS = [
     connections: ['fastapi', 'rest-apis'],
     title: 'Pydantic',
     desc: 'Strict runtime data validation, frozen Pydantic contracts, and serialization boundaries between autonomous optimization engines and APIs.',
-    projectIds: ['csi-origin']
+    projectIds: ['mule-matrix']
   },
   {
     id: 'winrm',
@@ -218,8 +218,8 @@ export const SKILLS = [
     coords: { x: 520, y: 120 },
     connections: ['python', 'vuln-assessment', 'mitre-attack'],
     title: 'NetworkX Graph Modeling',
-    desc: 'Complex network topology graphing, directed adversarial path exploration, betweenness centrality, and lateral-movement graph simulation.',
-    projectIds: ['aegis']
+    desc: 'Complex network topology graphing, temporal directed multigraph modeling, betweenness centrality, and money-mule cluster detection.',
+    projectIds: ['aegis', 'mule-matrix']
   },
   {
     id: 'workflow-automation',
@@ -232,7 +232,7 @@ export const SKILLS = [
     connections: ['python', 'git', 'fastapi'],
     title: 'Workflow Automation',
     desc: 'End-to-end data pipeline automation, schema harmonization queues, and event-driven trigger architectures.',
-    projectIds: ['csi-origin', 'probe360', 'aegis']
+    projectIds: ['mule-matrix', 'probe360', 'aegis']
   },
   {
     id: 'git',
@@ -245,7 +245,7 @@ export const SKILLS = [
     connections: ['python', 'workflow-automation'],
     title: 'Git & GitHub',
     desc: 'Version control branch workflows, atomic commits, repository documentation, and CI/CD automation foundations.',
-    projectIds: ['probe360', 'aegis', 'csi-origin', 'carbon']
+    projectIds: ['probe360', 'aegis', 'mule-matrix', 'carbon']
   }
 ];
 
@@ -266,19 +266,19 @@ export const PROJECTS = [
     architecture: 'Probe360 coordinates credentialed, TLS-encrypted WinRM sessions into target Windows endpoints without deploying intrusive binary daemons. It queries CIM/WMI classes for installed MSI packages, checks registry run-keys for insecure binary paths, audits service permission DACLs, and maps findings to national vulnerability databases.'
   },
   {
-    id: 'csi-origin',
+    id: 'mule-matrix',
     number: '02',
-    category: 'backend',
-    categoryLabel: 'Autonomous Treasury Agent',
-    title: 'CSI Origin — HELM: Autonomous Working-Capital Management Agent',
-    themeColor: '#6c8ea4',
-    status: 'Hackathon Prototype • CSI ORIGIN 2026',
+    category: 'fintech',
+    categoryLabel: 'Financial Fraud Intelligence',
+    title: 'Mule Matrix — Intelligent Financial Fraud Detection & Money-Mule Network Tracing',
+    themeColor: '#2dd4a7',
+    status: 'Analytical Prototype • Graph Intelligence',
     statusType: 'concept',
-    lead: 'Autonomous treasury agent engineered for CSI ORIGIN 2026 (Problem Statement 4, Team XYRUS). Replaces static corporate payment rules with 90-day Monte Carlo cash forecasting, scenario-constrained MILP optimization, and numerically grounded plain-English decision narratives.',
-    implementedSpec: 'NumPy vectorized 90-day Monte Carlo cash simulation (P10/P50/P90 quantile forecasting), scenario MILP optimizer (PuLP/CBC with a 2-second greedy fallback), and deterministic plain-English decision explainer with numeric grounding checks.',
-    plannedSpec: 'Real-time ERP ledger event streaming via WebSockets and automated multi-bank line credit facility orchestration.',
-    skills: ['python', 'fastapi', 'numpy', 'pydantic', 'sql', 'git'],
-    architecture: 'HELM is engineered as a pure-function decision engine over State rather than a passive BI dashboard. For every daily state, it computes deployable_cash via 90-day Monte Carlo cash-flow simulations over receivable delays, financing costs, and obligations. A scenario Mixed-Integer Linear Program (MILP via PuLP/CBC with a 2s greedy fallback) evaluates every open invoice (PAY_EARLY_DISCOUNT, HOLD, FINANCE_SUPPLIER), capturing discounts while maintaining mandatory liquidity safety floors. The decision object is narrated in plain English by an explainer verified against strict numeric grounding to prevent hallucinations, while a Chaos Shock panel simulates real-time GST notices and supplier distress.'
+    lead: 'An analytical platform combining programmable CBDC/e₹ transaction lineage with temporal graph intelligence to trace suspicious fund movements, identify connected money-mule networks, and highlight potential cash-out points for investigation.',
+    implementedSpec: 'Synthetic programmable e₹ transaction generator with simulated lineage metadata, multi-hop recursive lineage tracer, and temporal directed multigraph modeling via NetworkX with explainable risk scoring.',
+    plannedSpec: 'Distributed enterprise graph database deployment (Neo4j/TigerGraph) and Temporal Graph Neural Networks (TGNN) for dynamic embedding-based fraud scoring.',
+    skills: ['python', 'networkx', 'numpy', 'pydantic', 'sql', 'git'],
+    architecture: 'Mule Matrix structures transaction histories as directed temporal multigraphs where accounts form nodes and token transfers form time-stamped edges. Synthetic programmable e₹ tokens carry simulated metadata and lineage attributes across multi-hop hops. A recursive lineage engine traverses transaction paths from suspicious origin accounts across intermediary layers to detect layering schemes, rapid fan-out bursts, and pooling behavior. Temporal graph heuristics evaluate in/out degree ratios, velocity anomalies, and cyclic flow patterns. Potential money-mule clusters and cash-out endpoints are aggregated into explainable investigation dossiers with supporting transaction evidence, treating all alerts as investigative risk indicators rather than conclusive verdicts.'
   },
   {
     id: 'carbon',
@@ -341,13 +341,13 @@ export const INTERESTS = {
     relatedSkillIds: ['networkx', 'python', 'mitre-attack', 'fastapi']
   },
   software: {
-    tag: 'Optimization & Decision Systems',
-    title: 'Constrained Optimization & Decision Systems',
-    desc: 'Engineering autonomous decision systems pairing 90-day Monte Carlo cash simulations with scenario MILP optimization and numerically grounded plain-English explanations.',
-    tools: 'Python • FastAPI • PuLP (MILP) • NumPy • PostgreSQL',
-    projectId: 'csi-origin',
-    projectName: 'CSI Origin Treasury Agent →',
-    relatedSkillIds: ['python', 'fastapi', 'numpy', 'pydantic', 'sql']
+    tag: 'Financial Graph Intelligence & Fraud Analytics',
+    title: 'Financial Graph Intelligence & Mule Network Tracing',
+    desc: 'Combining simulated programmable CBDC/e₹ transaction lineage with temporal graph intelligence to trace suspicious multi-hop fund movements, identify money-mule networks, and highlight potential cash-out points.',
+    tools: 'Python • NetworkX • NumPy • Pydantic • SQL',
+    projectId: 'mule-matrix',
+    projectName: 'Mule Matrix — Fraud & Mule Tracing →',
+    relatedSkillIds: ['python', 'networkx', 'numpy', 'pydantic', 'sql']
   }
 };
 
@@ -592,12 +592,12 @@ export const RESUME_DATA = {
       ]
     },
     {
-      title: 'CSI Origin (HELM) — Autonomous Working-Capital Management Agent',
-      domain: 'Autonomous Decision Systems • Optimization • Hackathon Prototype',
+      title: 'Mule Matrix — Intelligent Financial Fraud Detection & Money-Mule Network Tracing',
+      domain: 'Financial Fraud Detection • Temporal Graph Intelligence • Analytical Prototype',
       points: [
-        'Engineered an autonomous agent replacing static corporate treasury rules with 90-day Monte Carlo liquidity forecasts and scenario MILP optimization.',
-        'Formulated multi-scenario invoice action optimization (discounts vs. holding vs. financing) using PuLP/CBC with guaranteed 2-second fallback algorithms.',
-        'Designed an explainability pipeline with numeric grounding verification to narrate payment decisions and shock responses in plain English without hallucination.'
+        'Designed an analytical platform combining simulated programmable CBDC/e₹ transaction lineage with temporal graph intelligence to trace suspicious fund movements.',
+        'Modelled multi-hop fund flows across intermediary accounts to identify layering schemes, rapid fan-out/fan-in dispersal, and potential cash-out points.',
+        'Formulated explainable risk scoring with supporting transaction evidence, treating alerts as investigative risk indicators rather than conclusive verdicts.'
       ]
     },
     {
@@ -683,7 +683,7 @@ export const CAREER_STATUS = {
   availability: 'Summer & Fall 2025 / Placement Drive',
   location: 'Chennai, Tamil Nadu, India (Open to Remote / Relocation)',
   statement:
-    'Currently completing undergraduate coursework and developing national-level hackathon prototypes (AEGIS-TWIN, Probe360, CSI Origin). Actively seeking summer/fall technical internships and entry-level engineering roles. Verified corporate roles and technical positions will be indexed in this timeline as they commence.'
+    'Currently completing undergraduate coursework and developing national-level hackathon prototypes (AEGIS-TWIN, Probe360, Mule Matrix). Actively seeking summer/fall technical internships and entry-level engineering roles. Verified corporate roles and technical positions will be indexed in this timeline as they commence.'
 };
 
 

@@ -3,7 +3,8 @@ import { SKILLS, SKILL_CATEGORIES } from '../data-store.js';
 
 const PROJECT_MAP = {
   probe360: { name: 'Probe360 Agentless Security', id: 'prj-probe360' },
-  'csi-origin': { name: 'CSI Origin — HELM Agent', id: 'prj-csi-origin' },
+  'mule-matrix': { name: 'Mule Matrix — Fraud & Mule Tracing', id: 'prj-mule-matrix' },
+  'csi-origin': { name: 'Mule Matrix — Fraud & Mule Tracing', id: 'prj-mule-matrix' },
   carbon: { name: 'AI Carbon Intelligence', id: 'prj-carbon' },
   aegis: { name: 'AEGIS-TWIN Cyber Digital Twin', id: 'prj-aegis' }
 };

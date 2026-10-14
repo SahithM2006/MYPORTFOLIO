@@ -545,7 +545,7 @@ function initProjectExhibits() {
   // EXHIBIT 1: Probe360 WinRM Telemetry Inspector
   initProbe360Exhibit();
 
-  // EXHIBIT 2: CSI Origin Working-Capital Agent Exhibit
+  // EXHIBIT 2: Mule Matrix Financial Fraud Detection & Mule Tracing Exhibit
   initCsiOriginExhibit();
 
   // EXHIBIT 3: AI Carbon Intelligence Scenario Forecaster
@@ -611,29 +611,34 @@ function initProbe360Exhibit() {
 }
 
 /**
- * Exhibit 2: CSI Origin Working-Capital Agent Exhibit
+ * Exhibit 2: Mule Matrix Fraud & Mule Tracing Exhibit
  */
 function initCsiOriginExhibit() {
-  const steps = document.querySelectorAll('.csi-step-btn');
+  const steps = document.querySelectorAll('.csi-step-btn, .mule-step-btn');
   const codeView = document.getElementById('csi-pipeline-code');
   if (!codeView) return;
 
   const PIPELINE_STEPS = {
-    forecast: `// [STAGE 1: 90-DAY VECTORIZED MONTE CARLO CASH FORECAST]
-[*] Horizon: 90 Days | 10,000 Iterations | Deployable Cash: ₹18,50,000
-[+] Quantiles: P10: ₹14.20L | P50: ₹22.80L | P90: ₹31.40L
-[!] Binding Day: Sim Day 42 (Quarterly tax & vendor wave)`,
+    simulation: `// [STAGE 1: SYNTHETIC e₹ TRANSACTION & LINEAGE SIMULATION]
+[*] Environment: Synthetic programmable CBDC / e₹ testbed (Offline Simulation Sandbox)
+[!] NOTICE: Simulation environment only; no connection to live banking or RBI infrastructure.
+[*] Token Specification: Programmable purpose-bound tokens with cryptographic lineage metadata
+[+] Genesis Ingestion Batch: 2,450 synthetic records | Seed: e₹ 4,80,000 at ACC_EXT_9921`,
 
-    optimizer: `// [STAGE 2: SCENARIO MILP OPTIMIZER (PuLP/CBC)]
-[*] Open Invoices: 3 Claims | Solved in 142ms via CBC
-[+] INV-2041: PAY_EARLY_DISCOUNT (+₹21,000 discount captured)
-[+] INV-2042: HOLD (Preserve buffer until RCV-0004 settles)
-[+] INV-2043: FINANCE_SUPPLIER (Overdraft Line draw)`,
+    lineage: `// [STAGE 2: MULTI-HOP FUND FLOW & LINEAGE TRACING ENGINE]
+[*] Algorithm: Recursive multi-hop lineage traversal across directed transaction DAG
+[*] Traversal Depth: Max 6 hops | Time window constraint: Δt ≤ 120 minutes
+[+] Path Provenance Trace: Origin ACC_EXT_9921 → 4 Intermediary Tiers → Endpoints`,
 
-    shock: `// [STAGE 3: CHAOS SHOCK INJECTION & RE-OPTIMIZATION]
-[!] EVENT: GST Emergency Demand ₹9,00,000 in 5 days
-[⟳] Re-solve triggered in 118ms → Deployable cash: ₹9,50,000
-[!] ACTION FLIP: INV-2041 flipped from DISCOUNT to HOLD to protect tax floor.`
+    graph: `// [STAGE 3: TEMPORAL GRAPH INTELLIGENCE & CLUSTER ANALYTICS]
+[*] Graph Structure: Directed Temporal Multigraph G = (V, E, T)
+[*] Metrics: In/out degree burst velocity (Z-score +4.2) | 6:1 Fan-in pooling ratio
+[!] Flag: High-confidence money-mule layering & pooling cluster topology identified.`,
+
+    findings: `// [STAGE 4: EXPLAINABLE RISK FINDINGS & INVESTIGATION SUMMARY]
+[*] Status: Suspicious transaction pattern flagged for human investigator review
+[!] POTENTIAL MONEY-MULE NETWORK (Requires formal compliance review)
+[+] Suspect Cash-Out: ACC_POOL_808 (e₹ 3,60,000) & ACC_POS_MERCHANT_44 (e₹ 1,20,000)`
   };
 
   steps.forEach((step) => {
@@ -641,8 +646,8 @@ function initCsiOriginExhibit() {
       steps.forEach((s) => s.classList.remove('active'));
       step.classList.add('active');
 
-      const stage = step.getAttribute('data-stage') || 'forecast';
-      codeView.textContent = PIPELINE_STEPS[stage] || PIPELINE_STEPS.forecast;
+      const stage = step.getAttribute('data-stage') || 'simulation';
+      codeView.textContent = PIPELINE_STEPS[stage] || PIPELINE_STEPS.simulation;
     });
   });
 }
@@ -1285,6 +1290,7 @@ function initMotionDesign() {
 
   const projectColorMap = {
     'prj-probe360': '#00e5ff',
+    'prj-mule-matrix': '#2dd4a7',
     'prj-csi-origin': '#2dd4a7',
     'prj-carbon': '#f59e0b',
     'prj-aegis': '#00f5d4',
