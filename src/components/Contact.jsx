@@ -8,7 +8,7 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const copyEmail = () => {
-    const email = 'sahith.developer.sec@gmail.com';
+    const email = 'sahithm2006@gmail.com';
     navigator.clipboard.writeText(email).then(() => {
       setCopyFeedback('✓ Copied to clipboard!');
       setTimeout(() => setCopyFeedback(''), 3000);
@@ -68,7 +68,7 @@ export default function Contact() {
             <div className="copy-email-card">
               <span className="card-kicker">DIRECT EMAIL</span>
               <div className="email-action-row">
-                <span className="email-string" id="email-address">sahith.developer.sec@gmail.com</span>
+                <span className="email-string" id="email-address">sahithm2006@gmail.com</span>
                 <button
                   className="btn-copy-email"
                   id="btn-copy-email"
