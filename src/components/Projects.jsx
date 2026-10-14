@@ -450,9 +450,17 @@ function MuleExhibit() {
 }
 
 function CarbonExhibit() {
+  const PRESETS = {
+    baseline: { label: 'Baseline Ops', distance: 1200, renewable: 30, volume: 2500 },
+    green: { label: 'Green Transition', distance: 800, renewable: 75, volume: 2500 },
+    nearshore: { label: 'Nearshore Sourcing', distance: 350, renewable: 30, volume: 2500 },
+    highvol: { label: 'High Volume', distance: 1200, renewable: 30, volume: 4800 }
+  };
+
   const [distance, setDistance] = useState(1200);
   const [renewable, setRenewable] = useState(30);
   const [volume, setVolume] = useState(2500);
+  const [activePreset, setActivePreset] = useState('baseline');
   const [copiedSnippetId, setCopiedSnippetId] = useState(null);
   const copyTimeoutRef = useRef(null);
 
@@ -462,10 +470,23 @@ function CarbonExhibit() {
     };
   }, []);
 
+  const applyPreset = (key) => {
+    const p = PRESETS[key];
+    setDistance(p.distance);
+    setRenewable(p.renewable);
+    setVolume(p.volume);
+    setActivePreset(key);
+  };
+
   const scope1 = Math.round((volume * 0.08) * (1 - renewable * 0.005));
   const scope2 = Math.round((volume * 0.06) * (1 - renewable * 0.008));
   const scope3 = Math.round(distance * 0.065 + volume * 0.015);
   const totalCo2 = scope1 + scope2 + scope3;
+  const intensityKg = totalCo2 > 0 ? ((totalCo2 * 1000) / volume).toFixed(1) : '0.0';
+
+  const renewableAbatement = Math.round((100 - renewable) * 0.8);
+  const logisticsExposure = Math.round((distance / 4000) * 100);
+  const prodElasticity = Math.round((volume / 5000) * 100);
 
   const copyTextToClipboard = (text) => {
     if (navigator.clipboard) {
@@ -480,13 +501,13 @@ function CarbonExhibit() {
   return (
     <div className="project-interactive-exhibit exhibit-box-carbon">
       <div className="exhibit-header">
-        <span className="exhibit-label">✦ Emissions Scenario Forecaster</span>
+        <span className="exhibit-label">✦ GHG Emissions Scenario Forecaster</span>
         <button
           type="button"
           className="btn-copy-snippet"
           onClick={() =>
             copyTextToClipboard(
-              `Scope 1: ${scope1} MT | Scope 2: ${scope2} MT | Scope 3: ${scope3} MT | Total: ${totalCo2} MT CO2e`
+              `Scope 1: ${scope1} MT | Scope 2: ${scope2} MT | Scope 3: ${scope3} MT | Total: ${totalCo2} MT CO2e | Intensity: ${intensityKg} kg/unit`
             )
           }
           aria-label="Copy carbon forecast summary"
@@ -494,6 +515,28 @@ function CarbonExhibit() {
           {copiedSnippetId === 'carbon' ? 'Copied ✓' : 'Copy Metrics'}
         </button>
       </div>
+
+      {/* Scenario Presets */}
+      <div className="carbon-presets-row">
+        {Object.entries(PRESETS).map(([key, p]) => (
+          <button
+            key={key}
+            type="button"
+            className={`carbon-preset-btn ${activePreset === key ? 'active' : ''}`}
+            onClick={() => applyPreset(key)}
+          >
+            {p.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Sandbox disclaimer */}
+      <div className="carbon-sandbox-notice">
+        <span>✦</span>
+        <span>Research Scenario Sandbox · GHG Protocol Scope 1/2/3 Framework · Illustrative Model Outputs</span>
+      </div>
+
+      {/* Sliders */}
       <div className="carbon-controls-grid">
         <div className="slider-group">
           <div className="slider-label-row">
@@ -507,7 +550,7 @@ function CarbonExhibit() {
             step="50"
             value={distance}
             aria-label="Freight distance slider"
-            onChange={(e) => setDistance(Number(e.target.value))}
+            onChange={(e) => { setDistance(Number(e.target.value)); setActivePreset(''); }}
           />
         </div>
         <div className="slider-group">
@@ -522,7 +565,7 @@ function CarbonExhibit() {
             step="5"
             value={renewable}
             aria-label="Renewable energy mix slider"
-            onChange={(e) => setRenewable(Number(e.target.value))}
+            onChange={(e) => { setRenewable(Number(e.target.value)); setActivePreset(''); }}
           />
         </div>
         <div className="slider-group">
@@ -537,27 +580,29 @@ function CarbonExhibit() {
             step="100"
             value={volume}
             aria-label="Production volume slider"
-            onChange={(e) => setVolume(Number(e.target.value))}
+            onChange={(e) => { setVolume(Number(e.target.value)); setActivePreset(''); }}
           />
         </div>
       </div>
+
+      {/* GHG Protocol Scope Breakdown */}
       <div className="carbon-output-bars">
         <div className="output-stat-row">
-          <span>Scope 1 (Fuels):</span>
+          <span>Scope 1 — Direct Fuels:</span>
           <strong>{scope1} MT</strong>
           <div className="stat-bar-track">
             <div className="stat-bar-fill bar-s1" style={{ width: `${Math.min(100, (scope1 / 300) * 100)}%` }}></div>
           </div>
         </div>
         <div className="output-stat-row">
-          <span>Scope 2 (Power):</span>
+          <span>Scope 2 — Purchased Power:</span>
           <strong>{scope2} MT</strong>
           <div className="stat-bar-track">
             <div className="stat-bar-fill bar-s2" style={{ width: `${Math.min(100, (scope2 / 200) * 100)}%` }}></div>
           </div>
         </div>
         <div className="output-stat-row">
-          <span>Scope 3 (Logistics):</span>
+          <span>Scope 3 — Logistics & Supply:</span>
           <strong>{scope3} MT</strong>
           <div className="stat-bar-track">
             <div className="stat-bar-fill bar-s3" style={{ width: `${Math.min(100, (scope3 / 300) * 100)}%` }}></div>
@@ -566,11 +611,73 @@ function CarbonExhibit() {
         <div className="total-emission-badge">
           <span>PROJECTED TOTAL:</span>
           <strong>{totalCo2} MT CO2e</strong>
+          <span className="emission-intensity-badge">{intensityKg} kg / unit</span>
         </div>
+      </div>
+
+      {/* Sensitivity & Scenario Impact */}
+      <div className="carbon-sensitivity-grid">
+        <div className="sensitivity-card">
+          <div className="sens-header">
+            <span className="sens-label">Renewable Abatement</span>
+            <span className={`sens-val ${renewableAbatement > 60 ? 'sens-good' : renewableAbatement > 30 ? 'sens-warn' : 'sens-crit'}`}>
+              {renewableAbatement}% reduction potential
+            </span>
+          </div>
+          <div className="sens-bar-track">
+            <div className="sens-bar-fill sens-green" style={{ width: `${renewableAbatement}%` }} />
+          </div>
+          <span className="sens-desc">PPA clean power procurement impact on Scope 2 exposure</span>
+        </div>
+        <div className="sensitivity-card">
+          <div className="sens-header">
+            <span className="sens-label">Logistics Exposure</span>
+            <span className={`sens-val ${logisticsExposure > 60 ? 'sens-crit' : logisticsExposure > 35 ? 'sens-warn' : 'sens-good'}`}>
+              {logisticsExposure}% of cap
+            </span>
+          </div>
+          <div className="sens-bar-track">
+            <div className="sens-bar-fill sens-amber" style={{ width: `${logisticsExposure}%` }} />
+          </div>
+          <span className="sens-desc">Scope 3 sensitivity to freight distance vs budget ceiling</span>
+        </div>
+        <div className="sensitivity-card">
+          <div className="sens-header">
+            <span className="sens-label">Production Elasticity</span>
+            <span className={`sens-val ${prodElasticity > 70 ? 'sens-crit' : prodElasticity > 45 ? 'sens-warn' : 'sens-good'}`}>
+              {prodElasticity}% load factor
+            </span>
+          </div>
+          <div className="sens-bar-track">
+            <div className="sens-bar-fill sens-blue" style={{ width: `${prodElasticity}%` }} />
+          </div>
+          <span className="sens-desc">Scope 1 linear scaling vs unit volume throughput</span>
+        </div>
+      </div>
+
+      {/* Mitigation Guidance Banner */}
+      <div className="carbon-mitigation-banner">
+        <span className="mitigation-icon">⚡</span>
+        <div className="mitigation-text">
+          <strong>Mitigation Lever:</strong>
+          {renewable < 50
+            ? ' Increase renewable mix via PPA contracts — highest Scope 2 ROI pathway.'
+            : distance > 2000
+            ? ' Nearshore supplier network — Scope 3 freight is dominant emission driver.'
+            : ' Profile is within low-risk threshold. Optimise volume scheduling to reduce Scope 1 variance.'}
+        </div>
+      </div>
+
+      {/* Tech Stack Badges */}
+      <div className="carbon-tech-badges">
+        {['Python 3.11', 'Scikit-learn', 'Pandas', 'NumPy', 'Matplotlib'].map((badge) => (
+          <span key={badge} className="carbon-tech-badge">{badge}</span>
+        ))}
       </div>
     </div>
   );
 }
+
 
 function AegisExhibit() {
   const [aegisStep, setAegisStep] = useState('vuln');
@@ -1214,13 +1321,17 @@ export default function Projects({
     }
   }, [activeFilter, filteredProjects]);
 
-  // Robust, stabilized IntersectionObserver for smooth project card focal alignment
+  // Robust, stabilized IntersectionObserver with strict hysteresis for smooth project focal alignment
   useEffect(() => {
     if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
     const entries = document.querySelectorAll('.project-narrative-entry');
     if (!entries.length) return;
 
     const ratioMap = new Map();
+    // Minimum ratio any card must reach to be considered at all
+    const MIN_QUALIFYING_RATIO = 0.25;
+    // The candidate must beat the current active card's ratio by this margin to trigger a switch
+    const HYSTERESIS_MARGIN = 0.10;
 
     const observer = new IntersectionObserver(
       (observed) => {
@@ -1230,8 +1341,9 @@ export default function Projects({
           ratioMap.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
         });
 
+        // Find the best visible candidate
         let bestId = null;
-        let maxRatio = 0.15;
+        let maxRatio = MIN_QUALIFYING_RATIO;
 
         ratioMap.forEach((ratio, id) => {
           if (ratio > maxRatio) {
@@ -1240,13 +1352,18 @@ export default function Projects({
           }
         });
 
-        if (bestId && bestId !== activeSpotlightRef.current) {
-          handleSpotlightChange(bestId, false);
-        }
+        if (!bestId) return;
+        if (bestId === activeSpotlightRef.current) return;
+
+        // Apply hysteresis: only switch if the new candidate beats the active card by a margin
+        const activeRatio = ratioMap.get(activeSpotlightRef.current) || 0;
+        if (maxRatio < activeRatio + HYSTERESIS_MARGIN) return;
+
+        handleSpotlightChange(bestId, false);
       },
       {
-        rootMargin: '-20% 0px -40% 0px',
-        threshold: [0.15, 0.35, 0.55, 0.75]
+        rootMargin: '-15% 0px -35% 0px',
+        threshold: [0.1, 0.25, 0.4, 0.55, 0.75]
       }
     );
 
@@ -1256,6 +1373,7 @@ export default function Projects({
       if (scrollLockTimeoutRef.current) clearTimeout(scrollLockTimeoutRef.current);
     };
   }, [filteredProjects]);
+
 
   // Stepper click handler with programmatic scroll lock
   const handleStepperClick = (e, prjId) => {

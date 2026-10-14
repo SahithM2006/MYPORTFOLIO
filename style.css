@@ -3019,6 +3019,178 @@ input[type="range"] {
   margin-top: 4px;
 }
 
+.emission-intensity-badge {
+  background: rgba(143, 168, 155, 0.15);
+  border: 1px solid rgba(143, 168, 155, 0.3);
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 0.74rem;
+  color: var(--color-sage);
+}
+
+/* Carbon preset scenario buttons */
+.carbon-presets-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.carbon-preset-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(185, 168, 216, 0.2);
+  color: var(--color-lavender);
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  padding: 5px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.carbon-preset-btn:hover {
+  background: rgba(184, 169, 201, 0.12);
+  border-color: rgba(184, 169, 201, 0.4);
+  color: var(--text-white);
+}
+
+.carbon-preset-btn.active {
+  background: rgba(184, 169, 201, 0.2);
+  border-color: #b8a9c9;
+  color: #ece7f2;
+  font-weight: 700;
+  box-shadow: 0 0 12px rgba(184, 169, 201, 0.25);
+}
+
+/* Carbon sandbox notice */
+.carbon-sandbox-notice {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(184, 169, 201, 0.07);
+  border: 1px solid rgba(184, 169, 201, 0.18);
+  border-radius: 6px;
+  margin-bottom: 12px;
+  font-size: 0.67rem;
+  color: #c4bada;
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+/* Carbon sensitivity analysis */
+.carbon-sensitivity-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+  margin-bottom: 12px;
+}
+
+.sensitivity-card {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(92, 135, 166, 0.15);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sens-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.sens-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-slate-muted);
+}
+
+.sens-val {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.sens-val.sens-good { color: #8fa89b; }
+.sens-val.sens-warn { color: var(--color-amber); }
+.sens-val.sens-crit { color: #b37583; }
+
+.sens-bar-track {
+  height: 5px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.sens-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.sens-green { background: #8fa89b; }
+.sens-amber { background: var(--color-amber); }
+.sens-blue  { background: var(--color-dusty-blue); }
+
+.sens-desc {
+  font-size: 0.68rem;
+  color: var(--text-subtle);
+  font-family: var(--font-mono);
+}
+
+/* Carbon mitigation guidance banner */
+.carbon-mitigation-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 9px 13px;
+  background: rgba(143, 168, 155, 0.08);
+  border: 1px solid rgba(143, 168, 155, 0.2);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 0.78rem;
+  color: var(--text-slate-muted);
+  line-height: 1.45;
+}
+
+.mitigation-icon {
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.mitigation-text strong {
+  color: #8fa89b;
+  font-weight: 700;
+}
+
+/* Carbon tech stack badges */
+.carbon-tech-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding-top: 4px;
+}
+
+.carbon-tech-badge {
+  background: rgba(92, 135, 166, 0.1);
+  border: 1px solid rgba(92, 135, 166, 0.22);
+  color: var(--color-dusty-blue);
+  font-family: var(--font-mono);
+  font-size: 0.69rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+}
+
 /* ==========================================================================
    AEGIS-TWIN — CYBER DIGITAL TWIN SIMULATION INTERFACE
    ========================================================================== */
@@ -3451,11 +3623,19 @@ input[type="range"] {
 /* Nodes */
 .aegis-interactive-node {
   cursor: pointer;
-  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.aegis-interactive-node:hover {
-  transform: scale(1.06);
+.aegis-interactive-node:hover .node-base-circle {
+  stroke-width: 3.5;
+  filter: drop-shadow(0 0 8px rgba(108, 142, 164, 0.65));
+}
+
+.aegis-interactive-node.is-selected .node-base-circle {
+  stroke-width: 3.5;
+}
+
+.aegis-interactive-node:hover .node-title-text {
+  fill: #ffffff;
 }
 
 .node-select-ring {
