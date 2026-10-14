@@ -4629,7 +4629,8 @@ input[type="range"] {
   transform: translateY(-2px);
 }
 
-.btn-copy-email.copied {
+.btn-copy-email.copied,
+.btn-copy-email.copied:hover {
   background: var(--color-jade);
   color: #07101E;
   border-color: var(--color-jade);

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 export default function Contact() {
   const [copyFeedback, setCopyFeedback] = useState('');
+  const [isCopied, setIsCopied] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [formErrors, setFormErrors] = useState({});
   const [formStatus, setFormStatus] = useState('');
@@ -9,12 +10,46 @@ export default function Contact() {
 
   const copyEmail = () => {
     const email = 'sahithm2006@gmail.com';
-    navigator.clipboard.writeText(email).then(() => {
+    const markCopied = () => {
+      setIsCopied(true);
       setCopyFeedback('✓ Copied to clipboard!');
-      setTimeout(() => setCopyFeedback(''), 3000);
-    }).catch(() => {
-      setCopyFeedback('Press Ctrl+C to copy: ' + email);
-    });
+      setTimeout(() => {
+        setIsCopied(false);
+        setCopyFeedback('');
+      }, 3000);
+    };
+
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(email)
+        .then(markCopied)
+        .catch(() => {
+          fallbackCopy(email, markCopied);
+        });
+    } else {
+      fallbackCopy(email, markCopied);
+    }
+  };
+
+  const fallbackCopy = (text, onSuccess) => {
+    try {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textArea);
+      if (successful) {
+        onSuccess();
+      } else {
+        setCopyFeedback('Press Ctrl+C to copy: ' + text);
+      }
+    } catch {
+      setCopyFeedback('Press Ctrl+C to copy: ' + text);
+    }
   };
 
   const validate = () => {
@@ -70,14 +105,14 @@ export default function Contact() {
               <div className="email-action-row">
                 <span className="email-string" id="email-address">sahithm2006@gmail.com</span>
                 <button
-                  className="btn-copy-email"
+                  className={`btn-copy-email ${isCopied ? 'copied' : ''}`}
                   id="btn-copy-email"
-                  aria-label="Copy email address to clipboard"
+                  aria-label={isCopied ? 'Email address copied' : 'Copy email address to clipboard'}
                   type="button"
                   onClick={copyEmail}
                 >
-                  <span className="copy-icon" aria-hidden="true">📋</span>
-                  <span className="copy-text">Copy</span>
+                  <span className="copy-icon" aria-hidden="true">{isCopied ? '✓' : '📋'}</span>
+                  <span className="copy-text">{isCopied ? 'Copied!' : 'Copy'}</span>
                 </button>
               </div>
               {copyFeedback && <span className="copy-feedback" id="copy-feedback" aria-live="polite">{copyFeedback}</span>}

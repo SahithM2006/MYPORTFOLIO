@@ -1173,7 +1173,7 @@ function initContactActions() {
           if (copyFeedback) copyFeedback.textContent = '';
         }, 3000);
       }).catch(() => {
-        if (copyFeedback) copyFeedback.textContent = 'Email: sahith.developer.sec@gmail.com';
+        if (copyFeedback) copyFeedback.textContent = 'Email: sahithm2006@gmail.com';
       });
     });
   }
@@ -1219,7 +1219,7 @@ function initContactActions() {
         const email = encodeURIComponent(emailInput.value.trim());
         const message = encodeURIComponent(msgInput.value.trim());
 
-        const mailtoUrl = `mailto:sahith.developer.sec@gmail.com?subject=Portfolio%20Inquiry%20from%20${name}&body=Sender:%20${name}%0D%0AEmail:%20${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+        const mailtoUrl = `mailto:sahithm2006@gmail.com?subject=Portfolio%20Inquiry%20from%20${name}&body=Sender:%20${name}%0D%0AEmail:%20${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
 
         if (formStatus) {
           formStatus.className = 'form-status success';
