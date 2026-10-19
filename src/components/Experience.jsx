@@ -27,8 +27,14 @@ export default function Experience() {
           </p>
         </div>
 
-        {/* Vertical Timeline Layout */}
+        {/* Vertical Timeline Layout with Scrubbed Animated Spine */}
         <div className="experience-timeline" role="list" aria-label="Professional Experience Timeline">
+          {/* Continuous Animated Timeline Spine Track */}
+          <div className="exp-timeline-spine-track" aria-hidden="true">
+            <div className="exp-timeline-spine-fill" id="exp-timeline-spine-fill"></div>
+            <div className="exp-timeline-spine-glow"></div>
+          </div>
+
           {hasVerifiedExperiences ? (
             /* Rendered when verified employment entries exist in data-store */
             EXPERIENCES.map((exp, index) => {
@@ -36,12 +42,12 @@ export default function Experience() {
               const isLast = index === EXPERIENCES.length - 1;
 
               return (
-                <div key={exp.id || index} className="exp-timeline-item" role="listitem">
+                <div key={exp.id || index} className="exp-timeline-item" role="listitem" id={`exp-item-${itemNumber}`}>
                   {/* Subtle Vertical Timeline Rail */}
                   <div className="exp-timeline-rail" aria-hidden="true">
                     <span className="exp-timeline-index">{itemNumber}</span>
-                    <span className="exp-timeline-node" />
-                    {!isLast && <span className="exp-timeline-line" />}
+                    <span className="exp-timeline-node" id={`exp-node-${itemNumber}`} />
+                    <span className="exp-node-pulse-ring" />
                   </div>
 
                   {/* Clean Content Block */}
@@ -100,11 +106,11 @@ export default function Experience() {
             */
             <>
               {/* Timeline Node 1: Current Academic Pre-Professional Trajectory */}
-              <div className="exp-timeline-item" role="listitem">
+              <div className="exp-timeline-item" role="listitem" id="exp-item-01">
                 <div className="exp-timeline-rail" aria-hidden="true">
                   <span className="exp-timeline-index">01</span>
-                  <span className="exp-timeline-node" />
-                  <span className="exp-timeline-line" />
+                  <span className="exp-timeline-node" id="exp-node-01" />
+                  <span className="exp-node-pulse-ring" />
                 </div>
 
                 <div className="exp-timeline-content">
@@ -147,11 +153,11 @@ export default function Experience() {
               </div>
 
               {/* Timeline Node 2: Prospective Industry Roles & Availability */}
-              <div className="exp-timeline-item" role="listitem">
+              <div className="exp-timeline-item" role="listitem" id="exp-item-02">
                 <div className="exp-timeline-rail" aria-hidden="true">
                   <span className="exp-timeline-index">02</span>
-                  <span className="exp-timeline-node status-active" />
-                  <span className="exp-timeline-line" />
+                  <span className="exp-timeline-node status-active" id="exp-node-02" />
+                  <span className="exp-node-pulse-ring" />
                 </div>
 
                 <div className="exp-timeline-content prospective-content">

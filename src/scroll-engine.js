@@ -98,6 +98,10 @@ export function initScrollEngine() {
       progressBar.style.transform = `scaleX(${progress})`;
     }
 
+    // Export real-time scroll metrics to CSS variables
+    document.documentElement.style.setProperty('--scroll-y', `${scrollTop}px`);
+    document.documentElement.style.setProperty('--scroll-progress', progress.toFixed(4));
+
     if (auraOrbit1) {
       auraOrbit1.style.transform = `rotate(${progress * 360}deg)`;
     }
@@ -326,7 +330,28 @@ export function initScrollEngine() {
         );
       });
 
-      // 4. Experience section: header & sequential timeline items with node illumination
+      // Continuous scrubbed parallax for project background index numerals
+      const projectNumerals = document.querySelectorAll('.project-bg-numeral');
+      projectNumerals.forEach((numeral) => {
+        const parent = numeral.closest('.project-narrative-entry') || numeral.parentElement;
+        gsap.fromTo(
+          numeral,
+          { y: -50, opacity: 0.15 },
+          {
+            y: 50,
+            opacity: 0.45,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: parent,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 0.6
+            }
+          }
+        );
+      });
+
+      // 4. Experience section: header & animated timeline progress spine
       const expHeader = document.querySelector('.exp-header-block') || document.querySelector('.experience-title');
       if (expHeader) {
         gsap.fromTo(
@@ -346,11 +371,44 @@ export function initScrollEngine() {
         );
       }
 
+      // Continuous scrubbed timeline progress fill along the experience rail
+      const spineFill = document.getElementById('exp-timeline-spine-fill');
+      const expSecEl = document.getElementById('experience');
+      if (spineFill && expSecEl) {
+        gsap.fromTo(
+          spineFill,
+          { height: '0%' },
+          {
+            height: '100%',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: expSecEl,
+              start: 'top 65%',
+              end: 'bottom 80%',
+              scrub: 0.5,
+              onUpdate: (self) => {
+                const p = self.progress;
+                const node1 = document.getElementById('exp-node-01');
+                const node2 = document.getElementById('exp-node-02');
+                if (node1) {
+                  if (p >= 0.18) node1.classList.add('node-illuminated');
+                  else node1.classList.remove('node-illuminated');
+                }
+                if (node2) {
+                  if (p >= 0.62) node2.classList.add('node-illuminated');
+                  else node2.classList.remove('node-illuminated');
+                }
+              }
+            }
+          }
+        );
+      }
+
       const expItems = document.querySelectorAll('.exp-timeline-item');
       expItems.forEach((item) => {
         gsap.fromTo(
           item,
-          { x: 20, opacity: 0.35 },
+          { x: 30, opacity: 0.35 },
           {
             x: 0,
             opacity: 1,
@@ -358,7 +416,7 @@ export function initScrollEngine() {
             ease: 'power2.out',
             scrollTrigger: {
               trigger: item,
-              start: 'top 82%',
+              start: 'top 84%',
               toggleActions: 'play none none none', once: true,
               onEnter: () => item.classList.add('in-view'),
               onEnterBack: () => item.classList.add('in-view'),
@@ -482,6 +540,27 @@ export function initScrollEngine() {
               trigger: contactForm,
               start: 'top 85%',
               toggleActions: 'play none none none', once: true
+            }
+          }
+        );
+      }
+
+      // Continuous scrubbed rotation and scale for Contact kinetic aura
+      const contactAura = document.getElementById('contact-kinetic-aura');
+      const contactSecEl = document.getElementById('contact');
+      if (contactAura && contactSecEl) {
+        gsap.fromTo(
+          contactAura,
+          { rotate: -25, scale: 0.88 },
+          {
+            rotate: 45,
+            scale: 1.12,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: contactSecEl,
+              start: 'top bottom',
+              end: 'bottom bottom',
+              scrub: 1
             }
           }
         );

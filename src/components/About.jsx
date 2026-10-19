@@ -190,18 +190,35 @@ export default function About({ onSelectSkill, onSelectProject }) {
       if (photoRef.current) {
         gsap.fromTo(
           photoRef.current,
-          { opacity: 0, y: 24, scale: 0.97 },
+          { y: 35, opacity: 0.7 },
           {
+            y: -30,
             opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.85,
-            ease: 'power2.out',
+            ease: 'none',
             scrollTrigger: {
-              trigger: photoRef.current,
-              start: 'top 88%',
-              toggleActions: 'play none none none',
-              once: true
+              trigger: sectionRef.current,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 0.8
+            }
+          }
+        );
+      }
+
+      const circuitSvg = sectionRef.current.querySelector('.circuit-svg');
+      if (circuitSvg) {
+        gsap.fromTo(
+          circuitSvg,
+          { x: -50, opacity: 0.25 },
+          {
+            x: 25,
+            opacity: 0.75,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 1
             }
           }
         );
@@ -213,6 +230,18 @@ export default function About({ onSelectSkill, onSelectProject }) {
 
   return (
     <section className="about-section is-in-view" id="about" ref={sectionRef} aria-labelledby="about-title">
+      {/* Moving Ambient Technical Circuit Motif */}
+      <div className="about-ambient-circuit" aria-hidden="true">
+        <svg viewBox="0 0 1000 400" className="circuit-svg" preserveAspectRatio="none">
+          <path d="M0,80 L250,80 L320,160 L680,160 L750,240 L1000,240" stroke="rgba(20, 184, 166, 0.16)" strokeWidth="1.5" strokeDasharray="6 6" fill="none" className="circuit-path-1" />
+          <path d="M0,280 L180,280 L240,200 L560,200 L620,120 L1000,120" stroke="rgba(94, 153, 179, 0.14)" strokeWidth="1.5" strokeDasharray="8 8" fill="none" className="circuit-path-2" />
+          <circle cx="320" cy="160" r="4" fill="#2DD4BF" className="circuit-node-pulse" />
+          <circle cx="680" cy="160" r="4" fill="#E5A93C" className="circuit-node-pulse" />
+          <circle cx="240" cy="200" r="3.5" fill="#10B981" className="circuit-node-pulse" />
+          <circle cx="620" cy="120" r="3.5" fill="#38BDF8" className="circuit-node-pulse" />
+        </svg>
+      </div>
+
       <div className="about-container">
         {/* Section Headline */}
         <div className="about-header-block">
@@ -227,8 +256,19 @@ export default function About({ onSelectSkill, onSelectProject }) {
 
           {/* Left Column: Original Photograph + Compact 10s Video Component */}
           <div className="about-portrait-col" ref={photoRef}>
-            {/* 1. Original Photograph */}
+            {/* 1. Original Photograph with Cyber Sensor Viewfinder Overlay */}
             <div className="about-portrait-frame" id="about-portrait-frame">
+              <div className="about-portrait-viewfinder" aria-hidden="true">
+                <span className="viewfinder-bracket bracket-tl">⌜</span>
+                <span className="viewfinder-bracket bracket-tr">⌝</span>
+                <span className="viewfinder-bracket bracket-bl">⌞</span>
+                <span className="viewfinder-bracket bracket-br">⌟</span>
+                <div className="viewfinder-scan-beam"></div>
+                <div className="viewfinder-hud-tag">
+                  <span className="hud-pulse"></span>
+                  <span>13.08°N 80.27°E // SEC CHENNAI</span>
+                </div>
+              </div>
               <div className="about-portrait-inner">
                 <img
                   src="./user_photo.jpg"

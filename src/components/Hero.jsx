@@ -49,17 +49,21 @@ export default function Hero() {
     if (prefersReducedMotion || !headlineRef.current || !heroContainerRef.current) return;
 
     const ctx = gsap.context(() => {
-      // Scrubbed kinetic mask transition on hero headline rows as visitor scrolls out
+      // Scrubbed parallax & environmental movement around character
       const headlineRows = headlineRef.current.querySelectorAll('.headline-row');
       const leadText = heroContainerRef.current.querySelector('.hero-lead');
       const metaText = heroContainerRef.current.querySelector('.hero-meta-summary');
       const ctaGroup = heroContainerRef.current.querySelector('.hero-cta-group');
+      const scrollCue = heroContainerRef.current.querySelector('.hero-scroll-cue');
+      const flowStem = heroContainerRef.current.querySelector('.flow-stem');
+      const reticle = document.querySelector('.hero-ambient-reticle');
+      const chips = document.querySelectorAll('.hero-telemetry-chip');
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: '#hero',
           start: 'top top',
-          end: 'bottom 40%',
+          end: 'bottom 25%',
           scrub: 0.6,
           invalidateOnRefresh: true
         }
@@ -74,26 +78,33 @@ export default function Hero() {
       }, 0);
 
       if (leadText) {
-        tl.to(leadText, {
-          y: -24,
-          opacity: 0.05,
-          ease: 'power1.inOut'
-        }, 0.05);
+        tl.to(leadText, { y: -24, opacity: 0.05, ease: 'power1.inOut' }, 0.05);
       }
 
       if (ctaGroup) {
-        tl.to(ctaGroup, {
-          y: -18,
-          opacity: 0.1,
-          ease: 'power1.inOut'
-        }, 0.08);
+        tl.to(ctaGroup, { y: -18, opacity: 0.1, ease: 'power1.inOut' }, 0.08);
       }
 
       if (metaText) {
-        tl.to(metaText, {
-          opacity: 0,
-          ease: 'power1.inOut'
-        }, 0.1);
+        tl.to(metaText, { opacity: 0, ease: 'power1.inOut' }, 0.1);
+      }
+
+      if (scrollCue) {
+        tl.to(scrollCue, { y: -15, opacity: 0, ease: 'power1.out' }, 0.02);
+      }
+
+      if (flowStem) {
+        tl.to(flowStem, { scaleY: 1, opacity: 1, ease: 'none' }, 0);
+      }
+
+      if (reticle) {
+        tl.to(reticle, { rotation: 75, scale: 1.15, opacity: 0.2, ease: 'none' }, 0);
+      }
+
+      if (chips.length >= 3) {
+        tl.to(chips[0], { y: -110, x: 25, opacity: 0.05, ease: 'none' }, 0);
+        tl.to(chips[1], { y: -160, x: -30, opacity: 0.05, ease: 'none' }, 0);
+        tl.to(chips[2], { y: -80, x: 15, opacity: 0.1, ease: 'none' }, 0);
       }
     });
 
@@ -105,6 +116,22 @@ export default function Hero() {
       {/* Original 360° Cursor-Tracking Character Canvas (PROTECTED BY RULE 1) */}
       <canvas id="character-canvas" className="character-canvas"></canvas>
       <div className="character-vignette" aria-hidden="true"></div>
+
+      {/* Floating Technical Telemetry Objects that parallax at different rates */}
+      <div className="hero-floating-telemetry" aria-hidden="true">
+        <div className="hero-telemetry-chip chip-top-right">
+          <span className="telemetry-dot dot-teal"></span>
+          <span className="telemetry-label">SYS_TELEMETRY // WINRM 5986</span>
+        </div>
+        <div className="hero-telemetry-chip chip-mid-left">
+          <span className="telemetry-dot dot-amber"></span>
+          <span className="telemetry-label">CBDC_LINEAGE // 4-HOP DAG</span>
+        </div>
+        <div className="hero-telemetry-chip chip-bottom-right">
+          <span className="telemetry-dot dot-jade"></span>
+          <span className="telemetry-label">DIGITAL_TWIN // AEGIS ACTIVE</span>
+        </div>
+      </div>
 
       <div className="hero-container" ref={heroContainerRef}>
         <div className="hero-typography hero-revealed">
@@ -189,6 +216,15 @@ export default function Hero() {
       <div className="hero-ambient-depth" aria-hidden="true">
         <div className="hero-ambient-grid"></div>
         <div className="hero-ambient-glow"></div>
+        <div className="hero-ambient-reticle">
+          <svg viewBox="0 0 400 400" className="hero-reticle-svg" aria-hidden="true">
+            <circle cx="200" cy="200" r="185" stroke="rgba(20, 184, 166, 0.18)" strokeWidth="1" strokeDasharray="6 8" fill="none" />
+            <circle cx="200" cy="200" r="135" stroke="rgba(94, 153, 179, 0.15)" strokeWidth="1" strokeDasharray="14 12" fill="none" />
+            <circle cx="200" cy="200" r="85" stroke="rgba(229, 169, 60, 0.16)" strokeWidth="1" strokeDasharray="4 6" fill="none" />
+            <line x1="200" y1="5" x2="200" y2="395" stroke="rgba(74, 134, 153, 0.12)" strokeWidth="1" />
+            <line x1="5" y1="200" x2="395" y2="200" stroke="rgba(74, 134, 153, 0.12)" strokeWidth="1" />
+          </svg>
+        </div>
       </div>
     </section>
   );

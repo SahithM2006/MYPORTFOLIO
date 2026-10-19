@@ -1,5 +1,9 @@
 import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SKILLS, SKILL_CATEGORIES } from '../data-store.js';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const PROJECT_MAP = {
   probe360: { name: 'Probe360 Agentless Security', id: 'prj-probe360' },
@@ -63,8 +67,44 @@ export default function Skills({
   const [internalSelectedSkillId, setInternalSelectedSkillId] = useState('python');
   const [hoveredSkillId, setHoveredSkillId] = useState(null);
   const [focusedSkillId, setFocusedSkillId] = useState(null);
+  const [isCategoryPulsing, setIsCategoryPulsing] = useState(false);
   const searchInputRef = useRef(null);
+  const constellationRef = useRef(null);
   const hoverTimeoutRef = useRef(null);
+
+  // Parallax floating drift on constellation stage tied to scroll scrub
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion || !constellationRef.current) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        constellationRef.current,
+        { y: 25, rotate: -0.4 },
+        {
+          y: -25,
+          rotate: 0.4,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '#skills',
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1
+          }
+        }
+      );
+    });
+    return () => ctx.revert();
+  }, []);
+
+  const handleCategoryChange = (catId) => {
+    setSelectedCategory(catId);
+    setIsCategoryPulsing(true);
+    setTimeout(() => setIsCategoryPulsing(false), 1200);
+    if (catId !== 'all') {
+      const firstInCat = SKILLS.find((s) => s.category === catId);
+      if (firstInCat) handleSelectSkill(firstInCat.id);
+    }
+  };
 
   const handleNodeMouseEnter = useCallback((skillId) => {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
@@ -270,7 +310,7 @@ export default function Skills({
                   role="tab"
                   aria-selected={selectedCategory === cat.id}
                   type="button"
-                  onClick={() => setSelectedCategory(cat.id)}
+                  onClick={() => handleCategoryChange(cat.id)}
                 >
                   {cat.label} ({cat.count})
                 </button>
@@ -281,7 +321,8 @@ export default function Skills({
 
         {/* Interactive Constellation Visual Stage */}
         <div
-          className="constellation-wrapper"
+          ref={constellationRef}
+          className={`constellation-wrapper ${isCategoryPulsing ? 'category-pulsing' : ''}`}
           id="constellation-wrapper"
           role="region"
           aria-label="Interactive skill constellation network"
@@ -375,7 +416,7 @@ export default function Skills({
                     y1={edge.source.coords.y}
                     x2={edge.target.coords.x}
                     y2={edge.target.coords.y}
-                    className={`constellation-line ${isEdgeActive ? 'line-active' : ''} ${isEdgeDimmed ? 'line-dimmed' : ''}`}
+                    className={`constellation-line ${isEdgeActive ? 'line-active' : ''} ${isEdgeGroupActive ? 'line-group-active line-electric' : ''} ${isEdgeDimmed ? 'line-dimmed' : ''}`}
                     stroke={strokeColor}
                     strokeWidth={strokeWidth}
                     filter={isEdgeActive ? 'url(#constellationGlow)' : undefined}
@@ -413,7 +454,7 @@ export default function Skills({
                   <g
                     key={skill.id}
                     id={`constellation-node-${skill.id}`}
-                    className={`constellation-node ${isActive ? 'node-active' : ''} ${isNeighbor ? 'node-neighbor' : ''} ${isDimmed ? 'node-dimmed' : ''} ${isHighlightedByProject ? 'node-project-linked' : ''}`}
+                    className={`constellation-node ${isActive ? 'node-active' : ''} ${isNeighbor ? 'node-neighbor' : ''} ${isDimmed ? 'node-dimmed' : ''} ${isHighlightedByProject ? 'node-project-linked' : ''} ${isCategoryPulsing && isGroupMatch && selectedCategory !== 'all' ? 'node-category-pulse' : ''}`}
                     transform={`translate(${skill.coords.x}, ${skill.coords.y})`}
                     role="button"
                     tabIndex={0}

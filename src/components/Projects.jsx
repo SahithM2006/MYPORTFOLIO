@@ -1513,6 +1513,9 @@ export default function Projects({
                   tabIndex={0}
                   onClick={() => handleSpotlightChange(prjId, true)}
                 >
+                  {/* Large Parallax Background Numeral */}
+                  <span className="project-bg-numeral" aria-hidden="true">{project.number}</span>
+
                   <div className="project-card-header">
                     <div className="project-meta-strip">
                       <span className="project-kicker">

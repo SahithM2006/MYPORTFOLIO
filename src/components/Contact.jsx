@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 export default function Contact() {
   const [copyFeedback, setCopyFeedback] = useState('');
@@ -7,6 +7,20 @@ export default function Contact() {
   const [formErrors, setFormErrors] = useState({});
   const [formStatus, setFormStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pointerPos, setPointerPos] = useState({ x: 0, y: 0, active: false });
+  const contactRef = useRef(null);
+
+  const handleMouseMove = (e) => {
+    if (!contactRef.current) return;
+    const rect = contactRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setPointerPos({ x, y, active: true });
+  };
+
+  const handleMouseLeave = () => {
+    setPointerPos((prev) => ({ ...prev, active: false }));
+  };
 
   const copyEmail = () => {
     const email = 'sahithm2006@gmail.com';
@@ -77,12 +91,32 @@ export default function Contact() {
   };
 
   return (
-    <section className="contact-section motion-finale-section is-in-view" id="contact" aria-labelledby="contact-title">
-      {/* Large Kinetic Orbital Aura Accent in Background */}
+    <section
+      ref={contactRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="contact-section motion-finale-section is-in-view"
+      id="contact"
+      aria-labelledby="contact-title"
+    >
+      {/* Large Kinetic Orbital Aura & Sonar Radar in Background */}
       <div className="contact-kinetic-aura" id="contact-kinetic-aura" aria-hidden="true">
         <div className="aura-orbit aura-orbit-1"></div>
         <div className="aura-orbit aura-orbit-2"></div>
         <div className="aura-center-beacon"></div>
+        <div className="radar-sweep-beam"></div>
+        {pointerPos.active && (
+          <div
+            className="radar-pointer-tracker"
+            style={{
+              left: `${pointerPos.x}px`,
+              top: `${pointerPos.y}px`
+            }}
+          >
+            <span className="tracker-ping"></span>
+            <span className="tracker-coord">SIGNAL LOCK</span>
+          </div>
+        )}
       </div>
 
       <div className="contact-container">
