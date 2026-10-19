@@ -333,7 +333,7 @@ function ProbeExhibit() {
   return (
     <div className="project-interactive-exhibit exhibit-box-security">
       <div className="exhibit-header">
-        <span className="exhibit-label">✦ WinRM Remote Audit Probe</span>
+        <span className="exhibit-label">WinRM Remote Audit Probe</span>
         <button
           type="button"
           className="btn-copy-snippet"
@@ -393,7 +393,7 @@ function MuleExhibit() {
   return (
     <div className="project-interactive-exhibit exhibit-box-mule exhibit-box-csi">
       <div className="exhibit-header">
-        <span className="exhibit-label">✦ Synthetic e₹ Lineage &amp; Mule Tracing</span>
+        <span className="exhibit-label">Synthetic e₹ Lineage &amp; Mule Tracing</span>
         <button
           type="button"
           className="btn-copy-snippet"
@@ -441,7 +441,7 @@ function MuleExhibit() {
           fontFamily: 'var(--font-mono)'
         }}
       >
-        <span>✦</span>
+        <span>•</span>
         <span>{currentStageObj.disclaimer}</span>
       </div>
       <pre className="telemetry-console csi-console mule-console">{currentStageObj.code}</pre>
@@ -501,7 +501,7 @@ function CarbonExhibit() {
   return (
     <div className="project-interactive-exhibit exhibit-box-carbon">
       <div className="exhibit-header">
-        <span className="exhibit-label">✦ GHG Emissions Scenario Forecaster</span>
+        <span className="exhibit-label">GHG Emissions Scenario Forecaster</span>
         <button
           type="button"
           className="btn-copy-snippet"
@@ -532,7 +532,7 @@ function CarbonExhibit() {
 
       {/* Sandbox disclaimer */}
       <div className="carbon-sandbox-notice">
-        <span>✦</span>
+        <span>•</span>
         <span>Research Scenario Sandbox · GHG Protocol Scope 1/2/3 Framework · Illustrative Model Outputs</span>
       </div>
 
@@ -838,7 +838,7 @@ function AegisExhibit() {
       {/* 3. Primary Visual Centerpiece: Enterprise Network Simulation Viewport */}
       <div className="aegis-twin-viewport">
         <div className="aegis-viewport-hint">
-          <span className="hint-glyph">✦</span>
+          <span className="hint-glyph">•</span>
           <span>Enterprise Network Topology &bull; Select any asset node to inspect vulnerability details</span>
         </div>
 
@@ -1103,7 +1103,7 @@ function AegisExhibit() {
         <div className="aegis-node-inspector" role="region" aria-label="Asset Inspector">
           <div className="inspector-head">
             <div className="inspector-title">
-              <span className="inspector-glyph">✦</span>
+              <span className="inspector-glyph">•</span>
               <strong className="inspector-name">{selectedNode.name}</strong>
               <code className="inspector-ip">{selectedNode.ip}</code>
               <span className={`inspector-status-pill status-${selectedNode.severity}`}>
@@ -1140,7 +1140,7 @@ function AegisExhibit() {
         </div>
       ) : (
         <div className="aegis-inspector-empty-hint">
-          <span className="hint-glyph">✦</span>
+          <span className="hint-glyph">•</span>
           <span>Click any node in the topology above to inspect vulnerabilities &amp; ATT&amp;CK mappings</span>
         </div>
       )}

@@ -125,19 +125,13 @@ export default function Experience() {
                     <li className="exp-resp-item">
                       <span className="exp-resp-bullet" aria-hidden="true">▸</span>
                       <span>
-                        Currently pursuing B.Tech in Artificial Intelligence &amp; Data Science. Formal corporate appointments, technical internships, and client engagements will be chronologically indexed in this vertical timeline as they commence.
+                        Pursuing B.Tech in AI &amp; Data Science. Formal internships and corporate roles will be indexed here as they commence.
                       </span>
                     </li>
                     <li className="exp-resp-item">
                       <span className="exp-resp-bullet" aria-hidden="true">▸</span>
                       <span>
-                        Academic coursework, competitive hackathon prototypes (AEGIS-TWIN, Mule Matrix, Probe360), and professional certifications are curated in their dedicated sections to maintain strict fidelity between pre-professional education and verified industry employment.
-                      </span>
-                    </li>
-                    <li className="exp-resp-item">
-                      <span className="exp-resp-bullet" aria-hidden="true">▸</span>
-                      <span>
-                        Actively preparing for industry deployment with strong foundations in procedural C, asynchronous Python backend architecture (FastAPI), machine learning pipelines, and remote systems telemetry.
+                        Current competencies: procedural C fundamentals, async Python backends (FastAPI), ML pipelines, and remote systems telemetry (WinRM).
                       </span>
                     </li>
                   </ul>
@@ -177,19 +171,13 @@ export default function Experience() {
                     <li className="exp-resp-item">
                       <span className="exp-resp-bullet" aria-hidden="true">▸</span>
                       <span>
-                        <strong>Target Tracks:</strong> AI &amp; Machine Learning Engineering, Asynchronous Python Backend Systems (FastAPI / REST APIs), and Security Telemetry Analytics.
+                        <strong>Target Tracks:</strong> AI &amp; ML Engineering, Python Backend Systems (FastAPI), and Security Telemetry Analytics.
                       </span>
                     </li>
                     <li className="exp-resp-item">
                       <span className="exp-resp-bullet" aria-hidden="true">▸</span>
                       <span>
-                        <strong>Engineering Focus:</strong> Seeking roles where I can contribute to production machine learning models, scalable REST APIs, and automated security audit infrastructure.
-                      </span>
-                    </li>
-                    <li className="exp-resp-item">
-                      <span className="exp-resp-bullet" aria-hidden="true">▸</span>
-                      <span>
-                        <strong>Immediate Availability:</strong> Ready for technical screenings, code assessments, and interviews. Official placement resume and repository exhibits are available for review.
+                        <strong>Availability:</strong> Ready for technical screenings, code assessments, and interviews. Resume and project exhibits available for review.
                       </span>
                     </li>
                   </ul>

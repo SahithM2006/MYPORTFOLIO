@@ -82,7 +82,7 @@ export default function Contact() {
       <div className="contact-kinetic-aura" id="contact-kinetic-aura" aria-hidden="true">
         <div className="aura-orbit aura-orbit-1"></div>
         <div className="aura-orbit aura-orbit-2"></div>
-        <div className="aura-center-beacon">✦</div>
+        <div className="aura-center-beacon"></div>
       </div>
 
       <div className="contact-container">
@@ -96,7 +96,7 @@ export default function Contact() {
               <span className="word-mask"><span className="word-reveal word-c4 highlight-name">IN MIND?</span></span>
             </h2>
             <p className="contact-subhead">
-              Let's build something worth exploring. Whether you want to discuss agentless security telemetry, AI pipelines, system automation, or collaborate on experimental software &mdash; I'm always open to meaningful conversations.
+              Actively seeking technical internships and roles in applied ML, Python backends, and security systems. Whether you have an engineering role to discuss, want to review my code, or wish to collaborate — reach out anytime.
             </p>
 
             {/* 1-Click Copy Email Card */}

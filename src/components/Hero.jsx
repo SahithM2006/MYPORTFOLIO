@@ -5,7 +5,7 @@ import { initCharacterRenderer } from '../character-renderer.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const KINETIC_WORDS = ['THINK', 'ADAPT', 'DISCOVER', 'PROTECT', 'ORCHESTRATE'];
+const KINETIC_WORDS = ['ENGINEER', 'PROTECT', 'ANALYZE', 'DISCOVER', 'ORCHESTRATE'];
 
 export default function Hero() {
   const [wordIdx, setWordIdx] = useState(0);
@@ -111,7 +111,7 @@ export default function Hero() {
           <div className="hero-badges-row">
             <div className="hero-tagline-badge">
               <span className="badge-dot" aria-hidden="true"></span>
-              <span>CREATIVE TECHNOLOGIST &bull; CHENNAI, IN</span>
+              <span>AI &amp; DATA SCIENCE UNDERGRADUATE &bull; CHENNAI, IN</span>
             </div>
           </div>
 
@@ -141,13 +141,15 @@ export default function Hero() {
           </h1>
 
           <p className="hero-lead">
-            Artificial intelligence, agentless security telemetry, systems automation, and interactive digital experiments.
+            AI and Data Science student engineering practical software systems, intelligent applications, and security-oriented solutions that bridge analytical models with real-world infrastructure.
           </p>
 
           <div className="hero-meta-summary">
             <span>Saveetha Engineering College (Autonomous)</span>
             <span className="meta-sep">&bull;</span>
             <span>B.Tech AI &amp; DS (3rd Year)</span>
+            <span className="meta-sep">&bull;</span>
+            <span>Chennai, Tamil Nadu</span>
           </div>
 
           <div className="hero-cta-group">
@@ -166,12 +168,27 @@ export default function Hero() {
               </svg>
             </a>
           </div>
+
+          {/* Restrained Scroll Cue that responds as visitor progresses */}
+          <a href="#about" className="hero-scroll-cue" id="hero-scroll-cue" aria-label="Scroll to explore portfolio">
+            <span className="scroll-cue-pill">
+              <span className="scroll-cue-dot"></span>
+            </span>
+            <span className="scroll-cue-text">EXPLORE JOURNEY</span>
+            <span className="scroll-cue-arrow" aria-hidden="true">↓</span>
+          </a>
         </div>
 
         {/* Visual Accent Flow carrying into About */}
         <div className="hero-to-about-flow" aria-hidden="true">
           <div className="flow-stem"></div>
         </div>
+      </div>
+
+      {/* Restrained Environmental Tech Depth Backdrop (Independent of character canvas) */}
+      <div className="hero-ambient-depth" aria-hidden="true">
+        <div className="hero-ambient-grid"></div>
+        <div className="hero-ambient-glow"></div>
       </div>
     </section>
   );

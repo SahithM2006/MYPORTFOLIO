@@ -43,7 +43,7 @@ export default function Header() {
     <header className="site-header" id="site-header">
       <nav className="nav-dock" aria-label="Main Navigation">
         <a href="#hero" className="nav-wordmark" id="nav-wordmark" onClick={closeMenu}>
-          <span className="nav-brand-dot">✦</span>
+          <span className="nav-brand-dot">•</span>
           <span>SAHITH M.</span>
         </a>
         <div className={`nav-links ${isOpen ? 'open' : ''}`} id="nav-links">

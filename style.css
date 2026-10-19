@@ -29,58 +29,58 @@
      - Soft Tinted Slate Neutrals (Crisp, High-Contrast Typography, No Pure White)
      ========================================================================== */
 
-  /* Foundational Backgrounds & Base Fallbacks */
-  --color-bg: #091322;
-  /* Foundational Deep Midnight Navy */
-  --color-bg-alt: #0D1A2D;
-  /* Midnight Blue subtle alternate */
-  --color-darkest: #060D18;
-  /* Deepest midnight space */
-  --color-surface: #132438;
-  /* Muted blue-grey surface */
-  --color-surface-elevated: #1B314B;
-  /* Elevated surface for active cards & drawers */
-  --color-card: #122237;
+  /* Foundational Backgrounds & Base Fallbacks (Deep Graphite & Dark Petrol) */
+  --color-bg: #0A1118;
+  /* Deep Obsidian Petrol Graphite */
+  --color-bg-alt: #0E1720;
+  /* Dark Petrol Slate */
+  --color-darkest: #060B0F;
+  /* Deepest Mineral Void */
+  --color-surface: #121E27;
+  /* Muted Petrol Slate Surface */
+  --color-surface-elevated: #182733;
+  /* Elevated Surface for active cards & drawers */
+  --color-card: #111D26;
   /* Base card background across sections */
-  --color-card-hover: #182C46;
+  --color-card-hover: #172734;
   /* Card hover state */
-  --color-border: rgba(94, 153, 179, 0.20);
-  /* Muted blue-grey border */
-  --color-border-hover: rgba(94, 153, 179, 0.45);
-  --color-border-subtle: rgba(94, 153, 179, 0.10);
-  --color-surface-subtle: rgba(94, 153, 179, 0.07);
+  --color-border: rgba(74, 134, 153, 0.18);
+  /* Muted teal-slate border */
+  --color-border-hover: rgba(74, 134, 153, 0.40);
+  --color-border-subtle: rgba(74, 134, 153, 0.10);
+  --color-surface-subtle: rgba(74, 134, 153, 0.06);
 
-  /* Distinct Section Background Tokens (Unique Visual Identity for Each Section) */
-  --bg-hero: #091322;
-  /* Hero: Deep navy / teal atmosphere */
-  --bg-about: #122334;
-  /* About: Softer blue-grey / slate-teal background */
-  --bg-skills: #0A1C24;
-  /* Skills: Deep spruce blue-grey with rich jade accents */
-  --bg-projects: #07101E;
-  /* Projects: Contrasting dark navy making visuals pop */
-  --bg-architecture: #091527;
-  /* Architecture: Deep midnight navy / slate-teal explorer */
-  --bg-experience: #0D1627;
-  /* Experience: Refined midnight navy with amber timeline */
-  --bg-certifications: #101F30;
-  /* Certifications: Structured deep slate with teal & gold */
-  --bg-resume: #081220;
-  /* Resume: High-contrast midnight blue */
-  --bg-contact: #0C1D2D;
-  /* Contact: Oceanic deep navy / muted teal */
-  --bg-footer: #060D18;
-  /* Footer: Deepest space */
+  /* Distinct Section Background Tokens (Each section has its own subtle visual character) */
+  --bg-hero: #0A1118;
+  /* Hero: Deep obsidian petrol graphite */
+  --bg-about: #0E1821;
+  /* About: Deep petrol slate with subtle mineral undertone */
+  --bg-skills: #09151A;
+  /* Skills: Deep forest-petrol / spruce with rich jade accents */
+  --bg-projects: #080E14;
+  /* Projects: Dark obsidian graphite making exhibits pop */
+  --bg-architecture: #0A141D;
+  /* Architecture: Technical slate-petrol explorer */
+  --bg-experience: #0B131B;
+  /* Experience: Deep slate graphite with warm amber timeline */
+  --bg-certifications: #0D161F;
+  /* Certifications: Structured deep petrol with teal & gold */
+  --bg-resume: #081017;
+  /* Resume: Clean high-contrast mineral graphite */
+  --bg-contact: #0C1620;
+  /* Contact: Oceanic deep petrol finale */
+  --bg-footer: #060A0E;
+  /* Footer: Deepest mineral space */
 
   /* Distinct Section Card & Surface Tokens */
-  --card-about: #172C40;
-  --card-skills: #112631;
-  --card-projects: #0F1E33;
-  --card-architecture: #102138;
-  --card-experience: #142236;
-  --card-certifications: #16283C;
-  --card-resume: #0F1E33;
-  --card-contact: #14273A;
+  --card-about: #13212C;
+  --card-skills: #0F1C23;
+  --card-projects: #0E1821;
+  --card-architecture: #11202B;
+  --card-experience: #141F2A;
+  --card-certifications: #13202C;
+  --card-resume: #0F1A23;
+  --card-contact: #121F2A;
 
   /* Legacy Mapping (ensures existing rules seamlessly inherit section palettes) */
   --color-dark-bg: var(--color-bg);
@@ -145,15 +145,16 @@
   --color-sage-subtle: var(--color-jade-subtle);
   --color-emerald: var(--color-jade);
 
-  /* 2. Warm Amber / Muted Gold (Key CTAs, Download Triggers, Timeline Accents) */
-  --color-amber: #E5A93C;
-  --color-amber-deep: #C78A22;
+  /* 2. Warm Amber / Muted Copper (Key CTAs, Download Triggers, Timeline Accents) */
+  --color-amber: #D9822B;
+  --color-amber-gold: #E5A93C;
+  --color-amber-deep: #B86B1E;
   --color-amber-hover: #F59E0B;
-  --color-amber-subtle: rgba(229, 169, 60, 0.16);
+  --color-amber-subtle: rgba(217, 130, 43, 0.16);
   --color-amber-text: #FBBF24;
-  --color-lime: var(--color-amber);
+  --color-lime: var(--color-amber-gold);
   --color-lime-deep: var(--color-amber-deep);
-  --color-lime-text: #091322;
+  --color-lime-text: #0A1118;
   --color-lime-subtle: var(--color-amber-subtle);
   --color-tangerine: var(--color-amber);
 
@@ -164,21 +165,21 @@
   --color-teal-text: #2DD4BF;
 
   --color-blue-grey: #64748B;
-  --color-dusty-blue: #5C87A6;
-  --color-dusty-blue-deep: #476B85;
-  --color-dusty-blue-subtle: rgba(92, 135, 166, 0.16);
+  --color-dusty-blue: #4D768E;
+  --color-dusty-blue-deep: #3C6075;
+  --color-dusty-blue-subtle: rgba(77, 118, 142, 0.16);
   --color-cyan: var(--color-teal);
   --color-cyan-deep: var(--color-teal-deep);
   --color-cyan-subtle: var(--color-teal-subtle);
 
   /* 4. Soft Slate Blue-Grey (Replaces Old Lavender) */
-  --color-lavender: #8FAEC2;
-  --color-lavender-deep: #7091A8;
-  --color-lavender-subtle: rgba(143, 174, 194, 0.14);
+  --color-lavender: #85A3B8;
+  --color-lavender-deep: #6688A0;
+  --color-lavender-subtle: rgba(133, 163, 184, 0.14);
   --color-violet: var(--color-dusty-blue);
   --color-violet-deep: var(--color-dusty-blue-deep);
   --color-violet-subtle: var(--color-dusty-blue-subtle);
-  --color-violet-subtle-light: rgba(92, 135, 166, 0.08);
+  --color-violet-subtle-light: rgba(77, 118, 142, 0.08);
 
   /* 5. Muted Warning / Alert (Controlled Rust-Amber Replaces Red & Plum) */
   --color-warning: #D97706;
@@ -192,22 +193,22 @@
   --color-coral-subtle: var(--color-amber-subtle);
 
   /* Navigation & Floating Chrome */
-  --nav-bg: rgba(9, 19, 34, 0.88);
-  --nav-border: rgba(94, 153, 179, 0.22);
-  --nav-link-color: #94A3B8;
-  --nav-link-hover: #F1F5F9;
+  --nav-bg: rgba(10, 17, 24, 0.90);
+  --nav-border: rgba(74, 134, 153, 0.22);
+  --nav-link-color: #8E9EA8;
+  --nav-link-hover: #EDF4FA;
   --nav-active-bg: var(--color-amber);
-  --nav-active-color: #091322;
+  --nav-active-color: #0A1118;
 
   /* Hero 360° Character Canvas Vignette */
-  --vignette-mid: rgba(9, 19, 34, 0.45);
-  --vignette-outer: rgba(9, 19, 34, 0.95);
+  --vignette-mid: rgba(10, 17, 24, 0.45);
+  --vignette-outer: rgba(10, 17, 24, 0.95);
 
   /* Inputs & Modals */
-  --input-bg: rgba(9, 19, 32, 0.85);
-  --modal-bg: #101E33;
-  --modal-header-bg: rgba(9, 19, 34, 0.95);
-  --modal-overlay: rgba(5, 11, 20, 0.85);
+  --input-bg: rgba(10, 17, 24, 0.85);
+  --modal-bg: #0F1A23;
+  --modal-header-bg: rgba(10, 17, 24, 0.95);
+  --modal-overlay: rgba(5, 9, 13, 0.85);
 
   /* Atmosphere Gradients (Subtle, balanced, no excessive neon) */
   --aura-1: rgba(20, 184, 166, 0.05);
@@ -740,8 +741,8 @@ input[type="range"] {
   background: linear-gradient(90deg,
       var(--bg-hero) 0%,
       var(--bg-hero) 38%,
-      rgba(9, 19, 34, 0.85) 44%,
-      rgba(9, 19, 34, 0.28) 49%,
+      rgba(10, 17, 24, 0.88) 44%,
+      rgba(10, 17, 24, 0.30) 49%,
       transparent 54%,
       transparent 100%);
   pointer-events: none;
@@ -751,11 +752,111 @@ input[type="range"] {
 @media (max-width: 992px) {
   .character-vignette {
     background: linear-gradient(180deg,
-        rgba(9, 19, 34, 0.88) 0%,
-        rgba(9, 19, 34, 0.60) 36%,
+        rgba(10, 17, 24, 0.90) 0%,
+        rgba(10, 17, 24, 0.62) 36%,
         transparent 54%,
         transparent 100%);
   }
+}
+
+/* Environmental Movement & Tech Depth (Independent of character canvas) */
+.hero-ambient-depth {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hero-ambient-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(74, 134, 153, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74, 134, 153, 0.05) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at 45% 45%, black 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(circle at 45% 45%, black 20%, transparent 75%);
+  opacity: 0.65;
+}
+
+.hero-ambient-glow {
+  position: absolute;
+  top: 25%;
+  left: 15%;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.08) 0%, rgba(10, 17, 24, 0) 70%);
+  filter: blur(60px);
+  animation: heroGlowDrift 16s ease-in-out infinite alternate;
+}
+
+@keyframes heroGlowDrift {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.45; }
+  100% { transform: translate(35px, -25px) scale(1.15); opacity: 0.75; }
+}
+
+/* Restrained Interactive Scroll Cue */
+.hero-scroll-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 8px 18px;
+  background: rgba(14, 23, 32, 0.75);
+  border: 1px solid rgba(74, 134, 153, 0.22);
+  border-radius: 9999px;
+  color: #8E9EA8;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-scroll-cue:hover {
+  border-color: rgba(45, 212, 191, 0.5);
+  color: #EDF4FA;
+  box-shadow: 0 4px 16px -4px rgba(45, 212, 191, 0.25);
+  transform: translateY(-2px);
+}
+
+.scroll-cue-pill {
+  width: 14px;
+  height: 22px;
+  border: 1.5px solid rgba(45, 212, 191, 0.6);
+  border-radius: 9999px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 3px 0;
+}
+
+.scroll-cue-dot {
+  width: 3px;
+  height: 5px;
+  background: #2DD4BF;
+  border-radius: 2px;
+  animation: scrollWheelPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollWheelPulse {
+  0% { transform: translateY(0); opacity: 1; }
+  60% { transform: translateY(6px); opacity: 0.2; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.scroll-cue-arrow {
+  color: #2DD4BF;
+  font-size: 0.85rem;
+  transition: transform 0.2s ease;
+}
+
+.hero-scroll-cue:hover .scroll-cue-arrow {
+  transform: translateY(2px);
 }
 
 /* Polar Coordinate HUD Compass Accent */
@@ -1522,35 +1623,49 @@ input[type="range"] {
 /* Portrait + Bio Row Layout */
 .about-portrait-row {
   display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 44px;
+  grid-template-columns: 280px 1fr;
+  gap: 48px;
   align-items: start;
 }
 
 .about-portrait-col {
-  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  max-width: 280px;
 }
 
 .about-portrait-frame {
   position: relative;
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0;
+  width: 100%;
 }
 
 .about-portrait-inner {
   position: relative;
-  width: 240px;
-  height: 310px;
+  width: 100%;
+  height: 320px;
   border-radius: 20px;
   overflow: hidden;
-  border: 2px solid rgba(45, 212, 191, 0.30);
+  border: 1px solid rgba(45, 212, 191, 0.35);
   box-shadow:
-    0 0 0 1px rgba(45, 212, 191, 0.10),
-    0 12px 40px rgba(0, 0, 0, 0.55),
-    0 2px 8px rgba(45, 212, 191, 0.08);
-  background: #0d1f31;
+    0 0 0 1px rgba(45, 212, 191, 0.12),
+    0 16px 40px -12px rgba(0, 0, 0, 0.65),
+    0 0 24px -4px rgba(45, 212, 191, 0.15);
+  background: #0B1622;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+.about-portrait-frame:hover .about-portrait-inner {
+  transform: translateY(-3px);
+  border-color: rgba(45, 212, 191, 0.6);
+  box-shadow:
+    0 0 0 1px rgba(45, 212, 191, 0.25),
+    0 20px 45px -10px rgba(0, 0, 0, 0.75),
+    0 0 32px -2px rgba(45, 212, 191, 0.28);
 }
 
 .about-portrait-img {
@@ -1559,78 +1674,451 @@ input[type="range"] {
   object-fit: cover;
   object-position: center 15%;
   display: block;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s ease;
 }
 
 .about-portrait-frame:hover .about-portrait-img {
-  transform: scale(1.03);
+  transform: scale(1.04);
 }
 
 .about-portrait-badge {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  margin-top: 14px;
-  padding: 5px 14px 5px 10px;
-  background: rgba(9, 19, 34, 0.82);
-  border: 1px solid rgba(45, 212, 191, 0.28);
+  gap: 8px;
+  margin-top: 12px;
+  padding: 6px 14px;
+  background: rgba(11, 22, 34, 0.92);
+  border: 1px solid rgba(45, 212, 191, 0.32);
   border-radius: 999px;
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--color-teal-text);
+  color: #38BDF8;
   letter-spacing: 0.04em;
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .portrait-badge-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--color-jade);
-  box-shadow: 0 0 6px var(--color-jade);
+  background: #10B981;
+  box-shadow: 0 0 8px #10B981;
   flex-shrink: 0;
   animation: badge-pulse 2.4s ease-in-out infinite;
 }
 
 @keyframes badge-pulse {
-  0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--color-jade); }
-  50% { opacity: 0.55; box-shadow: 0 0 3px var(--color-jade); }
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px #10B981; transform: scale(1); }
+  50% { opacity: 0.45; box-shadow: 0 0 3px #10B981; transform: scale(0.85); }
 }
 
+/* ── Compact 10-Second Video Intro Card (Beside / Near Photograph) ── */
+.about-video-card {
+  position: relative;
+  width: 100%;
+  background: rgba(11, 23, 34, 0.88);
+  border: 1px solid rgba(56, 189, 248, 0.28);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow:
+    0 8px 24px -6px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+}
+
+.about-video-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(56, 189, 248, 0.55);
+  box-shadow:
+    0 14px 32px -8px rgba(0, 0, 0, 0.65),
+    0 0 20px -4px rgba(56, 189, 248, 0.2);
+}
+
+.video-card-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.video-card-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.video-pulse-beacon {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #38BDF8;
+  box-shadow: 0 0 8px #38BDF8;
+  animation: beacon-pulse 2s infinite ease-in-out;
+}
+
+@keyframes beacon-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.video-card-heading {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: #F1F5F9;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.video-card-tag {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: #38BDF8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.video-card-viewport {
+  position: relative;
+  width: 100%;
+  height: 120px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #081119;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.video-preview-facade {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-facade-thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 20%;
+  filter: brightness(0.65) saturate(1.1);
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+.video-preview-facade:hover .video-facade-thumb {
+  transform: scale(1.05);
+  filter: brightness(0.75) saturate(1.2);
+}
+
+.video-facade-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 17, 25, 0.3) 0%, rgba(8, 17, 25, 0.75) 100%);
+}
+
+.video-facade-play-btn {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 16px;
+  background: rgba(14, 165, 233, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  color: #FFFFFF;
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow:
+    0 4px 16px rgba(14, 165, 233, 0.5),
+    0 0 12px rgba(56, 189, 248, 0.4);
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.video-preview-facade:hover .video-facade-play-btn,
+.video-facade-play-btn:hover {
+  transform: scale(1.06);
+  background: #0284C7;
+  box-shadow:
+    0 6px 20px rgba(14, 165, 233, 0.65),
+    0 0 16px rgba(56, 189, 248, 0.6);
+}
+
+.play-triangle {
+  font-size: 0.7rem;
+  line-height: 1;
+}
+
+.video-player-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.about-live-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.video-player-close {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(11, 23, 34, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.18s ease;
+}
+
+.video-player-close:hover {
+  background: #EF4444;
+  border-color: #EF4444;
+}
+
+.video-status-notice {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 9px;
+  font-family: var(--font-mono);
+  font-size: 0.67rem;
+  line-height: 1.4;
+  color: #94A3B8;
+}
+
+.video-status-notice code {
+  color: #38BDF8;
+  background: rgba(56, 189, 248, 0.1);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.video-notice-ready .notice-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #10B981;
+  flex-shrink: 0;
+}
+
+.video-notice-pending .notice-icon {
+  color: #F59E0B;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── About Bio Column & Domain Badges ── */
 .about-bio-main-col {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
 }
 
-/* Responsive: stack on smaller screens */
+.about-bio-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.about-intro-paragraph {
+  font-size: 1.08rem;
+  line-height: 1.72;
+  color: #CBD5E1;
+}
+
+.about-intro-paragraph strong {
+  color: #F8FAFC;
+  font-weight: 700;
+}
+
+.about-compact-education {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  background: rgba(14, 27, 40, 0.7);
+  border: 1px solid rgba(56, 189, 248, 0.22);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+}
+
+.edu-tag-icon {
+  font-size: 1.25rem;
+}
+
+.edu-details-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.88rem;
+  color: #94A3B8;
+}
+
+.edu-degree-text {
+  color: #F1F5F9;
+  font-weight: 600;
+}
+
+.edu-college-text {
+  color: #38BDF8;
+}
+
+.edu-timeline-text {
+  font-family: var(--font-mono);
+  color: #10B981;
+  font-weight: 600;
+}
+
+.edu-divider {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+/* Primary Technical Domain Badges */
+.about-domain-pills-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.domain-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(13, 25, 36, 0.85);
+  border: 1px solid rgba(74, 134, 153, 0.24);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: #E2E8F0;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.domain-pill:hover {
+  transform: translateY(-2px);
+  border-color: rgba(56, 189, 248, 0.45);
+  background: rgba(18, 34, 49, 0.95);
+  color: #FFFFFF;
+}
+
+.domain-pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.domain-pill-dot.dot-security { background: #38BDF8; box-shadow: 0 0 6px #38BDF8; }
+.domain-pill-dot.dot-graphs { background: #10B981; box-shadow: 0 0 6px #10B981; }
+.domain-pill-dot.dot-aiml { background: #14B8A6; box-shadow: 0 0 6px #14B8A6; }
+.domain-pill-dot.dot-systems { background: #F59E0B; box-shadow: 0 0 6px #F59E0B; }
+
+/* Direct Action Buttons */
+.about-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.about-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.about-action-btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary-action {
+  background: #10B981;
+  color: #04140D;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+}
+
+.btn-primary-action:hover {
+  background: #34D399;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(16, 185, 129, 0.5);
+}
+
+.btn-secondary-action {
+  background: rgba(56, 189, 248, 0.12);
+  color: #7DD3FC;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+}
+
+.btn-secondary-action:hover {
+  background: rgba(56, 189, 248, 0.22);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+  border-color: rgba(56, 189, 248, 0.6);
+}
+
+.btn-tertiary-action {
+  background: rgba(255, 255, 255, 0.05);
+  color: #CBD5E1;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.btn-tertiary-action:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+  transform: translateY(-2px);
+}
+
+/* Responsive: About Layout */
 @media (max-width: 1024px) {
   .about-portrait-row {
-    grid-template-columns: 220px 1fr;
+    grid-template-columns: 240px 1fr;
     gap: 32px;
-  }
-  .about-portrait-inner {
-    width: 210px;
-    height: 275px;
   }
 }
 
 @media (max-width: 768px) {
   .about-portrait-row {
     grid-template-columns: 1fr;
-    gap: 28px;
+    gap: 32px;
     justify-items: center;
   }
   .about-portrait-col {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-  .about-portrait-inner {
-    width: 200px;
-    height: 260px;
+    max-width: 280px;
   }
   .about-bio-main-col {
     width: 100%;
@@ -2974,6 +3462,16 @@ input[type="range"] {
   gap: 12px;
   font-size: 0.84rem;
   color: var(--color-lavender);
+}
+
+@media (max-width: 640px) {
+  .output-stat-row {
+    grid-template-columns: 1fr auto;
+    gap: 6px 10px;
+  }
+  .output-stat-row .stat-bar-track {
+    grid-column: 1 / -1;
+  }
 }
 
 .output-stat-row strong {
@@ -7775,6 +8273,40 @@ input[type="range"] {
   }
 }
 
+/* About Mindset Refinements */
+.shared-principles-list {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.shared-principle-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+
+.shared-principle-item .principle-bullet {
+  color: #10B981;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+#about-portrait-frame {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#about-portrait-frame:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 16px 40px -12px rgba(6, 15, 22, 0.85), 0 0 0 1px rgba(74, 134, 153, 0.35);
+}
+
 /* ==========================================================================
    9.5. EXPERIENCE SECTION (VERTICAL TIMELINE LAYOUT)
    ========================================================================== */
@@ -9656,6 +10188,211 @@ input[type="range"] {
     text-align: center;
   }
 }
+
+
+/* ==========================================================================
+   PURPOSEFUL SECTION-SPECIFIC MICRO-INTERACTIONS
+   Restrained, section-aware hover effects that make the UI feel alive.
+   All respect @media (prefers-reduced-motion: reduce).
+   ========================================================================== */
+
+/* ── About: Portrait frame edge glow on hover ── */
+.about-portrait-inner {
+  transition: box-shadow 0.4s ease, border-color 0.4s ease;
+}
+.about-portrait-frame:hover .about-portrait-inner {
+  box-shadow:
+    0 0 0 1px rgba(45, 212, 191, 0.22),
+    0 0 28px rgba(45, 212, 191, 0.14),
+    0 16px 44px rgba(0, 0, 0, 0.65);
+  border-color: rgba(45, 212, 191, 0.45);
+}
+
+/* ── Skills: Constellation node SVG group hover reaction ── */
+.constellation-node {
+  transition: filter 0.2s ease, opacity 0.2s ease;
+  will-change: filter;
+}
+.constellation-node:not(.node-dimmed):hover,
+.constellation-node.node-active {
+  filter: drop-shadow(0 0 8px currentColor);
+}
+.constellation-node.node-dimmed {
+  opacity: 0.35;
+  transition: opacity 0.22s ease, filter 0.22s ease;
+}
+.constellation-node.node-dimmed:hover {
+  opacity: 0.7;
+}
+
+/* ── Skills: Orbit ring animation when node is active ── */
+@keyframes orbit-spin {
+  to { stroke-dashoffset: -40; }
+}
+.node-orbit-ring.orbit-active {
+  animation: orbit-spin 3s linear infinite;
+}
+
+/* ── Projects: Project card entrance and hover lift ── */
+.project-card {
+  transition: transform 0.3s var(--ease-smooth), box-shadow 0.3s var(--ease-smooth);
+  will-change: transform;
+}
+.project-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.45), 0 0 0 1px rgba(74,134,153,0.22);
+}
+
+/* ── Architecture: Selected project tab indicator ── */
+.ca-proj-tab {
+  position: relative;
+  overflow: hidden;
+  transition: background 0.22s ease, border-color 0.22s ease, color 0.22s ease, transform 0.18s ease;
+}
+.ca-proj-tab::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--tab-accent, var(--color-jade));
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s var(--ease-smooth);
+  border-radius: 2px 2px 0 0;
+}
+.ca-proj-tab.active::after,
+.ca-proj-tab:hover::after {
+  transform: scaleX(1);
+}
+.ca-proj-tab.active {
+  transform: none;
+}
+.ca-proj-tab:not(.active):hover {
+  transform: translateY(-1px);
+}
+
+/* ── Architecture: Component layer card expand highlight ── */
+.ca-detail-card.open {
+  border-color: rgba(74, 134, 153, 0.38);
+  box-shadow: 0 0 0 1px rgba(74, 134, 153, 0.14), 0 8px 24px rgba(0,0,0,0.28);
+}
+
+/* ── Certifications: Timeline row hover reveal ── */
+.cert-timeline-row {
+  transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+  will-change: transform;
+}
+.cert-timeline-row:hover {
+  background: rgba(74, 134, 153, 0.05);
+  border-color: rgba(74, 134, 153, 0.22);
+  transform: translateX(4px);
+}
+.cert-timeline-row.highlighted-entry:hover {
+  background: rgba(20, 184, 166, 0.07);
+  border-color: rgba(45, 212, 191, 0.28);
+}
+
+/* ── Experience: Timeline item subtle hover ── */
+.exp-timeline-item {
+  transition: background 0.2s ease;
+  border-radius: 8px;
+  padding-left: 4px;
+}
+.exp-timeline-item:hover {
+  background: rgba(74, 134, 153, 0.04);
+}
+.exp-timeline-item:hover .exp-timeline-node {
+  box-shadow: 0 0 8px var(--color-amber);
+}
+
+/* ── Contact: Form input focus glow ── */
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: rgba(20, 184, 166, 0.55);
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.10);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Contact: Email card copy button confirmation flash */
+.btn-copy-email.copied {
+  background: rgba(16, 185, 129, 0.18);
+  border-color: rgba(16, 185, 129, 0.45);
+  color: var(--color-jade-text);
+}
+
+/* Contact: Social chip hover lift */
+.social-chip {
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.18s ease, color 0.18s ease;
+}
+.social-chip:hover {
+  transform: translateY(-2px);
+  border-color: rgba(45, 212, 191, 0.45);
+  color: var(--color-teal-text);
+}
+
+/* ── Skill context drawer: smooth open transition ── */
+.skill-context-drawer {
+  transition: opacity 0.22s ease, transform 0.22s var(--ease-smooth);
+}
+.skill-context-drawer.open {
+  animation: drawerReveal 0.28s var(--ease-smooth) both;
+}
+@keyframes drawerReveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Mindset pillar panel morph ── */
+.about-shared-card {
+  transition: opacity 0.14s ease, transform 0.14s ease;
+}
+.about-shared-card.morphing {
+  opacity: 0.6;
+  transform: scale(0.99);
+}
+
+/* ── Generic section kicker dot entrance ── */
+.section-kicker-dot {
+  animation: dotPop 0.6s var(--ease-out-back) both;
+}
+@keyframes dotPop {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+/* ── Skill-connected highlight flash (project → skill pulse) ── */
+@keyframes skillConnectedPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(229,169,60,0.5); }
+  60%  { box-shadow: 0 0 0 10px rgba(229,169,60,0); }
+  100% { box-shadow: 0 0 0 0 rgba(229,169,60,0); }
+}
+.skill-connected-highlight {
+  animation: skillConnectedPulse 0.9s ease-out 2;
+}
+
+/* ── Reduced Motion overrides for new additions ── */
+@media (prefers-reduced-motion: reduce) {
+  .constellation-node,
+  .cert-timeline-row,
+  .exp-timeline-item,
+  .project-card,
+  .ca-proj-tab,
+  .social-chip,
+  .skill-context-drawer {
+    transition: none !important;
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .about-portrait-frame:hover .about-portrait-inner {
+    box-shadow: none;
+  }
+}
+
+
 
 
 /* Reduced Motion Mode — Shows content immediately without animation delays */

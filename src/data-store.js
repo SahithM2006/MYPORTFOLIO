@@ -255,11 +255,15 @@ export const PROJECTS = [
     number: '01',
     category: 'security',
     categoryLabel: 'Cybersecurity Platform',
-    title: 'Probe360 — Agentless Security Platform',
-    themeColor: '#8fa89b',
+    title: 'Probe360 — Agentless Windows Security Platform',
+    themeColor: '#10B981',
     status: 'Prototype • Implemented',
     statusType: 'implemented',
-    lead: 'Agentless Windows asset discovery, remote credential verification, software inventorying, and vulnerability-baseline checks designed to eliminate persistent daemon footprint vulnerabilities on endpoints.',
+    problem: 'Traditional endpoint auditing requires installing persistent third-party background daemons across servers, introducing software supply-chain vulnerabilities, memory overhead, and administrative deployment friction.',
+    approach: 'Harness native Windows Remote Management (WinRM over HTTPS/Port 5986) with Kerberos/CredSSP mutual authentication to conduct credentialed remote audits without deploying any client agent.',
+    keyMechanism: 'Dispatches remote CIM and WMI queries to inspect installed software (Win32_Product / registry uninstall keys), check service permission DACLs, and cross-reference discovered packages against national CVE baselines.',
+    outcomeOrStatus: 'Working Python-based CLI prototype verified on Windows Server environments; automated baseline matching complete. Subnet honeypot decoys remain on the planned roadmap.',
+    lead: 'Agentless Windows endpoint discovery, credentialed software inventorying, and vulnerability baseline correlation designed to eliminate persistent daemon footprint vulnerabilities on monitored hosts.',
     implementedSpec: 'WinRM remote authenticated query pipeline (HTTPS/5986), installed software WMI inventory, and automated CVE baseline cross-referencing.',
     plannedSpec: 'Subnet honeypot decoy engagement nodes and automated behavioral anomaly scoring.',
     skills: ['python', 'winrm', 'windows-admin', 'vuln-assessment', 'workflow-automation', 'git'],
@@ -270,10 +274,14 @@ export const PROJECTS = [
     number: '02',
     category: 'fintech',
     categoryLabel: 'Financial Fraud Intelligence',
-    title: 'Mule Matrix — Intelligent Financial Fraud Detection & Money-Mule Network Tracing',
-    themeColor: '#2dd4a7',
-    status: 'Analytical Prototype • Graph Intelligence',
+    title: 'Mule Matrix — Financial Fraud Detection & Money-Mule Network Tracing',
+    themeColor: '#2DD4A7',
+    status: 'Analytical Prototype • Graph Simulation',
     statusType: 'concept',
+    problem: 'Financial fraud networks rapidly structure illicit funds across multi-hop intermediary accounts (fan-out) within minutes before re-aggregating into cash-out accounts (fan-in), rendering flat, static rule-based transaction checks ineffective.',
+    approach: 'Construct an offline analytical testbed combining synthetic programmable CBDC/e₹ token lineage with temporal directed multigraph modeling to evaluate flow velocity and network topology.',
+    keyMechanism: 'Models accounts as nodes and time-stamped token transfers as directed multigraph edges in NetworkX; a recursive lineage engine traces paths across intermediary tiers, calculating temporal burst velocity, fan-in/fan-out ratios, and cyclic flow heuristics.',
+    outcomeOrStatus: 'Analytical simulation prototype with synthetic programmable e₹ transaction generator and explainable risk scoring dossiers. Distributed graph databases (Neo4j) and Temporal Graph Neural Networks remain planned research.',
     lead: 'An analytical platform combining programmable CBDC/e₹ transaction lineage with temporal graph intelligence to trace suspicious fund movements, identify connected money-mule networks, and highlight potential cash-out points for investigation.',
     implementedSpec: 'Synthetic programmable e₹ transaction generator with simulated lineage metadata, multi-hop recursive lineage tracer, and temporal directed multigraph modeling via NetworkX with explainable risk scoring.',
     plannedSpec: 'Distributed enterprise graph database deployment (Neo4j/TigerGraph) and Temporal Graph Neural Networks (TGNN) for dynamic embedding-based fraud scoring.',
@@ -285,10 +293,14 @@ export const PROJECTS = [
     number: '03',
     category: 'ai',
     categoryLabel: 'Sustainability Analytics',
-    title: 'AI Carbon Intelligence',
-    themeColor: '#b8a9c9',
-    status: 'Research Concept',
+    title: 'AI Carbon Intelligence — Supply-Chain Emissions Analytics',
+    themeColor: '#7E9CB9',
+    status: 'Research Concept & Modeling Pipeline',
     statusType: 'concept',
+    problem: 'Industrial logistics chains struggle to accurately quantify Scope 1, 2, and 3 carbon emissions due to non-linear fuel consumption curves, payload weight variations, and fragmented transport records, making mitigation planning speculative.',
+    approach: 'Formulate a data-driven decision-support pipeline combining multi-variable statistical regression and machine learning estimators to evaluate operational carbon hotspots and test alternative routing configurations.',
+    keyMechanism: 'Preprocesses heterogeneous freight logistics logs and fuel records using Pandas/NumPy, then trains cross-validated Scikit-learn regression models to project emissions trajectories with empirical 95% uncertainty confidence intervals across distance and cargo payload weights.',
+    outcomeOrStatus: 'Research concept & analytical regression model; verified on synthetic logistics benchmarks with parameter sensitivity analysis. Live enterprise ERP integration is on the future roadmap.',
     lead: 'A sustainability-focused concept for analysing industrial supply-chain emissions, pinpointing operational carbon hotspots, and evaluating cost-optimal mitigation pathways.',
     implementedSpec: 'Multivariate regression models evaluating Scope 1, 2, and 3 factors across variable freight distance and energy fuel inputs with confidence intervals.',
     plannedSpec: 'Real-time ERP ledger data ingestion and dynamic carbon taxation liability risk scoring.',
@@ -300,10 +312,14 @@ export const PROJECTS = [
     number: '04',
     category: 'automation',
     categoryLabel: 'Cyber Digital Twin',
-    title: 'AEGIS-TWIN — Autonomous Digital Twin for Adversarial Path Simulation & Optimal Defense Orchestration',
-    themeColor: '#8fa89b',
-    status: 'Hackathon Prototype • Shortlisted',
+    title: 'AEGIS-TWIN — Autonomous Cyber Digital Twin & Attack Simulation',
+    themeColor: '#D9822B',
+    status: 'Hackathon Prototype • Shortlisted (VIT)',
     statusType: 'concept',
+    problem: 'Enterprise security teams assess software vulnerabilities in isolation, failing to anticipate how attackers chain low- and medium-severity flaws across adjacent network assets to reach critical crown jewels.',
+    approach: 'Build a graph-based cybersecurity digital twin that ingests network asset topologies, maps attacker techniques via MITRE ATT&CK, and simulates adversarial path traversal to compute optimal defensive interventions.',
+    keyMechanism: 'Constructs weighted directed graph topologies in NetworkX, maps discovered CVEs to ATT&CK tactics (Initial Access → Lateral Movement → Credential Dumping), executes shortest-path exploit traversal, and applies graph cut heuristics to identify the minimal network segmentation rules that sever exploit paths.',
+    outcomeOrStatus: 'Hackathon prototype developed for the VIT Vellore national hackathon (shortlisted for the next round); interactive attack path simulation and defensive remediation scoring via FastAPI backend service.',
     lead: 'A cybersecurity digital twin developed for the VIT Vellore national-level hackathon (shortlisted for the next round). Models enterprise network assets, simulates adversarial attack paths, identifies lateral-movement risks, and prioritizes defensive actions based on risk reduction.',
     implementedSpec: 'NetworkX directed graph topology modeling, MITRE ATT&CK technique mapping, CVSS-weighted risk scoring, and dynamic attack path simulation via FastAPI.',
     plannedSpec: 'Real-time telemetry graph ingestion from live firewalls and reinforcement learning for automated adaptive countermeasure deployment.',
@@ -312,44 +328,140 @@ export const PROJECTS = [
   }
 ];
 
-export const INTERESTS = {
-  ai: {
-    tag: 'Machine Learning & Models',
-    title: 'Predictive Intelligence & Vision Pipelines',
-    desc: 'Developing multivariate regression algorithms for supply-chain forecasting, multidimensional array operations with NumPy/Pandas, and mathematical spatial convolutions with OpenCV.',
-    tools: 'Python • Scikit-learn • OpenCV • Pandas • NumPy',
-    projectId: 'carbon',
-    projectName: 'AI Carbon Intelligence →',
-    relatedSkillIds: ['python', 'numpy', 'pandas', 'scikit-learn', 'opencv']
+/**
+ * About Me — Engineering Mindset, Learning Approach & Problem-Solving Pillars
+ * Replaces repetitive project summaries with authentic engineering philosophy.
+ */
+export const MINDSET_PILLARS = {
+  systems: {
+    key: 'systems',
+    tag: 'Systems & Architecture Mindset',
+    title: 'First-Principles Engineering & Underlying Primitives',
+    icon: '⚙️',
+    desc: 'Before layering high-level abstractions, I seek to understand what happens at the foundational boundary—memory pointers, operating system syscalls, and network protocols. Starting with procedural C taught me to respect memory layout and execution costs. In modern backend architectures, that grounding translates into designing lean, high-throughput Python services that eliminate redundant daemons and minimize runtime overhead.',
+    principles: [
+      'Understand low-level execution before adding frameworks',
+      'Minimize background daemon footprint on endpoints',
+      'Prefer deterministic protocols over black-box middleware'
+    ],
+    tools: 'C (Pointers & Memory) • Python Runtime • WinRM Protocol • OS Syscalls'
+  },
+  empirical: {
+    key: 'empirical',
+    tag: 'Learning & Verification Approach',
+    title: 'Empirical Validation Over Black-Box Assumptions',
+    icon: '🧠',
+    desc: 'Machine learning models are only as dependable as their validation discipline. Rather than treating neural networks or regression estimators as opaque predictors, I focus on data distribution shifts, feature correlation structures, and empirical error intervals. Whether fitting multivariate curves or inspecting convolutional layers, I verify hypotheses against concrete metrics rather than theoretical assumptions.',
+    principles: [
+      'Validate models with rigorous cross-validation and error bounds',
+      'Inspect feature collinearity and outliers before training',
+      'Treat predictive outputs as calibrated confidence intervals'
+    ],
+    tools: 'Scikit-learn • Pandas • NumPy • PyTorch • Error Quantification'
+  },
+  graphs: {
+    key: 'graphs',
+    tag: 'Problem-Solving Methodology',
+    title: 'Decomposing Complexity into Directed Topologies',
+    icon: '⚡',
+    desc: 'Many of the hardest technical challenges—from multi-hop money-mule laundering to enterprise cyber attack paths—cannot be expressed cleanly in flat relational tables. I approach complex systems by modeling relationships as directed graphs. Tracing multi-step lineages and computing topological cuts allows me to reveal hidden traversal patterns and identify the exact choke points that yield optimal intervention.',
+    principles: [
+      'Model interconnected entities as vertices and time-stamped edges',
+      'Evaluate flow velocity and degree anomalies across hops',
+      'Identify critical choke points using graph-cut heuristics'
+    ],
+    tools: 'NetworkX • Graph Algorithms • Path Traversal • Centrality Metrics'
   },
   security: {
-    tag: 'Agentless Security & Auditing',
-    title: 'Remote Vulnerability & Asset Discovery',
-    desc: 'Executing credentialed discovery over WinRM, auditing Windows registries, and mapping installed packages to national vulnerability baselines without installing client daemons.',
-    tools: 'WinRM • Python • Windows Administration • CVE DBs',
-    projectId: 'probe360',
-    projectName: 'Probe360 Platform →',
-    relatedSkillIds: ['winrm', 'windows-admin', 'vuln-assessment', 'python']
-  },
-  automation: {
-    tag: 'Adversarial Simulation & Digital Twins',
-    title: 'Autonomous Digital Twin & Risk Orchestration',
-    desc: 'Simulating multi-hop adversarial attack paths with NetworkX, identifying lateral-movement risks across enterprise assets, and orchestrating optimal defensive remediations.',
-    tools: 'Python • NetworkX • FastAPI • MITRE ATT&CK • CVSS',
-    projectId: 'aegis',
-    projectName: 'AEGIS-TWIN Digital Twin →',
-    relatedSkillIds: ['networkx', 'python', 'mitre-attack', 'fastapi']
-  },
-  software: {
-    tag: 'Financial Graph Intelligence & Fraud Analytics',
-    title: 'Financial Graph Intelligence & Mule Network Tracing',
-    desc: 'Combining simulated programmable CBDC/e₹ transaction lineage with temporal graph intelligence to trace suspicious multi-hop fund movements, identify money-mule networks, and highlight potential cash-out points.',
-    tools: 'Python • NetworkX • NumPy • Pydantic • SQL',
-    projectId: 'mule-matrix',
-    projectName: 'Mule Matrix — Fraud & Mule Tracing →',
-    relatedSkillIds: ['python', 'networkx', 'numpy', 'pydantic', 'sql']
+    key: 'security',
+    tag: 'Security & Operational Philosophy',
+    title: 'Defense-in-Depth with Zero-Agent Footprint',
+    icon: '🛡️',
+    desc: 'Security is not an afterthought added to finished code; it is an architectural property. My work in systems telemetry focuses on agentless administration—leveraging native operating system protocols with mutual authentication rather than deploying vulnerable third-party daemons. In adversarial simulation, I analyze how misconfigurations chain together, prioritizing mitigations that maximize enterprise risk reduction with minimal operational disruption.',
+    principles: [
+      'Eliminate third-party agent daemons via native OS protocols',
+      'Analyze exploit chains rather than isolated vulnerability scores',
+      'Prioritize remediations that yield maximum graph disruption'
+    ],
+    tools: 'Agentless WinRM • Kerberos/CredSSP • MITRE ATT&CK • Minimum-Cut Defense'
   }
 };
+
+// Backward-compatible alias for About component focus cards
+export const INTERESTS = MINDSET_PILLARS;
+
+/**
+ * Technical Background — Core Engineering Concepts & Distinctions
+ * Concise, high-signal architectural trade-offs without repetitive padding.
+ */
+export const TECHNICAL_CONCEPTS = [
+  {
+    id: 'agentless-telemetry',
+    category: 'security',
+    categoryLabel: 'Security & Systems',
+    title: 'Agentless vs. Agent-Based Telemetry',
+    shortDef: 'Queries remote Windows endpoints on demand over native WinRM/WMI (TLS 5986) using Kerberos/CredSSP credentials.',
+    keyDistinction: 'Eliminates third-party client daemons and supply-chain vulnerabilities, trading continuous offline telemetry for zero host footprint.',
+    interviewTakeaway: 'Avoids enterprise change-management approvals and daemon exploits while enabling instant, credentialed fleet auditing.',
+    relevantDomain: 'Endpoint Security • Probe360',
+    badge: 'Systems Architecture'
+  },
+  {
+    id: 'temporal-graphs',
+    category: 'graphs',
+    categoryLabel: 'Graph Intelligence',
+    title: 'Temporal Graph Analysis vs. Static Rule Detection',
+    shortDef: 'Models accounts as vertices and timestamped transactions as directed edges to uncover coordinated money-mule rings.',
+    keyDistinction: 'Evaluates fan-out burst velocity, rapid pooling ratios, and multi-hop paths that evade static transfer amount thresholds.',
+    interviewTakeaway: 'Mule networks structure transfers into micro-splits across 3–4 hops; temporal closeness metrics isolate the ring topology.',
+    relevantDomain: 'Financial Intelligence • Mule Matrix',
+    badge: 'Graph Intelligence'
+  },
+  {
+    id: 'adversarial-twins',
+    category: 'security',
+    categoryLabel: 'Security & Systems',
+    title: 'Adversarial Digital Twins vs. Static Vulnerability Scans',
+    shortDef: 'Constructs directed network topology graphs to simulate chained MITRE ATT&CK techniques across subnets.',
+    keyDistinction: 'Calculates minimum-cut defense chokepoints rather than generating uncontextualized, isolated vulnerability lists.',
+    interviewTakeaway: 'Proves which specific firewall or credential choke point neutralizes multi-stage exploit paths with minimal downtime.',
+    relevantDomain: 'Cyber Defense • AEGIS-TWIN',
+    badge: 'Adversarial Simulation'
+  },
+  {
+    id: 'multivariate-emissions',
+    category: 'aiml',
+    categoryLabel: 'Applied Machine Learning',
+    title: 'Multivariate Regression vs. Flat Emissions Multipliers',
+    shortDef: 'Models freight emissions by capturing non-linear interactions among payload tonnage, engine displacement, and topography.',
+    keyDistinction: 'Computes empirical 95% confidence intervals instead of applying static, naive activity multipliers.',
+    interviewTakeaway: 'Payload burn curves are non-linear; empirical regression delivers calibrated uncertainty bounds required for ESG audits.',
+    relevantDomain: 'Sustainability Analytics • AI Carbon',
+    badge: 'Statistical Modeling'
+  },
+  {
+    id: 'asgi-vs-wsgi',
+    category: 'systems',
+    categoryLabel: 'Systems & Architecture',
+    title: 'Asynchronous Event Loops (ASGI) vs. Thread-Blocking (WSGI)',
+    shortDef: 'Single-threaded cooperative asyncio event loop yielding during network/socket I/O vs. thread-per-request blocking.',
+    keyDistinction: 'Sustains thousands of concurrent remote endpoint telemetry polls without thread exhaustion or high memory overhead.',
+    interviewTakeaway: 'Because remote network round-trips dominate latency, async dispatch keeps the FastAPI collector lightweight and scalable.',
+    relevantDomain: 'Backend Engineering • FastAPI & WinRM',
+    badge: 'Async Architecture'
+  },
+  {
+    id: 'c-vs-python',
+    category: 'systems',
+    categoryLabel: 'Systems & Architecture',
+    title: 'Low-Level Memory (C) vs. Dynamic Managed Runtimes (Python)',
+    shortDef: 'Explicit pointer arithmetic and manual memory management in C vs. managed garbage collection and dynamic references in Python.',
+    keyDistinction: 'Grounded awareness of memory layout, cache lines, and syscall costs prevents naive bottlenecks in high-level services.',
+    interviewTakeaway: 'Understanding C primitives informs optimal data structure selection and memory reuse in Python data pipelines.',
+    relevantDomain: 'Systems Foundations • Procedural C & Python',
+    badge: 'Core Systems'
+  }
+];
 
 export const TIMELINE_MILESTONES = [
   {
@@ -447,7 +559,7 @@ export const CERTIFICATIONS = [
     date: 'May 16, 2026',
     credentialId: 'VTCGQEZ4DMMV',
     verifyUrl: 'https://coursera.org/verify/specialization/VTCGQEZ4DMMV',
-    fileUrl: '/certs/pytorch-specialization-coursera.pdf',
+    fileUrl: './certs/pytorch-specialization-coursera.pdf',
     badge: 'Specialization (3 Courses)',
     highlight: true,
     desc: 'Comprehensive specialization covering PyTorch fundamentals, deep learning neural network architectures, CNNs, RNNs, and GANs with hands-on coding implementations.'
@@ -462,7 +574,7 @@ export const CERTIFICATIONS = [
     date: 'May 14, 2026',
     credentialId: 'CZUBDK9IM63E',
     verifyUrl: 'https://coursera.org/verify/CZUBDK9IM63E',
-    fileUrl: '/certs/pytorch-neural-networks-coursera.pdf',
+    fileUrl: './certs/pytorch-neural-networks-coursera.pdf',
     badge: 'Course Certificate',
     desc: 'Applied neural network architecture design, loss optimization, backpropagation dynamics, and evaluation workflows in PyTorch.'
   },
@@ -476,7 +588,7 @@ export const CERTIFICATIONS = [
     date: 'May 16, 2026',
     credentialId: 'HR0NIDR3EHJM',
     verifyUrl: 'https://coursera.org/verify/HR0NIDR3EHJM',
-    fileUrl: '/certs/pytorch-advanced-coursera.pdf',
+    fileUrl: './certs/pytorch-advanced-coursera.pdf',
     badge: 'Course Certificate',
     desc: 'Advanced model architectures, custom loss functions, transfer learning pipelines, and production inference optimization.'
   },
@@ -490,7 +602,7 @@ export const CERTIFICATIONS = [
     date: 'May 14, 2026',
     credentialId: 'NAKO1OC3M76Q',
     verifyUrl: 'https://coursera.org/verify/NAKO1OC3M76Q',
-    fileUrl: '/certs/pytorch-foundations-coursera.pdf',
+    fileUrl: './certs/pytorch-foundations-coursera.pdf',
     badge: 'Course Certificate',
     desc: 'Tensor operations, autograd computational graphs, data loaders, and foundational GPU acceleration routines.'
   },
@@ -504,7 +616,7 @@ export const CERTIFICATIONS = [
     date: '16th May 2025',
     credentialId: '1303770',
     verifyUrl: null,
-    fileUrl: '/certs/cloud-security-simplilearn-skillup.pdf',
+    fileUrl: './certs/cloud-security-simplilearn-skillup.pdf',
     badge: 'SkillUp Certificate',
     highlight: true,
     desc: 'Principles of enterprise cloud security architecture, identity and access management (IAM), encryption at rest/transit, and cloud compliance frameworks.'
@@ -519,7 +631,7 @@ export const CERTIFICATIONS = [
     date: 'September 26, 2025',
     credentialId: 'Issued: Oct 15, 2025',
     verifyUrl: 'https://verify.onwingspan.com',
-    fileUrl: '/certs/rnns-infosys-springboard.pdf',
+    fileUrl: './certs/rnns-infosys-springboard.pdf',
     badge: 'Industry Credential',
     desc: 'Sequential data modeling, recurrent neural network hidden states, vanishing gradients, LSTM/GRU memory cell architectures, and time-series forecasting.'
   },
@@ -533,7 +645,7 @@ export const CERTIFICATIONS = [
     date: '31 August 2025',
     credentialId: '74 Modules • 16 Challenges',
     verifyUrl: null,
-    fileUrl: '/certs/dbms-scaler-topics.pdf',
+    fileUrl: './certs/dbms-scaler-topics.pdf',
     badge: 'Excellence Certificate',
     desc: 'Relational database schema modeling, ER diagrams, complex SQL subqueries, B-tree indexing mechanics, ACID transaction guarantees, and normal forms (1NF–BCNF).'
   },
@@ -547,7 +659,7 @@ export const CERTIFICATIONS = [
     date: 'Course Progress: 100%',
     credentialId: 'GPXX0D58EN',
     verifyUrl: null,
-    fileUrl: '/certs/ibm-skillsnetwork-programming.png',
+    fileUrl: './certs/ibm-skillsnetwork-programming.png',
     badge: 'SkillsNetwork Course',
     desc: 'Multi-paradigm programming syntax foundations, compilation vs interpretation, execution environments, and procedural control flows across 11 programming languages.'
   }
@@ -560,7 +672,7 @@ export const RESUME_DATA = {
   email: 'sahithm2006@gmail.com',
   linkedin: 'https://linkedin.com/in/sahith-m-sahith518',
   github: 'https://github.com/SahithM2006',
-  pdfUrl: '/Sahith_M_Placement_Resume.pdf',
+  pdfUrl: './Sahith_M_Placement_Resume.pdf',
   pdfFilename: 'Sahith_M_Placement_Resume.pdf',
   education: {
     institution: 'Saveetha Engineering College (Autonomous)',

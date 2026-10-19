@@ -40,9 +40,9 @@ export function initScrollEngine() {
     projects: { top: 3100, height: 1800 },
     architecture: { top: 4400, height: 1600 },
     experience: { top: 6000, height: 1000 },
-    certifications: { top: 7100, height: 1200 },
-    resume: { top: 8300, height: 1200 },
-    contact: { top: 9500, height: 800 },
+    certifications: { top: 7500, height: 1200 },
+    resume: { top: 8700, height: 1200 },
+    contact: { top: 9900, height: 800 },
     cards: []
   };
 
@@ -184,21 +184,22 @@ export function initScrollEngine() {
         );
       }
 
-      const focusCol = document.querySelector('.about-focus-column');
-      if (focusCol) {
+      const videoCard = document.querySelector('.about-video-card');
+      if (videoCard) {
         gsap.fromTo(
-          focusCol,
-          { y: 24, opacity: 0.35 },
+          videoCard,
+          { y: 20, opacity: 0.4 },
           {
             y: 0,
             opacity: 1,
             duration: 0.75,
-            delay: 0.08,
+            delay: 0.1,
             ease: 'power2.out',
             scrollTrigger: {
-              trigger: focusCol,
-              start: 'top 85%',
-              toggleActions: 'play none none none', once: true
+              trigger: videoCard,
+              start: 'top 88%',
+              toggleActions: 'play none none none',
+              once: true
             }
           }
         );
