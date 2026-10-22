@@ -250,27 +250,6 @@ export function initScrollEngine() {
         );
       }
 
-      const videoCard = document.querySelector('.about-video-card');
-      if (videoCard) {
-        gsap.fromTo(
-          videoCard,
-          { y: 20, opacity: 0.4 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 0.75,
-            delay: 0.1,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: videoCard,
-              start: 'top 88%',
-              toggleActions: 'play none none none',
-              once: true
-            }
-          }
-        );
-      }
-
       // 2. Skills section: header & Interactive Skill Constellation progressive reveal
       const skillsHeader = document.querySelector('.skills-header');
       if (skillsHeader) {

@@ -1,141 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CAREER_STATUS } from '../data-store.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
-/**
- * Cinematic 12-second self-introduction video component.
- * Features Sahith's character speaking the official portfolio introduction.
- * Responsive 16:9 layout with playback controls and graceful fallback.
- */
-function VideoIntroCard({
-  videoSrc = '/portfolio-intro.mp4',
-  fallbackSrc = '/videos/intro.mp4',
-  poster = '/center.webp'
-}) {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [hasError, setHasError] = useState(false);
-  const [activeSrc, setActiveSrc] = useState(videoSrc);
-  const [isReady, setIsReady] = useState(true);
-  const videoRef = useRef(null);
-
-  const handlePlay = () => {
-    setHasError(false);
-    setIsPlaying(true);
-    setTimeout(() => {
-      if (videoRef.current) {
-        videoRef.current.play().catch(() => {
-          // If browser policy requires user gesture, controls allow manual play
-        });
-      }
-    }, 50);
-  };
-
-  const handleStop = () => {
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
-    setIsPlaying(false);
-  };
-
-  return (
-    <div className="about-video-card" id="about-video-card">
-      <div className="video-card-topbar">
-        <div className="video-card-title-wrap">
-          <span className="video-pulse-beacon" aria-hidden="true" />
-          <span className="video-card-heading">12-Sec Video Intro</span>
-        </div>
-        <span className="video-card-tag">0:12 • 1080p HD</span>
-      </div>
-
-      <div className="video-card-viewport">
-        {isPlaying ? (
-          <div className="video-player-container">
-            <video
-              ref={videoRef}
-              src={activeSrc}
-              poster={poster}
-              playsInline
-              controls
-              autoPlay
-              onEnded={handleStop}
-              onError={() => {
-                if (activeSrc !== fallbackSrc) {
-                  setActiveSrc(fallbackSrc);
-                } else {
-                  setHasError(true);
-                }
-              }}
-              className="about-live-video"
-              aria-label="Sahith M. 12-second self-introduction video"
-            >
-              <source src={videoSrc} type="video/mp4" />
-              <source src={fallbackSrc} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            <button
-              type="button"
-              className="video-player-close"
-              onClick={handleStop}
-              aria-label="Close video player"
-              title="Close video"
-            >
-              ✕
-            </button>
-          </div>
-        ) : (
-          <div
-            className="video-preview-facade"
-            onClick={handlePlay}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') handlePlay();
-            }}
-          >
-            <img
-              src={poster}
-              alt="Sahith M. Character Video Intro Preview"
-              className="video-facade-thumb"
-              loading="eager"
-            />
-            <div className="video-facade-overlay" />
-            <button
-              type="button"
-              className="video-facade-play-btn"
-              aria-label="Play 12-second character introduction video"
-              onClick={(e) => {
-                e.stopPropagation();
-                handlePlay();
-              }}
-            >
-              <span className="play-triangle" aria-hidden="true">▶</span>
-              <span className="play-label">Play 12s Intro</span>
-            </button>
-          </div>
-        )}
-      </div>
-
-      {/* Video Status & Direct Link */}
-      {hasError ? (
-        <div className="video-status-notice video-notice-pending">
-          <span className="notice-icon" aria-hidden="true">ℹ</span>
-          <span>
-            Unable to stream inline. <a href={videoSrc} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-amber)' }}>Open video directly ↗</a>
-          </span>
-        </div>
-      ) : (
-        <div className="video-status-notice video-notice-ready">
-          <span className="notice-dot" aria-hidden="true" />
-          <span>Cinematic character introduction with dialogue &amp; telemetry HUD</span>
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default function About({ onSelectSkill, onSelectProject }) {
   const sectionRef = useRef(null);
@@ -243,10 +112,10 @@ export default function About({ onSelectSkill, onSelectProject }) {
           </h2>
         </div>
 
-        {/* Profile Grid: Left column (Photograph + 10s Video Component), Right column (Bio & Education) */}
+        {/* Profile Grid: Left column (Photograph), Right column (Bio & Education) */}
         <div className="about-portrait-row">
 
-          {/* Left Column: Original Photograph + Compact 10s Video Component */}
+          {/* Left Column: Original Photograph */}
           <div className="about-portrait-col" ref={photoRef}>
             {/* 1. Original Photograph with Cyber Sensor Viewfinder Overlay */}
             <div className="about-portrait-frame" id="about-portrait-frame">
@@ -278,8 +147,6 @@ export default function About({ onSelectSkill, onSelectProject }) {
               </div>
             </div>
 
-            {/* 2. Compact 12-Second Self-Introduction Video Component */}
-            <VideoIntroCard videoSrc="/portfolio-intro.mp4" fallbackSrc="/videos/intro.mp4" poster="/center.webp" />
           </div>
 
           {/* Right Column: Bio Narrative & Academic Foundation (Redundant Concepts Column Removed) */}
