@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Sahith M. — Curriculum Vitae &amp; Placement Resume</title>
+  <meta name="theme-color" content="#080A0F" />
+  <meta name="description" content="Official placement resume of Sahith M., 3rd-year B.Tech Artificial Intelligence &amp; Data Science undergraduate at Saveetha Engineering College (Autonomous), Chennai." />
+
+  <!-- Google Fonts: Outfit + Plus Jakarta Sans + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-color: #080A0F;
+      --card-bg: #151B27;
+      --border-color: #343B49;
+      --accent-gold: #C6A45A;
+      --accent-gold-hover: #CBB57E;
+      --accent-blue: #263B60;
+      --accent-steel: #7596C8;
+      --text-heading: #E9E2D4;
+      --text-body: #E9E2D4;
+      --text-muted: #A9B1BF;
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-body);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 20px 32px;
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(8, 10, 15, 0.9);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text-heading);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+    }
+
+    .brand-dot {
+      color: var(--accent-gold);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-gold {
+      background: var(--accent-gold);
+      color: #080A0F;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 16px rgba(198, 164, 90, 0.3);
+    }
+
+    .btn-gold:hover {
+      background: var(--accent-gold-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(198, 164, 90, 0.45);
+    }
+
+    .btn-subtle {
+      background: rgba(38, 59, 96, 0.2);
+      border: 1px solid var(--border-color);
+      color: var(--text-heading);
+      padding: 10px 18px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-subtle:hover {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      background: rgba(198, 164, 90, 0.1);
+    }
+
+    main {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--accent-gold);
+      margin-bottom: 12px;
+    }
+
+    .kicker-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-gold);
+      box-shadow: 0 0 10px var(--accent-gold);
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5vw, 3.4rem);
+      font-weight: 800;
+      color: var(--text-heading);
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 740px;
+      margin-bottom: 36px;
+    }
+
+    .layout-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: 32px;
+      align-items: start;
+    }
+
+    .viewer-frame {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .viewer-bar {
+      padding: 14px 20px;
+      background: rgba(17, 23, 34, 0.95);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .viewer-badge {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      background: rgba(198, 164, 90, 0.12);
+      border: 1px solid rgba(198, 164, 90, 0.28);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .doc-container {
+      padding: 24px;
+      background: #040508;
+      display: flex;
+      justify-content: center;
+    }
+
+    .doc-sheet {
+      max-width: 600px;
+      width: 100%;
+      background: #FFFFFF;
+      border-radius: 4px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
+      overflow: hidden;
+    }
+
+    .doc-sheet img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .viewer-footer {
+      padding: 14px 20px;
+      background: rgba(17, 23, 34, 0.95);
+      border-top: 1px solid var(--border-color);
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .card-kicker {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .card-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-bottom: 14px;
+    }
+
+    .meta-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(52, 59, 73, 0.4);
+    }
+
+    .meta-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .meta-label {
+      color: var(--text-muted);
+    }
+
+    .meta-val {
+      color: var(--text-heading);
+      font-weight: 600;
+    }
+
+    .meta-val.gold {
+      color: var(--accent-gold);
+      font-family: var(--font-mono);
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .pill {
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: rgba(38, 59, 96, 0.2);
+      border: 1px solid var(--border-color);
+      color: var(--text-heading);
+    }
+
+    .pill.gold {
+      background: rgba(198, 164, 90, 0.12);
+      border-color: rgba(198, 164, 90, 0.3);
+      color: var(--accent-gold);
+      font-weight: 600;
+    }
+
+    @media (max-width: 900px) {
+      .layout-grid {
+        grid-template-columns: 1fr;
+      }
+      header {
+        padding: 16px 20px;
+      }
+      main {
+        padding: 32px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/" class="brand">
+      <span class="brand-dot">•</span>
+      <span>SAHITH M.</span>
+    </a>
+    <div class="nav-actions">
+      <a href="/" class="btn-subtle">← Digital Playground</a>
+      <a href="/Sahith_M_Placement_Resume.pdf" download="Sahith_M_Placement_Resume.pdf" class="btn-gold" id="download-resume-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        Download PDF
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <div class="kicker">
+      <span class="kicker-dot"></span>
+      <span>CURRICULUM VITAE &amp; CREDENTIALS</span>
+    </div>
+    <h1>Placement Resume &amp; Profile</h1>
+    <p class="subtitle">
+      Official placement resume reflecting verified academic coursework, hackathon prototypes, and technical domains.
+    </p>
+
+    <div class="layout-grid">
+      <!-- Document Preview -->
+      <div class="viewer-frame">
+        <div class="viewer-bar">
+          <span class="viewer-badge">VERIFIED PLACEMENT RESUME</span>
+          <a href="/Sahith_M_Placement_Resume.pdf" target="_blank" class="btn-subtle" style="font-size: 0.78rem; padding: 6px 12px;">
+            Open PDF Tab ↗
+          </a>
+        </div>
+        <div class="doc-container">
+          <div class="doc-sheet">
+            <img src="/resume-preview.webp" alt="Sahith M. Placement Resume" />
+          </div>
+        </div>
+        <div class="viewer-footer">
+          <span>Source: <strong>Sahith_M_Placement_Resume.pdf</strong> (ReportLab Placement Edition)</span>
+          <a href="/Sahith_M_Placement_Resume.pdf" download="Sahith_M_Placement_Resume.pdf" style="color: var(--accent-gold); font-weight: 600; text-decoration: none;">
+            Save PDF ↓
+          </a>
+        </div>
+      </div>
+
+      <!-- Candidate Credentials Snapshot -->
+      <div class="sidebar">
+        <div class="card">
+          <div class="card-kicker">CANDIDATE SNAPSHOT</div>
+          <h2 class="card-title">Sahith M.</h2>
+          <div class="meta-list">
+            <div class="meta-row">
+              <span class="meta-label">Discipline</span>
+              <span class="meta-val">B.Tech Artificial Intelligence &amp; Data Science</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Institution</span>
+              <span class="meta-val">Saveetha Engineering College (Autonomous)</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Year of Study</span>
+              <span class="meta-val">3rd Year (Class of 2028)</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Cumulative GPA</span>
+              <span class="meta-val gold">7.5 / 10</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Higher Secondary</span>
+              <span class="meta-val">80% (Class XII)</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Secondary School</span>
+              <span class="meta-val">85% (Class X)</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-label">Location</span>
+              <span class="meta-val">Chennai, Tamil Nadu, India</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-kicker">CORE TECHNICAL MATRIX</div>
+          <h3 class="card-title">Placement Competencies</h3>
+          <div class="pills">
+            <span class="pill gold">Python</span>
+            <span class="pill gold">C</span>
+            <span class="pill gold">SQL</span>
+            <span class="pill">FastAPI</span>
+            <span class="pill">PyTorch</span>
+            <span class="pill">Machine Learning</span>
+            <span class="pill">Deep Learning</span>
+            <span class="pill">Data Analysis &amp; EDA</span>
+            <span class="pill">Scikit-learn</span>
+            <span class="pill">NetworkX</span>
+            <span class="pill">Docker</span>
+            <span class="pill">Git &amp; GitHub</span>
+          </div>
+        </div>
+
+        <div class="card" style="border-left: 3px solid var(--accent-gold);">
+          <div class="card-kicker">OFFICIAL PLACEMENT ACTIONS</div>
+          <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 16px;">
+            Download the official placement PDF or explore the interactive 360° digital portfolio.
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <a href="/Sahith_M_Placement_Resume.pdf" download="Sahith_M_Placement_Resume.pdf" class="btn-gold" style="justify-content: center;">
+              Download Placement Resume (PDF)
+            </a>
+            <a href="/" class="btn-subtle" style="justify-content: center; text-align: center;">
+              Launch 360° Digital Playground →
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

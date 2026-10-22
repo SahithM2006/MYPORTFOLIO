@@ -672,8 +672,9 @@ export const RESUME_DATA = {
   email: 'sahithm2006@gmail.com',
   linkedin: 'https://linkedin.com/in/sahith-m-sahith518',
   github: 'https://github.com/SahithM2006',
-  pdfUrl: './Sahith_M_Placement_Resume.pdf',
+  pdfUrl: '/Sahith_M_Placement_Resume.pdf',
   pdfFilename: 'Sahith_M_Placement_Resume.pdf',
+  previewUrl: '/resume-preview.webp',
   education: {
     institution: 'Saveetha Engineering College (Autonomous)',
     degree: 'B.Tech in Artificial Intelligence and Data Science',

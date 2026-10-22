@@ -3,6 +3,14 @@
   "cleanUrls": true,
   "rewrites": [
     {
+      "source": "/resume",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/resume/",
+      "destination": "/index.html"
+    },
+    {
       "source": "/((?!assets|certs|frames|.*\\.[a-zA-Z0-9]+$).*)",
       "destination": "/index.html"
     }

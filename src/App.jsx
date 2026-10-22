@@ -30,6 +30,22 @@ export default function App() {
   useEffect(() => {
     const cleanupScroll = initScrollEngine();
     const cleanupMobile = initMobileReadiness();
+
+    // Auto-scroll to resume section if accessed via /resume or #resume
+    const isResumePath =
+      window.location.pathname === '/resume' ||
+      window.location.pathname === '/resume/' ||
+      window.location.hash === '#resume';
+
+    if (isResumePath) {
+      setTimeout(() => {
+        const resumeEl = document.getElementById('resume');
+        if (resumeEl) {
+          resumeEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 350);
+    }
+
     return () => {
       if (typeof cleanupScroll === 'function') {
         cleanupScroll();
