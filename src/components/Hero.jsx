@@ -216,6 +216,10 @@ export default function Hero() {
                 <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
             </a>
+            <a href="#about-video-card" className="btn btn-intro-video" id="hero-btn-intro-video" title="Watch 12-second portfolio intro video">
+              <span className="btn-intro-icon" aria-hidden="true">▶</span>
+              <span>Watch Intro</span>
+            </a>
             <a href="#contact" className="btn btn-ghost" id="hero-btn-contact">
               <span>Get in touch</span>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

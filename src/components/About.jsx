@@ -6,64 +6,20 @@ import { CAREER_STATUS } from '../data-store.js';
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Compact 10-second self-introduction video component.
- * Positioned beside/near the photograph.
- * Ready for a real video asset (/intro.mp4 or /videos/intro.mp4).
- * Shows clear play controls, duration badge, and ready-state placeholder.
+ * Cinematic 12-second self-introduction video component.
+ * Features Sahith's character speaking the official portfolio introduction.
+ * Responsive 16:9 layout with playback controls and graceful fallback.
  */
-function VideoIntroCard({ videoSrc = './videos/intro.mp4', fallbackSrc = './intro.mp4', poster = './user_photo.jpg' }) {
+function VideoIntroCard({
+  videoSrc = '/portfolio-intro.mp4',
+  fallbackSrc = '/videos/intro.mp4',
+  poster = '/center.webp'
+}) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasError, setHasError] = useState(false);
-  const [activeSrc, setActiveSrc] = useState(null);
-  const [isReady, setIsReady] = useState(false);
+  const [activeSrc, setActiveSrc] = useState(videoSrc);
+  const [isReady, setIsReady] = useState(true);
   const videoRef = useRef(null);
-
-  // Probe both primary and fallback video locations
-  useEffect(() => {
-    let isMounted = true;
-    fetch(videoSrc, { method: 'HEAD' })
-      .then((res) => {
-        if (isMounted) {
-          if (res.ok) {
-            setActiveSrc(videoSrc);
-            setIsReady(true);
-          } else {
-            fetch(fallbackSrc, { method: 'HEAD' })
-              .then((res2) => {
-                if (isMounted && res2.ok) {
-                  setActiveSrc(fallbackSrc);
-                  setIsReady(true);
-                } else if (isMounted) {
-                  setIsReady(false);
-                }
-              })
-              .catch(() => { if (isMounted) setIsReady(false); });
-          }
-        }
-      })
-      .catch(() => {
-        if (isMounted) {
-          fetch(fallbackSrc, { method: 'HEAD' })
-            .then((res2) => {
-              if (isMounted && res2.ok) {
-                setActiveSrc(fallbackSrc);
-                setIsReady(true);
-              } else if (isMounted) {
-                setIsReady(false);
-              }
-            })
-            .catch(() => { if (isMounted) setIsReady(false); });
-        }
-      });
-
-    return () => {
-      isMounted = false;
-    };
-  }, [videoSrc, fallbackSrc]);
-
-  if (!isReady || !activeSrc) {
-    return null;
-  }
 
   const handlePlay = () => {
     setHasError(false);
@@ -71,7 +27,7 @@ function VideoIntroCard({ videoSrc = './videos/intro.mp4', fallbackSrc = './intr
     setTimeout(() => {
       if (videoRef.current) {
         videoRef.current.play().catch(() => {
-          setHasError(true);
+          // If browser policy requires user gesture, controls allow manual play
         });
       }
     }, 50);
@@ -90,9 +46,9 @@ function VideoIntroCard({ videoSrc = './videos/intro.mp4', fallbackSrc = './intr
       <div className="video-card-topbar">
         <div className="video-card-title-wrap">
           <span className="video-pulse-beacon" aria-hidden="true" />
-          <span className="video-card-heading">10-Sec Video Intro</span>
+          <span className="video-card-heading">12-Sec Video Intro</span>
         </div>
-        <span className="video-card-tag">0:10 • HD</span>
+        <span className="video-card-tag">0:12 • 1080p HD</span>
       </div>
 
       <div className="video-card-viewport">
@@ -104,11 +60,22 @@ function VideoIntroCard({ videoSrc = './videos/intro.mp4', fallbackSrc = './intr
               poster={poster}
               playsInline
               controls
+              autoPlay
               onEnded={handleStop}
-              onError={() => setHasError(true)}
+              onError={() => {
+                if (activeSrc !== fallbackSrc) {
+                  setActiveSrc(fallbackSrc);
+                } else {
+                  setHasError(true);
+                }
+              }}
               className="about-live-video"
-              aria-label="Sahith M. 10-second self-introduction video"
-            />
+              aria-label="Sahith M. 12-second self-introduction video"
+            >
+              <source src={videoSrc} type="video/mp4" />
+              <source src={fallbackSrc} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
             <button
               type="button"
               className="video-player-close"
@@ -120,40 +87,50 @@ function VideoIntroCard({ videoSrc = './videos/intro.mp4', fallbackSrc = './intr
             </button>
           </div>
         ) : (
-          <div className="video-preview-facade" onClick={handlePlay} role="button" tabIndex={0} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handlePlay(); }}>
+          <div
+            className="video-preview-facade"
+            onClick={handlePlay}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') handlePlay();
+            }}
+          >
             <img
               src={poster}
-              alt="Video intro thumbnail preview"
+              alt="Sahith M. Character Video Intro Preview"
               className="video-facade-thumb"
-              loading="lazy"
+              loading="eager"
             />
             <div className="video-facade-overlay" />
             <button
               type="button"
               className="video-facade-play-btn"
-              aria-label="Play 10-second introduction video"
+              aria-label="Play 12-second character introduction video"
               onClick={(e) => {
                 e.stopPropagation();
                 handlePlay();
               }}
             >
               <span className="play-triangle" aria-hidden="true">▶</span>
-              <span className="play-label">Play 10s Intro</span>
+              <span className="play-label">Play 12s Intro</span>
             </button>
           </div>
         )}
       </div>
 
-      {/* Video Status / Placeholder Prompt */}
+      {/* Video Status & Direct Link */}
       {hasError ? (
         <div className="video-status-notice video-notice-pending">
           <span className="notice-icon" aria-hidden="true">ℹ</span>
-          <span>Video ready: place <code>intro.mp4</code> in <code>/public/videos/</code> or <code>/public/</code> to play.</span>
+          <span>
+            Unable to stream inline. <a href={videoSrc} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--color-amber)' }}>Open video directly ↗</a>
+          </span>
         </div>
       ) : (
         <div className="video-status-notice video-notice-ready">
           <span className="notice-dot" aria-hidden="true" />
-          <span>{isReady ? 'Intro video ready to play' : 'Ready for video asset (e.g. /public/videos/intro.mp4)'}</span>
+          <span>Cinematic character introduction with dialogue &amp; telemetry HUD</span>
         </div>
       )}
     </div>
@@ -301,8 +278,8 @@ export default function About({ onSelectSkill, onSelectProject }) {
               </div>
             </div>
 
-            {/* 2. Compact 10-Second Self-Introduction Video Component */}
-            <VideoIntroCard videoSrc="./videos/intro.mp4" fallbackSrc="./intro.mp4" poster="./user_photo.jpg" />
+            {/* 2. Compact 12-Second Self-Introduction Video Component */}
+            <VideoIntroCard videoSrc="/portfolio-intro.mp4" fallbackSrc="/videos/intro.mp4" poster="/center.webp" />
           </div>
 
           {/* Right Column: Bio Narrative & Academic Foundation (Redundant Concepts Column Removed) */}
