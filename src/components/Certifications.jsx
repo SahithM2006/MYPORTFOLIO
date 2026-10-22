@@ -61,15 +61,15 @@ export default function Certifications() {
         <svg viewBox="0 0 1200 600" className="cert-ambient-svg" preserveAspectRatio="none">
           <defs>
             <linearGradient id="certGradTeal" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#2DD4BF" stopOpacity="0.4" />
-              <stop offset="50%" stopColor="#38BDF8" stopOpacity="0.6" />
-              <stop offset="100%" stopColor="#2DD4BF" stopOpacity="0.4" />
+              <stop offset="0%" stopColor="#C6A45A" stopOpacity="0.45" />
+              <stop offset="50%" stopColor="#7596C8" stopOpacity="0.65" />
+              <stop offset="100%" stopColor="#C6A45A" stopOpacity="0.45" />
             </linearGradient>
           </defs>
-          <path d="M0,100 L300,100 L380,180 L820,180 L900,260 L1200,260" stroke="rgba(45, 212, 191, 0.12)" strokeWidth="1.2" strokeDasharray="6 6" fill="none" />
+          <path d="M0,100 L300,100 L380,180 L820,180 L900,260 L1200,260" stroke="rgba(198, 164, 90, 0.2)" strokeWidth="1.2" strokeDasharray="6 6" fill="none" />
           <path d="M0,100 L300,100 L380,180 L820,180 L900,260 L1200,260" stroke="url(#certGradTeal)" strokeWidth="1.8" strokeDasharray="16 120" fill="none" className="circuit-path-stream-1" />
-          <path d="M0,450 L250,450 L320,380 L700,380 L780,300 L1200,300" stroke="rgba(229, 169, 60, 0.12)" strokeWidth="1.2" strokeDasharray="8 8" fill="none" />
-          <path d="M0,450 L250,450 L320,380 L700,380 L780,300 L1200,300" stroke="#E5A93C" strokeWidth="1.6" strokeDasharray="14 110" fill="none" className="circuit-path-stream-2" />
+          <path d="M0,450 L250,450 L320,380 L700,380 L780,300 L1200,300" stroke="rgba(38, 59, 96, 0.28)" strokeWidth="1.2" strokeDasharray="8 8" fill="none" />
+          <path d="M0,450 L250,450 L320,380 L700,380 L780,300 L1200,300" stroke="#C6A45A" strokeWidth="1.6" strokeDasharray="14 110" fill="none" className="circuit-path-stream-2" />
         </svg>
       </div>
 

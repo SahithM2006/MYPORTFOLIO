@@ -976,19 +976,19 @@ function initDataPlayground() {
 
     // Build SVG elements
     const pathD = points.map((p, idx) => `${idx === 0 ? 'M' : 'L'} ${p.cx.toFixed(1)} ${p.cy.toFixed(1)}`).join(' ');
-    const circlesSvg = points.map((p) => `<circle cx="${p.cx.toFixed(1)}" cy="${p.cy.toFixed(1)}" r="3" fill="#C8FF4D" opacity="0.85" />`).join('');
+    const circlesSvg = points.map((p) => `<circle cx="${p.cx.toFixed(1)}" cy="${p.cy.toFixed(1)}" r="3" fill="#C6A45A" opacity="0.85" />`).join('');
 
     svgChart.innerHTML = `
       <defs>
         <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#C8FF4D" stop-opacity="0.3" />
-          <stop offset="100%" stop-color="#C8FF4D" stop-opacity="0.0" />
+          <stop offset="0%" stop-color="#C6A45A" stop-opacity="0.3" />
+          <stop offset="100%" stop-color="#C6A45A" stop-opacity="0.0" />
         </linearGradient>
       </defs>
       <line x1="${padding}" y1="${height - padding}" x2="${width - padding}" y2="${height - padding}" stroke="rgba(185,168,216,0.2)" stroke-width="1" />
       <line x1="${padding}" y1="${padding}" x2="${padding}" y2="${height - padding}" stroke="rgba(185,168,216,0.2)" stroke-width="1" />
       <path d="${pathD} L ${width - padding} ${height - padding} L ${padding} ${height - padding} Z" fill="url(#chartGrad)" />
-      <path d="${pathD}" fill="none" stroke="#C8FF4D" stroke-width="2.5" />
+      <path d="${pathD}" fill="none" stroke="#C6A45A" stroke-width="2.5" />
       ${circlesSvg}
     `;
   }
@@ -1289,12 +1289,12 @@ function initMotionDesign() {
   const contactSec = document.getElementById('contact');
 
   const projectColorMap = {
-    'prj-probe360': '#00e5ff',
-    'prj-mule-matrix': '#2dd4a7',
-    'prj-csi-origin': '#2dd4a7',
-    'prj-carbon': '#f59e0b',
-    'prj-aegis': '#00f5d4',
-    'prj-dip': '#ec4899'
+    'prj-probe360': '#7596C8',
+    'prj-mule-matrix': '#C6A45A',
+    'prj-csi-origin': '#C6A45A',
+    'prj-carbon': '#7596C8',
+    'prj-aegis': '#C6A45A',
+    'prj-dip': '#7596C8'
   };
 
   // Cached Geometry Store to prevent DOM thrashing inside the scroll tick
@@ -1339,7 +1339,7 @@ function initMotionDesign() {
         el: card,
         top,
         height: rect.height || card.offsetHeight || 1,
-        color: projectColorMap[card.id] || '#c8ff4d'
+        color: projectColorMap[card.id] || '#C6A45A'
       };
     });
   }
@@ -1394,23 +1394,23 @@ function initMotionDesign() {
     // 5. Active Exhibition Chapter Badge on Left Spine
     const focusY = scrollTop + winH * 0.45;
     let currentChapter = '01 HERO';
-    let chapterColor = '#c8ff4d';
+    let chapterColor = '#C6A45A';
 
     if (focusY >= cachedGeometry.contact.top - 140) {
       currentChapter = '06 FINALE';
-      chapterColor = '#c8ff4d';
+      chapterColor = '#C6A45A';
     } else if (focusY >= cachedGeometry.playground.top - 120) {
       currentChapter = '05 LABS';
-      chapterColor = '#fb7185';
+      chapterColor = '#7596C8';
     } else if (focusY >= cachedGeometry.projects.top - 120) {
       currentChapter = '04 EXHIBITS';
-      chapterColor = lastActiveCardId ? (projectColorMap[lastActiveCardId] || '#00e5ff') : '#00e5ff';
+      chapterColor = lastActiveCardId ? (projectColorMap[lastActiveCardId] || '#C6A45A') : '#C6A45A';
     } else if (focusY >= cachedGeometry.skills.top - 120) {
       currentChapter = '03 SKILLS';
-      chapterColor = '#8157ff';
+      chapterColor = '#7596C8';
     } else if (focusY >= cachedGeometry.about.top - 120) {
       currentChapter = '02 ESSAY';
-      chapterColor = '#ff8a45';
+      chapterColor = '#263B60';
     }
 
     if (spineLabel && currentChapter !== lastChapter) {

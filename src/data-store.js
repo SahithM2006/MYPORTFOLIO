@@ -4,12 +4,12 @@
  */
 
 export const SKILL_CATEGORIES = [
-  { id: 'all', label: 'All Constellations', count: 18, color: '#10B981' },
-  { id: 'programming', label: 'Programming', count: 3, color: '#5C87A6' },
-  { id: 'ai-ml', label: 'AI & Machine Learning', count: 2, color: '#10B981' },
-  { id: 'data-science', label: 'Data Science', count: 3, color: '#14B8A6' },
-  { id: 'development', label: 'Development', count: 5, color: '#38BDF8' },
-  { id: 'tools', label: 'Tools', count: 5, color: '#E5A93C' }
+  { id: 'all', label: 'All Constellations', count: 18, color: '#C6A45A' },
+  { id: 'programming', label: 'Programming', count: 3, color: '#C6A45A' },
+  { id: 'ai-ml', label: 'AI & Machine Learning', count: 2, color: '#7596C8' },
+  { id: 'data-science', label: 'Data Science', count: 3, color: '#C6A45A' },
+  { id: 'development', label: 'Development', count: 5, color: '#7596C8' },
+  { id: 'tools', label: 'Tools', count: 5, color: '#C6A45A' }
 ];
 
 export const SKILLS = [
@@ -256,7 +256,7 @@ export const PROJECTS = [
     category: 'security',
     categoryLabel: 'Cybersecurity Platform',
     title: 'Probe360 — Agentless Windows Security Platform',
-    themeColor: '#10B981',
+    themeColor: '#7596C8',
     status: 'Prototype • Implemented',
     statusType: 'implemented',
     problem: 'Traditional endpoint auditing requires installing persistent third-party background daemons across servers, introducing software supply-chain vulnerabilities, memory overhead, and administrative deployment friction.',
@@ -275,7 +275,7 @@ export const PROJECTS = [
     category: 'fintech',
     categoryLabel: 'Financial Fraud Intelligence',
     title: 'Mule Matrix — Financial Fraud Detection & Money-Mule Network Tracing',
-    themeColor: '#2DD4A7',
+    themeColor: '#C6A45A',
     status: 'Analytical Prototype • Graph Simulation',
     statusType: 'concept',
     problem: 'Financial fraud networks rapidly structure illicit funds across multi-hop intermediary accounts (fan-out) within minutes before re-aggregating into cash-out accounts (fan-in), rendering flat, static rule-based transaction checks ineffective.',
@@ -294,7 +294,7 @@ export const PROJECTS = [
     category: 'ai',
     categoryLabel: 'Sustainability Analytics',
     title: 'AI Carbon Intelligence — Supply-Chain Emissions Analytics',
-    themeColor: '#7E9CB9',
+    themeColor: '#7596C8',
     status: 'Research Concept & Modeling Pipeline',
     statusType: 'concept',
     problem: 'Industrial logistics chains struggle to accurately quantify Scope 1, 2, and 3 carbon emissions due to non-linear fuel consumption curves, payload weight variations, and fragmented transport records, making mitigation planning speculative.',
@@ -313,7 +313,7 @@ export const PROJECTS = [
     category: 'automation',
     categoryLabel: 'Cyber Digital Twin',
     title: 'AEGIS-TWIN — Autonomous Cyber Digital Twin & Attack Simulation',
-    themeColor: '#D9822B',
+    themeColor: '#C6A45A',
     status: 'Hackathon Prototype • Shortlisted (VIT)',
     statusType: 'concept',
     problem: 'Enterprise security teams assess software vulnerabilities in isolation, failing to anticipate how attackers chain low- and medium-severity flaws across adjacent network assets to reach critical crown jewels.',
@@ -496,43 +496,43 @@ export const TIMELINE_MILESTONES = [
 
 export const PALETTES = [
   {
-    id: 'aubergine-sage',
-    name: 'Aubergine & Soft Sage (Default)',
+    id: 'obsidian-gold',
+    name: 'Obsidian & Champagne Gold (Default)',
     colors: {
-      '--color-lime': '#8FA89B',
-      '--color-violet': '#B8A9C9',
-      '--color-tangerine': '#6C8EA4',
-      '--color-aubergine-border-hover': 'rgba(143, 168, 155, 0.4)'
+      '--color-lime': '#C6A45A',
+      '--color-violet': '#7596C8',
+      '--color-tangerine': '#263B60',
+      '--color-aubergine-border-hover': 'rgba(198, 164, 90, 0.4)'
     }
   },
   {
-    id: 'aubergine-lavender',
-    name: 'Aubergine & Muted Lavender',
+    id: 'obsidian-steel',
+    name: 'Obsidian & Muted Steel Blue',
     colors: {
-      '--color-lime': '#B8A9C9',
-      '--color-violet': '#6C8EA4',
-      '--color-tangerine': '#8FA89B',
-      '--color-aubergine-border-hover': 'rgba(184, 169, 201, 0.4)'
+      '--color-lime': '#7596C8',
+      '--color-violet': '#263B60',
+      '--color-tangerine': '#C6A45A',
+      '--color-aubergine-border-hover': 'rgba(117, 150, 200, 0.4)'
     }
   },
   {
-    id: 'aubergine-dusty-blue',
-    name: 'Aubergine & Dusty Blue',
+    id: 'midnight-gold',
+    name: 'Midnight Blue & Gold Illumination',
     colors: {
-      '--color-lime': '#6C8EA4',
-      '--color-violet': '#B8A9C9',
-      '--color-tangerine': '#8FA89B',
-      '--color-aubergine-border-hover': 'rgba(108, 142, 164, 0.4)'
+      '--color-lime': '#C6A45A',
+      '--color-violet': '#263B60',
+      '--color-tangerine': '#7596C8',
+      '--color-aubergine-border-hover': 'rgba(38, 59, 96, 0.4)'
     }
   },
   {
-    id: 'aubergine-plum',
-    name: 'Aubergine & Restrained Plum',
+    id: 'charcoal-gold',
+    name: 'Deep Charcoal & Warm Ivory',
     colors: {
-      '--color-lime': '#8FA89B',
-      '--color-violet': '#B37583',
-      '--color-tangerine': '#6C8EA4',
-      '--color-aubergine-border-hover': 'rgba(179, 117, 131, 0.4)'
+      '--color-lime': '#C6A45A',
+      '--color-violet': '#E9E2D4',
+      '--color-tangerine': '#263B60',
+      '--color-aubergine-border-hover': 'rgba(198, 164, 90, 0.4)'
     }
   }
 ];

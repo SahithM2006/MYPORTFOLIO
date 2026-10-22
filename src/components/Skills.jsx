@@ -15,43 +15,43 @@ const PROJECT_MAP = {
 
 const GROUP_THEME_MAP = {
   programming: {
-    color: '#5C87A6',
-    border: 'rgba(92, 135, 166, 0.45)',
-    glow: 'rgba(92, 135, 166, 0.4)',
-    tagBg: 'rgba(92, 135, 166, 0.16)',
-    text: '#8FAEC2',
+    color: '#C6A45A',
+    border: '#343B49',
+    glow: 'rgba(198, 164, 90, 0.45)',
+    tagBg: 'rgba(198, 164, 90, 0.16)',
+    text: '#E9E2D4',
     name: 'Programming'
   },
   'ai-ml': {
-    color: '#10B981',
-    border: 'rgba(16, 185, 129, 0.45)',
-    glow: 'rgba(16, 185, 129, 0.4)',
-    tagBg: 'rgba(16, 185, 129, 0.16)',
-    text: '#34D399',
+    color: '#7596C8',
+    border: '#343B49',
+    glow: 'rgba(117, 150, 200, 0.45)',
+    tagBg: 'rgba(117, 150, 200, 0.16)',
+    text: '#E9E2D4',
     name: 'AI & Machine Learning'
   },
   'data-science': {
-    color: '#14B8A6',
-    border: 'rgba(20, 184, 166, 0.45)',
-    glow: 'rgba(20, 184, 166, 0.4)',
-    tagBg: 'rgba(20, 184, 166, 0.16)',
-    text: '#2DD4BF',
+    color: '#C6A45A',
+    border: '#343B49',
+    glow: 'rgba(198, 164, 90, 0.45)',
+    tagBg: 'rgba(198, 164, 90, 0.16)',
+    text: '#E9E2D4',
     name: 'Data Science'
   },
   development: {
-    color: '#38BDF8',
-    border: 'rgba(56, 189, 248, 0.45)',
-    glow: 'rgba(56, 189, 248, 0.4)',
-    tagBg: 'rgba(56, 189, 248, 0.16)',
-    text: '#7DD3FC',
+    color: '#7596C8',
+    border: '#343B49',
+    glow: 'rgba(117, 150, 200, 0.45)',
+    tagBg: 'rgba(117, 150, 200, 0.16)',
+    text: '#E9E2D4',
     name: 'Development'
   },
   tools: {
-    color: '#E5A93C',
-    border: 'rgba(229, 169, 60, 0.45)',
-    glow: 'rgba(229, 169, 60, 0.4)',
-    tagBg: 'rgba(229, 169, 60, 0.16)',
-    text: '#FBBF24',
+    color: '#C6A45A',
+    border: '#343B49',
+    glow: 'rgba(198, 164, 90, 0.45)',
+    tagBg: 'rgba(198, 164, 90, 0.16)',
+    text: '#E9E2D4',
     name: 'Tools'
   }
 };
@@ -340,24 +340,24 @@ export default function Skills({
             <defs>
               {/* Radial Gradients for Node Cores */}
               <radialGradient id="nodeGrad-programming" cx="35%" cy="35%" r="65%">
-                <stop offset="0%" stopColor="#254256" />
-                <stop offset="100%" stopColor="#0B1720" />
+                <stop offset="0%" stopColor="#1E2B42" />
+                <stop offset="100%" stopColor="#080A0F" />
               </radialGradient>
               <radialGradient id="nodeGrad-ai-ml" cx="35%" cy="35%" r="65%">
-                <stop offset="0%" stopColor="#134E3C" />
-                <stop offset="100%" stopColor="#071913" />
+                <stop offset="0%" stopColor="#182337" />
+                <stop offset="100%" stopColor="#080A0F" />
               </radialGradient>
               <radialGradient id="nodeGrad-data-science" cx="35%" cy="35%" r="65%">
-                <stop offset="0%" stopColor="#115049" />
-                <stop offset="100%" stopColor="#061A17" />
+                <stop offset="0%" stopColor="#1E2B42" />
+                <stop offset="100%" stopColor="#080A0F" />
               </radialGradient>
               <radialGradient id="nodeGrad-development" cx="35%" cy="35%" r="65%">
-                <stop offset="0%" stopColor="#194860" />
-                <stop offset="100%" stopColor="#081822" />
+                <stop offset="0%" stopColor="#182337" />
+                <stop offset="100%" stopColor="#080A0F" />
               </radialGradient>
               <radialGradient id="nodeGrad-tools" cx="35%" cy="35%" r="65%">
-                <stop offset="0%" stopColor="#573D17" />
-                <stop offset="100%" stopColor="#1E1408" />
+                <stop offset="0%" stopColor="#1E2B42" />
+                <stop offset="100%" stopColor="#080A0F" />
               </radialGradient>
 
               {/* Luminous Glow Filter */}
@@ -397,7 +397,7 @@ export default function Skills({
 
                 const theme = GROUP_THEME_MAP[edge.source.category] || GROUP_THEME_MAP.programming;
 
-                let strokeColor = 'rgba(74, 153, 179, 0.42)';
+                let strokeColor = 'rgba(52, 59, 73, 0.65)';
                 let strokeWidth = 1.6;
 
                 if (isEdgeActive) {
@@ -504,19 +504,21 @@ export default function Skills({
                       dominantBaseline="central"
                       className={`node-symbol-text ${isAnchor ? 'symbol-anchor' : ''}`}
                       style={{
-                        fontSize: skill.symbol.length >= 4 ? '10px' : (skill.symbol.length === 3 ? '12px' : (isAnchor ? '16px' : '13.5px'))
+                        fontSize: skill.symbol.length >= 4 ? '10px' : (skill.symbol.length === 3 ? '12px' : (isAnchor ? '16px' : '13.5px')),
+                        pointerEvents: 'none'
                       }}
-                      fill={isActive ? '#FFFFFF' : (isNeighbor ? theme.text : '#E2E8F0')}
+                      fill={isActive ? '#C6A45A' : (isNeighbor ? theme.text : '#E9E2D4')}
                     >
                       {skill.symbol}
                     </text>
 
                     {/* High-Contrast Skill Title Label */}
                     <text
-                      y={baseRadius + 17}
+                      y={baseRadius + 16}
                       textAnchor="middle"
                       className={`node-title-label ${isActive ? 'label-active' : ''}`}
-                      fill={isActive ? '#FFFFFF' : '#E2E8F0'}
+                      style={{ pointerEvents: 'none' }}
+                      fill={isActive ? '#C6A45A' : '#A9B1BF'}
                     >
                       {skill.title}
                     </text>
@@ -524,10 +526,10 @@ export default function Skills({
                     {/* Project Link Beacon Vector Badge */}
                     {isHighlightedByProject && (
                       <g className="node-project-beacon" transform={`translate(${Math.round(baseRadius * 0.72)}, ${-Math.round(baseRadius * 0.72)})`}>
-                        <circle r="6.5" fill="#E5A93C" stroke="#091322" strokeWidth="1.5" />
+                        <circle r="6.5" fill="#C6A45A" stroke="#080A0F" strokeWidth="1.5" />
                         <path
                           d="M -0.5 -3.2 L 1.8 -0.5 L 0.2 -0.5 L 1.2 3.2 L -1.8 -0.2 L -0.2 -0.2 Z"
-                          fill="#091322"
+                          fill="#080A0F"
                         />
                       </g>
                     )}
@@ -552,7 +554,7 @@ export default function Skills({
                   className={`mobile-skill-chip ${isSelected ? 'active' : ''}`}
                   style={{
                     borderColor: isSelected ? theme.color : undefined,
-                    color: isSelected ? '#FFFFFF' : undefined
+                    color: isSelected ? '#F4EBDD' : undefined
                   }}
                   onClick={() => handleSelectSkill(skill.id)}
                 >

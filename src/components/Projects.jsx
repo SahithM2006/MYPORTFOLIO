@@ -218,55 +218,47 @@ const AEGIS_DATA = {
 [*] NetworkX Directed Graph: G = nx.DiGraph()
 [+] Node 1: Attacker (External Vector 198.51.100.24)
 [+] Node 2: Nginx Web Ingress (10.0.1.5)
-    ├── [CVE-2023-38606] CVSS 9.8 (Critical) | Port 443 RCE
-[+] Node 3: FastAPI App Cluster (10.0.2.14)
-    ├── [CVE-2024-21413] CVSS 8.8 (High) | NTLM Credential Relay
-[+] Node 4: Domain Controller DC-01 (10.0.3.2)
-    └── [CROWN JEWEL] Kerberos Domain Admin (Port 389/88)
-[!] Topology graph initialized. Attack surface ready for simulation.`
+    └── Vulnerability: CVE-2023-38606 (CVSS 9.8 Critical RCE)
+[+] Node 3: FastAPI Application Cluster (10.0.2.14)
+    └── Vulnerability: CVE-2024-21413 (CVSS 8.8 High NTLM Relay)
+[+] Node 4: Domain Controller DC-01 (10.0.3.2) [CROWN JEWEL]
+[!] Graph loaded: 4 assets, 3 vulnerable lateral pathways identified.`
   },
   attack: {
-    title: 'Adversarial Lateral Path Traversal',
-    status: 'Attack Path Simulated',
-    riskScore: '9.8',
+    title: 'Adversarial Lateral Traversal Simulation',
+    status: 'Attack Vector Propagating',
+    riskScore: '9.4',
     riskClass: 'val-crit',
-    hopCount: '3 Hops (Direct)',
-    blastRadius: 'Crown Jewels Targeted',
-    defenseStatus: 'Lateral Path Active',
-    edgeState: 'attacking',
-    code: `// [STAGE 2: ADVERSARIAL PATH SIMULATION (MITRE ATT&CK)]
-[*] Traversal Algorithm: Dijkstra Shortest Vulnerability Path
-[>] HOP 1: Attacker ──> Nginx Web Ingress
-    ├── Technique: T1190 (Exploit Public-Facing Application)
-    └── Vector: Reverse shell established via CVE-2023-38606
-[>] HOP 2: Nginx Web ──> App Cluster
-    ├── Technique: T1550.002 (Pass-the-Hash / Alternate Auth)
-    └── Vector: Pivoting over internal SSH tunnel to Port 8000
-[>] HOP 3: App Cluster ──> Domain Controller DC-01
-    ├── Technique: T1003 (OS Credential Dumping)
-    └── Vector: Golden Ticket forged via Kerberos compromise
-[!] CRITICAL: Full compromise path verified from External to DC-01.`
+    hopCount: '3 Hops to DC',
+    blastRadius: 'Entire Domain at Risk',
+    defenseStatus: 'No Guardrails Active',
+    edgeState: 'attack',
+    code: `// [STAGE 2: ADVERSARIAL TRAVERSAL (MITRE ATT&CK Mapping)]
+[*] Initial Access: Exploit Public-Facing App (T1190) via CVE-2023-38606
+    └── Compromised: Nginx Reverse Proxy (10.0.1.5) -> Reverse shell spawned
+[*] Lateral Movement: Pass-the-Hash / NTLM Relay (T1550.002)
+    └── Compromised: FastAPI App Cluster (10.0.2.14) -> Service tokens harvested
+[*] Privilege Escalation: OS Credential Dumping (T1003) -> Kerberos Golden Ticket
+[!] Target Reached: Domain Controller DC-01 (10.0.3.2) breached in 3 hops!`
   },
   risk: {
-    title: 'Multi-Hop Blast Radius & Impact Quantifier',
-    status: 'Blast Radius Evaluated',
+    title: 'Crown Jewel Blast Radius & CVSS Weighting',
+    status: 'Critical Crown Jewel Exposure',
     riskScore: '9.8',
     riskClass: 'val-crit',
-    hopCount: '3 Hops',
-    blastRadius: '100% Crown Jewels Exposed',
-    defenseStatus: 'Immediate Cut Required',
-    edgeState: 'attacking',
-    code: `// [STAGE 3: RISK IMPACT & BLAST RADIUS METRICS]
-[*] NetworkX Graph Centrality & Exposure Analysis:
-    ├── Composite CVSS Risk Index : 9.8 / 10.0 [EXTREME RISK]
-    ├── Critical Lateral Hop Depth: 3 Hops (Zero Segmentation)
-    ├── Mean Time-to-Compromise   : 3.8 minutes
-    ├── Domain Controller Reach   : EXPOSED (100% Likelihood)
-    └── Business Impact Rating    : Tier-1 Catastrophic Exposure
-[!] Optimization Directive: Synthesize minimum-cost defense policy.`
+    hopCount: '3 Hops Traversed',
+    blastRadius: 'Active Directory Core Compromised',
+    defenseStatus: 'Defensive Action Required',
+    edgeState: 'attack',
+    code: `// [STAGE 3: BLAST RADIUS ANALYSIS & CVSS IMPACT COMPUTATION]
+[*] Cumulative Path Risk Index: 9.8 / 10.0 (CRITICAL)
+    ├── Exploitability Sub-score: 3.9 (Network / Low Complexity)
+    ├── Impact Sub-score        : 5.9 (Total Confidentiality & Integrity Loss)
+    └── Crown Jewel Exposure   : DC-01 (Active Directory KDC) COMPROMISED
+[!] ALERT: Lateral pivot bridge DMZ -> App Cluster allows total domain compromise.`
   },
   fix: {
-    title: 'Optimal Defense Policy Synthesis',
+    title: 'Optimal Minimum-Cut Policy Synthesis',
     status: 'Mitigation Policy Enforced',
     riskScore: '3.2',
     riskClass: 'val-safe',
@@ -306,19 +298,40 @@ const AEGIS_DATA = {
 };
 
 /* ==========================================================================
-   ISOLATED EXHIBIT COMPONENTS (Dedicated state, zero cross-project leakage)
+   ISOLATED EXHIBIT COMPONENTS WITH SCROLL PROGRESS RESPONSIVENESS
    ========================================================================== */
 
-function ProbeExhibit() {
+function ProbeExhibit({ scrollProgress = 0 }) {
   const [probeView, setProbeView] = useState('discovery');
   const [copiedSnippetId, setCopiedSnippetId] = useState(null);
   const copyTimeoutRef = useRef(null);
+  const userInteractedRef = useRef(false);
+  const userTimeoutRef = useRef(null);
+
+  // Sync active view with scrollProgress unless user manually picked a tab recently
+  useEffect(() => {
+    if (userInteractedRef.current) return;
+    if (scrollProgress < 0.25) setProbeView('discovery');
+    else if (scrollProgress < 0.50) setProbeView('packages');
+    else if (scrollProgress < 0.75) setProbeView('cve');
+    else setProbeView('honeypot');
+  }, [scrollProgress]);
 
   useEffect(() => {
     return () => {
       if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      if (userTimeoutRef.current) clearTimeout(userTimeoutRef.current);
     };
   }, []);
+
+  const handleTabClick = (tabId) => {
+    userInteractedRef.current = true;
+    setProbeView(tabId);
+    if (userTimeoutRef.current) clearTimeout(userTimeoutRef.current);
+    userTimeoutRef.current = setTimeout(() => {
+      userInteractedRef.current = false;
+    }, 4000);
+  };
 
   const copyTextToClipboard = (text) => {
     if (navigator.clipboard) {
@@ -330,10 +343,16 @@ function ProbeExhibit() {
     }
   };
 
+  // Compute rotation angle for scanning beam from scrollProgress (0 to 360 deg)
+  const scanAngle = (scrollProgress * 360).toFixed(1);
+
   return (
     <div className="project-interactive-exhibit exhibit-box-security">
       <div className="exhibit-header">
-        <span className="exhibit-label">WinRM Remote Audit Probe</span>
+        <div className="exhibit-header-left">
+          <span className="exhibit-label">WinRM Remote Audit Telemetry</span>
+          <span className="exhibit-subtext">Agentless Windows Discovery • Port 5986</span>
+        </div>
         <button
           type="button"
           className="btn-copy-snippet"
@@ -343,6 +362,114 @@ function ProbeExhibit() {
           {copiedSnippetId === 'probe' ? 'Copied ✓' : 'Copy Output'}
         </button>
       </div>
+
+      {/* Interactive Visual Topology & Scanning Radar Viewport */}
+      <div className="probe-visual-canvas" aria-label="Probe360 Agentless Architecture Map">
+        <svg viewBox="0 0 640 160" className="probe-radar-svg">
+          <defs>
+            <linearGradient id="probeGoldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#C6A45A" stopOpacity="0.8" />
+              <stop offset="100%" stopColor="#7596C8" stopOpacity="0.9" />
+            </linearGradient>
+            <radialGradient id="radarSweep" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="rgba(198, 164, 90, 0.25)" />
+              <stop offset="60%" stopColor="rgba(38, 59, 96, 0.15)" />
+              <stop offset="100%" stopColor="rgba(8, 10, 15, 0)" />
+            </radialGradient>
+            <filter id="goldGlowMini" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="2" result="blur" />
+              <feComposite in="SourceGraphic" in2="blur" operator="over" />
+            </filter>
+          </defs>
+
+          {/* Grid background */}
+          <rect width="640" height="160" rx="8" fill="#111722" stroke="#343B49" strokeWidth="1" />
+          <line x1="0" y1="80" x2="640" y2="80" stroke="rgba(52, 59, 73, 0.4)" strokeDasharray="3 3" />
+          <line x1="320" y1="0" x2="320" y2="160" stroke="rgba(52, 59, 73, 0.4)" strokeDasharray="3 3" />
+          <circle cx="320" cy="80" r="50" fill="none" stroke="rgba(117, 150, 200, 0.18)" strokeDasharray="4 4" />
+          <circle cx="320" cy="80" r="72" fill="url(#radarSweep)" />
+
+          {/* Scanning Needle driven by scroll */}
+          <line
+            x1="320"
+            y1="80"
+            x2={320 + 70 * Math.cos((scanAngle * Math.PI) / 180)}
+            y2={80 + 70 * Math.sin((scanAngle * Math.PI) / 180)}
+            stroke="#C6A45A"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            filter="url(#goldGlowMini)"
+          />
+
+          {/* Connector Streams */}
+          <path
+            d="M 320 80 L 140 45"
+            stroke={probeView === 'discovery' ? '#C6A45A' : '#343B49'}
+            strokeWidth={probeView === 'discovery' ? '2' : '1.2'}
+            strokeDasharray={probeView === 'discovery' ? '4 2' : 'none'}
+          />
+          <path
+            d="M 320 80 L 140 115"
+            stroke={probeView === 'packages' ? '#7596C8' : '#343B49'}
+            strokeWidth={probeView === 'packages' ? '2' : '1.2'}
+            strokeDasharray={probeView === 'packages' ? '4 2' : 'none'}
+          />
+          <path
+            d="M 320 80 L 500 45"
+            stroke={probeView === 'cve' ? '#C6A45A' : '#343B49'}
+            strokeWidth={probeView === 'cve' ? '2' : '1.2'}
+            strokeDasharray={probeView === 'cve' ? '4 2' : 'none'}
+          />
+          <path
+            d="M 320 80 L 500 115"
+            stroke={probeView === 'honeypot' ? '#7596C8' : '#343B49'}
+            strokeWidth={probeView === 'honeypot' ? '2' : '1.2'}
+            strokeDasharray={probeView === 'honeypot' ? '4 2' : 'none'}
+          />
+
+          {/* Central Target Node: Server */}
+          <g transform="translate(320, 80)">
+            <circle r="20" fill="#151B27" stroke="#C6A45A" strokeWidth="2" filter="url(#goldGlowMini)" />
+            <text textAnchor="middle" dy="4" fontSize="11" fill="#E9E2D4">🖥️</text>
+            <text x="0" y="28" textAnchor="middle" fontSize="8" fontFamily="var(--font-mono)" fill="#A9B1BF" fontWeight="600">
+              WIN-SRV-2022
+            </text>
+          </g>
+
+          {/* Pod 1: Discovery */}
+          <g transform="translate(140, 45)" className="probe-node-item" onClick={() => handleTabClick('discovery')} cursor="pointer">
+            <rect x="-60" y="-14" width="120" height="28" rx="6" fill={probeView === 'discovery' ? 'rgba(198, 164, 90, 0.2)' : '#151B27'} stroke={probeView === 'discovery' ? '#C6A45A' : '#343B49'} strokeWidth="1.4" />
+            <text x="0" y="4" textAnchor="middle" fontSize="8" fontFamily="var(--font-mono)" fill={probeView === 'discovery' ? '#C6A45A' : '#A9B1BF'} fontWeight="700">
+              01. TLS 5986 WinRM
+            </text>
+          </g>
+
+          {/* Pod 2: Packages */}
+          <g transform="translate(140, 115)" className="probe-node-item" onClick={() => handleTabClick('packages')} cursor="pointer">
+            <rect x="-60" y="-14" width="120" height="28" rx="6" fill={probeView === 'packages' ? 'rgba(117, 150, 200, 0.2)' : '#151B27'} stroke={probeView === 'packages' ? '#7596C8' : '#343B49'} strokeWidth="1.4" />
+            <text x="0" y="4" textAnchor="middle" fontSize="8" fontFamily="var(--font-mono)" fill={probeView === 'packages' ? '#7596C8' : '#A9B1BF'} fontWeight="700">
+              02. 142 Packages WMI
+            </text>
+          </g>
+
+          {/* Pod 3: CVE Correlation */}
+          <g transform="translate(500, 45)" className="probe-node-item" onClick={() => handleTabClick('cve')} cursor="pointer">
+            <rect x="-60" y="-14" width="120" height="28" rx="6" fill={probeView === 'cve' ? 'rgba(198, 164, 90, 0.2)' : '#151B27'} stroke={probeView === 'cve' ? '#C6A45A' : '#343B49'} strokeWidth="1.4" />
+            <text x="0" y="4" textAnchor="middle" fontSize="8" fontFamily="var(--font-mono)" fill={probeView === 'cve' ? '#C6A45A' : '#A9B1BF'} fontWeight="700">
+              03. CVE 98.4% Baseline
+            </text>
+          </g>
+
+          {/* Pod 4: Decoy Subnet */}
+          <g transform="translate(500, 115)" className="probe-node-item" onClick={() => handleTabClick('honeypot')} cursor="pointer">
+            <rect x="-60" y="-14" width="120" height="28" rx="6" fill={probeView === 'honeypot' ? 'rgba(117, 150, 200, 0.2)' : '#151B27'} stroke={probeView === 'honeypot' ? '#7596C8' : '#343B49'} strokeWidth="1.4" />
+            <text x="0" y="4" textAnchor="middle" fontSize="8" fontFamily="var(--font-mono)" fill={probeView === 'honeypot' ? '#7596C8' : '#A9B1BF'} fontWeight="700">
+              04. Planned Honeypots
+            </text>
+          </g>
+        </svg>
+      </div>
+
       <div className="probe-tabs-row" role="tablist">
         {[
           { id: 'discovery', label: '01. Host Discovery' },
@@ -356,7 +483,7 @@ function ProbeExhibit() {
             role="tab"
             aria-selected={probeView === t.id}
             type="button"
-            onClick={() => setProbeView(t.id)}
+            onClick={() => handleTabClick(t.id)}
           >
             {t.label}
           </button>
@@ -367,16 +494,37 @@ function ProbeExhibit() {
   );
 }
 
-function MuleExhibit() {
+function MuleExhibit({ scrollProgress = 0 }) {
   const [muleStage, setMuleStage] = useState('simulation');
   const [copiedSnippetId, setCopiedSnippetId] = useState(null);
   const copyTimeoutRef = useRef(null);
+  const userInteractedRef = useRef(false);
+  const userTimeoutRef = useRef(null);
+
+  // Sync stage with scrollProgress
+  useEffect(() => {
+    if (userInteractedRef.current) return;
+    if (scrollProgress < 0.25) setMuleStage('simulation');
+    else if (scrollProgress < 0.50) setMuleStage('lineage');
+    else if (scrollProgress < 0.75) setMuleStage('graph');
+    else setMuleStage('findings');
+  }, [scrollProgress]);
 
   useEffect(() => {
     return () => {
       if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      if (userTimeoutRef.current) clearTimeout(userTimeoutRef.current);
     };
   }, []);
+
+  const handleStageClick = (stageId) => {
+    userInteractedRef.current = true;
+    setMuleStage(stageId);
+    if (userTimeoutRef.current) clearTimeout(userTimeoutRef.current);
+    userTimeoutRef.current = setTimeout(() => {
+      userInteractedRef.current = false;
+    }, 4000);
+  };
 
   const currentStageObj = MULE_STAGES[muleStage] || MULE_STAGES.simulation;
 
@@ -390,10 +538,17 @@ function MuleExhibit() {
     }
   };
 
+  const isLayeringActive = muleStage !== 'simulation';
+  const isGraphActive = muleStage === 'graph' || muleStage === 'findings';
+  const isFindingsActive = muleStage === 'findings';
+
   return (
     <div className="project-interactive-exhibit exhibit-box-mule exhibit-box-csi">
       <div className="exhibit-header">
-        <span className="exhibit-label">Synthetic e₹ Lineage &amp; Mule Tracing</span>
+        <div className="exhibit-header-left">
+          <span className="exhibit-label">Synthetic e₹ Lineage &amp; Mule Tracing</span>
+          <span className="exhibit-subtext">NetworkX Multigraph • Temporal Flow Analytics</span>
+        </div>
         <button
           type="button"
           className="btn-copy-snippet"
@@ -403,6 +558,105 @@ function MuleExhibit() {
           {copiedSnippetId === 'mule' ? 'Copied ✓' : 'Copy Output'}
         </button>
       </div>
+
+      {/* SVG Directed Multigraph Visualization */}
+      <div className="mule-dag-viewport" aria-label="Mule Matrix Transaction DAG Network">
+        <svg viewBox="0 0 680 170" className="mule-dag-svg">
+          <defs>
+            <linearGradient id="flowGoldBlue" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#C6A45A" />
+              <stop offset="100%" stopColor="#7596C8" />
+            </linearGradient>
+            <marker id="dagArrowGold" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#C6A45A" />
+            </marker>
+            <marker id="dagArrowSteel" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#7596C8" />
+            </marker>
+          </defs>
+
+          <rect width="680" height="170" rx="8" fill="#111722" stroke="#343B49" strokeWidth="1" />
+
+          {/* Tier Labels */}
+          <text x="70" y="20" textAnchor="middle" fontSize="8" fontFamily="var(--font-mono)" fill="#A9B1BF" letterSpacing="0.08em">00. ORIGIN</text>
+          <text x="240" y="20" textAnchor="middle" fontSize="8" fontFamily="var(--font-mono)" fill="#A9B1BF" letterSpacing="0.08em">01. FAN-OUT (4 SPLITS)</text>
+          <text x="430" y="20" textAnchor="middle" fontSize="8" fontFamily="var(--font-mono)" fill="#A9B1BF" letterSpacing="0.08em">02. LAYERING HOPS</text>
+          <text x="600" y="20" textAnchor="middle" fontSize="8" fontFamily="var(--font-mono)" fill="#A9B1BF" letterSpacing="0.08em">03. CASH-OUT POOL</text>
+
+          {/* Connecting Paths */}
+          {/* Origin -> Mules */}
+          <path d="M 105 85 L 195 45" stroke="#C6A45A" strokeWidth="1.5" strokeDasharray={isLayeringActive ? 'none' : '4 3'} markerEnd="url(#dagArrowGold)" />
+          <path d="M 105 85 L 195 72" stroke="#C6A45A" strokeWidth="1.5" strokeDasharray={isLayeringActive ? 'none' : '4 3'} markerEnd="url(#dagArrowGold)" />
+          <path d="M 105 85 L 195 102" stroke="#C6A45A" strokeWidth="1.5" strokeDasharray={isLayeringActive ? 'none' : '4 3'} markerEnd="url(#dagArrowGold)" />
+          <path d="M 105 85 L 195 130" stroke="#C6A45A" strokeWidth="1.5" strokeDasharray={isLayeringActive ? 'none' : '4 3'} markerEnd="url(#dagArrowGold)" />
+
+          {/* Mules -> Layering Micro-hops */}
+          <path d="M 285 45 L 385 65" stroke={isLayeringActive ? '#7596C8' : '#343B49'} strokeWidth="1.4" strokeDasharray="3 3" markerEnd="url(#dagArrowSteel)" />
+          <path d="M 285 72 L 385 75" stroke={isLayeringActive ? '#7596C8' : '#343B49'} strokeWidth="1.4" strokeDasharray="3 3" markerEnd="url(#dagArrowSteel)" />
+          <path d="M 285 102 L 385 105" stroke={isLayeringActive ? '#7596C8' : '#343B49'} strokeWidth="1.4" strokeDasharray="3 3" markerEnd="url(#dagArrowSteel)" />
+          <path d="M 285 130 L 385 115" stroke={isLayeringActive ? '#7596C8' : '#343B49'} strokeWidth="1.4" strokeDasharray="3 3" markerEnd="url(#dagArrowSteel)" />
+
+          {/* Layering -> Convergence Pool */}
+          <path d="M 475 75 L 555 70" stroke={isGraphActive ? '#C6A45A' : '#343B49'} strokeWidth={isGraphActive ? '2.2' : '1.2'} strokeDasharray={isGraphActive ? 'none' : '4 3'} markerEnd="url(#dagArrowGold)" />
+          <path d="M 475 105 L 555 125" stroke={isGraphActive ? '#7596C8' : '#343B49'} strokeWidth={isGraphActive ? '2' : '1.2'} strokeDasharray={isGraphActive ? 'none' : '4 3'} markerEnd="url(#dagArrowSteel)" />
+
+          {/* Node 0: Origin */}
+          <g transform="translate(70, 85)">
+            <circle r="22" fill="#151B27" stroke="#C6A45A" strokeWidth="2" />
+            <text textAnchor="middle" dy="4" fontSize="11" fill="#E9E2D4">🏦</text>
+            <text x="0" y="27" textAnchor="middle" fontSize="7.5" fontFamily="var(--font-mono)" fill="#C6A45A" fontWeight="700">ACC_EXT_9921</text>
+            <text x="0" y="37" textAnchor="middle" fontSize="6.5" fontFamily="var(--font-mono)" fill="#A9B1BF">e₹ 4,80,000</text>
+          </g>
+
+          {/* Nodes: Mules 101..104 */}
+          {[
+            { id: '101', y: 45, lag: '+04m' },
+            { id: '102', y: 72, lag: '+06m' },
+            { id: '103', y: 102, lag: '+09m' },
+            { id: '104', y: 130, lag: '+13m' }
+          ].map((m) => (
+            <g key={m.id} transform={`translate(240, ${m.y})`}>
+              <rect x="-44" y="-12" width="88" height="24" rx="4" fill="#151B27" stroke={isLayeringActive ? '#7596C8' : '#343B49'} strokeWidth="1.3" />
+              <text x="-8" y="3" textAnchor="middle" fontSize="7" fontFamily="var(--font-mono)" fill="#E9E2D4" fontWeight="600">
+                MULE_{m.id}
+              </text>
+              <text x="28" y="3" textAnchor="middle" fontSize="6.5" fontFamily="var(--font-mono)" fill={isLayeringActive ? '#C6A45A' : '#A9B1BF'}>
+                {m.lag}
+              </text>
+            </g>
+          ))}
+
+          {/* Layering Node Hubs */}
+          <g transform="translate(430, 90)">
+            <rect x="-42" y="-22" width="84" height="44" rx="6" fill="#151B27" stroke={isLayeringActive ? '#7596C8' : '#343B49'} strokeWidth="1.2" strokeDasharray="3 2" />
+            <text x="0" y="-8" textAnchor="middle" fontSize="7.5" fontFamily="var(--font-mono)" fill="#7596C8" fontWeight="700">8 MICRO-PATHS</text>
+            <text x="0" y="5" textAnchor="middle" fontSize="6.5" fontFamily="var(--font-mono)" fill="#A9B1BF">Dwell: &lt; 3 min</text>
+            <text x="0" y="16" textAnchor="middle" fontSize="6.5" fontFamily="var(--font-mono)" fill="#C6A45A">Hop Lat: 6.2m</text>
+          </g>
+
+          {/* Cash-Out Endpoints */}
+          <g transform="translate(600, 70)">
+            <rect x="-45" y="-14" width="90" height="28" rx="6" fill={isFindingsActive ? 'rgba(198, 164, 90, 0.22)' : '#151B27'} stroke={isFindingsActive ? '#C6A45A' : '#343B49'} strokeWidth={isFindingsActive ? '2' : '1.2'} />
+            <text x="0" y="-2" textAnchor="middle" fontSize="7.5" fontFamily="var(--font-mono)" fill={isFindingsActive ? '#C6A45A' : '#E9E2D4'} fontWeight="700">
+              ACC_POOL_808
+            </text>
+            <text x="0" y="9" textAnchor="middle" fontSize="6.5" fontFamily="var(--font-mono)" fill={isFindingsActive ? '#C6A45A' : '#A9B1BF'}>
+              e₹ 3,60,000 [FLAGGED]
+            </text>
+          </g>
+
+          <g transform="translate(600, 125)">
+            <rect x="-45" y="-12" width="90" height="24" rx="5" fill="#151B27" stroke={isFindingsActive ? '#7596C8' : '#343B49'} strokeWidth="1.2" />
+            <text x="0" y="0" textAnchor="middle" fontSize="7" fontFamily="var(--font-mono)" fill="#A9B1BF" fontWeight="600">
+              POS_MERCHANT_44
+            </text>
+            <text x="0" y="9" textAnchor="middle" fontSize="6" fontFamily="var(--font-mono)" fill="#A9B1BF">
+              e₹ 1,20,000 [POS Voucher]
+            </text>
+          </g>
+        </svg>
+      </div>
+
       <div className="csi-steps-row mule-steps-row" role="tablist">
         {Object.values(MULE_STAGES).map((s) => (
           <button
@@ -411,12 +665,13 @@ function MuleExhibit() {
             role="tab"
             aria-selected={muleStage === s.id}
             type="button"
-            onClick={() => setMuleStage(s.id)}
+            onClick={() => handleStageClick(s.id)}
           >
             {s.label}
           </button>
         ))}
       </div>
+
       <div className="csi-metrics-bar mule-metrics-bar">
         {currentStageObj.metrics.map((m, idx) => (
           <div key={idx} className="csi-metric-pill mule-metric-pill">
@@ -425,31 +680,18 @@ function MuleExhibit() {
           </div>
         ))}
       </div>
-      <div
-        className="mule-sandbox-notice"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '6px',
-          padding: '6px 12px',
-          background: 'rgba(45, 212, 167, 0.08)',
-          border: '1px solid rgba(45, 212, 167, 0.2)',
-          borderRadius: '6px',
-          marginBottom: '10px',
-          fontSize: '0.68rem',
-          color: '#99f6e4',
-          fontFamily: 'var(--font-mono)'
-        }}
-      >
-        <span>•</span>
+
+      <div className="mule-sandbox-notice">
+        <span className="notice-bullet">•</span>
         <span>{currentStageObj.disclaimer}</span>
       </div>
+
       <pre className="telemetry-console csi-console mule-console">{currentStageObj.code}</pre>
     </div>
   );
 }
 
-function CarbonExhibit() {
+function CarbonExhibit({ scrollProgress = 0 }) {
   const PRESETS = {
     baseline: { label: 'Baseline Ops', distance: 1200, renewable: 30, volume: 2500 },
     green: { label: 'Green Transition', distance: 800, renewable: 75, volume: 2500 },
@@ -488,6 +730,9 @@ function CarbonExhibit() {
   const logisticsExposure = Math.round((distance / 4000) * 100);
   const prodElasticity = Math.round((volume / 5000) * 100);
 
+  // Progressive reveal factor based on scrollProgress
+  const revealFactor = Math.min(Math.max((scrollProgress - 0.1) / 0.8, 0.3), 1);
+
   const copyTextToClipboard = (text) => {
     if (navigator.clipboard) {
       navigator.clipboard.writeText(text).then(() => {
@@ -501,7 +746,10 @@ function CarbonExhibit() {
   return (
     <div className="project-interactive-exhibit exhibit-box-carbon">
       <div className="exhibit-header">
-        <span className="exhibit-label">GHG Emissions Scenario Forecaster</span>
+        <div className="exhibit-header-left">
+          <span className="exhibit-label">GHG Emissions Scenario Forecaster</span>
+          <span className="exhibit-subtext">Scope 1, 2, 3 Analytics • Scikit-learn Pipeline</span>
+        </div>
         <button
           type="button"
           className="btn-copy-snippet"
@@ -514,6 +762,38 @@ function CarbonExhibit() {
         >
           {copiedSnippetId === 'carbon' ? 'Copied ✓' : 'Copy Metrics'}
         </button>
+      </div>
+
+      {/* Supply Chain SVG Logistics Map */}
+      <div className="carbon-supply-map" aria-label="Supply Chain Emissions Topology">
+        <svg viewBox="0 0 620 90" className="carbon-map-svg">
+          <rect width="620" height="90" rx="8" fill="#111722" stroke="#343B49" strokeWidth="1" />
+
+          {/* Pipeline Traces */}
+          <line x1="140" y1="45" x2="250" y2="45" stroke="#7596C8" strokeWidth="2" strokeDasharray="4 3" />
+          <line x1="370" y1="45" x2="480" y2="45" stroke="#C6A45A" strokeWidth="2" strokeDasharray="4 3" />
+
+          {/* Node 1: Factory Scope 1 */}
+          <g transform="translate(85, 45)">
+            <circle r="22" fill="#151B27" stroke="#7596C8" strokeWidth="1.8" />
+            <text textAnchor="middle" dy="4" fontSize="12">🏭</text>
+            <text x="0" y="32" textAnchor="middle" fontSize="7.5" fontFamily="var(--font-mono)" fill="#7596C8" fontWeight="700">Scope 1 (Fuels)</text>
+          </g>
+
+          {/* Node 2: Energy Grid Scope 2 */}
+          <g transform="translate(310, 45)">
+            <circle r="22" fill="#151B27" stroke="#C6A45A" strokeWidth="1.8" />
+            <text textAnchor="middle" dy="4" fontSize="12">⚡</text>
+            <text x="0" y="32" textAnchor="middle" fontSize="7.5" fontFamily="var(--font-mono)" fill="#C6A45A" fontWeight="700">Scope 2 (Power)</text>
+          </g>
+
+          {/* Node 3: Fleet Logistics Scope 3 */}
+          <g transform="translate(535, 45)">
+            <circle r="22" fill="#151B27" stroke="#7596C8" strokeWidth="1.8" />
+            <text textAnchor="middle" dy="4" fontSize="12">🚢</text>
+            <text x="0" y="32" textAnchor="middle" fontSize="7.5" fontFamily="var(--font-mono)" fill="#7596C8" fontWeight="700">Scope 3 (Freight)</text>
+          </g>
+        </svg>
       </div>
 
       {/* Scenario Presets */}
@@ -530,10 +810,9 @@ function CarbonExhibit() {
         ))}
       </div>
 
-      {/* Sandbox disclaimer */}
       <div className="carbon-sandbox-notice">
-        <span>•</span>
-        <span>Research Scenario Sandbox · GHG Protocol Scope 1/2/3 Framework · Illustrative Model Outputs</span>
+        <span className="notice-bullet">•</span>
+        <span>Research Scenario Sandbox • GHG Protocol Scope 1/2/3 Framework • Model Estimates</span>
       </div>
 
       {/* Sliders */}
@@ -585,27 +864,27 @@ function CarbonExhibit() {
         </div>
       </div>
 
-      {/* GHG Protocol Scope Breakdown */}
+      {/* GHG Protocol Scope Breakdown with Scroll-responsive fill */}
       <div className="carbon-output-bars">
         <div className="output-stat-row">
           <span>Scope 1 — Direct Fuels:</span>
           <strong>{scope1} MT</strong>
           <div className="stat-bar-track">
-            <div className="stat-bar-fill bar-s1" style={{ width: `${Math.min(100, (scope1 / 300) * 100)}%` }}></div>
+            <div className="stat-bar-fill bar-s1" style={{ width: `${Math.min(100, (scope1 / 300) * 100 * revealFactor)}%` }}></div>
           </div>
         </div>
         <div className="output-stat-row">
           <span>Scope 2 — Purchased Power:</span>
           <strong>{scope2} MT</strong>
           <div className="stat-bar-track">
-            <div className="stat-bar-fill bar-s2" style={{ width: `${Math.min(100, (scope2 / 200) * 100)}%` }}></div>
+            <div className="stat-bar-fill bar-s2" style={{ width: `${Math.min(100, (scope2 / 200) * 100 * revealFactor)}%` }}></div>
           </div>
         </div>
         <div className="output-stat-row">
-          <span>Scope 3 — Logistics & Supply:</span>
+          <span>Scope 3 — Logistics &amp; Supply:</span>
           <strong>{scope3} MT</strong>
           <div className="stat-bar-track">
-            <div className="stat-bar-fill bar-s3" style={{ width: `${Math.min(100, (scope3 / 300) * 100)}%` }}></div>
+            <div className="stat-bar-fill bar-s3" style={{ width: `${Math.min(100, (scope3 / 300) * 100 * revealFactor)}%` }}></div>
           </div>
         </div>
         <div className="total-emission-badge">
@@ -625,7 +904,7 @@ function CarbonExhibit() {
             </span>
           </div>
           <div className="sens-bar-track">
-            <div className="sens-bar-fill sens-green" style={{ width: `${renewableAbatement}%` }} />
+            <div className="sens-bar-fill sens-gold" style={{ width: `${renewableAbatement}%` }} />
           </div>
           <span className="sens-desc">PPA clean power procurement impact on Scope 2 exposure</span>
         </div>
@@ -637,7 +916,7 @@ function CarbonExhibit() {
             </span>
           </div>
           <div className="sens-bar-track">
-            <div className="sens-bar-fill sens-amber" style={{ width: `${logisticsExposure}%` }} />
+            <div className="sens-bar-fill sens-steel" style={{ width: `${logisticsExposure}%` }} />
           </div>
           <span className="sens-desc">Scope 3 sensitivity to freight distance vs budget ceiling</span>
         </div>
@@ -649,37 +928,16 @@ function CarbonExhibit() {
             </span>
           </div>
           <div className="sens-bar-track">
-            <div className="sens-bar-fill sens-blue" style={{ width: `${prodElasticity}%` }} />
+            <div className="sens-bar-fill sens-steel" style={{ width: `${prodElasticity}%` }} />
           </div>
-          <span className="sens-desc">Scope 1 linear scaling vs unit volume throughput</span>
+          <span className="sens-desc">Output volume sensitivity against emissions baseline</span>
         </div>
-      </div>
-
-      {/* Mitigation Guidance Banner */}
-      <div className="carbon-mitigation-banner">
-        <span className="mitigation-icon">⚡</span>
-        <div className="mitigation-text">
-          <strong>Mitigation Lever:</strong>
-          {renewable < 50
-            ? ' Increase renewable mix via PPA contracts — highest Scope 2 ROI pathway.'
-            : distance > 2000
-            ? ' Nearshore supplier network — Scope 3 freight is dominant emission driver.'
-            : ' Profile is within low-risk threshold. Optimise volume scheduling to reduce Scope 1 variance.'}
-        </div>
-      </div>
-
-      {/* Tech Stack Badges */}
-      <div className="carbon-tech-badges">
-        {['Python 3.11', 'Scikit-learn', 'Pandas', 'NumPy', 'Matplotlib'].map((badge) => (
-          <span key={badge} className="carbon-tech-badge">{badge}</span>
-        ))}
       </div>
     </div>
   );
 }
 
-
-function AegisExhibit() {
+function AegisExhibit({ scrollProgress = 0 }) {
   const [aegisStep, setAegisStep] = useState('vuln');
   const [selectedNodeId, setSelectedNodeId] = useState(null);
   const [showLogs, setShowLogs] = useState(false);
@@ -688,16 +946,38 @@ function AegisExhibit() {
 
   const simTimeoutRef = useRef(null);
   const copyTimeoutRef = useRef(null);
+  const userInteractedRef = useRef(false);
+  const userTimeoutRef = useRef(null);
+
+  // Synchronize pipeline step with scrollProgress
+  useEffect(() => {
+    if (userInteractedRef.current || isSimulating) return;
+    if (scrollProgress < 0.20) setAegisStep('vuln');
+    else if (scrollProgress < 0.40) setAegisStep('attack');
+    else if (scrollProgress < 0.60) setAegisStep('risk');
+    else if (scrollProgress < 0.80) setAegisStep('fix');
+    else setAegisStep('resim');
+  }, [scrollProgress, isSimulating]);
 
   useEffect(() => {
     return () => {
       if (simTimeoutRef.current) clearTimeout(simTimeoutRef.current);
       if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      if (userTimeoutRef.current) clearTimeout(userTimeoutRef.current);
     };
   }, []);
 
+  const flagUserInteraction = () => {
+    userInteractedRef.current = true;
+    if (userTimeoutRef.current) clearTimeout(userTimeoutRef.current);
+    userTimeoutRef.current = setTimeout(() => {
+      userInteractedRef.current = false;
+    }, 4500);
+  };
+
   const handleRunAttack = () => {
     if (isSimulating) return;
+    flagUserInteraction();
     setIsSimulating(true);
     setAegisStep('attack');
     simTimeoutRef.current = setTimeout(() => {
@@ -708,6 +988,7 @@ function AegisExhibit() {
 
   const handleApplyFix = () => {
     if (isSimulating) return;
+    flagUserInteraction();
     setIsSimulating(true);
     setAegisStep('fix');
     simTimeoutRef.current = setTimeout(() => {
@@ -717,6 +998,7 @@ function AegisExhibit() {
   };
 
   const handleResetAegis = () => {
+    flagUserInteraction();
     if (simTimeoutRef.current) clearTimeout(simTimeoutRef.current);
     setAegisStep('vuln');
     setSelectedNodeId(null);
@@ -740,7 +1022,7 @@ function AegisExhibit() {
 
   return (
     <div className="project-interactive-exhibit exhibit-box-aegis">
-      {/* 1. Cyber Range Header & Operations Toolbar */}
+      {/* Cyber Range Header & Operations Toolbar */}
       <div className="aegis-dashboard-header">
         <div className="aegis-header-title-block">
           <div className="aegis-kicker-row">
@@ -810,7 +1092,7 @@ function AegisExhibit() {
         </div>
       </div>
 
-      {/* 2. Structured 5-Stage Stepper Ribbon */}
+      {/* 5-Stage Stepper Pipeline Ribbon */}
       <div className="aegis-pipeline-track" role="tablist" aria-label="AEGIS-TWIN 5-stage simulation pipeline">
         {AEGIS_STEPS.map((s, idx) => {
           const isActive = aegisStep === s.id;
@@ -824,6 +1106,7 @@ function AegisExhibit() {
               aria-selected={isActive}
               type="button"
               onClick={() => {
+                flagUserInteraction();
                 setAegisStep(s.id);
                 setIsSimulating(false);
               }}
@@ -835,7 +1118,7 @@ function AegisExhibit() {
         })}
       </div>
 
-      {/* 3. Primary Visual Centerpiece: Enterprise Network Simulation Viewport */}
+      {/* Network Simulation Viewport */}
       <div className="aegis-twin-viewport">
         <div className="aegis-viewport-hint">
           <span className="hint-glyph">•</span>
@@ -844,60 +1127,56 @@ function AegisExhibit() {
 
         <svg viewBox="0 0 760 220" className="aegis-graph-svg" aria-label="AEGIS-TWIN Cybersecurity Network Graph">
           <defs>
-            <filter id="cyanGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <filter id="goldGlow" x="-30%" y="-30%" width="160%" height="160%">
               <feGaussianBlur stdDeviation="3.5" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
-            <filter id="redGlow" x="-30%" y="-30%" width="160%" height="160%">
-              <feGaussianBlur stdDeviation="3" result="blur" />
-              <feComposite in="SourceGraphic" in2="blur" operator="over" />
-            </filter>
-            <filter id="emeraldGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <filter id="steelGlow" x="-30%" y="-30%" width="160%" height="160%">
               <feGaussianBlur stdDeviation="3" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
             <marker id="arrowRed" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#b37583" />
+              <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#C6A45A" />
             </marker>
             <marker id="arrowEmerald" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#8fa89b" />
+              <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#7596C8" />
             </marker>
             <marker id="arrowMuted" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#6c8ea4" />
+              <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#343B49" />
             </marker>
           </defs>
 
           {/* Tactical Cyber Grid Background */}
-          <rect width="760" height="220" className="aegis-grid-canvas" rx="10" />
-          <line x1="0" y1="52" x2="760" y2="52" className="aegis-grid-line" strokeDasharray="4,4" />
-          <line x1="0" y1="162" x2="760" y2="162" className="aegis-grid-line" strokeDasharray="4,4" />
+          <rect width="760" height="220" className="aegis-grid-canvas" rx="10" fill="#111722" stroke="#343B49" />
+          <line x1="0" y1="52" x2="760" y2="52" className="aegis-grid-line" stroke="#343B49" strokeDasharray="4,4" />
+          <line x1="0" y1="162" x2="760" y2="162" className="aegis-grid-line" stroke="#343B49" strokeDasharray="4,4" />
 
           {/* Subnet Zone 1: External Threat Surface */}
           <g className="aegis-zone-group zone-wan">
-            <rect x="14" y="16" width="135" height="183" rx="8" className="aegis-zone-box zone-wan-box" />
-            <text x="24" y="32" className="aegis-zone-title zone-wan-title">EXTERNAL WAN</text>
-            <text x="24" y="43" className="aegis-zone-sub">UNTRUSTED VECTOR</text>
+            <rect x="14" y="16" width="135" height="183" rx="8" fill="rgba(8, 10, 15, 0.6)" stroke="#343B49" strokeWidth="1" />
+            <text x="24" y="32" className="aegis-zone-title" fill="#C6A45A" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">EXTERNAL WAN</text>
+            <text x="24" y="43" className="aegis-zone-sub" fill="#A9B1BF" fontSize="7.5" fontFamily="var(--font-mono)">UNTRUSTED VECTOR</text>
           </g>
 
           {/* Subnet Zone 2: DMZ Perimeter Subnet */}
           <g className="aegis-zone-group zone-dmz">
-            <rect x="165" y="16" width="175" height="183" rx="8" className="aegis-zone-box zone-dmz-box" />
-            <text x="175" y="32" className="aegis-zone-title zone-dmz-title">PERIMETER DMZ</text>
-            <text x="175" y="43" className="aegis-zone-sub">10.0.1.0/24 &bull; PORT 443</text>
+            <rect x="165" y="16" width="175" height="183" rx="8" fill="rgba(38, 59, 96, 0.15)" stroke="#343B49" strokeWidth="1" />
+            <text x="175" y="32" className="aegis-zone-title" fill="#7596C8" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">PERIMETER DMZ</text>
+            <text x="175" y="43" className="aegis-zone-sub" fill="#A9B1BF" fontSize="7.5" fontFamily="var(--font-mono)">10.0.1.0/24 &bull; PORT 443</text>
           </g>
 
           {/* Subnet Zone 3: Internal Application LAN */}
           <g className="aegis-zone-group zone-app">
-            <rect x="355" y="16" width="185" height="183" rx="8" className="aegis-zone-box zone-app-box" />
-            <text x="365" y="32" className="aegis-zone-title zone-app-title">INTERNAL APP LAN</text>
-            <text x="365" y="43" className="aegis-zone-sub">10.0.2.0/24 &bull; PORT 8000</text>
+            <rect x="355" y="16" width="185" height="183" rx="8" fill="rgba(8, 10, 15, 0.6)" stroke="#343B49" strokeWidth="1" />
+            <text x="365" y="32" className="aegis-zone-title" fill="#7596C8" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">INTERNAL APP LAN</text>
+            <text x="365" y="43" className="aegis-zone-sub" fill="#A9B1BF" fontSize="7.5" fontFamily="var(--font-mono)">10.0.2.0/24 &bull; PORT 8000</text>
           </g>
 
           {/* Subnet Zone 4: Crown Jewel Core Tier */}
           <g className="aegis-zone-group zone-core">
-            <rect x="555" y="16" width="190" height="183" rx="8" className="aegis-zone-box zone-core-box" />
-            <text x="565" y="32" className="aegis-zone-title zone-core-title">IDENTITY TIER</text>
-            <text x="565" y="43" className="aegis-zone-sub">10.0.3.0/24 &bull; KDC CORE</text>
+            <rect x="555" y="16" width="190" height="183" rx="8" fill="rgba(38, 59, 96, 0.2)" stroke={isSevered ? '#7596C8' : '#C6A45A'} strokeWidth="1.2" />
+            <text x="565" y="32" className="aegis-zone-title" fill="#C6A45A" fontSize="9" fontFamily="var(--font-mono)" fontWeight="700">IDENTITY TIER</text>
+            <text x="565" y="43" className="aegis-zone-sub" fill="#A9B1BF" fontSize="7.5" fontFamily="var(--font-mono)">10.0.3.0/24 &bull; KDC CORE</text>
           </g>
 
           {/* Network Edge 1: Attacker -> DMZ */}
@@ -907,15 +1186,15 @@ function AegisExhibit() {
             x2="225"
             y2="108"
             className={`aegis-edge-line ${aegisStep !== 'vuln' ? 'edge-active-threat' : 'edge-muted'}`}
-            stroke={aegisStep !== 'vuln' ? '#b37583' : '#6c8ea4'}
+            stroke={aegisStep !== 'vuln' ? '#C6A45A' : '#343B49'}
             strokeWidth={aegisStep !== 'vuln' ? '2.5' : '1.5'}
             strokeDasharray={isAttackActive ? '6,4' : 'none'}
             markerEnd={aegisStep !== 'vuln' ? 'url(#arrowRed)' : 'url(#arrowMuted)'}
           />
           {aegisStep !== 'vuln' && (
             <g className="aegis-edge-badge">
-              <rect x="126" y="81" width="80" height="16" rx="4" className="aegis-edge-badge-bg threat" />
-              <text x="166" y="92" textAnchor="middle" className="aegis-edge-badge-text threat">
+              <rect x="126" y="81" width="80" height="16" rx="4" fill="#151B27" stroke="#C6A45A" strokeWidth="1" />
+              <text x="166" y="92" textAnchor="middle" fontSize="7" fontFamily="var(--font-mono)" fill="#C6A45A" fontWeight="700">
                 T1190 EXPLOIT
               </text>
             </g>
@@ -924,20 +1203,20 @@ function AegisExhibit() {
           {/* Network Edge 2: DMZ -> App Cluster (The Bridge / Severed Barrier) */}
           {isSevered ? (
             <>
-              <line x1="279" y1="108" x2="318" y2="108" stroke="#b37583" strokeWidth="2" strokeDasharray="3,3" />
+              <line x1="279" y1="108" x2="318" y2="108" stroke="#C6A45A" strokeWidth="2" strokeDasharray="3,3" />
               <g transform="translate(350, 108)" className="aegis-severed-shield">
-                <circle r="18" className="aegis-shield-circle" filter="url(#cyanGlow)" />
+                <circle r="18" fill="#151B27" stroke="#C6A45A" strokeWidth="2" filter="url(#goldGlow)" />
                 <text textAnchor="middle" dy="5" fontSize="13">🛡️</text>
                 <g className="aegis-shield-tag-top">
-                  <rect x="-44" y="-34" width="88" height="17" rx="4" className="shield-tag-bg" />
-                  <text x="0" y="-22" textAnchor="middle" className="shield-tag-text">ACL-901 SEVERED</text>
+                  <rect x="-44" y="-34" width="88" height="17" rx="4" fill="#111722" stroke="#C6A45A" strokeWidth="1" />
+                  <text x="0" y="-22" textAnchor="middle" fontSize="7" fontFamily="var(--font-mono)" fill="#C6A45A" fontWeight="700">ACL-901 SEVERED</text>
                 </g>
                 <g className="aegis-shield-tag-bottom">
-                  <rect x="-40" y="24" width="80" height="16" rx="3" className="shield-tag-sub-bg" />
-                  <text x="0" y="35" textAnchor="middle" className="shield-tag-sub-text">mTLS ENFORCED</text>
+                  <rect x="-40" y="24" width="80" height="16" rx="3" fill="#111722" stroke="#7596C8" strokeWidth="1" />
+                  <text x="0" y="35" textAnchor="middle" fontSize="6.5" fontFamily="var(--font-mono)" fill="#7596C8" fontWeight="600">mTLS ENFORCED</text>
                 </g>
               </g>
-              <line x1="382" y1="108" x2="420" y2="108" stroke="#8fa89b" strokeWidth="1.8" strokeDasharray="3,3" markerEnd="url(#arrowEmerald)" />
+              <line x1="382" y1="108" x2="420" y2="108" stroke="#7596C8" strokeWidth="1.8" strokeDasharray="3,3" markerEnd="url(#arrowEmerald)" />
             </>
           ) : (
             <>
@@ -947,15 +1226,15 @@ function AegisExhibit() {
                 x2="420"
                 y2="108"
                 className={`aegis-edge-line ${isAttackActive ? 'edge-active-threat' : 'edge-muted'}`}
-                stroke={isAttackActive ? '#b37583' : '#6c8ea4'}
+                stroke={isAttackActive ? '#C6A45A' : '#343B49'}
                 strokeWidth={isAttackActive ? '2.5' : '1.5'}
                 strokeDasharray={isAttackActive ? '6,4' : 'none'}
                 markerEnd={isAttackActive ? 'url(#arrowRed)' : 'url(#arrowMuted)'}
               />
               {isAttackActive && (
                 <g className="aegis-edge-badge">
-                  <rect x="306" y="81" width="88" height="16" rx="4" className="aegis-edge-badge-bg threat" />
-                  <text x="350" y="92" textAnchor="middle" className="aegis-edge-badge-text threat">
+                  <rect x="306" y="81" width="88" height="16" rx="4" fill="#151B27" stroke="#C6A45A" strokeWidth="1" />
+                  <text x="350" y="92" textAnchor="middle" fontSize="7" fontFamily="var(--font-mono)" fill="#C6A45A" fontWeight="700">
                     T1550 LATERAL PIVOT
                   </text>
                 </g>
@@ -970,22 +1249,22 @@ function AegisExhibit() {
             x2="623"
             y2="108"
             className={`aegis-edge-line ${isSevered ? 'edge-secure' : isAttackActive ? 'edge-active-threat' : 'edge-muted'}`}
-            stroke={isSevered ? '#8fa89b' : isAttackActive ? '#b37583' : '#6c8ea4'}
+            stroke={isSevered ? '#7596C8' : isAttackActive ? '#C6A45A' : '#343B49'}
             strokeWidth={isSevered || isAttackActive ? '2.5' : '1.5'}
             strokeDasharray={!isSevered && isAttackActive ? '6,4' : 'none'}
             markerEnd={isSevered ? 'url(#arrowEmerald)' : isAttackActive ? 'url(#arrowRed)' : 'url(#arrowMuted)'}
           />
           {isSevered ? (
             <g className="aegis-edge-badge">
-              <rect x="500" y="81" width="96" height="16" rx="4" className="aegis-edge-badge-bg safe" />
-              <text x="548" y="92" textAnchor="middle" className="aegis-edge-badge-text safe">
+              <rect x="500" y="81" width="96" height="16" rx="4" fill="#151B27" stroke="#7596C8" strokeWidth="1" />
+              <text x="548" y="92" textAnchor="middle" fontSize="7" fontFamily="var(--font-mono)" fill="#7596C8" fontWeight="700">
                 ISOLATED &bull; SECURE ✓
               </text>
             </g>
           ) : isAttackActive ? (
             <g className="aegis-edge-badge">
-              <rect x="498" y="81" width="100" height="16" rx="4" className="aegis-edge-badge-bg threat" />
-              <text x="548" y="92" textAnchor="middle" className="aegis-edge-badge-text threat">
+              <rect x="498" y="81" width="100" height="16" rx="4" fill="#151B27" stroke="#C6A45A" strokeWidth="1" />
+              <text x="548" y="92" textAnchor="middle" fontSize="7" fontFamily="var(--font-mono)" fill="#C6A45A" fontWeight="700">
                 T1003 GOLDEN TICKET
               </text>
             </g>
@@ -995,19 +1274,22 @@ function AegisExhibit() {
           <g
             transform="translate(81, 108)"
             className={`aegis-interactive-node ${selectedNodeId === 'attacker' ? 'is-selected' : ''}`}
-            onClick={() => setSelectedNodeId(selectedNodeId === 'attacker' ? null : 'attacker')}
+            onClick={() => { flagUserInteraction(); setSelectedNodeId(selectedNodeId === 'attacker' ? null : 'attacker'); }}
           >
-            {selectedNodeId === 'attacker' && <circle r="34" className="node-select-ring threat" />}
+            {selectedNodeId === 'attacker' && <circle r="34" className="node-select-ring threat" stroke="#C6A45A" fill="none" strokeWidth="2" strokeDasharray="4 3" />}
             <circle
               r="24"
               className="node-base-circle node-attacker"
-              filter={aegisStep !== 'vuln' ? 'url(#redGlow)' : ''}
+              fill="#151B27"
+              stroke="#C6A45A"
+              strokeWidth="2"
+              filter={aegisStep !== 'vuln' ? 'url(#goldGlow)' : ''}
             />
             <text textAnchor="middle" dy="5" fontSize="13">⚔️</text>
-            <text x="0" y="37" textAnchor="middle" className="node-title-text">Attacker</text>
+            <text x="0" y="37" textAnchor="middle" fontSize="9" fontFamily="var(--font-mono)" fill="#E9E2D4" fontWeight="700">Attacker</text>
             <g className="node-pill-group">
-              <rect x="-42" y="44" width="84" height="15" rx="3" className="node-pill-bg threat" />
-              <text x="0" y="55" textAnchor="middle" className="node-pill-text threat">198.51.100.24</text>
+              <rect x="-42" y="44" width="84" height="15" rx="3" fill="#111722" stroke="#343B49" />
+              <text x="0" y="55" textAnchor="middle" fontSize="7.5" fontFamily="var(--font-mono)" fill="#C6A45A">198.51.100.24</text>
             </g>
             <circle r="36" fill="transparent" cursor="pointer" />
           </g>
@@ -1016,15 +1298,15 @@ function AegisExhibit() {
           <g
             transform="translate(252, 108)"
             className={`aegis-interactive-node ${selectedNodeId === 'dmz' ? 'is-selected' : ''}`}
-            onClick={() => setSelectedNodeId(selectedNodeId === 'dmz' ? null : 'dmz')}
+            onClick={() => { flagUserInteraction(); setSelectedNodeId(selectedNodeId === 'dmz' ? null : 'dmz'); }}
           >
-            {selectedNodeId === 'dmz' && <circle r="34" className="node-select-ring warn" />}
-            <circle r="24" className="node-base-circle node-dmz" />
+            {selectedNodeId === 'dmz' && <circle r="34" className="node-select-ring warn" stroke="#7596C8" fill="none" strokeWidth="2" strokeDasharray="4 3" />}
+            <circle r="24" className="node-base-circle node-dmz" fill="#151B27" stroke="#7596C8" strokeWidth="2" />
             <text textAnchor="middle" dy="5" fontSize="13">🌐</text>
-            <text x="0" y="37" textAnchor="middle" className="node-title-text">DMZ Ingress</text>
+            <text x="0" y="37" textAnchor="middle" fontSize="9" fontFamily="var(--font-mono)" fill="#E9E2D4" fontWeight="700">DMZ Ingress</text>
             <g className="node-pill-group">
-              <rect x="-48" y="44" width="96" height="15" rx="3" className="node-pill-bg warn" />
-              <text x="0" y="55" textAnchor="middle" className="node-pill-text warn">CVE-2023-38606</text>
+              <rect x="-48" y="44" width="96" height="15" rx="3" fill="#111722" stroke="#343B49" />
+              <text x="0" y="55" textAnchor="middle" fontSize="7.5" fontFamily="var(--font-mono)" fill="#7596C8">CVE-2023-38606</text>
             </g>
             <circle r="36" fill="transparent" cursor="pointer" />
           </g>
@@ -1033,21 +1315,24 @@ function AegisExhibit() {
           <g
             transform="translate(447, 108)"
             className={`aegis-interactive-node ${selectedNodeId === 'app' ? 'is-selected' : ''}`}
-            onClick={() => setSelectedNodeId(selectedNodeId === 'app' ? null : 'app')}
+            onClick={() => { flagUserInteraction(); setSelectedNodeId(selectedNodeId === 'app' ? null : 'app'); }}
           >
             {selectedNodeId === 'app' && (
-              <circle r="34" className={`node-select-ring ${isSevered ? 'safe' : 'app'}`} />
+              <circle r="34" className="node-select-ring safe" stroke={isSevered ? '#7596C8' : '#343B49'} fill="none" strokeWidth="2" strokeDasharray="4 3" />
             )}
             <circle
               r="24"
               className={`node-base-circle ${isSevered ? 'node-app-safe' : 'node-app'}`}
-              filter={isSevered ? 'url(#emeraldGlow)' : ''}
+              fill="#151B27"
+              stroke={isSevered ? '#7596C8' : '#343B49'}
+              strokeWidth="2"
+              filter={isSevered ? 'url(#steelGlow)' : ''}
             />
             <text textAnchor="middle" dy="5" fontSize="13">⚙️</text>
-            <text x="0" y="37" textAnchor="middle" className="node-title-text">App Cluster</text>
+            <text x="0" y="37" textAnchor="middle" fontSize="9" fontFamily="var(--font-mono)" fill="#E9E2D4" fontWeight="700">App Cluster</text>
             <g className="node-pill-group">
-              <rect x="-48" y="44" width="96" height="15" rx="3" className={`node-pill-bg ${isSevered ? 'safe' : 'app'}`} />
-              <text x="0" y="55" textAnchor="middle" className={`node-pill-text ${isSevered ? 'safe' : 'app'}`}>
+              <rect x="-48" y="44" width="96" height="15" rx="3" fill="#111722" stroke="#343B49" />
+              <text x="0" y="55" textAnchor="middle" fontSize="7.5" fontFamily="var(--font-mono)" fill={isSevered ? '#7596C8' : '#A9B1BF'}>
                 {isSevered ? 'mTLS Guarded ✓' : 'CVE-2024-21413'}
               </text>
             </g>
@@ -1058,39 +1343,32 @@ function AegisExhibit() {
           <g
             transform="translate(650, 108)"
             className={`aegis-interactive-node ${selectedNodeId === 'dc' ? 'is-selected' : ''}`}
-            onClick={() => setSelectedNodeId(selectedNodeId === 'dc' ? null : 'dc')}
+            onClick={() => { flagUserInteraction(); setSelectedNodeId(selectedNodeId === 'dc' ? null : 'dc'); }}
           >
             {selectedNodeId === 'dc' && (
               <circle
                 r="34"
-                className={`node-select-ring ${isSevered ? 'safe' : aegisStep === 'risk' ? 'threat' : 'core'}`}
+                className="node-select-ring"
+                stroke={isSevered ? '#7596C8' : '#C6A45A'}
+                fill="none"
+                strokeWidth="2"
+                strokeDasharray="4 3"
               />
             )}
             <circle
               r="24"
-              className={`node-base-circle ${
-                isSevered ? 'node-core-safe' : aegisStep === 'risk' ? 'node-core-compromised' : 'node-core'
-              }`}
-              filter={isSevered ? 'url(#cyanGlow)' : aegisStep === 'risk' ? 'url(#redGlow)' : ''}
+              className={`node-base-circle ${isSevered ? 'node-core-safe' : 'node-core'}`}
+              fill="#151B27"
+              stroke={isSevered ? '#7596C8' : '#C6A45A'}
+              strokeWidth="2"
+              filter={isSevered ? 'url(#steelGlow)' : aegisStep === 'risk' ? 'url(#goldGlow)' : ''}
             />
             <text textAnchor="middle" dy="5" fontSize="13">👑</text>
-            <text x="0" y="37" textAnchor="middle" className="node-title-text">Domain Controller</text>
+            <text x="0" y="37" textAnchor="middle" fontSize="9" fontFamily="var(--font-mono)" fill="#E9E2D4" fontWeight="700">Domain Controller</text>
             <g className="node-pill-group">
-              <rect
-                x="-48"
-                y="44"
-                width="96"
-                height="15"
-                rx="3"
-                className={`node-pill-bg ${isSevered ? 'safe' : aegisStep === 'risk' ? 'threat' : 'core'}`}
-              />
-              <text
-                x="0"
-                y="55"
-                textAnchor="middle"
-                className={`node-pill-text ${isSevered ? 'safe' : aegisStep === 'risk' ? 'threat' : 'core'}`}
-              >
-                {isSevered ? 'SECURED ✓' : aegisStep === 'risk' ? 'COMPROMISED ✕' : 'Crown Jewel'}
+              <rect x="-48" y="44" width="96" height="15" rx="3" fill="#111722" stroke="#343B49" />
+              <text x="0" y="55" textAnchor="middle" fontSize="7.5" fontFamily="var(--font-mono)" fill={isSevered ? '#7596C8' : '#C6A45A'}>
+                {isSevered ? 'SECURE • CONTAINED' : '10.0.3.2 KDC'}
               </text>
             </g>
             <circle r="36" fill="transparent" cursor="pointer" />
@@ -1098,120 +1376,82 @@ function AegisExhibit() {
         </svg>
       </div>
 
-      {/* 4. Contextual Asset Inspector (Drawer when node clicked) */}
-      {selectedNode ? (
-        <div className="aegis-node-inspector" role="region" aria-label="Asset Inspector">
-          <div className="inspector-head">
-            <div className="inspector-title">
-              <span className="inspector-glyph">•</span>
-              <strong className="inspector-name">{selectedNode.name}</strong>
-              <code className="inspector-ip">{selectedNode.ip}</code>
-              <span className={`inspector-status-pill status-${selectedNode.severity}`}>
-                {selectedNode.status}
-              </span>
-            </div>
-            <button
-              type="button"
-              className="btn-close-inspector"
-              onClick={() => setSelectedNodeId(null)}
-              aria-label="Close inspector"
-            >
-              ✕
-            </button>
+      {/* Node Details Inspector (When a node is selected) */}
+      {selectedNode && (
+        <div className="aegis-node-inspector" role="region" aria-label="Selected Node Telemetry">
+          <div className="inspector-header">
+            <span className="inspector-title">{selectedNode.name}</span>
+            <span className={`inspector-badge sev-${selectedNode.severity}`}>{selectedNode.status}</span>
           </div>
           <div className="inspector-grid">
             <div className="inspector-item">
-              <span className="item-lbl">Network Zone</span>
-              <span className="item-val">{selectedNode.zone}</span>
+              <span className="item-label">IP / Subnet:</span>
+              <span className="item-val">{selectedNode.ip} ({selectedNode.zone})</span>
             </div>
             <div className="inspector-item">
-              <span className="item-lbl">Running Service</span>
+              <span className="item-label">Active Service:</span>
               <span className="item-val">{selectedNode.service}</span>
             </div>
             <div className="inspector-item">
-              <span className="item-lbl">Vulnerability</span>
-              <span className="item-val val-warn">{selectedNode.vuln}</span>
+              <span className="item-label">Vulnerability:</span>
+              <span className="item-val val-alert">{selectedNode.vuln}</span>
             </div>
             <div className="inspector-item">
-              <span className="item-lbl">ATT&amp;CK Technique</span>
-              <span className="item-val val-mono">{selectedNode.technique}</span>
+              <span className="item-label">MITRE ATT&amp;CK:</span>
+              <span className="item-val">{selectedNode.technique}</span>
             </div>
           </div>
-        </div>
-      ) : (
-        <div className="aegis-inspector-empty-hint">
-          <span className="hint-glyph">•</span>
-          <span>Click any node in the topology above to inspect vulnerabilities &amp; ATT&amp;CK mappings</span>
         </div>
       )}
 
-      {/* 5. Actionable Risk Matrix: Before vs. After Impact */}
+      {/* Impact Matrix */}
       <div className="aegis-impact-matrix">
-        <div className={`impact-card pre-defense ${isAttackActive ? 'highlight-threat' : ''}`}>
+        <div className="impact-card">
           <div className="impact-card-top">
             <div className="impact-kicker-group">
-              <span className="impact-card-dot threat" />
-              <span className="impact-kicker threat">PRE-MITIGATION RISK</span>
+              <span className={`impact-card-dot ${isSevered ? 'safe' : 'threat'}`} />
+              <span className="impact-kicker">CUMULATIVE RISK SCORE</span>
             </div>
-            <span className="impact-score score-crit">9.8 <small>/ 10.0</small></span>
-          </div>
-          <div className="impact-stats-list">
-            <div className="impact-stat-item">
-              <span className="stat-label">Lateral Hop Path</span>
-              <strong className="stat-value">3 Hops (Direct)</strong>
-            </div>
-            <div className="impact-stat-item">
-              <span className="stat-label">Crown Jewel Reach</span>
-              <strong className="stat-value val-danger">100% Compromised</strong>
-            </div>
-            <div className="impact-stat-item">
-              <span className="stat-label">Exploit Sequence</span>
-              <strong className="stat-value val-mono">T1190 &rarr; T1550 &rarr; T1003</strong>
-            </div>
-          </div>
-        </div>
-
-        <div className="impact-matrix-delta">
-          <div className="delta-pill">
-            <span className="delta-arrow">&darr;</span>
-            <span className="delta-number">-88%</span>
-            <span className="delta-label">RISK REDUCTION</span>
-          </div>
-          <span className="delta-subtext">Zero-Downtime Microsegmentation</span>
-        </div>
-
-        <div className={`impact-card post-defense ${isSevered ? 'highlight-safe' : ''}`}>
-          <div className="impact-card-top">
-            <div className="impact-kicker-group">
-              <span className={`impact-card-dot ${isSevered ? 'safe' : 'pending'}`} />
-              <span className={`impact-kicker ${isSevered ? 'safe' : 'pending'}`}>
-                {isSevered ? 'POST-DEFENSE VERIFIED' : 'DEFENSE POLICY PENDING'}
-              </span>
-            </div>
-            <span className={`impact-score ${isSevered ? 'score-safe' : 'score-pending'}`}>
-              {isSevered ? '1.2' : '3.2'} <small>/ 10.0</small>
+            <span className={`impact-score ${isSevered ? 'score-safe' : 'score-crit'}`}>
+              {currData.riskScore} <small>/ 10.0</small>
             </span>
           </div>
           <div className="impact-stats-list">
             <div className="impact-stat-item">
-              <span className="stat-label">Residual Attack Paths</span>
-              <strong className="stat-value">{isSevered ? '0 Valid Paths (Severed)' : 'Pending Synthesis'}</strong>
+              <span className="stat-label">Exploit Traversal Hop:</span>
+              <span className="stat-value">{currData.hopCount}</span>
             </div>
             <div className="impact-stat-item">
-              <span className="stat-label">Crown Jewel Reach</span>
-              <strong className={`stat-value ${isSevered ? 'val-success' : 'val-warn'}`}>
-                {isSevered ? 'Isolated & Protected ✓' : 'Cut Required'}
-              </strong>
+              <span className="stat-label">Blast Radius Scope:</span>
+              <span className="stat-value">{currData.blastRadius}</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="impact-card">
+          <div className="impact-card-top">
+            <div className="impact-kicker-group">
+              <span className={`impact-card-dot ${isSevered ? 'safe' : 'pending'}`} />
+              <span className="impact-kicker">DEFENSIVE POLICY POSTURE</span>
+            </div>
+            <span className={`impact-score ${isSevered ? 'score-safe' : 'score-pending'}`}>
+              {isSevered ? 'CONTAINED' : 'UNGUARDED'}
+            </span>
+          </div>
+          <div className="impact-stats-list">
+            <div className="impact-stat-item">
+              <span className="stat-label">Zero-Trust Guardrail:</span>
+              <span className="stat-value">{currData.defenseStatus}</span>
             </div>
             <div className="impact-stat-item">
-              <span className="stat-label">Policy Enforcement</span>
-              <strong className="stat-value">{isSevered ? 'Microsegmentation ACL-901' : 'Awaiting Mitigation Run'}</strong>
+              <span className="stat-label">Active Lateral Cut:</span>
+              <span className="stat-value">{isSevered ? 'ACL-901 Microsegmentation' : 'None (Adversarial Bridge Active)'}</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* 6. Collapsible Technical Execution Logs */}
+      {/* Collapsible Technical Execution Logs */}
       <div className="aegis-collapsible-logs">
         <button
           type="button"
@@ -1231,7 +1471,7 @@ function AegisExhibit() {
         {showLogs && (
           <pre
             className="telemetry-console aegis-console"
-            style={{ maxHeight: '140px', overflowY: 'auto', overscrollBehavior: 'contain', margin: 0 }}
+            style={{ maxHeight: '140px', overflowY: 'auto', margin: 0 }}
           >
             {currData.code}
           </pre>
@@ -1255,6 +1495,12 @@ export default function Projects({
   const [openDrawers, setOpenDrawers] = useState({});
   const [activeSpotlight, setActiveSpotlight] = useState(activeProjectId);
   const [isMobile, setIsMobile] = useState(() => (typeof window !== 'undefined' ? window.innerWidth <= 992 : false));
+  const [projectProgressMap, setProjectProgressMap] = useState({
+    'prj-probe360': 0,
+    'prj-mule-matrix': 0,
+    'prj-carbon': 0,
+    'prj-aegis': 0
+  });
 
   const activeSpotlightRef = useRef(activeSpotlight);
   activeSpotlightRef.current = activeSpotlight;
@@ -1271,23 +1517,76 @@ export default function Projects({
     return () => mql.removeEventListener('change', onChange);
   }, []);
 
+  // Compute normalized scroll progress through each project card
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    let ticking = false;
+    const calculateProgress = () => {
+      const winH = window.innerHeight;
+      const newMap = {};
+      const ids = ['prj-probe360', 'prj-mule-matrix', 'prj-carbon', 'prj-aegis'];
+
+      ids.forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          const enterThreshold = winH * 0.85;
+          const exitThreshold = winH * 0.15;
+          const totalDistance = rect.height + (enterThreshold - exitThreshold);
+          const currentDistance = enterThreshold - rect.top;
+          const rawProgress = currentDistance / totalDistance;
+          newMap[id] = Math.min(Math.max(rawProgress, 0), 1);
+        }
+      });
+
+      setProjectProgressMap((prev) => {
+        let changed = false;
+        for (const k of ids) {
+          if (Math.abs((prev[k] || 0) - (newMap[k] || 0)) > 0.015) {
+            changed = true;
+            break;
+          }
+        }
+        return changed ? newMap : prev;
+      });
+      ticking = false;
+    };
+
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(calculateProgress);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
+    calculateProgress();
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
+
   const handleSpotlightChange = (prjId, isManual = false) => {
     if (isManual) {
       isProgrammaticScrollRef.current = true;
       if (scrollLockTimeoutRef.current) clearTimeout(scrollLockTimeoutRef.current);
       scrollLockTimeoutRef.current = setTimeout(() => {
         isProgrammaticScrollRef.current = false;
-      }, 750);
+      }, 850);
     }
     setActiveSpotlight(prjId);
     if (onSelectProject) {
       onSelectProject(prjId);
     }
     const colorMap = {
-      'prj-probe360': '#8fa89b',
-      'prj-mule-matrix': '#2dd4a7',
-      'prj-carbon': '#b8a9c9',
-      'prj-aegis': '#8fa89b'
+      'prj-probe360': '#7596C8',
+      'prj-mule-matrix': '#C6A45A',
+      'prj-carbon': '#7596C8',
+      'prj-aegis': '#C6A45A'
     };
     if (colorMap[prjId]) {
       document.documentElement.style.setProperty('--active-project-color', colorMap[prjId]);
@@ -1321,17 +1620,15 @@ export default function Projects({
     }
   }, [activeFilter, filteredProjects]);
 
-  // Robust, stabilized IntersectionObserver with strict hysteresis for smooth project focal alignment
+  // Stabilized IntersectionObserver for automatic scroll synchronization
   useEffect(() => {
     if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return;
     const entries = document.querySelectorAll('.project-narrative-entry');
     if (!entries.length) return;
 
     const ratioMap = new Map();
-    // Minimum ratio any card must reach to be considered at all
-    const MIN_QUALIFYING_RATIO = 0.25;
-    // The candidate must beat the current active card's ratio by this margin to trigger a switch
-    const HYSTERESIS_MARGIN = 0.10;
+    const MIN_QUALIFYING_RATIO = 0.22;
+    const HYSTERESIS_MARGIN = 0.08;
 
     const observer = new IntersectionObserver(
       (observed) => {
@@ -1341,7 +1638,6 @@ export default function Projects({
           ratioMap.set(entry.target.id, entry.isIntersecting ? entry.intersectionRatio : 0);
         });
 
-        // Find the best visible candidate
         let bestId = null;
         let maxRatio = MIN_QUALIFYING_RATIO;
 
@@ -1355,14 +1651,13 @@ export default function Projects({
         if (!bestId) return;
         if (bestId === activeSpotlightRef.current) return;
 
-        // Apply hysteresis: only switch if the new candidate beats the active card by a margin
         const activeRatio = ratioMap.get(activeSpotlightRef.current) || 0;
         if (maxRatio < activeRatio + HYSTERESIS_MARGIN) return;
 
         handleSpotlightChange(bestId, false);
       },
       {
-        rootMargin: '-15% 0px -35% 0px',
+        rootMargin: '-12% 0px -28% 0px',
         threshold: [0.1, 0.25, 0.4, 0.55, 0.75]
       }
     );
@@ -1374,15 +1669,23 @@ export default function Projects({
     };
   }, [filteredProjects]);
 
-
-  // Stepper click handler with programmatic scroll lock
+  // Stepper click handler with calculated offset and programmatic scroll lock
   const handleStepperClick = (e, prjId) => {
     e.preventDefault();
     handleSpotlightChange(prjId, true);
-    const target = document.getElementById(prjId);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
+
+    requestAnimationFrame(() => {
+      const target = document.getElementById(prjId);
+      if (target) {
+        const navClearance = 110;
+        const elementPosition = target.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - navClearance;
+        window.scrollTo({
+          top: Math.max(0, offsetPosition),
+          behavior: 'smooth'
+        });
+      }
+    });
   };
 
   // Keyboard navigation [1..4] to jump to exhibits
@@ -1398,17 +1701,24 @@ export default function Projects({
       const targetId = keyMap[e.key];
       if (targetId) {
         handleSpotlightChange(targetId, true);
-        const target = document.getElementById(targetId);
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+        requestAnimationFrame(() => {
+          const target = document.getElementById(targetId);
+          if (target) {
+            const navClearance = 110;
+            const elementPosition = target.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - navClearance;
+            window.scrollTo({
+              top: Math.max(0, offsetPosition),
+              behavior: 'smooth'
+            });
+          }
+        });
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Toggle Drawers inline
   const toggleDrawer = (id) => {
     setOpenDrawers((prev) => ({ ...prev, [id]: !prev[id] }));
     if (typeof window.__recomputeScrollGeometry === 'function') {
@@ -1420,18 +1730,19 @@ export default function Projects({
     PROJECTS.find((p) => `prj-${p.id}` === activeSpotlight) || PROJECTS[0];
 
   const renderExhibitComponent = (prjId) => {
+    const progress = projectProgressMap[prjId] || 0;
     switch (prjId) {
       case 'prj-probe360':
-        return <ProbeExhibit key="probe-component" />;
+        return <ProbeExhibit key="probe-component" scrollProgress={progress} />;
       case 'prj-mule-matrix':
       case 'prj-csi-origin':
-        return <MuleExhibit key="mule-component" />;
+        return <MuleExhibit key="mule-component" scrollProgress={progress} />;
       case 'prj-carbon':
-        return <CarbonExhibit key="carbon-component" />;
+        return <CarbonExhibit key="carbon-component" scrollProgress={progress} />;
       case 'prj-aegis':
-        return <AegisExhibit key="aegis-component" />;
+        return <AegisExhibit key="aegis-component" scrollProgress={progress} />;
       default:
-        return <ProbeExhibit key="probe-default" />;
+        return <ProbeExhibit key="probe-default" scrollProgress={progress} />;
     }
   };
 
@@ -1439,9 +1750,13 @@ export default function Projects({
     <section className="projects-section is-in-view" id="projects" aria-labelledby="projects-title">
       <div className="projects-container">
         <div className="projects-header-block">
-          <h2 className="projects-title" id="projects-title">Project Gallery Exhibition</h2>
+          <div className="section-kicker-strip">
+            <span className="section-kicker-dot" />
+            <span className="section-kicker">ENGINEERING &amp; RESEARCH EXHIBITION</span>
+          </div>
+          <h2 className="projects-title" id="projects-title">Interactive Project Showcase</h2>
           <p className="projects-subtitle">
-            An interactive showcase of engineering projects spanning agentless security telemetry, financial fraud detection &amp; money-mule tracing, sustainability forecasting, and autonomous cybersecurity digital twins.
+            An immersive showcase of engineering projects spanning agentless security telemetry, financial fraud detection &amp; money-mule tracing, sustainability forecasting, and autonomous cybersecurity digital twins. Demos continuously respond to scroll progression and interactive testing.
           </p>
 
           {/* Filter Category Tabs */}
@@ -1492,7 +1807,7 @@ export default function Projects({
           </div>
         </div>
 
-        {/* Bounded Exhibition Workspace (2-Column Desktop Grid / Stacked Mobile) */}
+        {/* 2-Column Desktop Grid / Stacked Mobile Layout */}
         <div className="projects-exhibition-wrap">
           {/* Column 1: Narrative Scroll Ledger */}
           <div className="projects-narrative-column">
@@ -1551,7 +1866,7 @@ export default function Projects({
                       </div>
                     </div>
 
-                    {/* Mobile Only: Inline Exhibit */}
+                    {/* Mobile Only: Inline Exhibit with scroll reactivity */}
                     {isMobile && (
                       <div className="mobile-exhibit-container">
                         {renderExhibitComponent(prjId)}
@@ -1641,14 +1956,14 @@ export default function Projects({
                 {/* Ambient scanning scanline across preview stage */}
                 <div className="sticky-stage-scanline" aria-hidden="true" />
 
-                {/* Dynamic Exhibit Renderer with explicit keyed mounting */}
+                {/* Dynamic Exhibit Renderer with explicit keyed mounting & scroll progress */}
                 <div className="sticky-stage-content" id="sticky-stage-content">
                   {renderExhibitComponent(activeSpotlight)}
                 </div>
 
                 <div className="sticky-stage-footer">
                   <span className="stage-hint">
-                    Scroll through entries or press <kbd className="kbd-mini">1</kbd> to <kbd className="kbd-mini">4</kbd> to navigate exhibits.
+                    Scroll through project cards or press <kbd className="kbd-mini">1</kbd> to <kbd className="kbd-mini">4</kbd> to jump between exhibits.
                   </span>
                 </div>
               </div>
@@ -1656,7 +1971,7 @@ export default function Projects({
           )}
         </div>
 
-        {/* Dynamic Transitional Motif leading smoothly from the final project into Contact */}
+        {/* Dynamic Transitional Motif leading smoothly from the final project into Architecture */}
         <div className="projects-to-contact-flow" aria-hidden="true">
           <div className="flow-ambient-glow"></div>
           <div className="flow-connector-line"></div>

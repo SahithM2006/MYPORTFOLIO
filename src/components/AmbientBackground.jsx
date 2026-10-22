@@ -19,12 +19,12 @@ export default function AmbientBackground() {
         <svg className="ambient-grid-svg" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="ambient-coord-grid" width="80" height="80" patternUnits="userSpaceOnUse">
-              <path d="M 80 0 L 0 0 0 80" fill="none" stroke="rgba(74, 134, 153, 0.05)" strokeWidth="1" />
-              <circle cx="80" cy="0" r="1.5" fill="rgba(45, 212, 191, 0.12)" />
-              <circle cx="0" cy="80" r="1.5" fill="rgba(45, 212, 191, 0.12)" />
+              <path d="M 80 0 L 0 0 0 80" fill="none" stroke="rgba(64, 80, 61, 0.25)" strokeWidth="1" />
+              <circle cx="80" cy="0" r="1.5" fill="rgba(183, 161, 106, 0.25)" />
+              <circle cx="0" cy="80" r="1.5" fill="rgba(183, 161, 106, 0.25)" />
               {/* Subtle crosshair at (40, 40) */}
-              <line x1="38" y1="40" x2="42" y2="40" stroke="rgba(94, 153, 179, 0.10)" strokeWidth="1" />
-              <line x1="40" y1="38" x2="40" y2="42" stroke="rgba(94, 153, 179, 0.10)" strokeWidth="1" />
+              <line x1="38" y1="40" x2="42" y2="40" stroke="rgba(183, 161, 106, 0.20)" strokeWidth="1" />
+              <line x1="40" y1="38" x2="40" y2="42" stroke="rgba(183, 161, 106, 0.20)" strokeWidth="1" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#ambient-coord-grid)" />

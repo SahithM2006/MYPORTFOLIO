@@ -24,7 +24,7 @@ const CONFIG = {
   deadzoneExitRatio: 1.10,      // Hysteresis exit threshold
   stationaryDeadbandPx: 1.0,    // Deadband in pixels to reject sensor micro-tremors
   frameHysteresis: 0.08,        // Hysteresis fraction of a frame slice (~0.45 deg) to prevent frame flipping
-  backgroundColor: '#21132D',   // Deep Aubergine foundation
+  backgroundColor: '#080A0F',   // Obsidian black foundation
   faceCenterInImage: { x: 0.50, y: 0.38 }
 };
 

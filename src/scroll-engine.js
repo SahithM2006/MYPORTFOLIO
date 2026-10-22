@@ -9,11 +9,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const projectColorMap = {
-  'prj-probe360': '#8fa89b',
-  'prj-mule-matrix': '#2dd4a7',
-  'prj-csi-origin': '#2dd4a7',
-  'prj-carbon': '#b8a9c9',
-  'prj-aegis': '#8fa89b'
+  'prj-probe360': '#7596C8',
+  'prj-mule-matrix': '#C6A45A',
+  'prj-csi-origin': '#C6A45A',
+  'prj-carbon': '#7596C8',
+  'prj-aegis': '#C6A45A'
 };
 
 export function initScrollEngine() {
@@ -78,7 +78,7 @@ export function initScrollEngine() {
         el: card,
         top,
         height: rect.height || card.offsetHeight || 1,
-        color: projectColorMap[card.id] || '#8fa89b'
+        color: projectColorMap[card.id] || '#C6A45A'
       };
     });
   }
@@ -144,15 +144,15 @@ export function initScrollEngine() {
 
     // Determine current section in viewport focus for Scroll Spine Indicator
     const sections = [
-      { id: 'hero', num: '01', name: 'HERO', color: '#2DD4BF', top: cachedGeometry.hero.top, height: cachedGeometry.hero.height },
-      { id: 'about', num: '02', name: 'ABOUT', color: '#38BDF8', top: cachedGeometry.about.top, height: cachedGeometry.about.height },
-      { id: 'skills', num: '03', name: 'SKILLS', color: '#10B981', top: cachedGeometry.skills.top, height: cachedGeometry.skills.height },
-      { id: 'projects', num: '04', name: 'PROJECTS', color: '#E5A93C', top: cachedGeometry.projects.top, height: cachedGeometry.projects.height },
-      { id: 'architecture', num: '05', name: 'SYSTEMS', color: '#38BDF8', top: cachedGeometry.architecture.top, height: cachedGeometry.architecture.height },
-      { id: 'experience', num: '06', name: 'TIMELINE', color: '#E5A93C', top: cachedGeometry.experience.top, height: cachedGeometry.experience.height },
-      { id: 'certifications', num: '07', name: 'CREDENTIALS', color: '#2DD4BF', top: cachedGeometry.certifications.top, height: cachedGeometry.certifications.height },
-      { id: 'resume', num: '08', name: 'DOSSIER', color: '#94A3B8', top: cachedGeometry.resume.top, height: cachedGeometry.resume.height },
-      { id: 'contact', num: '09', name: 'TRANSMIT', color: '#2DD4BF', top: cachedGeometry.contact.top, height: cachedGeometry.contact.height },
+      { id: 'hero', num: '01', name: 'HERO', color: '#C6A45A', top: cachedGeometry.hero.top, height: cachedGeometry.hero.height },
+      { id: 'about', num: '02', name: 'ABOUT', color: '#7596C8', top: cachedGeometry.about.top, height: cachedGeometry.about.height },
+      { id: 'skills', num: '03', name: 'SKILLS', color: '#7596C8', top: cachedGeometry.skills.top, height: cachedGeometry.skills.height },
+      { id: 'projects', num: '04', name: 'PROJECTS', color: '#C6A45A', top: cachedGeometry.projects.top, height: cachedGeometry.projects.height },
+      { id: 'architecture', num: '05', name: 'SYSTEMS', color: '#7596C8', top: cachedGeometry.architecture.top, height: cachedGeometry.architecture.height },
+      { id: 'experience', num: '06', name: 'TIMELINE', color: '#C6A45A', top: cachedGeometry.experience.top, height: cachedGeometry.experience.height },
+      { id: 'certifications', num: '07', name: 'CREDENTIALS', color: '#C6A45A', top: cachedGeometry.certifications.top, height: cachedGeometry.certifications.height },
+      { id: 'resume', num: '08', name: 'DOSSIER', color: '#A9B1BF', top: cachedGeometry.resume.top, height: cachedGeometry.resume.height },
+      { id: 'contact', num: '09', name: 'TRANSMIT', color: '#C6A45A', top: cachedGeometry.contact.top, height: cachedGeometry.contact.height },
     ];
 
     let currentSection = sections[0];

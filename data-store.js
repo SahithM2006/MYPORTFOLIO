@@ -4,12 +4,12 @@
  */
 
 export const SKILL_CATEGORIES = [
-  { id: 'all', label: 'All Disciplines', count: 18 },
-  { id: 'ai', label: 'AI & Data Science', count: 6, color: '#C8FF4D' },
-  { id: 'programming', label: 'Programming', count: 2, color: '#FF8A45' },
-  { id: 'backend', label: 'Backend Development', count: 3, color: '#38BDF8' },
-  { id: 'security', label: 'Security & Systems', count: 4, color: '#10B981' },
-  { id: 'automation', label: 'Automation & Graphs', count: 3, color: '#8157FF' }
+  { id: 'all', label: 'All Disciplines', count: 18, color: '#C6A45A' },
+  { id: 'ai', label: 'AI & Data Science', count: 6, color: '#7596C8' },
+  { id: 'programming', label: 'Programming', count: 2, color: '#C6A45A' },
+  { id: 'backend', label: 'Backend Development', count: 3, color: '#7596C8' },
+  { id: 'security', label: 'Security & Systems', count: 4, color: '#7596C8' },
+  { id: 'automation', label: 'Automation & Graphs', count: 3, color: '#C6A45A' }
 ];
 
 export const SKILLS = [
@@ -214,7 +214,7 @@ export const PROJECTS = [
     category: 'ai',
     categoryLabel: 'Sustainability Analytics',
     title: 'AI Carbon Intelligence',
-    themeColor: '#C8FF4D',
+    themeColor: '#7596C8',
     status: 'Research Concept',
     statusType: 'concept',
     lead: 'A sustainability-focused concept for analysing industrial supply-chain emissions, pinpointing operational carbon hotspots, and evaluating cost-optimal mitigation pathways.',
@@ -327,43 +327,43 @@ export const TIMELINE_MILESTONES = [
 
 export const PALETTES = [
   {
-    id: 'aubergine-lime',
-    name: 'Aubergine & Lime (Original)',
+    id: 'obsidian-gold',
+    name: 'Obsidian & Champagne Gold (Default)',
     colors: {
-      '--color-lime': '#C8FF4D',
-      '--color-violet': '#8157FF',
-      '--color-tangerine': '#FF8A45',
-      '--color-aubergine-border-hover': 'rgba(200, 255, 77, 0.4)'
+      '--color-lime': '#C6A45A',
+      '--color-violet': '#7596C8',
+      '--color-tangerine': '#263B60',
+      '--color-aubergine-border-hover': 'rgba(198, 164, 90, 0.4)'
     }
   },
   {
-    id: 'cyberpunk-cyan',
-    name: 'Cyberpunk Midnight & Cyan',
+    id: 'obsidian-steel',
+    name: 'Obsidian & Muted Steel Blue',
     colors: {
-      '--color-lime': '#00F5D4',
-      '--color-violet': '#7B2CBF',
-      '--color-tangerine': '#F72585',
-      '--color-aubergine-border-hover': 'rgba(0, 245, 212, 0.45)'
+      '--color-lime': '#7596C8',
+      '--color-violet': '#263B60',
+      '--color-tangerine': '#C6A45A',
+      '--color-aubergine-border-hover': 'rgba(117, 150, 200, 0.4)'
     }
   },
   {
-    id: 'editorial-coral',
-    name: 'Warm Plum & Sunset Coral',
+    id: 'midnight-gold',
+    name: 'Midnight Blue & Gold Illumination',
     colors: {
-      '--color-lime': '#FF6B6B',
-      '--color-violet': '#9D4EDD',
-      '--color-tangerine': '#FFD166',
-      '--color-aubergine-border-hover': 'rgba(255, 107, 107, 0.45)'
+      '--color-lime': '#C6A45A',
+      '--color-violet': '#263B60',
+      '--color-tangerine': '#7596C8',
+      '--color-aubergine-border-hover': 'rgba(38, 59, 96, 0.4)'
     }
   },
   {
-    id: 'bio-emerald',
-    name: 'Deep Forest & Bio-Emerald',
+    id: 'charcoal-gold',
+    name: 'Deep Charcoal & Warm Ivory',
     colors: {
-      '--color-lime': '#10B981',
-      '--color-violet': '#6366F1',
-      '--color-tangerine': '#F59E0B',
-      '--color-aubergine-border-hover': 'rgba(16, 185, 129, 0.45)'
+      '--color-lime': '#C6A45A',
+      '--color-violet': '#E9E2D4',
+      '--color-tangerine': '#263B60',
+      '--color-aubergine-border-hover': 'rgba(198, 164, 90, 0.4)'
     }
   }
 ];

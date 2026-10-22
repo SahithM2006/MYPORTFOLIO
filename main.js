@@ -17,7 +17,7 @@ const CONFIG = {
   numFrames: 64,
   lerpFactor: 0.26,             // Smooth ~35ms responsive tracking
   deadzoneRadiusRatio: 0.12,    // 12% screen radius for direct eye contact
-  backgroundColor: '#21132D',   // Deep Aubergine foundation
+  backgroundColor: '#080A0F',   // Obsidian black foundation
   // The face in the 1920x1080 video is centered horizontally (0.50) and vertically at ~38% (0.38)
   faceCenterInImage: { x: 0.50, y: 0.38 }
 };

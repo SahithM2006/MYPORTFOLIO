@@ -27,14 +27,14 @@ export default function Footer() {
               <path
                 d="M 0,16 L 120,16 L 135,4 L 145,28 L 155,8 L 165,22 L 175,16 L 360,16 L 375,6 L 385,26 L 395,10 L 405,20 L 415,16 L 600,16"
                 fill="none"
-                stroke="rgba(45, 212, 191, 0.28)"
+                stroke="rgba(117, 150, 200, 0.25)"
                 strokeWidth="1.5"
                 className="waveform-path-base"
               />
               <path
                 d="M 0,16 L 120,16 L 135,4 L 145,28 L 155,8 L 165,22 L 175,16 L 360,16 L 375,6 L 385,26 L 395,10 L 405,20 L 415,16 L 600,16"
                 fill="none"
-                stroke="#2DD4BF"
+                stroke="#C6A45A"
                 strokeWidth="2"
                 strokeDasharray="24 160"
                 className="waveform-path-pulse"

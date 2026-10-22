@@ -84,19 +84,19 @@ export default function Playground() {
     canvas.width = w;
     canvas.height = h;
 
-    ctx.fillStyle = '#140C1C';
+    ctx.fillStyle = '#080A0F';
     ctx.fillRect(0, 0, w, h);
 
     // Draw base graphic
-    ctx.fillStyle = '#8FA89B';
+    ctx.fillStyle = '#C6A45A';
     ctx.beginPath();
     ctx.arc(w * 0.5, h * 0.5, 60, 0, Math.PI * 2);
     ctx.fill();
 
-    ctx.fillStyle = '#B8A9C9';
+    ctx.fillStyle = '#7596C8';
     ctx.fillRect(w * 0.25, h * 0.25, 70, 70);
 
-    ctx.fillStyle = '#6C8EA4';
+    ctx.fillStyle = '#263B60';
     ctx.fillRect(w * 0.55, h * 0.45, 65, 65);
 
     try {
@@ -143,7 +143,7 @@ export default function Playground() {
     canvas.width = w;
     canvas.height = h;
 
-    ctx.fillStyle = '#140C1C';
+    ctx.fillStyle = '#080A0F';
     ctx.fillRect(0, 0, w, h);
 
     const cx = w / 2;
@@ -167,7 +167,7 @@ export default function Playground() {
       }
       ctx.closePath();
 
-      ctx.strokeStyle = ring % 2 === 0 ? '#8FA89B' : '#B8A9C9';
+      ctx.strokeStyle = ring % 2 === 0 ? '#C6A45A' : '#7596C8';
       ctx.lineWidth = 1.2;
       ctx.stroke();
     }
@@ -232,7 +232,7 @@ export default function Playground() {
                         onClick={() => handlePaletteChange(pal.id)}
                       >
                         <span className="swatch-dots">
-                          <span className="swatch-dot" style={{ background: pal.colors['--color-aubergine-border-hover'] || '#21132D' }}></span>
+                          <span className="swatch-dot" style={{ background: pal.colors['--color-aubergine-border-hover'] || '#080A0F' }}></span>
                           <span className="swatch-dot" style={{ background: pal.colors['--color-lime'] }}></span>
                           <span className="swatch-dot" style={{ background: pal.colors['--color-violet'] }}></span>
                         </span>

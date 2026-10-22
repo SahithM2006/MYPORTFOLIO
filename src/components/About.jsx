@@ -235,25 +235,25 @@ export default function About({ onSelectSkill, onSelectProject }) {
         <svg viewBox="0 0 1000 400" className="circuit-svg" preserveAspectRatio="none">
           <defs>
             <linearGradient id="electricGradTeal" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#2DD4BF" stopOpacity="0.8" />
-              <stop offset="50%" stopColor="#38BDF8" stopOpacity="0.9" />
-              <stop offset="100%" stopColor="#2DD4BF" stopOpacity="0.8" />
+              <stop offset="0%" stopColor="#C6A45A" stopOpacity="0.85" />
+              <stop offset="50%" stopColor="#7596C8" stopOpacity="0.9" />
+              <stop offset="100%" stopColor="#C6A45A" stopOpacity="0.85" />
             </linearGradient>
             <filter id="circuitGlow" x="-20%" y="-20%" width="140%" height="140%">
               <feGaussianBlur stdDeviation="2.5" result="blur" />
               <feComposite in="SourceGraphic" in2="blur" operator="over" />
             </filter>
           </defs>
-          <path d="M0,80 L250,80 L320,160 L680,160 L750,240 L1000,240" stroke="rgba(20, 184, 166, 0.16)" strokeWidth="1.5" strokeDasharray="6 6" fill="none" className="circuit-path-1" />
+          <path d="M0,80 L250,80 L320,160 L680,160 L750,240 L1000,240" stroke="rgba(117, 150, 200, 0.18)" strokeWidth="1.5" strokeDasharray="6 6" fill="none" className="circuit-path-1" />
           <path d="M0,80 L250,80 L320,160 L680,160 L750,240 L1000,240" stroke="url(#electricGradTeal)" strokeWidth="2" strokeDasharray="16 120" fill="none" className="circuit-path-stream-1" filter="url(#circuitGlow)" />
-          <path d="M0,280 L180,280 L240,200 L560,200 L620,120 L1000,120" stroke="rgba(94, 153, 179, 0.14)" strokeWidth="1.5" strokeDasharray="8 8" fill="none" className="circuit-path-2" />
-          <path d="M0,280 L180,280 L240,200 L560,200 L620,120 L1000,120" stroke="#E5A93C" strokeWidth="1.8" strokeDasharray="14 100" fill="none" className="circuit-path-stream-2" filter="url(#circuitGlow)" />
-          <path d="M120,400 L200,320 L400,320 L480,240 L900,240" stroke="rgba(16, 185, 129, 0.12)" strokeWidth="1.2" strokeDasharray="4 6" fill="none" className="circuit-path-3" />
-          <circle cx="320" cy="160" r="4.5" fill="#2DD4BF" className="circuit-node-pulse" />
-          <circle cx="680" cy="160" r="4.5" fill="#E5A93C" className="circuit-node-pulse" />
-          <circle cx="240" cy="200" r="4" fill="#10B981" className="circuit-node-pulse" />
-          <circle cx="620" cy="120" r="4" fill="#38BDF8" className="circuit-node-pulse" />
-          <circle cx="480" cy="240" r="3.5" fill="#2DD4BF" className="circuit-node-pulse" />
+          <path d="M0,280 L180,280 L240,200 L560,200 L620,120 L1000,120" stroke="rgba(38, 59, 96, 0.25)" strokeWidth="1.5" strokeDasharray="8 8" fill="none" className="circuit-path-2" />
+          <path d="M0,280 L180,280 L240,200 L560,200 L620,120 L1000,120" stroke="#C6A45A" strokeWidth="1.8" strokeDasharray="14 100" fill="none" className="circuit-path-stream-2" filter="url(#circuitGlow)" />
+          <path d="M120,400 L200,320 L400,320 L480,240 L900,240" stroke="rgba(198, 164, 90, 0.15)" strokeWidth="1.2" strokeDasharray="4 6" fill="none" className="circuit-path-3" />
+          <circle cx="320" cy="160" r="4.5" fill="#C6A45A" className="circuit-node-pulse" />
+          <circle cx="680" cy="160" r="4.5" fill="#C6A45A" className="circuit-node-pulse" />
+          <circle cx="240" cy="200" r="4" fill="#7596C8" className="circuit-node-pulse" />
+          <circle cx="620" cy="120" r="4" fill="#7596C8" className="circuit-node-pulse" />
+          <circle cx="480" cy="240" r="3.5" fill="#C6A45A" className="circuit-node-pulse" />
         </svg>
       </div>
 
