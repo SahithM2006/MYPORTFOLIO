@@ -416,7 +416,7 @@ export default function Skills({
                     y1={edge.source.coords.y}
                     x2={edge.target.coords.x}
                     y2={edge.target.coords.y}
-                    className={`constellation-line ${isEdgeActive ? 'line-active' : ''} ${isEdgeGroupActive ? 'line-group-active line-electric' : ''} ${isEdgeDimmed ? 'line-dimmed' : ''}`}
+                    className={`constellation-line line-ambient-pulse ${isEdgeActive ? 'line-active line-electric' : ''} ${isEdgeGroupActive ? 'line-group-active line-electric' : ''} ${isEdgeDimmed ? 'line-dimmed' : ''}`}
                     stroke={strokeColor}
                     strokeWidth={strokeWidth}
                     filter={isEdgeActive ? 'url(#constellationGlow)' : undefined}
@@ -450,11 +450,12 @@ export default function Skills({
                 const baseRadius = isAnchor ? 28 : 20;
                 const orbitRadius = isAnchor ? 38 : 28;
 
+                const floatClass = `node-float-${((skill.coords.x + skill.coords.y) % 4) + 1}`;
                 return (
                   <g
                     key={skill.id}
                     id={`constellation-node-${skill.id}`}
-                    className={`constellation-node ${isActive ? 'node-active' : ''} ${isNeighbor ? 'node-neighbor' : ''} ${isDimmed ? 'node-dimmed' : ''} ${isHighlightedByProject ? 'node-project-linked' : ''} ${isCategoryPulsing && isGroupMatch && selectedCategory !== 'all' ? 'node-category-pulse' : ''}`}
+                    className={`constellation-node ${floatClass} ${isActive ? 'node-active' : ''} ${isNeighbor ? 'node-neighbor' : ''} ${isDimmed ? 'node-dimmed' : ''} ${isHighlightedByProject ? 'node-project-linked' : ''} ${isCategoryPulsing && isGroupMatch && selectedCategory !== 'all' ? 'node-category-pulse' : ''}`}
                     transform={`translate(${skill.coords.x}, ${skill.coords.y})`}
                     role="button"
                     tabIndex={0}

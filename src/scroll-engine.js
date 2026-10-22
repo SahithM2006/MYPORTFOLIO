@@ -87,6 +87,14 @@ export function initScrollEngine() {
 
   let scrollTicking = false;
   let lastActiveCardId = null;
+  const spineTrack = document.getElementById('scroll-spine-track');
+  const spineThumb = document.getElementById('scroll-spine-thumb');
+  const spineLabel = document.getElementById('scroll-spine-label');
+  const bgLayerDeep = document.getElementById('bg-layer-deep');
+  const bgLayerMid = document.getElementById('bg-layer-mid');
+  const bgLayerNear = document.getElementById('bg-layer-near');
+  const atmosphereLayer = document.getElementById('ambient-atmosphere-layer');
+
   let lastChapter = null;
 
   function onScrollTick() {
@@ -109,8 +117,62 @@ export function initScrollEngine() {
       auraOrbit2.style.transform = `rotate(-${progress * 260}deg)`;
     }
 
+    // Continuous Multi-Layer Ambient Background Parallax
+    if (bgLayerDeep) {
+      bgLayerDeep.style.transform = `translate3d(0, ${-(scrollTop * 0.05).toFixed(2)}px, 0)`;
+    }
+    if (bgLayerMid) {
+      bgLayerMid.style.transform = `translate3d(0, ${-(scrollTop * 0.12).toFixed(2)}px, 0)`;
+    }
+    if (bgLayerNear) {
+      bgLayerNear.style.transform = `translate3d(0, ${-(scrollTop * 0.20).toFixed(2)}px, 0)`;
+    }
+    if (atmosphereLayer) {
+      atmosphereLayer.style.transform = `translate3d(0, ${-(scrollTop * 0.03).toFixed(2)}px, 0)`;
+    }
+
+    // Continuous Scroll Spine Thumb Movement
+    if (spineThumb && spineTrack) {
+      const trackH = spineTrack.offsetHeight || 200;
+      const thumbH = spineThumb.offsetHeight || 28;
+      const maxTranslate = Math.max(trackH - thumbH, 10);
+      spineThumb.style.transform = `translate3d(0, ${(progress * maxTranslate).toFixed(1)}px, 0)`;
+    }
+
     const winH = cachedGeometry.winH;
     const focusY = scrollTop + winH * 0.45;
+
+    // Determine current section in viewport focus for Scroll Spine Indicator
+    const sections = [
+      { id: 'hero', num: '01', name: 'HERO', color: '#2DD4BF', top: cachedGeometry.hero.top, height: cachedGeometry.hero.height },
+      { id: 'about', num: '02', name: 'ABOUT', color: '#38BDF8', top: cachedGeometry.about.top, height: cachedGeometry.about.height },
+      { id: 'skills', num: '03', name: 'SKILLS', color: '#10B981', top: cachedGeometry.skills.top, height: cachedGeometry.skills.height },
+      { id: 'projects', num: '04', name: 'PROJECTS', color: '#E5A93C', top: cachedGeometry.projects.top, height: cachedGeometry.projects.height },
+      { id: 'architecture', num: '05', name: 'SYSTEMS', color: '#38BDF8', top: cachedGeometry.architecture.top, height: cachedGeometry.architecture.height },
+      { id: 'experience', num: '06', name: 'TIMELINE', color: '#E5A93C', top: cachedGeometry.experience.top, height: cachedGeometry.experience.height },
+      { id: 'certifications', num: '07', name: 'CREDENTIALS', color: '#2DD4BF', top: cachedGeometry.certifications.top, height: cachedGeometry.certifications.height },
+      { id: 'resume', num: '08', name: 'DOSSIER', color: '#94A3B8', top: cachedGeometry.resume.top, height: cachedGeometry.resume.height },
+      { id: 'contact', num: '09', name: 'TRANSMIT', color: '#2DD4BF', top: cachedGeometry.contact.top, height: cachedGeometry.contact.height },
+    ];
+
+    let currentSection = sections[0];
+    for (let i = 0; i < sections.length; i++) {
+      const sec = sections[i];
+      if (focusY >= sec.top && focusY < sec.top + sec.height) {
+        currentSection = sec;
+        break;
+      } else if (i === sections.length - 1 && focusY >= sec.top) {
+        currentSection = sec;
+      }
+    }
+
+    if (spineLabel && currentSection && lastChapter !== currentSection.id) {
+      lastChapter = currentSection.id;
+      spineLabel.textContent = `${currentSection.num} ${currentSection.name}`;
+      spineLabel.style.color = currentSection.color;
+      spineLabel.style.borderColor = `${currentSection.color}55`;
+      spineLabel.style.boxShadow = `0 0 12px ${currentSection.color}22`;
+    }
 
     // Active Project Spotlight Tracking is handled authoritatively by Projects.jsx IntersectionObserver
     // to avoid dual-observer fighting, stale geometry caching, and rapid state flapping.

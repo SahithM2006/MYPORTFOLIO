@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ScrollProgress from './components/ScrollProgress.jsx';
+import ScrollSpine from './components/ScrollSpine.jsx';
+import AmbientBackground from './components/AmbientBackground.jsx';
 import Header from './components/Header.jsx';
 import Hero from './components/Hero.jsx';
 import About from './components/About.jsx';
@@ -49,6 +51,8 @@ export default function App() {
   return (
     <>
       <ScrollProgress />
+      <ScrollSpine />
+      <AmbientBackground />
       <Header />
       <main className="page-main" id="main-content">
         <Hero />

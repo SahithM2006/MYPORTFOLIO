@@ -106,6 +106,15 @@ export default function Hero() {
         tl.to(chips[1], { y: -160, x: -30, opacity: 0.05, ease: 'none' }, 0);
         tl.to(chips[2], { y: -80, x: 15, opacity: 0.1, ease: 'none' }, 0);
       }
+
+      const geo1 = document.getElementById('hero-geo-1');
+      const geo2 = document.getElementById('hero-geo-2');
+      if (geo1) {
+        tl.to(geo1, { y: -170, x: -35, rotation: 45, opacity: 0.1, ease: 'none' }, 0);
+      }
+      if (geo2) {
+        tl.to(geo2, { y: -110, x: 25, rotation: -40, opacity: 0.1, ease: 'none' }, 0);
+      }
     });
 
     return () => ctx.revert();
@@ -130,6 +139,26 @@ export default function Hero() {
         <div className="hero-telemetry-chip chip-bottom-right">
           <span className="telemetry-dot dot-jade"></span>
           <span className="telemetry-label">DIGITAL_TWIN // AEGIS ACTIVE</span>
+        </div>
+      </div>
+
+      {/* Independent Floating 3D Geometric Prisms (Moving around hero space, independent of character) */}
+      <div className="hero-floating-geometry" aria-hidden="true">
+        <div className="hero-geo-prism geo-prism-1" id="hero-geo-1">
+          <svg width="68" height="68" viewBox="0 0 64 64" fill="none">
+            <polygon points="32,4 60,20 32,36 4,20" stroke="rgba(45, 212, 191, 0.45)" strokeWidth="1.2" fill="rgba(45, 212, 191, 0.05)" />
+            <polygon points="4,20 32,36 32,60 4,44" stroke="rgba(45, 212, 191, 0.3)" strokeWidth="1.2" fill="rgba(45, 212, 191, 0.03)" />
+            <polygon points="60,20 32,36 32,60 60,44" stroke="rgba(45, 212, 191, 0.25)" strokeWidth="1.2" fill="none" />
+            <circle cx="32" cy="36" r="2.5" fill="#2DD4BF" />
+          </svg>
+        </div>
+        <div className="hero-geo-prism geo-prism-2" id="hero-geo-2">
+          <svg width="60" height="60" viewBox="0 0 56 56" fill="none">
+            <polygon points="28,4 52,28 28,52 4,28" stroke="rgba(229, 169, 60, 0.45)" strokeWidth="1.2" fill="rgba(229, 169, 60, 0.05)" />
+            <line x1="28" y1="4" x2="28" y2="52" stroke="rgba(229, 169, 60, 0.25)" strokeWidth="1" strokeDasharray="3 3" />
+            <line x1="4" y1="28" x2="52" y2="28" stroke="rgba(229, 169, 60, 0.25)" strokeWidth="1" strokeDasharray="3 3" />
+            <circle cx="28" cy="28" r="2.5" fill="#E5A93C" />
+          </svg>
         </div>
       </div>
 

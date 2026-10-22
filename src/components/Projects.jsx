@@ -1627,6 +1627,7 @@ export default function Projects({
                     <h4 className="stage-title">{activeProjectObj.title.split('—')[0].trim()}</h4>
                   </div>
                   <div className="stage-topbar-badge">
+                    <span className="stage-stream-pulse" aria-hidden="true" />
                     <span
                       className={`status-badge-mini ${
                         activeProjectObj.statusType === 'implemented' ? 'status-live' : 'status-proto'
@@ -1636,6 +1637,9 @@ export default function Projects({
                     </span>
                   </div>
                 </div>
+
+                {/* Ambient scanning scanline across preview stage */}
+                <div className="sticky-stage-scanline" aria-hidden="true" />
 
                 {/* Dynamic Exhibit Renderer with explicit keyed mounting */}
                 <div className="sticky-stage-content" id="sticky-stage-content">
