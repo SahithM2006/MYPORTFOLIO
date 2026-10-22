@@ -2367,14 +2367,21 @@ input[type="range"] {
 .constellation-node {
   cursor: pointer;
   outline: none;
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
-  will-change: transform, opacity;
+  transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
 .constellation-node:hover,
 .constellation-node:focus-visible,
 .constellation-node.node-active {
-  transform: translate(0, 0) scale(1.14);
+  /* CRITICAL: Never apply CSS transform to SVG <g> positioned by XML transform="translate(x,y)" attribute */
+  filter: drop-shadow(0 0 12px currentColor);
+}
+
+.constellation-node:hover .node-core-circle,
+.constellation-node:focus-visible .node-core-circle,
+.constellation-node.node-active .node-core-circle {
+  stroke-width: 3.5px !important;
+  filter: drop-shadow(0 0 8px currentColor);
 }
 
 .constellation-node.node-neighbor {
