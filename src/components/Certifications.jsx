@@ -56,6 +56,23 @@ export default function Certifications() {
 
   return (
     <section className="certifications-section" id="certifications" aria-labelledby="certifications-title">
+      {/* Moving Ambient Technical Circuit Motif & Telemetry Stream */}
+      <div className="cert-ambient-circuit" aria-hidden="true">
+        <svg viewBox="0 0 1200 600" className="cert-ambient-svg" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="certGradTeal" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#2DD4BF" stopOpacity="0.4" />
+              <stop offset="50%" stopColor="#38BDF8" stopOpacity="0.6" />
+              <stop offset="100%" stopColor="#2DD4BF" stopOpacity="0.4" />
+            </linearGradient>
+          </defs>
+          <path d="M0,100 L300,100 L380,180 L820,180 L900,260 L1200,260" stroke="rgba(45, 212, 191, 0.12)" strokeWidth="1.2" strokeDasharray="6 6" fill="none" />
+          <path d="M0,100 L300,100 L380,180 L820,180 L900,260 L1200,260" stroke="url(#certGradTeal)" strokeWidth="1.8" strokeDasharray="16 120" fill="none" className="circuit-path-stream-1" />
+          <path d="M0,450 L250,450 L320,380 L700,380 L780,300 L1200,300" stroke="rgba(229, 169, 60, 0.12)" strokeWidth="1.2" strokeDasharray="8 8" fill="none" />
+          <path d="M0,450 L250,450 L320,380 L700,380 L780,300 L1200,300" stroke="#E5A93C" strokeWidth="1.6" strokeDasharray="14 110" fill="none" className="circuit-path-stream-2" />
+        </svg>
+      </div>
+
       <div className="certifications-container">
         {/* Section Header */}
         <div className="section-header-block">
@@ -112,6 +129,11 @@ export default function Certifications() {
 
         {/* Vertically Arranged Timeline / Numbered Entries */}
         <div className="cert-timeline-list" role="list">
+          {/* Continuous Animated Timeline Spine Track */}
+          <div className="cert-timeline-spine-track" aria-hidden="true">
+            <div className="cert-timeline-spine-fill" id="cert-timeline-spine-fill"></div>
+          </div>
+
           {filteredCerts.map((cert, index) => {
             const itemNumber = String(index + 1).padStart(2, '0');
             const hasVerifyLink = Boolean(cert.verifyUrl);
@@ -122,12 +144,13 @@ export default function Certifications() {
                 key={cert.id}
                 className={`cert-timeline-row ${cert.highlight ? 'highlighted-entry' : ''} ${isSpecialization ? 'specialization-entry' : ''}`}
                 role="listitem"
+                id={`cert-row-${itemNumber}`}
               >
                 {/* Timeline Column: Numbered Entry & Slim Node Track */}
                 <div className="cert-timeline-rail" aria-hidden="true">
                   <span className="cert-timeline-index">{itemNumber}</span>
                   <div className="cert-timeline-node-wrap">
-                    <span className="cert-timeline-node" />
+                    <span className="cert-timeline-node" id={`cert-node-${itemNumber}`} />
                     <span className="cert-timeline-line" />
                   </div>
                 </div>

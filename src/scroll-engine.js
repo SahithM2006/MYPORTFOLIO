@@ -323,22 +323,22 @@ export function initScrollEngine() {
           );
         }
 
-        // Delicate connecting lines fade & draw in
+        // Delicate connecting lines fade in
         if (constellationLines.length) {
           skillsTl.fromTo(
             constellationLines,
-            { opacity: 0, scale: 0.96, transformOrigin: 'center center' },
-            { opacity: 1, scale: 1, duration: 0.7, stagger: { amount: 0.35, from: 'random' }, ease: 'power2.out' },
+            { opacity: 0 },
+            { opacity: 1, duration: 0.7, stagger: { amount: 0.35, from: 'random' }, ease: 'power2.out' },
             0.15
           );
         }
 
-        // Nodes expand smoothly from center ecosystem
+        // Nodes reveal smoothly with opacity stagger, preserving SVG geometric coordinates
         if (constellationNodes.length) {
           skillsTl.fromTo(
             constellationNodes,
-            { opacity: 0, scale: 0.5, transformOrigin: 'center center' },
-            { opacity: 1, scale: 1, duration: 0.55, stagger: { amount: 0.45, from: 'center' }, ease: 'back.out(1.4)' },
+            { opacity: 0 },
+            { opacity: 1, duration: 0.55, stagger: { amount: 0.4, from: 'center' }, ease: 'power2.out' },
             0.2
           );
         }
@@ -413,7 +413,67 @@ export function initScrollEngine() {
         );
       });
 
-      // 4. Experience section: header & animated timeline progress spine
+      // 4. Technical Architecture section: header, selector tabs & system canvas
+      const archHeader = document.querySelector('.architecture-header-center');
+      if (archHeader) {
+        gsap.fromTo(
+          archHeader,
+          { y: 20, opacity: 0.35 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.65,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: archHeader,
+              start: 'top 88%',
+              toggleActions: 'play none none none', once: true
+            }
+          }
+        );
+      }
+
+      const archTabs = document.querySelectorAll('.ca-proj-tab');
+      if (archTabs.length) {
+        gsap.fromTo(
+          archTabs,
+          { y: 16, opacity: 0.4 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.5,
+            stagger: 0.06,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: '.ca-project-selector',
+              start: 'top 86%',
+              toggleActions: 'play none none none', once: true
+            }
+          }
+        );
+      }
+
+      const archCards = document.querySelectorAll('.ca-overview-card');
+      if (archCards.length) {
+        gsap.fromTo(
+          archCards,
+          { y: 24, opacity: 0.35 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: '.ca-overview-grid',
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
+      // 5. Experience section: header & animated timeline progress spine
       const expHeader = document.querySelector('.exp-header-block') || document.querySelector('.experience-title');
       if (expHeader) {
         gsap.fromTo(
@@ -479,7 +539,7 @@ export function initScrollEngine() {
             scrollTrigger: {
               trigger: item,
               start: 'top 84%',
-              toggleActions: 'play none none none', once: true,
+              toggleActions: 'play none none reverse',
               onEnter: () => item.classList.add('in-view'),
               onEnterBack: () => item.classList.add('in-view'),
               onLeaveBack: () => item.classList.remove('in-view')
@@ -488,7 +548,7 @@ export function initScrollEngine() {
         );
       });
 
-      // 5. Certifications section: header & horizontal timeline row cascades
+      // 6. Certifications section: continuous scrubbed timeline spine, ambient circuit parallax & reversible row entrances
       const certHeader = document.querySelector('.certifications-header') || document.querySelector('#certifications-title');
       if (certHeader) {
         gsap.fromTo(
@@ -508,34 +568,78 @@ export function initScrollEngine() {
         );
       }
 
-      const certList = document.querySelector('.cert-timeline-list');
-      const certRows = document.querySelectorAll('.cert-timeline-row');
-      if (certList && certRows.length) {
+      // Continuous scrubbed timeline progress fill along the certifications rail
+      const certSpineFill = document.getElementById('cert-timeline-spine-fill');
+      const certSecEl = document.getElementById('certifications');
+      if (certSpineFill && certSecEl) {
         gsap.fromTo(
-          certRows,
-          { x: -18, opacity: 0.35 },
+          certSpineFill,
+          { height: '0%' },
           {
-            x: 0,
-            opacity: 1,
-            duration: 0.45,
-            ease: 'power2.out',
-            stagger: 0.04,
+            height: '100%',
+            ease: 'none',
             scrollTrigger: {
-              trigger: certList,
-              start: 'top 84%',
-              toggleActions: 'play none none none', once: true
+              trigger: certSecEl,
+              start: 'top 70%',
+              end: 'bottom 85%',
+              scrub: 0.5,
+              onUpdate: (self) => {
+                const p = self.progress;
+                const certNodes = document.querySelectorAll('.cert-timeline-node');
+                certNodes.forEach((node, idx) => {
+                  const threshold = (idx + 0.3) / Math.max(certNodes.length, 1);
+                  if (p >= threshold) node.classList.add('node-illuminated');
+                  else node.classList.remove('node-illuminated');
+                });
+              }
             }
           }
         );
       }
 
-      // 6. Resume section: dual-column entrance
+      // Parallax drifting circuit background in Certifications
+      const certCircuit = document.querySelector('.cert-ambient-circuit');
+      if (certCircuit && certSecEl) {
+        gsap.to(certCircuit, {
+          y: -50,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: certSecEl,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 0.8
+          }
+        });
+      }
+
+      // Staggered, bidirectional entrance for each certification card
+      const certRows = document.querySelectorAll('.cert-timeline-row');
+      certRows.forEach((row, idx) => {
+        const isEven = idx % 2 === 0;
+        gsap.fromTo(
+          row,
+          { x: isEven ? -22 : 22, opacity: 0.3 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.55,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: row,
+              start: 'top 88%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      });
+
+      // 7. Resume section: dual-column entrance with scroll scrub and reversible reveals
       const resumeColPrimary = document.querySelector('.resume-col-primary');
       const resumeColSecondary = document.querySelector('.resume-col-secondary');
       if (resumeColPrimary) {
         gsap.fromTo(
           resumeColPrimary,
-          { x: -20, opacity: 0.35 },
+          { x: -24, opacity: 0.3 },
           {
             x: 0,
             opacity: 1,
@@ -543,8 +647,8 @@ export function initScrollEngine() {
             ease: 'power2.out',
             scrollTrigger: {
               trigger: resumeColPrimary,
-              start: 'top 84%',
-              toggleActions: 'play none none none', once: true
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
             }
           }
         );
@@ -552,7 +656,7 @@ export function initScrollEngine() {
       if (resumeColSecondary) {
         gsap.fromTo(
           resumeColSecondary,
-          { x: 20, opacity: 0.35 },
+          { x: 24, opacity: 0.3 },
           {
             x: 0,
             opacity: 1,
@@ -561,20 +665,20 @@ export function initScrollEngine() {
             ease: 'power2.out',
             scrollTrigger: {
               trigger: resumeColSecondary,
-              start: 'top 84%',
-              toggleActions: 'play none none none', once: true
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
             }
           }
         );
       }
 
-      // 7. Contact section: invitation & form entrance
+      // 8. Contact section: invitation & form entrance with reversible reveals
       const contactIntro = document.querySelector('.contact-intro-col');
       const contactForm = document.querySelector('.contact-form-col') || document.querySelector('.contact-form-wrapper');
       if (contactIntro) {
         gsap.fromTo(
           contactIntro,
-          { x: -24, opacity: 0.35 },
+          { x: -24, opacity: 0.3 },
           {
             x: 0,
             opacity: 1,
@@ -582,8 +686,8 @@ export function initScrollEngine() {
             ease: 'power2.out',
             scrollTrigger: {
               trigger: contactIntro,
-              start: 'top 85%',
-              toggleActions: 'play none none none', once: true
+              start: 'top 86%',
+              toggleActions: 'play none none reverse'
             }
           }
         );
@@ -591,7 +695,7 @@ export function initScrollEngine() {
       if (contactForm) {
         gsap.fromTo(
           contactForm,
-          { y: 24, opacity: 0.35 },
+          { y: 24, opacity: 0.3 },
           {
             y: 0,
             opacity: 1,
@@ -600,8 +704,8 @@ export function initScrollEngine() {
             ease: 'power2.out',
             scrollTrigger: {
               trigger: contactForm,
-              start: 'top 85%',
-              toggleActions: 'play none none none', once: true
+              start: 'top 86%',
+              toggleActions: 'play none none reverse'
             }
           }
         );

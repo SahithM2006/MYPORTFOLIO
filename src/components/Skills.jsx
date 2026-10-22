@@ -373,11 +373,11 @@ export default function Skills({
 
             {/* Constellation Cluster Monikers */}
             <g className="constellation-cluster-labels" aria-hidden="true">
-              <text x="370" y="160" className="cluster-moniker">PROGRAMMING</text>
-              <text x="755" y="105" className="cluster-moniker">AI &amp; MACHINE LEARNING</text>
-              <text x="770" y="350" className="cluster-moniker">DATA SCIENCE</text>
-              <text x="210" y="210" className="cluster-moniker">DEVELOPMENT &amp; SYSTEMS</text>
-              <text x="470" y="60" className="cluster-moniker">TOOLS &amp; SECURITY</text>
+              <text x="440" y="48" className="cluster-moniker">TOOLS &amp; SECURITY ANALYSIS</text>
+              <text x="180" y="175" className="cluster-moniker">DEVELOPMENT &amp; SYSTEMS</text>
+              <text x="790" y="75" className="cluster-moniker">AI &amp; MACHINE LEARNING</text>
+              <text x="860" y="520" className="cluster-moniker">DATA SCIENCE &amp; ANALYTICS</text>
+              <text x="410" y="565" className="cluster-moniker">INFRASTRUCTURE &amp; AUTOMATION</text>
             </g>
 
             {/* Connecting Edges */}
@@ -397,15 +397,15 @@ export default function Skills({
 
                 const theme = GROUP_THEME_MAP[edge.source.category] || GROUP_THEME_MAP.programming;
 
-                let strokeColor = 'rgba(94, 153, 179, 0.22)';
-                let strokeWidth = 1.1;
+                let strokeColor = 'rgba(74, 153, 179, 0.42)';
+                let strokeWidth = 1.6;
 
                 if (isEdgeActive) {
                   strokeColor = theme.color;
-                  strokeWidth = 2.4;
+                  strokeWidth = 2.8;
                 } else if (isEdgeGroupActive) {
                   strokeColor = theme.color;
-                  strokeWidth = 1.8;
+                  strokeWidth = 2.2;
                 }
 
                 return (
@@ -416,9 +416,10 @@ export default function Skills({
                     y1={edge.source.coords.y}
                     x2={edge.target.coords.x}
                     y2={edge.target.coords.y}
-                    className={`constellation-line line-ambient-pulse ${isEdgeActive ? 'line-active line-electric' : ''} ${isEdgeGroupActive ? 'line-group-active line-electric' : ''} ${isEdgeDimmed ? 'line-dimmed' : ''}`}
+                    className={`constellation-line ${isEdgeActive ? 'line-active line-electric' : ''} ${isEdgeGroupActive ? 'line-group-active line-electric' : ''} ${isEdgeDimmed ? 'line-dimmed' : ''}`}
                     stroke={strokeColor}
                     strokeWidth={strokeWidth}
+                    strokeLinecap="round"
                     filter={isEdgeActive ? 'url(#constellationGlow)' : undefined}
                   />
                 );
@@ -450,12 +451,11 @@ export default function Skills({
                 const baseRadius = isAnchor ? 28 : 20;
                 const orbitRadius = isAnchor ? 38 : 28;
 
-                const floatClass = `node-float-${((skill.coords.x + skill.coords.y) % 4) + 1}`;
                 return (
                   <g
                     key={skill.id}
                     id={`constellation-node-${skill.id}`}
-                    className={`constellation-node ${floatClass} ${isActive ? 'node-active' : ''} ${isNeighbor ? 'node-neighbor' : ''} ${isDimmed ? 'node-dimmed' : ''} ${isHighlightedByProject ? 'node-project-linked' : ''} ${isCategoryPulsing && isGroupMatch && selectedCategory !== 'all' ? 'node-category-pulse' : ''}`}
+                    className={`constellation-node ${isActive ? 'node-active' : ''} ${isNeighbor ? 'node-neighbor' : ''} ${isDimmed ? 'node-dimmed' : ''} ${isHighlightedByProject ? 'node-project-linked' : ''} ${isCategoryPulsing && isGroupMatch && selectedCategory !== 'all' ? 'node-category-pulse' : ''}`}
                     transform={`translate(${skill.coords.x}, ${skill.coords.y})`}
                     role="button"
                     tabIndex={0}
@@ -511,24 +511,14 @@ export default function Skills({
                       {skill.symbol}
                     </text>
 
-                    {/* Skill Label (Placed below node) */}
+                    {/* High-Contrast Skill Title Label */}
                     <text
-                      y={baseRadius + 15}
+                      y={baseRadius + 17}
                       textAnchor="middle"
                       className={`node-title-label ${isActive ? 'label-active' : ''}`}
-                      fill={isActive ? '#FFFFFF' : '#CBD5E1'}
+                      fill={isActive ? '#FFFFFF' : '#E2E8F0'}
                     >
                       {skill.title}
-                    </text>
-
-                    {/* Group Badge Indicator */}
-                    <text
-                      y={baseRadius + 26}
-                      textAnchor="middle"
-                      className="node-group-label"
-                      fill={theme.text}
-                    >
-                      {skill.groupLabel}
                     </text>
 
                     {/* Project Link Beacon Vector Badge */}

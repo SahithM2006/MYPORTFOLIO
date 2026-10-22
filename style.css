@@ -2438,17 +2438,24 @@ input[type="range"] {
 }
 
 .node-title-label {
-  font-family: var(--font-body);
+  font-family: var(--font-body, sans-serif);
   font-weight: 600;
   font-size: 11px;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
   pointer-events: none;
   user-select: none;
-  transition: fill 0.2s ease;
+  transition: fill 0.2s ease, font-weight 0.2s ease;
+  paint-order: stroke fill;
+  stroke: rgba(6, 11, 15, 0.95);
+  stroke-width: 4px;
+  stroke-linejoin: round;
 }
 
 .node-title-label.label-active {
-  font-weight: 700;
+  font-weight: 800;
+  fill: #FFFFFF !important;
+  stroke: rgba(4, 8, 12, 0.98);
+  stroke-width: 5px;
 }
 
 .node-group-label {
@@ -11017,21 +11024,113 @@ input[type="range"] {
   50% { opacity: 0.85; stroke-dashoffset: 20; }
 }
 
-.node-float-1 { animation: nodeFloatAnim1 5s ease-in-out infinite alternate; }
-.node-float-2 { animation: nodeFloatAnim2 6s ease-in-out infinite alternate 0.8s; }
-.node-float-3 { animation: nodeFloatAnim1 5.5s ease-in-out infinite alternate 1.6s; }
-.node-float-4 { animation: nodeFloatAnim2 6.5s ease-in-out infinite alternate 2.4s; }
-
-@keyframes nodeFloatAnim1 {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(2px, -3px); }
-  100% { transform: translate(-2px, 2px); }
+.line-electric {
+  stroke-dasharray: 8 10;
+  animation: lineElectricPulseFlow 2.4s linear infinite;
 }
 
-@keyframes nodeFloatAnim2 {
-  0% { transform: translate(0, 0); }
-  50% { transform: translate(-3px, 2px); }
-  100% { transform: translate(2px, -2px); }
+@keyframes lineElectricPulseFlow {
+  from { stroke-dashoffset: 36; }
+  to { stroke-dashoffset: 0; }
+}
+
+.node-orbit-ring {
+  transform-origin: center;
+  animation: orbitRingDash 20s linear infinite;
+}
+
+@keyframes orbitRingDash {
+  from { stroke-dashoffset: 64; }
+  to { stroke-dashoffset: 0; }
+}
+
+.node-glow-halo {
+  animation: glowHaloPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes glowHaloPulse {
+  0% { opacity: 0.35; transform: scale(0.92); }
+  100% { opacity: 0.75; transform: scale(1.08); }
+}
+
+/* ==========================================================================
+   30B. CERTIFICATIONS DYNAMIC TIMELINE & AMBIENT MOTION
+   ========================================================================== */
+.cert-ambient-circuit {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+  opacity: 0.7;
+}
+
+.cert-ambient-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.cert-timeline-spine-track {
+  position: absolute;
+  left: 20px;
+  top: 15px;
+  bottom: 25px;
+  width: 2px;
+  background: rgba(74, 134, 153, 0.14);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.cert-timeline-spine-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(180deg, #2DD4BF 0%, #38BDF8 60%, #E5A93C 100%);
+  box-shadow: 0 0 10px rgba(45, 212, 191, 0.6);
+  will-change: height;
+  border-radius: 2px;
+}
+
+.cert-timeline-node {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-surface, #121E27);
+  border: 2px solid rgba(74, 134, 153, 0.35);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 3;
+}
+
+.cert-timeline-node.node-illuminated {
+  background: #2DD4BF !important;
+  border-color: #FFF6E9 !important;
+  box-shadow: 0 0 14px rgba(45, 212, 191, 0.8), 0 0 28px rgba(45, 212, 191, 0.4) !important;
+}
+
+.cert-timeline-row {
+  position: relative;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.cert-timeline-row:hover,
+.cert-timeline-row:focus-within {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(45, 212, 191, 0.15);
+  border-color: rgba(45, 212, 191, 0.4);
+}
+
+.cert-link-action {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cert-link-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(45, 212, 191, 0.25);
 }
 
 /* ==========================================================================
