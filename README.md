@@ -1,270 +1,68 @@
-# Ex01 Portfolio
-## Date: 02/02/2026
+﻿# Sahith M. — Engineering Portfolio & Digital Playground
 
-## AIM
-To create a Portfolio using HTML and CSS.
+An editorial, cinematic, and technically rigorous web portfolio showcasing systems engineering, machine learning pipelines, and agentless telemetry architectures.
 
-## ALGORITHM
-### STEP 1
-Create an HTML file (index.html)
+Built for **Sahith M.**, 3rd-year B.Tech undergraduate in **Artificial Intelligence & Data Science (AI & DS)** at **Saveetha Engineering College (Autonomous), Chennai**.
 
-### STEP 2
-Create a CSS file (style.css)
+---
 
-### STEP 3
-Include a navigation bar with links to different sections.
+## 🏛 Core Architectural Principles & Visual Identity
 
-### STEP 4
-Add structured sections for introduction, about, projects, and contact details.
+- **Theme**: An Independent Mind, Always Evolving. Communicated subtly through atmospheric depth, controlled lighting, and layered geometric compositions rather than decorative storytelling.
+- **Palette**: Obsidian (`#07090E`), Midnight Blue (`#182338`), Deep Charcoal (`#10141D`), Muted Steel Blue (`#7596C8`), and Champagne Gold (`#C6A45A`).
+- **Typography**: Google Fonts Outfit (Editorial Display) + Plus Jakarta Sans (Clean Tech Body) + JetBrains Mono (Telemetry/Code).
+- **Zero Gimmicks**: Complete removal of legacy moving character, cursor tracking, and custom cursor replacements. The default OS system cursor is strictly enforced across the entire experience.
 
-### STEP 5
-Define global styles for fonts, colors, and layout.
+---
 
-### STEP 6
-Style the header, navigation bar, and sections.
+## 🚀 Key Sections & Chapters
 
-### STEP 7
-Use Flexbox or CSS Grid for layout design.
+1. **Chapter 01 // ORIGIN (Hero)**: Architectural Focal Aperture with volumetric lighting, dual-orbiting coordinate astrolabe SVG, kinetic status display, and scroll-linked depth retreat.
+2. **Chapter 02 // MINDSET (About)**: Verified student profile, academic credentials, framed photograph, and 4 interactive technical principles (First-Principles Foundation, Concrete Engineering, Autonomous Execution, Scientific Rigor).
+3. **Chapter 03 // SPECTRUM (Skills)**: 18-skill interactive SVG constellation diagram with cluster orbits and dynamic telemetry context drawer.
+4. **Chapter 04 // EXHIBITS (Projects & Demos)**: Two-column layout with scrolling narrative ledger on the left and a sticky interactive demo stage on the right featuring 4 live simulators:
+   - **Probe360**: WinRM agentless endpoint discovery and CVE baseline auditor.
+   - **Mule Matrix**: Synthetic e₹ CBDC transaction lineage tracer, fan-out dispersal metrics, and NetworkX multigraph flow simulation.
+   - **AI Carbon Intelligence**: Real-time multivariate regression parameter cockpit with energy/distance sliders and carbon savings KPIs.
+   - **AEGIS-TWIN**: Automated honeypot decoy engagement ledger and attack path simulation.
+5. **Chapter 05 // SYSTEMS (Technical Architecture)**: Verified component layers, technical roles, data flows, and interactive 4-column project explorer.
+6. **Chapter 06 // TIMELINE (Experience)**: Chronological milestones documenting genuine pre-professional academic foundations, national-level hackathon prototype honors (VIT Vellore AEGIS-TWIN, SIH shortlisted prototype), and target industry opportunities.
+7. **Chapter 07 // CREDENTIALS (Certifications)**: Verified industry credentials (Packt/Coursera PyTorch Specialization, Simplilearn Cloud Security, Infosys RNNs, Scaler DBMS, IBM SkillsNetwork).
+8. **Chapter 08 // DOSSIER (Resume)**: Comprehensive technical dossier with direct placement PDF downloads (`/Sahith_M_Placement_Resume.pdf`), dual-column breakdown of skills and coursework, and verified schooling records (Class XII 80%, Class X 85%).
+9. **Chapter 09 // TRANSMIT (Contact & Footer)**: Real-time validated contact form, clipboard copy utilities, kinetic orbital radar aura, and live telemetry heartbeat waveform.
 
-### STEP 8
-Add hover effects and transitions for interactivity.
+---
 
-### STEP 9
-Add Images and Media.
+## 🛠 Tech Stack
 
-### STEP 10
-Use optimized images for a professional look.
+- **Framework**: React 19 + Vite 5
+- **Styling**: Vanilla CSS with comprehensive design token architecture (`--bg-primary`, `--surface-card`, `--border-subtle`, `--color-gold`, etc.)
+- **Motion & Transitions**: GSAP 3 + ScrollTrigger + RequestAnimationFrame scroll engine with cached viewport metrics
+- **Deployment**: Vercel (`vercel.json`) with SPA rewrites, clean URLs, and immutable asset caching
 
-### STEP 11
-Open the HTML file in a browser to check layout and functionality.
+---
 
-### STEP 12
-Fix styling issues and refine content placement.
+## 💻 Local Development
 
-### STEP 13
-Deploy the Portfolio.
+```bash
+# Clone the repository
+git clone https://github.com/SahithM2006/Portfolio.git
+cd Portfolio
 
-### STEP 14
-Upload to GitHub Pages for free hosting.
+# Install dependencies
+npm install
 
-## PROGRAM
-```
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Home | Portfolio</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #e3f2fd, #bbdefb);
-            margin: 0;
-        }
-        header {
-            background: #1e88e5;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        nav a {
-            color: yellow;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        nav a:hover {
-            color: white;
-        }
-        .content {
-            background: white;
-            margin: 30px;
-            padding: 40px;
-            border-radius: 10px;
-        }
-    </style>
-</head>
-<body>
+# Start local development server
+npm run dev
+# Server runs on http://localhost:3000
 
-<header>
-    <h1>My Portfolio</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="projects.html">Projects</a>
-        <a href="contact.html">Contact</a>
-    </nav>
-</header>
-
-<div class="content">
-    <h2>Hello, I'm Sahith</h2>
-    <p>Aspiring Web Developer</p>
-</div>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>About | Portfolio</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #f3e5f5, #e1bee7);
-            margin: 0;
-        }
-        header {
-            background: #8e24aa;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        nav a {
-            color: #ffeb3b;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .content {
-            background: white;
-            margin: 30px;
-            padding: 40px;
-            border-radius: 10px;
-        }
-    </style>
-</head>
-<body>
-
-<header>
-    <h1>About Me</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="projects.html">Projects</a>
-        <a href="contact.html">Contact</a>
-    </nav>
-</header>
-
-<div class="content">
-    <p>
-        I am passionate about web development and enjoy building
-        clean and responsive websites using HTML and CSS.
-    </p>
-</div>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Projects | Portfolio</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #e8f5e9, #c8e6c9);
-            margin: 0;
-        }
-        header {
-            background: #2e7d32;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        nav a {
-            color: #ffeb3b;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .content {
-            background: white;
-            margin: 30px;
-            padding: 40px;
-            border-radius: 10px;
-        }
-    </style>
-</head>
-<body>
-
-<header>
-    <h1>Projects</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="projects.html">Projects</a>
-        <a href="contact.html">Contact</a>
-    </nav>
-</header>
-
-<div class="content">
-    <ul>
-        <li>Portfolio Website</li>
-        <li>Landing Page Design</li>
-        <li>Calculator using HTML & CSS</li>
-    </ul>
-</div>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Contact | Portfolio</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #fff3e0, #ffe0b2);
-            margin: 0;
-        }
-        header {
-            background: #ef6c00;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        nav a {
-            color: #fff176;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .content {
-            background: white;
-            margin: 30px;
-            padding: 40px;
-            border-radius: 10px;
-        }
-    </style>
-</head>
-<body>
-
-<header>
-    <h1>Contact Me</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="projects.html">Projects</a>
-        <a href="contact.html">Contact</a>
-    </nav>
-</header>
-
-<div class="content">
-    <p>Email: sahith@example.com</p>
-    <p>Phone: +91 9876543210</p>
-</div>
-
-</body>
-</html>
-
+# Build production bundle
+npm run build
 ```
 
-## OUTPUT
-<img width="1918" height="1030" alt="Screenshot 2026-02-02 174618" src="https://github.com/user-attachments/assets/309a525a-5e86-4e44-bd6e-de6e7bf4e208" />
-<img width="1897" height="1030" alt="Screenshot 2026-02-02 174557" src="https://github.com/user-attachments/assets/b873132b-353e-445f-b3e7-8bf152d17a92" />
-<img width="1918" height="1030" alt="Screenshot 2026-02-02 174539" src="https://github.com/user-attachments/assets/b2a4679e-7051-4781-97fb-3a4d1d5bc476" />
-<img width="1918" height="1027" alt="Screenshot 2026-02-02 174518" src="https://github.com/user-attachments/assets/47b463fd-2c3f-4372-b4e7-2bf1aa407b46" />
+---
 
-## RESULT
-The program for creating Portfolio using HTML and CSS is executed successfully.
+## 📄 License & Attribution
+
+Designed and engineered for **Sahith M.** (Saveetha Engineering College, Autonomous).  
+All rights reserved © 2026.
