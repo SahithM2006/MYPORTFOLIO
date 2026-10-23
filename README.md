@@ -1,4 +1,4 @@
-﻿# Sahith M. — Engineering Portfolio & Digital Playground
+# Sahith M. — Engineering Portfolio & Digital Playground
 
 An editorial, cinematic, and technically rigorous web portfolio showcasing systems engineering, machine learning pipelines, and agentless telemetry architectures.
 
@@ -15,21 +15,38 @@ Built for **Sahith M.**, 3rd-year B.Tech undergraduate in **Artificial Intellige
 
 ---
 
-## 🚀 Key Sections & Chapters
+## 🚀 Key Sections & Cinematic Chapters (Visual Reference Reconstruction)
 
-1. **Chapter 01 // ORIGIN (Hero)**: Architectural Focal Aperture with volumetric lighting, dual-orbiting coordinate astrolabe SVG, kinetic status display, and scroll-linked depth retreat.
-2. **Chapter 02 // MINDSET (About)**: Verified student profile, academic credentials, framed photograph, and 4 interactive technical principles (First-Principles Foundation, Concrete Engineering, Autonomous Execution, Scientific Rigor).
-3. **Chapter 03 // SPECTRUM (Skills)**: 18-skill interactive SVG constellation diagram with cluster orbits and dynamic telemetry context drawer.
-4. **Chapter 04 // EXHIBITS (Projects & Demos)**: Two-column layout with scrolling narrative ledger on the left and a sticky interactive demo stage on the right featuring 4 live simulators:
-   - **Probe360**: WinRM agentless endpoint discovery and CVE baseline auditor.
-   - **Mule Matrix**: Synthetic e₹ CBDC transaction lineage tracer, fan-out dispersal metrics, and NetworkX multigraph flow simulation.
-   - **AI Carbon Intelligence**: Real-time multivariate regression parameter cockpit with energy/distance sliders and carbon savings KPIs.
-   - **AEGIS-TWIN**: Automated honeypot decoy engagement ledger and attack path simulation.
-5. **Chapter 05 // SYSTEMS (Technical Architecture)**: Verified component layers, technical roles, data flows, and interactive 4-column project explorer.
-6. **Chapter 06 // TIMELINE (Experience)**: Chronological milestones documenting genuine pre-professional academic foundations, national-level hackathon prototype honors (VIT Vellore AEGIS-TWIN, SIH shortlisted prototype), and target industry opportunities.
-7. **Chapter 07 // CREDENTIALS (Certifications)**: Verified industry credentials (Packt/Coursera PyTorch Specialization, Simplilearn Cloud Security, Infosys RNNs, Scaler DBMS, IBM SkillsNetwork).
-8. **Chapter 08 // DOSSIER (Resume)**: Comprehensive technical dossier with direct placement PDF downloads (`/Sahith_M_Placement_Resume.pdf`), dual-column breakdown of skills and coursework, and verified schooling records (Class XII 80%, Class X 85%).
-9. **Chapter 09 // TRANSMIT (Contact & Footer)**: Real-time validated contact form, clipboard copy utilities, kinetic orbital radar aura, and live telemetry heartbeat waveform.
+1. **Chapter 01 // ORIGIN (Hero — Image 1 Reference)**:
+   - Screen-spanning monumental typography (`EXPLORE MY PORTFOLIO.`) with subtle kinetic depth.
+   - Central portrait silhouette emerging from the bottom edge with ambient rim lighting and soft mask.
+   - Rotating editorial SVG badge (`SAHITH M • AI & DS • 2024–2028 •`) on the bottom-left corner.
+   - Real-time interactive verb cycle directive button (`ENGINEER`, `PROTECT`, `ANALYZE`, `DISCOVER`, `ORCHESTRATE`) and editorial discipline statement on bottom-right.
+2. **Chapter 02 // CURIOSITY & MINDSET (About — Images 2 & 3 Reference)**:
+   - **Stage 01 Gate Card**: Pinned dark translucent card (`STAGE 01 // CURIOSITY` / `ABOUT ME`) over starry cosmos that smoothly zooms and scales as the user pulls down.
+   - **Stage 02 Volumetric Spotlight Beam**: Angled high-contrast beam of light shining from the top-right onto the illuminated engineer portrait.
+   - Verbatim bio narrative, academic credentials capsule (`B.Tech in AI & DS, 3rd Year • CGPA 8.44`), 4 interactive Mindset Pillars (Systems Before Syntax, Telemetry Over Assumptions, Empirical Verification, Continuous Evolution), and craft matrix.
+3. **Chapter 03 // SPECTRUM (Skills)**:
+   - 18-skill interactive SVG constellation diagram with cluster orbits and dynamic telemetry context drawer.
+4. **Chapter 04 // CREATION (Featured Projects & Demos — Image 5 Reference)**:
+   - High-contrast card entrance banner (`FEATURED PROJECTS` / `STAGE 03: CREATION`).
+   - Two-column exhibition ledger with 4 live interactive simulators:
+     - **Probe360**: WinRM agentless endpoint discovery and CVE baseline auditor.
+     - **Mule Matrix**: Synthetic e₹ CBDC transaction lineage tracer, fan-out dispersal metrics, and NetworkX multigraph flow simulation.
+     - **AI Carbon Intelligence**: Real-time multivariate regression parameter cockpit with energy/distance sliders and carbon savings KPIs.
+     - **AEGIS-TWIN**: Automated honeypot decoy engagement ledger and attack path simulation.
+5. **Chapter 05 // SYSTEMS (Technical Architecture)**:
+   - System canvas, component layers, technical roles, data flows, and interactive 4-column project explorer.
+6. **Chapter 06 // UNDERSTANDING (Experience — Image 4 Reference)**:
+   - Pinned horizontal scrolling timeline driven by vertical scroll (`pin: true`, `scrub: 1`).
+   - Persistent left column (`WHERE I'VE BEEN` / `OPEN TO 2026 INTERNSHIPS`) with stacked typography and category filter pills.
+   - Horizontal moving track with oversized background year watermarks (`2024`, `SELF-DIRECTED`, `2025`, `HACKATHONS`, `2026`) and milestone cards sliding across (Academic Foundation at Saveetha Engineering College, Hackathon Honors & Software Winner, Target Industry Roles & Availability).
+7. **Chapter 07 // CREDENTIALS (Certifications)**:
+   - Industry credentials (Packt/Coursera PyTorch Specialization, Simplilearn Cloud Security, Infosys RNNs, Scaler DBMS, IBM SkillsNetwork).
+8. **Chapter 08 // DOSSIER (Resume)**:
+   - Technical dossier with direct placement PDF downloads (`/Sahith_M_Placement_Resume.pdf`), dual-column breakdown of skills and coursework, and schooling records (Class XII 80%, Class X 85%).
+9. **Chapter 09 // TRANSMIT (Contact & Footer)**:
+   - Real-time validated contact form, clipboard copy utilities, kinetic orbital radar aura, and live telemetry heartbeat waveform.
 
 ---
 
