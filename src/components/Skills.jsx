@@ -333,13 +333,15 @@ export default function Skills({
           {/* Ambient Cosmic Backdrop */}
           <div className="constellation-ambient-glow" aria-hidden="true" />
 
-          <svg
-            className="constellation-stage"
-            id="constellation-stage"
-            viewBox="0 0 1000 600"
-            preserveAspectRatio="xMidYMid meet"
-            aria-hidden="false"
-          >
+          {/* Primary Constellation Network Canvas */}
+          <div className="constellation-canvas-pane">
+            <svg
+              className="constellation-stage"
+              id="constellation-stage"
+              viewBox="0 0 1000 600"
+              preserveAspectRatio="xMidYMid meet"
+              aria-hidden="false"
+            >
             <defs>
               {/* Radial Gradients for Node Cores */}
               <radialGradient id="nodeGrad-programming" cx="35%" cy="35%" r="65%">
@@ -541,6 +543,95 @@ export default function Skills({
               })}
             </g>
           </svg>
+          </div>
+
+          {/* Right: Integrated Telemetry Context Inspector */}
+          {selectedSkill && (
+            <div className="skill-context-drawer open" id="skill-context-drawer" aria-live="polite">
+              <div className="context-drawer-inner">
+                <div className="drawer-header-row">
+                  <div className="drawer-title-group">
+                    <div className="drawer-tags-bar">
+                      <span
+                        className="constellation-cat-pill"
+                        style={{
+                          backgroundColor: (GROUP_THEME_MAP[selectedSkill.category] || GROUP_THEME_MAP.programming).tagBg,
+                          color: (GROUP_THEME_MAP[selectedSkill.category] || GROUP_THEME_MAP.programming).text,
+                          borderColor: (GROUP_THEME_MAP[selectedSkill.category] || GROUP_THEME_MAP.programming).color
+                        }}
+                      >
+                        {selectedSkill.groupLabel.toUpperCase()} &bull; {selectedSkill.symbol}
+                      </span>
+                      <span className="drawer-tier-badge">
+                        {selectedSkill.tier === 'anchor' ? 'PRIMARY ECOSYSTEM ANCHOR' : 'DOMAIN SPECIALIST'}
+                      </span>
+                    </div>
+                    <h4 className="drawer-skill-title" id="drawer-skill-name">
+                      {selectedSkill.title}
+                    </h4>
+                  </div>
+
+                  {/* Ecosystem Connections Ribbon in Inspector */}
+                  <div className="drawer-connections-preview">
+                    <span className="drawer-conn-title">Constellation Links ({selectedSkill.connections?.length || 0}):</span>
+                    <div className="drawer-connected-pills">
+                      {(selectedSkill.connections || []).map((connId) => {
+                        const connSkill = SKILLS.find((s) => s.id === connId);
+                        if (!connSkill) return null;
+                        const connTheme = GROUP_THEME_MAP[connSkill.category] || GROUP_THEME_MAP.programming;
+                        return (
+                          <button
+                            key={connId}
+                            type="button"
+                            className="drawer-neighbor-pill"
+                            title={`Hop to ${connSkill.title} in the constellation`}
+                            onClick={() => handleSelectSkill(connId)}
+                          >
+                            <span className="pill-dot" style={{ backgroundColor: connTheme.color }} />
+                            <span className="pill-name">{connSkill.title}</span>
+                            <span className="pill-arrow">&rarr;</span>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                <p className="drawer-description" id="drawer-skill-desc">
+                  {selectedSkill.desc}
+                </p>
+
+                <div className="drawer-related-projects">
+                  <span className="drawer-rel-label">Featured in Projects:</span>
+                  <div className="drawer-project-links" id="drawer-project-links">
+                    {selectedSkill.projectIds?.length > 0 ? (
+                      selectedSkill.projectIds.map((pId) => {
+                        const prj = PROJECT_MAP[pId];
+                        if (!prj) return null;
+                        return (
+                          <a
+                            key={pId}
+                            href={`#${prj.id}`}
+                            className="drawer-proj-pill"
+                            onClick={(e) => {
+                              if (onJumpToProject) {
+                                e.preventDefault();
+                                onJumpToProject(prj.id);
+                              }
+                            }}
+                          >
+                            {prj.name} &rarr;
+                          </a>
+                        );
+                      })
+                    ) : (
+                      <span className="drawer-no-proj">Foundational Core Architecture</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Responsive Mobile / Touch Cluster Strip */}
@@ -572,94 +663,6 @@ export default function Skills({
         {filteredSkills.length === 0 && (
           <div id="skills-empty-state" className="skills-empty-state" style={{ display: 'block' }}>
             <p>No matching skills found in this constellation query. Try searching for "Python", "API", or "Security".</p>
-          </div>
-        )}
-
-        {/* Deep Skill Context Inspector */}
-        {selectedSkill && (
-          <div className="skill-context-drawer open" id="skill-context-drawer" aria-live="polite">
-            <div className="context-drawer-inner">
-              <div className="drawer-header-row">
-                <div className="drawer-title-group">
-                  <div className="drawer-tags-bar">
-                    <span
-                      className="constellation-cat-pill"
-                      style={{
-                        backgroundColor: (GROUP_THEME_MAP[selectedSkill.category] || GROUP_THEME_MAP.programming).tagBg,
-                        color: (GROUP_THEME_MAP[selectedSkill.category] || GROUP_THEME_MAP.programming).text,
-                        borderColor: (GROUP_THEME_MAP[selectedSkill.category] || GROUP_THEME_MAP.programming).color
-                      }}
-                    >
-                      {selectedSkill.groupLabel.toUpperCase()} &bull; {selectedSkill.symbol}
-                    </span>
-                    <span className="drawer-tier-badge">
-                      {selectedSkill.tier === 'anchor' ? 'PRIMARY ECOSYSTEM ANCHOR' : 'DOMAIN SPECIALIST'}
-                    </span>
-                  </div>
-                  <h4 className="drawer-skill-title" id="drawer-skill-name">
-                    {selectedSkill.title}
-                  </h4>
-                </div>
-
-                {/* Ecosystem Connections Ribbon in Inspector */}
-                <div className="drawer-connections-preview">
-                  <span className="drawer-conn-title">Constellation Links ({selectedSkill.connections?.length || 0}):</span>
-                  <div className="drawer-connected-pills">
-                    {(selectedSkill.connections || []).map((connId) => {
-                      const connSkill = SKILLS.find((s) => s.id === connId);
-                      if (!connSkill) return null;
-                      const connTheme = GROUP_THEME_MAP[connSkill.category] || GROUP_THEME_MAP.programming;
-                      return (
-                        <button
-                          key={connId}
-                          type="button"
-                          className="drawer-neighbor-pill"
-                          title={`Hop to ${connSkill.title} in the constellation`}
-                          onClick={() => handleSelectSkill(connId)}
-                        >
-                          <span className="pill-dot" style={{ backgroundColor: connTheme.color }} />
-                          <span className="pill-name">{connSkill.title}</span>
-                          <span className="pill-arrow">&rarr;</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-
-              <p className="drawer-description" id="drawer-skill-desc">
-                {selectedSkill.desc}
-              </p>
-
-              <div className="drawer-related-projects">
-                <span className="drawer-rel-label">Featured in Projects:</span>
-                <div className="drawer-project-links" id="drawer-project-links">
-                  {selectedSkill.projectIds?.length > 0 ? (
-                    selectedSkill.projectIds.map((pId) => {
-                      const prj = PROJECT_MAP[pId];
-                      if (!prj) return null;
-                      return (
-                        <a
-                          key={pId}
-                          href={`#${prj.id}`}
-                          className="drawer-proj-pill"
-                          onClick={(e) => {
-                            if (onJumpToProject) {
-                              e.preventDefault();
-                              onJumpToProject(prj.id);
-                            }
-                          }}
-                        >
-                          {prj.name} &rarr;
-                        </a>
-                      );
-                    })
-                  ) : (
-                    <span className="drawer-no-proj">Foundational Core Architecture</span>
-                  )}
-                </div>
-              </div>
-            </div>
           </div>
         )}
       </div>

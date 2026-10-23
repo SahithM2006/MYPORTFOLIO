@@ -1819,74 +1819,65 @@ export default function Projects({
           </div>
         </div>
 
-        {/* 2-Column Desktop Grid / Stacked Mobile Layout */}
-        <div className="projects-exhibition-wrap">
-          {/* Column 1: Narrative Scroll Ledger */}
-          <div className="projects-narrative-column">
-            {filteredProjects.map((project) => {
-              const prjId = `prj-${project.id}`;
-              const isSpotlight = activeSpotlight === prjId;
-              const isExpanded = !!openDrawers[project.id];
-              const isLinkedToSelectedSkill = selectedSkillId && project.skills.includes(selectedSkillId);
+        {/* Full-Width Spacious Engineering Showcase Cards */}
+        <div className="projects-showcase-stream" role="feed" aria-label="Project Exhibition Feed">
+          {filteredProjects.map((project) => {
+            const prjId = `prj-${project.id}`;
+            const isExpanded = !!openDrawers[project.id];
+            const isLinkedToSelectedSkill = selectedSkillId && project.skills.includes(selectedSkillId);
 
-              return (
-                <article
-                  key={project.id}
-                  id={prjId}
-                  className={`project-narrative-entry ${isSpotlight ? 'active-spotlight' : ''} ${
-                    isLinkedToSelectedSkill ? 'skill-connected-highlight' : ''
-                  }`}
-                  data-category={project.category}
-                  tabIndex={0}
-                  onClick={() => handleSpotlightChange(prjId, true)}
-                >
-                  {/* Large Parallax Background Numeral */}
-                  <span className="project-bg-numeral" aria-hidden="true">{project.number}</span>
+            return (
+              <article
+                key={project.id}
+                id={prjId}
+                className={`project-showcase-card ${isLinkedToSelectedSkill ? 'skill-connected-highlight' : ''}`}
+                data-category={project.category}
+                tabIndex={0}
+              >
+                {/* Parallax Background Index Numeral */}
+                <span className="project-bg-numeral" aria-hidden="true">{project.number}</span>
 
-                  <div className="project-card-header">
-                    <div className="project-meta-strip">
-                      <span className="project-kicker">
-                        Project {project.number} &bull; {project.categoryLabel}
-                      </span>
-                      <span
-                        className={`project-status ${
-                          project.statusType === 'implemented' ? 'status-prototype' : 'status-concept'
-                        }`}
-                      >
-                        <span className="status-pulse-dot" />
-                        {project.status}
-                      </span>
-                    </div>
-                    <h3 className="project-name">{project.title}</h3>
+                {/* Card Topbar */}
+                <div className="showcase-card-header">
+                  <div className="showcase-meta-strip">
+                    <span className="showcase-kicker">
+                      PROJECT {project.number} &bull; {project.categoryLabel.toUpperCase()}
+                    </span>
+                    <span
+                      className={`project-status ${
+                        project.statusType === 'implemented' ? 'status-prototype' : 'status-concept'
+                      }`}
+                    >
+                      <span className="status-pulse-dot" />
+                      {project.status}
+                    </span>
                   </div>
+                  <h3 className="showcase-project-name">{project.title}</h3>
+                </div>
 
-                  <div className="project-card-body">
+                {/* Main 2-Column Showcase Grid */}
+                <div className="showcase-content-grid">
+                  {/* Left Column: System Narrative & Specifications */}
+                  <div className="showcase-narrative-col">
                     <p className="project-lead">{project.lead}</p>
 
                     <div className="project-specs-highlights">
                       <div className="spec-item">
-                        <span className="spec-check">✓</span>
+                        <span className="spec-check">&#10003;</span>
                         <span>
                           <strong>Implemented:</strong> {project.implementedSpec}
                         </span>
                       </div>
                       <div className="spec-item">
-                        <span className="spec-plan">→</span>
+                        <span className="spec-plan">&rarr;</span>
                         <span>
                           <strong>Planned:</strong> {project.plannedSpec}
                         </span>
                       </div>
                     </div>
 
-                    {/* Mobile Only: Inline Exhibit with scroll reactivity */}
-                    {isMobile && (
-                      <div className="mobile-exhibit-container">
-                        {renderExhibitComponent(prjId)}
-                      </div>
-                    )}
-
                     {/* Interactive Connected Skills Row */}
-                    <div className="project-tags-row">
+                    <div className="project-tags-row" aria-label="Connected Technologies">
                       {project.skills.map((skillId) => {
                         const skillObj = SKILLS.find((s) => s.id === skillId);
                         const isSkillActive = selectedSkillId === skillId;
@@ -1906,7 +1897,7 @@ export default function Projects({
                             }}
                           >
                             <span>{skillObj ? skillObj.title : skillId}</span>
-                            {isSkillActive && <span className="active-dot">•</span>}
+                            {isSkillActive && <span className="active-dot">&bull;</span>}
                           </button>
                         );
                       })}
@@ -1930,57 +1921,45 @@ export default function Projects({
                     </div>
 
                     {/* Inline Architecture Drawer */}
-                    <div className={`project-inline-drawer ${isExpanded ? 'open' : ''}`}>
-                      <div className="drawer-detail-box">
-                        <h4 className="drawer-subhead">System Architecture Breakdown</h4>
-                        <p>{project.architecture}</p>
+                    {isExpanded && (
+                      <div className="project-inline-drawer open">
+                        <div className="drawer-detail-box">
+                          <h4 className="drawer-subhead">System Architecture Breakdown</h4>
+                          <p>{project.architecture}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Right Column: Dedicated Interactive Demonstration Cockpit */}
+                  <div className="showcase-cockpit-col" aria-label={`${project.title} Demonstration Stage`}>
+                    <div className="cockpit-stage-card">
+                      <div className="cockpit-topbar">
+                        <div className="cockpit-topbar-info">
+                          <span className="cockpit-kicker">INTERACTIVE TELEMETRY COCKPIT</span>
+                          <span className="cockpit-title">{project.title.split('—')[0].trim()}</span>
+                        </div>
+                        <div className="cockpit-badge">
+                          <span className="cockpit-pulse" aria-hidden="true" />
+                          <span className={`status-badge-mini ${project.statusType === 'implemented' ? 'status-live' : 'status-proto'}`}>
+                            {project.statusType === 'implemented' ? 'LIVE DEMO' : 'SIMULATION'}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Ambient Scanline */}
+                      <div className="sticky-stage-scanline" aria-hidden="true" />
+
+                      {/* Interactive Exhibit Mount */}
+                      <div className="cockpit-content-viewport">
+                        {renderExhibitComponent(prjId)}
                       </div>
                     </div>
                   </div>
-                </article>
-              );
-            })}
-          </div>
-
-          {/* Column 2: Bounded Sticky Interactive Preview Stage (Desktop Only) */}
-          {!isMobile && (
-            <aside className="projects-sticky-column" aria-label="Interactive Project Preview Stage">
-              <div className="sticky-exhibit-card">
-                <div className="sticky-stage-topbar">
-                  <div className="stage-topbar-info">
-                    <span className="stage-kicker">
-                      Project {activeProjectObj.number} &bull; {activeProjectObj.categoryLabel}
-                    </span>
-                    <h4 className="stage-title">{activeProjectObj.title.split('—')[0].trim()}</h4>
-                  </div>
-                  <div className="stage-topbar-badge">
-                    <span className="stage-stream-pulse" aria-hidden="true" />
-                    <span
-                      className={`status-badge-mini ${
-                        activeProjectObj.statusType === 'implemented' ? 'status-live' : 'status-proto'
-                      }`}
-                    >
-                      {activeProjectObj.statusType === 'implemented' ? 'Interactive Demo' : 'Simulation'}
-                    </span>
-                  </div>
                 </div>
-
-                {/* Ambient scanning scanline across preview stage */}
-                <div className="sticky-stage-scanline" aria-hidden="true" />
-
-                {/* Dynamic Exhibit Renderer with explicit keyed mounting & scroll progress */}
-                <div className="sticky-stage-content" id="sticky-stage-content">
-                  {renderExhibitComponent(activeSpotlight)}
-                </div>
-
-                <div className="sticky-stage-footer">
-                  <span className="stage-hint">
-                    Scroll through project cards or press <kbd className="kbd-mini">1</kbd> to <kbd className="kbd-mini">4</kbd> to jump between exhibits.
-                  </span>
-                </div>
-              </div>
-            </aside>
-          )}
+              </article>
+            );
+          })}
         </div>
 
         {/* Dynamic Transitional Motif leading smoothly from the final project into Architecture */}
