@@ -1,298 +1,372 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { EXPERIENCES, CAREER_STATUS, RESUME_DATA } from '../data-store.js';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function Experience() {
+  const sectionRef = useRef(null);
+  const trackRef = useRef(null);
+  const progressLineRef = useRef(null);
+  const [activeFilter, setActiveFilter] = useState('all');
+
+  // GSAP Pinned Horizontal Scroll (Inspired by Reference Video Image 4)
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = window.innerWidth <= 860;
+
+    if (prefersReducedMotion || isMobile || !sectionRef.current || !trackRef.current) {
+      return;
+    }
+
+    const sectionEl = sectionRef.current;
+    const trackEl = trackRef.current;
+
+    const ctx = gsap.context(() => {
+      // Calculate total horizontal travel distance
+      const getScrollAmount = () => -(trackEl.scrollWidth - window.innerWidth + 200);
+
+      const horizontalTween = gsap.to(trackEl, {
+        x: getScrollAmount,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionEl,
+          start: 'top top',
+          end: () => `+=${trackEl.scrollWidth - window.innerWidth + 600}`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+          anticipatePin: 1,
+          onUpdate: (self) => {
+            if (progressLineRef.current) {
+              progressLineRef.current.style.transform = `scaleX(${self.progress})`;
+            }
+          }
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   const hasVerifiedExperiences = EXPERIENCES && EXPERIENCES.length > 0;
 
   return (
     <section
-      className="experience-section"
+      className="horizontal-timeline-section"
       id="experience"
-      aria-labelledby="experience-title"
+      ref={sectionRef}
+      aria-labelledby="timeline-headline"
     >
-      {/* Oversized Cinematic Typography Watermark */}
-      <div className="section-bg-watermark watermark-experience" aria-hidden="true">06 // TIMELINE</div>
+      {/* Background Section Watermark */}
+      <div className="section-bg-watermark watermark-experience" aria-hidden="true">
+        05 // TRAJECTORY
+      </div>
 
-      <div className="experience-container">
-        {/* Section Header */}
-        <div className="section-header-block">
-          <div className="section-kicker-strip">
-            <span className="section-kicker-dot experience-kicker-dot" />
-            <span className="section-kicker experience-kicker">
-              CAREER &amp; INDUSTRY TRAJECTORY
-            </span>
-          </div>
-          <h2 className="section-title experience-title" id="experience-title">
-            Professional Experience
-          </h2>
-          <p className="section-subtitle experience-subtitle">
-            A chronological timeline documenting formal engineering roles, technical internships, and professional appointments.
-          </p>
+      {/* Top Header & Progress Ribbon (Image 4 Reference) */}
+      <div className="timeline-top-ribbon">
+        <div className="ribbon-kicker-group">
+          <span className="ribbon-kicker-dot" />
+          <span className="ribbon-kicker-text">ORIGIN &amp; FOUNDATIONS</span>
+          <span className="ribbon-kicker-sep">•</span>
+          <span className="ribbon-kicker-sub">ACADEMIC &amp; COMPETITIVE MILESTONES</span>
         </div>
+        <div className="ribbon-progress-track" aria-hidden="true">
+          <div className="ribbon-progress-bar" ref={progressLineRef} />
+        </div>
+        <div className="ribbon-chapter-tag">STAGE 02 // UNDERSTANDING</div>
+      </div>
 
-        {/* Vertical Timeline Layout with Scrubbed Animated Spine */}
-        <div className="experience-timeline" role="list" aria-label="Professional Experience Timeline">
-          {/* Continuous Animated Timeline Spine Track */}
-          <div className="exp-timeline-spine-track" aria-hidden="true">
-            <div className="exp-timeline-spine-fill" id="exp-timeline-spine-fill"></div>
-            <div className="exp-timeline-spine-glow"></div>
+      {/* Main Pinned Stage: Persistent Column on Left + Horizontal Track on Right */}
+      <div className="timeline-stage-wrapper">
+        {/* Persistent Column on Left (Image 4 Reference) */}
+        <aside className="timeline-persistent-col">
+          <div className="persistent-headline-wrap">
+            <h2 className="persistent-title" id="timeline-headline">
+              <span className="title-row">WHERE</span>
+              <span className="title-row">I&apos;VE</span>
+              <span className="title-row title-accent">BEEN</span>
+            </h2>
+            <div className="persistent-echo-shadow" aria-hidden="true">
+              WHERE I&apos;VE BEEN
+            </div>
           </div>
 
-          {hasVerifiedExperiences ? (
-            /* Rendered when verified employment entries exist in data-store */
-            EXPERIENCES.map((exp, index) => {
-              const itemNumber = String(index + 1).padStart(2, '0');
-              const isLast = index === EXPERIENCES.length - 1;
+          <p className="persistent-desc">
+            Documenting foundational academic engineering, national hackathon prototypes, and industry availability.
+          </p>
 
-              return (
-                <div key={exp.id || index} className="exp-timeline-item" role="listitem" id={`exp-item-${itemNumber}`}>
-                  {/* Subtle Vertical Timeline Rail */}
-                  <div className="exp-timeline-rail" aria-hidden="true">
-                    <span className="exp-timeline-index">{itemNumber}</span>
-                    <span className="exp-timeline-node" id={`exp-node-${itemNumber}`} />
-                    <span className="exp-node-pulse-ring" />
-                  </div>
+          {/* Quick Filter / Milestone Pills */}
+          <div className="persistent-filter-pills" role="tablist" aria-label="Filter milestones">
+            <button
+              type="button"
+              className={`timeline-filter-btn ${activeFilter === 'all' ? 'active' : ''}`}
+              onClick={() => setActiveFilter('all')}
+              role="tab"
+              aria-selected={activeFilter === 'all'}
+            >
+              ALL MILESTONES
+            </button>
+            <button
+              type="button"
+              className={`timeline-filter-btn ${activeFilter === 'academic' ? 'active' : ''}`}
+              onClick={() => setActiveFilter('academic')}
+              role="tab"
+              aria-selected={activeFilter === 'academic'}
+            >
+              ACADEMIC
+            </button>
+            <button
+              type="button"
+              className={`timeline-filter-btn ${activeFilter === 'hackathon' ? 'active' : ''}`}
+              onClick={() => setActiveFilter('hackathon')}
+              role="tab"
+              aria-selected={activeFilter === 'hackathon'}
+            >
+              HACKATHONS
+            </button>
+          </div>
 
-                  {/* Clean Content Block */}
-                  <div className="exp-timeline-content">
-                    <div className="exp-meta-row">
-                      {exp.period && (
-                        <span className="exp-period-badge">{exp.period}</span>
-                      )}
-                      {exp.duration && (
-                        <span className="exp-duration-text">• {exp.duration}</span>
-                      )}
-                      {exp.employmentType && (
-                        <span className={`exp-type-pill type-${exp.employmentType.toLowerCase().replace(/\s+/g, '-')}`}>
-                          {exp.employmentType}
-                        </span>
-                      )}
-                      {exp.location && (
-                        <span className="exp-location-tag">📍 {exp.location}</span>
-                      )}
+          <div className="persistent-footer-badge">
+            <span className="badge-dot-live" />
+            <span>STATUS: OPEN TO 2026 INTERNSHIPS</span>
+          </div>
+        </aside>
+
+        {/* Horizontal Moving Track (Image 4 Reference) */}
+        <div className="timeline-horizontal-viewport">
+          <div className="timeline-horizontal-track" ref={trackRef}>
+            {/* Oversized Background Parallax Watermarks */}
+            <div className="timeline-bg-track-watermarks" aria-hidden="true">
+              <span className="track-watermark-txt">2024</span>
+              <span className="track-watermark-txt">SELF-DIRECTED</span>
+              <span className="track-watermark-txt">2025</span>
+              <span className="track-watermark-txt">HACKATHONS</span>
+              <span className="track-watermark-txt">2026</span>
+              <span className="track-watermark-txt">PRODUCTION</span>
+            </div>
+
+            {/* If verified corporate employment experiences exist */}
+            {hasVerifiedExperiences ? (
+              EXPERIENCES.map((exp, index) => {
+                const itemNum = String(index + 1).padStart(2, '0');
+                return (
+                  <article key={exp.id || index} className="timeline-card-panel">
+                    <div className="panel-kicker-strip">
+                      <span className="panel-year-pill">{exp.period || '2024–2026'}</span>
+                      <span className="panel-category-tag">{exp.employmentType || 'Engineering'}</span>
+                      <span className="panel-num">#{itemNum}</span>
                     </div>
 
-                    <h3 className="exp-role-title">
-                      {exp.role}{' '}
-                      <span className="exp-org-sep">at</span>{' '}
-                      <span className="exp-org-name">{exp.organization}</span>
-                    </h3>
+                    <h3 className="panel-headline">{exp.role}</h3>
+                    <h4 className="panel-org">at {exp.organization}</h4>
+                    {exp.location && <div className="panel-loc">📍 {exp.location}</div>}
 
-                    {exp.responsibilities && exp.responsibilities.length > 0 && (
-                      <ul className="exp-resp-list">
-                        {exp.responsibilities.map((resp, rIdx) => (
-                          <li key={rIdx} className="exp-resp-item">
-                            <span className="exp-resp-bullet" aria-hidden="true">▸</span>
-                            <span>{resp}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                    <div className="panel-body">
+                      {exp.responsibilities?.map((resp, rIdx) => (
+                        <p key={rIdx} className="panel-resp-item">
+                          <span className="bullet">▸</span> {resp}
+                        </p>
+                      ))}
+                    </div>
 
-                    {exp.skills && exp.skills.length > 0 && (
-                      <div className="exp-skills-row" aria-label="Technologies used">
+                    {exp.skills?.length > 0 && (
+                      <div className="panel-skills-chips">
                         {exp.skills.map((skill, sIdx) => (
-                          <span key={sIdx} className="exp-skill-chip">{skill}</span>
+                          <span key={sIdx} className="exp-chip">{skill}</span>
                         ))}
                       </div>
                     )}
-                  </div>
-                </div>
-              );
-            })
-          ) : (
-            /*
-              Verified Career Trajectory Timeline:
-              When no formal corporate employment is recorded yet,
-              displays genuine academic engineering milestones and active readiness for roles.
-              Does NOT fabricate jobs, companies, or dates, and does NOT falsely label coursework as employment.
-            */
-            <>
-              {/* Timeline Node 1: Current Academic Pre-Professional Trajectory */}
-              <div className="exp-timeline-item" role="listitem" id="exp-item-01">
-                <div className="exp-timeline-rail" aria-hidden="true">
-                  <span className="exp-timeline-index">01</span>
-                  <span className="exp-timeline-node" id="exp-node-01" />
-                  <span className="exp-node-pulse-ring" />
-                </div>
-
-                <div className="exp-timeline-content">
-                  <div className="exp-meta-row">
-                    <span className="exp-period-badge">{CAREER_STATUS.academicPeriod}</span>
-                    <span className="exp-duration-text">• 3rd Year (CGPA: {CAREER_STATUS.cgpa})</span>
-                    <span className="exp-type-pill">Undergraduate Candidate</span>
-                    <span className="exp-location-tag">📍 {CAREER_STATUS.location.split('(')[0].trim()}</span>
+                  </article>
+                );
+              })
+            ) : (
+              /* Verified Genuine Experience & Trajectory Panels (Verbatim Content) */
+              <>
+                {/* Panel 01: Academic Pre-Professional Foundation */}
+                <article
+                  className={`timeline-card-panel ${
+                    activeFilter !== 'all' && activeFilter !== 'academic' ? 'panel-dimmed' : ''
+                  }`}
+                  id="timeline-panel-01"
+                >
+                  <div className="panel-kicker-strip">
+                    <span className="panel-year-pill">{CAREER_STATUS.academicPeriod} // ACADEMIC FOUNDATION</span>
+                    <span className="panel-num">#01</span>
                   </div>
 
-                  <h3 className="exp-role-title">
-                    Pre-Professional Foundation{' '}
-                    <span className="exp-org-sep">at</span>{' '}
-                    <span className="exp-org-name">{CAREER_STATUS.institution}</span>
-                  </h3>
+                  <h3 className="panel-headline">PRE-PROFESSIONAL FOUNDATION</h3>
+                  <h4 className="panel-org">Saveetha Engineering College (Autonomous)</h4>
+                  <div className="panel-meta-row">
+                    <span className="panel-meta-tag">B.Tech in AI &amp; DS (3rd Year)</span>
+                    <span className="panel-meta-dot">•</span>
+                    <span className="panel-meta-tag">CGPA: {CAREER_STATUS.cgpa}</span>
+                    <span className="panel-meta-dot">•</span>
+                    <span className="panel-meta-tag">📍 {CAREER_STATUS.location.split('(')[0].trim()}</span>
+                  </div>
 
-                  <ul className="exp-resp-list">
-                    <li className="exp-resp-item">
-                      <span className="exp-resp-bullet" aria-hidden="true">▸</span>
+                  <div className="panel-body">
+                    <p className="panel-resp-item">
+                      <span className="bullet">▸</span>
                       <span>
                         Pursuing B.Tech in AI &amp; DS (3rd Year). Formal internships and corporate roles will be indexed here as they commence.
                       </span>
-                    </li>
-                    <li className="exp-resp-item">
-                      <span className="exp-resp-bullet" aria-hidden="true">▸</span>
+                    </p>
+                    <p className="panel-resp-item">
+                      <span className="bullet">▸</span>
                       <span>
                         Current competencies: procedural C fundamentals, async Python backends (FastAPI), ML pipelines, and remote systems telemetry (WinRM).
                       </span>
-                    </li>
-                  </ul>
-
-                  <div className="exp-skills-row" aria-label="Target Technical Competencies">
-                    <span className="exp-skill-chip">AI &amp; Machine Learning</span>
-                    <span className="exp-skill-chip">FastAPI &amp; REST</span>
-                    <span className="exp-skill-chip">Python Telemetry</span>
-                    <span className="exp-skill-chip">PostgreSQL</span>
-                    <span className="exp-skill-chip">Docker</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Timeline Node 2: National-Level Hackathons & Competitive Engineering Prototypes */}
-              <div className="exp-timeline-item" role="listitem" id="exp-item-02">
-                <div className="exp-timeline-rail" aria-hidden="true">
-                  <span className="exp-timeline-index">02</span>
-                  <span className="exp-timeline-node" id="exp-node-02" />
-                  <span className="exp-node-pulse-ring" />
-                </div>
-
-                <div className="exp-timeline-content">
-                  <div className="exp-meta-row">
-                    <span className="exp-period-badge">2024 – 2025</span>
-                    <span className="exp-duration-text">• Hackathon Honors</span>
-                    <span className="exp-type-pill type-hackathon">Competitive Engineering</span>
-                    <span className="exp-location-tag">📍 National Hackathons</span>
+                    </p>
                   </div>
 
-                  <h3 className="exp-role-title">
-                    Hackathon Finalist &amp; Software Winner{' '}
-                    <span className="exp-org-sep">at</span>{' '}
-                    <span className="exp-org-name">National-Level Competitions</span>
-                  </h3>
+                  {/* Highlighted Milestones (Image 4 Reference) */}
+                  <div className="panel-milestones-row">
+                    <div className="milestone-box">
+                      <span className="milestone-label">MILESTONE 01</span>
+                      <p className="milestone-text">Completed 500+ hours of hands-on systems, ML, and backend development.</p>
+                    </div>
+                    <div className="milestone-box">
+                      <span className="milestone-label">MILESTONE 02</span>
+                      <p className="milestone-text">Maintained consistent academic excellence (8.44 CGPA) across advanced AI &amp; DS coursework.</p>
+                    </div>
+                  </div>
 
-                  <ul className="exp-resp-list">
+                  <div className="panel-skills-chips" aria-label="Core Competencies">
+                    <span className="exp-chip">AI &amp; Machine Learning</span>
+                    <span className="exp-chip">FastAPI &amp; REST</span>
+                    <span className="exp-chip">Python Telemetry</span>
+                    <span className="exp-chip">PostgreSQL</span>
+                    <span className="exp-chip">Docker</span>
+                  </div>
+                </article>
+
+                {/* Panel 02: Competitive Engineering & National Hackathons */}
+                <article
+                  className={`timeline-card-panel ${
+                    activeFilter !== 'all' && activeFilter !== 'hackathon' ? 'panel-dimmed' : ''
+                  }`}
+                  id="timeline-panel-02"
+                >
+                  <div className="panel-kicker-strip">
+                    <span className="panel-year-pill">2024–2025 // COMPETITIVE PROTOTYPING</span>
+                    <span className="panel-num">#02</span>
+                  </div>
+
+                  <h3 className="panel-headline">HACKATHON HONORS &amp; WINNER</h3>
+                  <h4 className="panel-org">National-Level Engineering Competitions</h4>
+                  <div className="panel-meta-row">
+                    <span className="panel-meta-tag">Competitive Engineering</span>
+                    <span className="panel-meta-dot">•</span>
+                    <span className="panel-meta-tag">Software Track Winner</span>
+                    <span className="panel-meta-dot">•</span>
+                    <span className="panel-meta-tag">📍 National Hackathons</span>
+                  </div>
+
+                  <div className="panel-body">
                     {RESUME_DATA.achievements.map((ach, aIdx) => (
-                      <li key={aIdx} className="exp-resp-item">
-                        <span className="exp-resp-bullet" aria-hidden="true">★</span>
+                      <p key={aIdx} className="panel-resp-item">
+                        <span className="bullet star-bullet">★</span>
                         <span>{ach}</span>
-                      </li>
+                      </p>
                     ))}
-                    <li className="exp-resp-item">
-                      <span className="exp-resp-bullet" aria-hidden="true">▸</span>
+                    <p className="panel-resp-item">
+                      <span className="bullet">▸</span>
                       <span>
                         Architected and prototyped solutions under competitive constraints, including AEGIS-TWIN (Cybersecurity Digital Twin, shortlisted for the next round at VIT Vellore) and Probe360 (Agentless Vulnerability Assessment Platform).
                       </span>
-                    </li>
-                  </ul>
-
-                  <div className="exp-skills-row" aria-label="Hackathon Technologies">
-                    <span className="exp-skill-chip">Python</span>
-                    <span className="exp-skill-chip">NetworkX</span>
-                    <span className="exp-skill-chip">FastAPI</span>
-                    <span className="exp-skill-chip">WinRM</span>
-                    <span className="exp-skill-chip">MITRE ATT&amp;CK</span>
-                    <span className="exp-skill-chip">Machine Learning</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Timeline Node 3: Prospective Industry Roles & Availability */}
-              <div className="exp-timeline-item" role="listitem" id="exp-item-03">
-                <div className="exp-timeline-rail" aria-hidden="true">
-                  <span className="exp-timeline-index">03</span>
-                  <span className="exp-timeline-node status-active" id="exp-node-03" />
-                  <span className="exp-node-pulse-ring" />
-                </div>
-
-                <div className="exp-timeline-content prospective-content">
-                  <div className="exp-meta-row">
-                    <span className="exp-period-badge active-badge">{CAREER_STATUS.availability}</span>
-                    <span className="exp-type-pill status-open">Available for Hire</span>
-                    <span className="exp-location-tag">📍 Open to Remote &amp; Relocation</span>
+                    </p>
                   </div>
 
-                  <h3 className="exp-role-title">
-                    Technical Internship &amp; Entry-Level Engineering{' '}
-                    <span className="exp-org-sep">•</span>{' '}
-                    <span className="exp-org-name">Target Opportunities</span>
-                  </h3>
+                  {/* Highlighted Milestones (Image 4 Reference) */}
+                  <div className="panel-milestones-row">
+                    <div className="milestone-box">
+                      <span className="milestone-label">MILESTONE 01</span>
+                      <p className="milestone-text">Shortlisted for next round at VIT Vellore for AEGIS-TWIN (Cybersecurity Digital Twin).</p>
+                    </div>
+                    <div className="milestone-box">
+                      <span className="milestone-label">MILESTONE 02</span>
+                      <p className="milestone-text">State-level Hackathon Winner (Software Track) for real-time telemetry systems.</p>
+                    </div>
+                  </div>
 
-                  <ul className="exp-resp-list">
-                    <li className="exp-resp-item">
-                      <span className="exp-resp-bullet" aria-hidden="true">▸</span>
+                  <div className="panel-skills-chips" aria-label="Competitive Technologies">
+                    <span className="exp-chip">Python</span>
+                    <span className="exp-chip">NetworkX</span>
+                    <span className="exp-chip">FastAPI</span>
+                    <span className="exp-chip">WinRM</span>
+                    <span className="exp-chip">MITRE ATT&amp;CK</span>
+                    <span className="exp-chip">Machine Learning</span>
+                  </div>
+                </article>
+
+                {/* Panel 03: Industry Readiness & Target Opportunities */}
+                <article
+                  className={`timeline-card-panel panel-prospective ${
+                    activeFilter !== 'all' ? 'panel-dimmed' : ''
+                  }`}
+                  id="timeline-panel-03"
+                >
+                  <div className="panel-kicker-strip">
+                    <span className="panel-year-pill active-pill">{CAREER_STATUS.availability} // TARGET ROLES</span>
+                    <span className="panel-num">#03</span>
+                  </div>
+
+                  <h3 className="panel-headline">TECHNICAL INTERNSHIP &amp; ENTRY-LEVEL ROLES</h3>
+                  <h4 className="panel-org">Immediate Engineering Opportunities</h4>
+                  <div className="panel-meta-row">
+                    <span className="panel-meta-tag">Available for Hire</span>
+                    <span className="panel-meta-dot">•</span>
+                    <span className="panel-meta-tag">Ready for Assessments</span>
+                    <span className="panel-meta-dot">•</span>
+                    <span className="panel-meta-tag">📍 Open to Remote &amp; Relocation</span>
+                  </div>
+
+                  <div className="panel-body">
+                    <p className="panel-resp-item">
+                      <span className="bullet">▸</span>
                       <span>
                         <strong>Target Tracks:</strong> AI &amp; ML Engineering, Python Backend Systems (FastAPI), and Security Telemetry Analytics.
                       </span>
-                    </li>
-                    <li className="exp-resp-item">
-                      <span className="exp-resp-bullet" aria-hidden="true">▸</span>
+                    </p>
+                    <p className="panel-resp-item">
+                      <span className="bullet">▸</span>
                       <span>
                         <strong>Availability:</strong> Ready for technical screenings, code assessments, and interviews. Resume and project exhibits available for review.
                       </span>
-                    </li>
-                  </ul>
+                    </p>
+                  </div>
 
-                  <div className="exp-actions-row">
+                  <div className="panel-milestones-row">
+                    <div className="milestone-box milestone-accent">
+                      <span className="milestone-label">ROLE READINESS</span>
+                      <p className="milestone-text">Production code quality, git workflows, Docker containerization, and REST API design.</p>
+                    </div>
+                  </div>
+
+                  <div className="panel-actions-row">
                     <a
                       href={RESUME_DATA.pdfUrl}
                       download={RESUME_DATA.pdfFilename}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="exp-btn-action primary"
-                      id="exp-download-resume-btn"
-                      title="Download verified placement resume PDF"
-                      onClick={(e) => {
-                        // Ensure direct trigger if browser blocks attribute
-                        if (typeof window !== 'undefined' && window.navigator && window.navigator.msSaveOrOpenBlob) {
-                          e.preventDefault();
-                          window.open(RESUME_DATA.pdfUrl, '_blank');
-                        }
-                      }}
+                      className="btn-timeline-action primary"
+                      id="timeline-download-resume-btn"
                     >
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                        <polyline points="7 10 12 15 17 10" />
-                        <line x1="12" y1="15" x2="12" y2="3" />
-                      </svg>
                       <span>Download Resume (PDF)</span>
+                      <span className="btn-icon" aria-hidden="true">&darr;</span>
                     </a>
-
-                    <a
-                      href="#resume"
-                      className="exp-btn-action secondary exp-btn-view-resume"
-                      id="exp-view-resume-btn"
-                      title="Inspect full resume and document viewer"
-                    >
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                        <circle cx="12" cy="12" r="3" />
-                      </svg>
-                      <span>View Resume Document →</span>
-                    </a>
-
-                    <a
-                      href="#contact"
-                      className="exp-btn-action secondary"
-                      id="exp-contact-btn"
-                      title="Navigate to contact section"
-                    >
-                      <span>Get in Touch →</span>
+                    <a href="#contact" className="btn-timeline-action secondary">
+                      <span>Initiate Contact &rarr;</span>
                     </a>
                   </div>
-                </div>
-              </div>
-            </>
-          )}
+                </article>
+              </>
+            )}
+          </div>
         </div>
       </div>
     </section>
   );
 }
-

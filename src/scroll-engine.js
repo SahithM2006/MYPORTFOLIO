@@ -435,6 +435,27 @@ export function initScrollEngine() {
         );
       });
 
+      // Featured Projects High-Contrast Gate (Reference Image 5)
+      const projectsGate = document.getElementById('featured-projects-gate');
+      if (projectsGate) {
+        gsap.fromTo(
+          projectsGate,
+          { y: 50, opacity: 0.25, scale: 0.96 },
+          {
+            y: 0,
+            opacity: 1,
+            scale: 1,
+            duration: 0.7,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: projectsGate,
+              start: 'top 85%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      }
+
       // Continuous scrubbed parallax for project background index numerals
       const projectNumerals = document.querySelectorAll('.project-bg-numeral');
       projectNumerals.forEach((numeral) => {

@@ -1751,6 +1751,15 @@ export default function Projects({
       {/* Oversized Cinematic Typography Watermark */}
       <div className="section-bg-watermark watermark-projects" aria-hidden="true">04 // EXHIBITS</div>
 
+      {/* High-Contrast Stage 03 Gate (Image 5 Reference: FEATURED PROJECTS) */}
+      <div className="projects-gate-banner" id="featured-projects-gate">
+        <div className="gate-banner-inner">
+          <div className="gate-banner-kicker">STAGE 03 // CREATION • SYSTEM PORTFOLIO</div>
+          <h2 className="gate-banner-headline">FEATURED PROJECTS</h2>
+          <div className="gate-banner-meta">5 PRODUCTION ARCHITECTURES • REAL-TIME INTERACTIVE SIMULATORS</div>
+        </div>
+      </div>
+
       <div className="projects-container">
         <div className="projects-header-block">
           <div className="section-kicker-strip">
