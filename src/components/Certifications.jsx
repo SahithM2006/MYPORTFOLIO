@@ -56,6 +56,9 @@ export default function Certifications() {
 
   return (
     <section className="certifications-section" id="certifications" aria-labelledby="certifications-title">
+      {/* Oversized Cinematic Typography Watermark */}
+      <div className="section-bg-watermark watermark-certifications" aria-hidden="true">07 // CREDENTIALS</div>
+
       {/* Moving Ambient Technical Circuit Motif & Telemetry Stream */}
       <div className="cert-ambient-circuit" aria-hidden="true">
         <svg viewBox="0 0 1200 600" className="cert-ambient-svg" preserveAspectRatio="none">

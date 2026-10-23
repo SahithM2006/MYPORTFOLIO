@@ -4,6 +4,9 @@ import { RESUME_DATA } from '../data-store.js';
 export default function Resume() {
   return (
     <section className="resume-section" id="resume" aria-labelledby="resume-title">
+      {/* Oversized Cinematic Typography Watermark */}
+      <div className="section-bg-watermark watermark-resume" aria-hidden="true">08 // DOSSIER</div>
+
       <div className="resume-container">
         {/* Section Header */}
         <div className="section-header-block">
@@ -158,41 +161,62 @@ export default function Resume() {
                 <h3 className="resume-subcard-title">Flagship Implementations</h3>
 
                 <div className="resume-curated-projects">
-                  {RESUME_DATA.projects.slice(0, 3).map((proj, idx) => (
+                  {RESUME_DATA.projects.map((proj, idx) => (
                     <div key={idx} className="curated-project-item">
                       <div className="curated-proj-top">
                         <span className="curated-proj-idx">0{idx + 1}</span>
                         <div>
-                          <h4 className="curated-proj-name">{proj.title.split('—')[0].trim()}</h4>
-                          <span className="curated-proj-domain">{proj.domain.split('•')[0].trim()}</span>
+                          <h4 className="curated-proj-name">{proj.title}</h4>
+                          <span className="curated-proj-domain">{proj.domain}</span>
                         </div>
                       </div>
-                      <p className="curated-proj-desc">
-                        {proj.points[0]}
-                      </p>
+                      <ul className="curated-proj-points">
+                        {proj.points.map((pt, pIdx) => (
+                          <li key={pIdx} className="curated-proj-point">
+                            <span className="curated-bullet" aria-hidden="true">▸</span>
+                            <span>{pt}</span>
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Academic Foundations & Honors */}
+              {/* Competitive Hackathon Honors */}
               <div className="resume-subcard">
-                <div className="resume-subcard-kicker">ACADEMIC &amp; COMPETITIVE HIGHLIGHTS</div>
-                <h3 className="resume-subcard-title">Foundations &amp; Recognition</h3>
+                <div className="resume-subcard-kicker">HONORS &amp; COMPETITIVE AWARDS</div>
+                <h3 className="resume-subcard-title">Hackathon Recognition</h3>
                 <ul className="resume-honors-list">
-                  <li className="resume-honor-item">
-                    <span className="honor-icon" aria-hidden="true">★</span>
-                    <span>National-level Hackathon prototypes in autonomous cybersecurity digital twins &amp; financial fraud detection.</span>
-                  </li>
-                  <li className="resume-honor-item">
-                    <span className="honor-icon" aria-hidden="true">▸</span>
-                    <span>Class XII Higher Secondary: <strong>80%</strong> • Class X Secondary School: <strong>85%</strong>.</span>
-                  </li>
-                  <li className="resume-honor-item">
-                    <span className="honor-icon" aria-hidden="true">▸</span>
-                    <span>Verified coursework: Data Structures, Analysis of Algorithms, Object-Oriented Programming, and Applied Deep Learning.</span>
-                  </li>
+                  {RESUME_DATA.achievements.map((ach, aIdx) => (
+                    <li key={aIdx} className="resume-honor-item">
+                      <span className="honor-icon" aria-hidden="true">★</span>
+                      <span>{ach}</span>
+                    </li>
+                  ))}
                 </ul>
+              </div>
+
+              {/* Academic Foundations & Schooling */}
+              <div className="resume-subcard">
+                <div className="resume-subcard-kicker">ACADEMIC FOUNDATIONS &amp; COURSEWORK</div>
+                <h3 className="resume-subcard-title">Schooling &amp; Technical Subjects</h3>
+                <div className="resume-schooling-row">
+                  {RESUME_DATA.education.schooling.map((sch, sIdx) => (
+                    <div key={sIdx} className="resume-schooling-item">
+                      <span className="schooling-std">{sch.standard}</span>
+                      <strong className="schooling-score">{sch.score}</strong>
+                    </div>
+                  ))}
+                </div>
+                <div className="resume-coursework-wrap">
+                  <span className="coursework-label">Verified Undergraduate Coursework:</span>
+                  <div className="coursework-pills">
+                    {RESUME_DATA.coursework.map((cw, cIdx) => (
+                      <span key={cIdx} className="coursework-pill">{cw}</span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>

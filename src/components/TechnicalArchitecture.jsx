@@ -239,6 +239,9 @@ export default function TechnicalArchitecture() {
       aria-labelledby="architecture-title"
       style={{ "--project-accent": currentProject.accentColor, "--project-glow": currentProject.accentGlow }}
     >
+      {/* Oversized Cinematic Typography Watermark */}
+      <div className="section-bg-watermark watermark-architecture" aria-hidden="true">05 // SYSTEMS</div>
+
       <div className="architecture-container">
         <div className="section-header-block architecture-header-center">
           <div className="section-kicker-strip">

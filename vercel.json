@@ -11,7 +11,7 @@
       "destination": "/index.html"
     },
     {
-      "source": "/((?!assets|certs|frames|.*\\.[a-zA-Z0-9]+$).*)",
+      "source": "/((?!assets|certs|.*\\.[a-zA-Z0-9]+$).*)",
       "destination": "/index.html"
     }
   ],
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "source": "/(assets|certs|frames)/(.*)",
+      "source": "/(assets|certs)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",

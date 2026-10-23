@@ -1,15 +1,17 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { CAREER_STATUS } from '../data-store.js';
+import { CAREER_STATUS, MINDSET_PILLARS } from '../data-store.js';
 
 gsap.registerPlugin(ScrollTrigger);
-
 
 export default function About({ onSelectSkill, onSelectProject }) {
   const sectionRef = useRef(null);
   const headlineRef = useRef(null);
   const photoRef = useRef(null);
+  const [activePillarKey, setActivePillarKey] = useState('systems');
+
+  const activePillar = MINDSET_PILLARS[activePillarKey] || MINDSET_PILLARS.systems;
 
   // Scroll-driven headline wipe via GSAP ScrollTrigger
   useEffect(() => {
@@ -36,9 +38,9 @@ export default function About({ onSelectSkill, onSelectProject }) {
       if (photoRef.current) {
         gsap.fromTo(
           photoRef.current,
-          { y: 35, opacity: 0.7 },
+          { y: 30, opacity: 0.8 },
           {
-            y: -30,
+            y: -25,
             opacity: 1,
             ease: 'none',
             scrollTrigger: {
@@ -50,25 +52,6 @@ export default function About({ onSelectSkill, onSelectProject }) {
           }
         );
       }
-
-      const circuitSvg = sectionRef.current.querySelector('.circuit-svg');
-      if (circuitSvg) {
-        gsap.fromTo(
-          circuitSvg,
-          { x: -50, opacity: 0.25 },
-          {
-            x: 25,
-            opacity: 0.75,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: 1
-            }
-          }
-        );
-      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -76,60 +59,27 @@ export default function About({ onSelectSkill, onSelectProject }) {
 
   return (
     <section className="about-section is-in-view" id="about" ref={sectionRef} aria-labelledby="about-title">
-      {/* Moving Ambient Technical Circuit Motif with Streaming Electric Pulses */}
-      <div className="about-ambient-circuit" aria-hidden="true">
-        <svg viewBox="0 0 1000 400" className="circuit-svg" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="electricGradTeal" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#C6A45A" stopOpacity="0.85" />
-              <stop offset="50%" stopColor="#7596C8" stopOpacity="0.9" />
-              <stop offset="100%" stopColor="#C6A45A" stopOpacity="0.85" />
-            </linearGradient>
-            <filter id="circuitGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="2.5" result="blur" />
-              <feComposite in="SourceGraphic" in2="blur" operator="over" />
-            </filter>
-          </defs>
-          <path d="M0,80 L250,80 L320,160 L680,160 L750,240 L1000,240" stroke="rgba(117, 150, 200, 0.18)" strokeWidth="1.5" strokeDasharray="6 6" fill="none" className="circuit-path-1" />
-          <path d="M0,80 L250,80 L320,160 L680,160 L750,240 L1000,240" stroke="url(#electricGradTeal)" strokeWidth="2" strokeDasharray="16 120" fill="none" className="circuit-path-stream-1" filter="url(#circuitGlow)" />
-          <path d="M0,280 L180,280 L240,200 L560,200 L620,120 L1000,120" stroke="rgba(38, 59, 96, 0.25)" strokeWidth="1.5" strokeDasharray="8 8" fill="none" className="circuit-path-2" />
-          <path d="M0,280 L180,280 L240,200 L560,200 L620,120 L1000,120" stroke="#C6A45A" strokeWidth="1.8" strokeDasharray="14 100" fill="none" className="circuit-path-stream-2" filter="url(#circuitGlow)" />
-          <path d="M120,400 L200,320 L400,320 L480,240 L900,240" stroke="rgba(198, 164, 90, 0.15)" strokeWidth="1.2" strokeDasharray="4 6" fill="none" className="circuit-path-3" />
-          <circle cx="320" cy="160" r="4.5" fill="#C6A45A" className="circuit-node-pulse" />
-          <circle cx="680" cy="160" r="4.5" fill="#C6A45A" className="circuit-node-pulse" />
-          <circle cx="240" cy="200" r="4" fill="#7596C8" className="circuit-node-pulse" />
-          <circle cx="620" cy="120" r="4" fill="#7596C8" className="circuit-node-pulse" />
-          <circle cx="480" cy="240" r="3.5" fill="#C6A45A" className="circuit-node-pulse" />
-        </svg>
-      </div>
+      {/* Oversized Cinematic Typography Watermark */}
+      <div className="section-bg-watermark watermark-about" aria-hidden="true">02 // MINDSET</div>
 
       <div className="about-container">
-        {/* Section Headline */}
-        <div className="about-header-block">
+        {/* Section Header */}
+        <div className="section-header-block">
+          <div className="section-kicker-strip">
+            <span className="section-kicker-dot" />
+            <span className="section-kicker">02 // MINDSET &amp; FOUNDATIONS</span>
+          </div>
           <h2 className="about-headline" id="about-title" ref={headlineRef}>
             <span className="statement-prefix">Engineering mindset grounded in </span>
             <span className="statement-highlight scroll-chromatic-phrase">first principles, telemetry &amp; models.</span>
           </h2>
         </div>
 
-        {/* Profile Grid: Left column (Photograph), Right column (Bio & Education) */}
+        {/* Profile Grid: Left column (Photograph), Right column (Bio & Education & Mindset Pillars) */}
         <div className="about-portrait-row">
-
-          {/* Left Column: Original Photograph */}
+          {/* Left Column: Portrait Photograph */}
           <div className="about-portrait-col" ref={photoRef}>
-            {/* 1. Original Photograph with Cyber Sensor Viewfinder Overlay */}
             <div className="about-portrait-frame" id="about-portrait-frame">
-              <div className="about-portrait-viewfinder" aria-hidden="true">
-                <span className="viewfinder-bracket bracket-tl">⌜</span>
-                <span className="viewfinder-bracket bracket-tr">⌝</span>
-                <span className="viewfinder-bracket bracket-bl">⌞</span>
-                <span className="viewfinder-bracket bracket-br">⌟</span>
-                <div className="viewfinder-scan-beam"></div>
-                <div className="viewfinder-hud-tag">
-                  <span className="hud-pulse"></span>
-                  <span>13.08°N 80.27°E // SEC CHENNAI</span>
-                </div>
-              </div>
               <div className="about-portrait-inner">
                 <img
                   src="./user_photo.jpg"
@@ -141,15 +91,19 @@ export default function About({ onSelectSkill, onSelectProject }) {
                   height="640"
                 />
               </div>
-              <div className="about-portrait-badge" aria-hidden="true">
-                <span className="portrait-badge-dot" />
-                <span>Sahith M. &bull; Engineering Profile</span>
+              <div className="about-portrait-hud" aria-hidden="true">
+                <div className="hud-badge-left">
+                  <span className="hud-dot" />
+                  <span>SAHITH M. &bull; PROFILE</span>
+                </div>
+                <div className="hud-badge-right">
+                  <span>13.08&deg;N 80.27&deg;E &bull; SEC CHENNAI</span>
+                </div>
               </div>
             </div>
-
           </div>
 
-          {/* Right Column: Bio Narrative & Academic Foundation (Redundant Concepts Column Removed) */}
+          {/* Right Column: Bio Narrative, Education, and Interactive Mindset Pillars */}
           <div className="about-bio-main-col">
             <div className="about-bio-column">
               <p className="about-intro-paragraph">
@@ -158,9 +112,9 @@ export default function About({ onSelectSkill, onSelectProject }) {
               </p>
 
               <div className="about-compact-education" aria-label="Academic details">
-                <span className="edu-tag-icon" aria-hidden="true">🎓</span>
+                <span className="edu-tag-icon" aria-hidden="true">&bull;</span>
                 <div className="edu-details-text">
-                  <span className="edu-degree-text">B.Tech in AI &amp; Data Science (3rd Year)</span>
+                  <span className="edu-degree-text">B.Tech in AI &amp; DS (3rd Year)</span>
                   <span className="edu-divider">&bull;</span>
                   <span className="edu-college-text">Saveetha Engineering College (Autonomous)</span>
                   <span className="edu-divider">&bull;</span>
@@ -188,24 +142,59 @@ export default function About({ onSelectSkill, onSelectProject }) {
                 </span>
               </div>
 
+              {/* Interactive Mindset Pillars: Concrete Technical Principles */}
+              <div className="about-pillars-card">
+                <div className="pillars-card-kicker">ENGINEERING PHILOSOPHY &bull; CORE PILLARS</div>
+                <div className="pillars-tabs-row" role="tablist" aria-label="Mindset Pillars">
+                  {Object.values(MINDSET_PILLARS).map((p) => (
+                    <button
+                      key={p.key}
+                      type="button"
+                      className={`pillar-tab-btn ${activePillarKey === p.key ? 'active' : ''}`}
+                      role="tab"
+                      aria-selected={activePillarKey === p.key}
+                      onClick={() => setActivePillarKey(p.key)}
+                    >
+                      <span className="pillar-tab-name">{p.tag.split('&')[0].trim()}</span>
+                    </button>
+                  ))}
+                </div>
+
+                <div className="pillar-detail-body">
+                  <h4 className="pillar-detail-title">{activePillar.title}</h4>
+                  <p className="pillar-detail-desc">{activePillar.desc}</p>
+                  <ul className="pillar-principles-list">
+                    {activePillar.principles.map((pr, idx) => (
+                      <li key={idx} className="pillar-principle-item">
+                        <span className="principle-bullet" aria-hidden="true">&bull;</span>
+                        <span>{pr}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="pillar-tools-footer">
+                    <span className="tools-kicker">PRIMITIVES &amp; TOOLS:</span>
+                    <span className="tools-text">{activePillar.tools}</span>
+                  </div>
+                </div>
+              </div>
+
               {/* Direct Action Links */}
               <div className="about-actions-row">
                 <a href="#projects" className="about-action-btn btn-primary-action">
                   <span>Explore Projects</span>
-                  <span className="btn-arrow" aria-hidden="true">↓</span>
+                  <span className="btn-arrow" aria-hidden="true">&darr;</span>
                 </a>
                 <a href="#skills" className="about-action-btn btn-secondary-action">
                   <span>Skill Constellation</span>
-                  <span className="btn-arrow" aria-hidden="true">→</span>
+                  <span className="btn-arrow" aria-hidden="true">&rarr;</span>
                 </a>
                 <a href="#resume" className="about-action-btn btn-tertiary-action">
                   <span>View Resume</span>
-                  <span className="btn-arrow" aria-hidden="true">↗</span>
+                  <span className="btn-arrow" aria-hidden="true">&nearr;</span>
                 </a>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>

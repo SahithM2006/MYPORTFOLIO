@@ -144,10 +144,10 @@ export function initScrollEngine() {
 
     // Determine current section in viewport focus for Scroll Spine Indicator
     const sections = [
-      { id: 'hero', num: '01', name: 'HERO', color: '#C6A45A', top: cachedGeometry.hero.top, height: cachedGeometry.hero.height },
-      { id: 'about', num: '02', name: 'ABOUT', color: '#7596C8', top: cachedGeometry.about.top, height: cachedGeometry.about.height },
-      { id: 'skills', num: '03', name: 'SKILLS', color: '#7596C8', top: cachedGeometry.skills.top, height: cachedGeometry.skills.height },
-      { id: 'projects', num: '04', name: 'PROJECTS', color: '#C6A45A', top: cachedGeometry.projects.top, height: cachedGeometry.projects.height },
+      { id: 'hero', num: '01', name: 'ORIGIN', color: '#C6A45A', top: cachedGeometry.hero.top, height: cachedGeometry.hero.height },
+      { id: 'about', num: '02', name: 'MINDSET', color: '#7596C8', top: cachedGeometry.about.top, height: cachedGeometry.about.height },
+      { id: 'skills', num: '03', name: 'SPECTRUM', color: '#7596C8', top: cachedGeometry.skills.top, height: cachedGeometry.skills.height },
+      { id: 'projects', num: '04', name: 'EXHIBITS', color: '#C6A45A', top: cachedGeometry.projects.top, height: cachedGeometry.projects.height },
       { id: 'architecture', num: '05', name: 'SYSTEMS', color: '#7596C8', top: cachedGeometry.architecture.top, height: cachedGeometry.architecture.height },
       { id: 'experience', num: '06', name: 'TIMELINE', color: '#C6A45A', top: cachedGeometry.experience.top, height: cachedGeometry.experience.height },
       { id: 'certifications', num: '07', name: 'CREDENTIALS', color: '#C6A45A', top: cachedGeometry.certifications.top, height: cachedGeometry.certifications.height },
@@ -166,12 +166,19 @@ export function initScrollEngine() {
       }
     }
 
-    if (spineLabel && currentSection && lastChapter !== currentSection.id) {
+    if (currentSection && lastChapter !== currentSection.id) {
       lastChapter = currentSection.id;
-      spineLabel.textContent = `${currentSection.num} ${currentSection.name}`;
-      spineLabel.style.color = currentSection.color;
-      spineLabel.style.borderColor = `${currentSection.color}55`;
-      spineLabel.style.boxShadow = `0 0 12px ${currentSection.color}22`;
+      document.querySelectorAll('.spine-chapter-item').forEach((item) => {
+        item.classList.remove('active');
+      });
+      const activeItem = document.getElementById(`spine-chapter-${currentSection.id}`);
+      if (activeItem) {
+        activeItem.classList.add('active');
+      }
+      if (spineLabel) {
+        spineLabel.textContent = `${currentSection.num} ${currentSection.name}`;
+        spineLabel.style.color = currentSection.color;
+      }
     }
 
     // Active Project Spotlight Tracking is handled authoritatively by Projects.jsx IntersectionObserver
@@ -230,6 +237,63 @@ export function initScrollEngine() {
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!prefersReduced) {
     gsapCtx = gsap.context(() => {
+      // 0A. Oversized Background Typography Watermarks: Scroll-Linked Horizontal Parallax
+      const watermarks = document.querySelectorAll('.section-bg-watermark');
+      const isMobileScreen = window.innerWidth <= 900;
+      watermarks.forEach((wm, idx) => {
+        const parent = wm.closest('section') || wm.parentElement;
+        if (!parent) return;
+        const isEven = idx % 2 === 0;
+        const driftDistance = isMobileScreen ? 4 : 10;
+        gsap.fromTo(
+          wm,
+          { xPercent: isEven ? -driftDistance : driftDistance },
+          {
+            xPercent: isEven ? driftDistance : -driftDistance,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: parent,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 0.8
+            }
+          }
+        );
+      });
+
+      // 0B. Section Bridges: Progressive Conduit Wire Expansion & Waypoint Illumination
+      const bridges = document.querySelectorAll('.section-bridge');
+      bridges.forEach((bridge) => {
+        const pill = bridge.querySelector('.bridge-waypoint-pill');
+        const lines = bridge.querySelectorAll('.bridge-track-line');
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: bridge,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+            once: true
+          }
+        });
+
+        if (lines.length) {
+          tl.fromTo(
+            lines,
+            { scaleX: 0.2, opacity: 0.2 },
+            { scaleX: 1, opacity: 1, duration: 0.7, ease: 'power2.out' },
+            0
+          );
+        }
+
+        if (pill) {
+          tl.fromTo(
+            pill,
+            { y: 14, opacity: 0.35, scale: 0.96 },
+            { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.4)' },
+            0.1
+          );
+        }
+      });
+
       // 1. About section: directional bio entrance & lifted focus column
       const bioCol = document.querySelector('.about-bio-column');
       if (bioCol) {
@@ -489,16 +553,12 @@ export function initScrollEngine() {
               scrub: 0.5,
               onUpdate: (self) => {
                 const p = self.progress;
-                const node1 = document.getElementById('exp-node-01');
-                const node2 = document.getElementById('exp-node-02');
-                if (node1) {
-                  if (p >= 0.18) node1.classList.add('node-illuminated');
-                  else node1.classList.remove('node-illuminated');
-                }
-                if (node2) {
-                  if (p >= 0.62) node2.classList.add('node-illuminated');
-                  else node2.classList.remove('node-illuminated');
-                }
+                const expNodes = document.querySelectorAll('.exp-timeline-node');
+                expNodes.forEach((node, idx) => {
+                  const threshold = (idx + 0.25) / Math.max(expNodes.length, 1);
+                  if (p >= threshold) node.classList.add('node-illuminated');
+                  else node.classList.remove('node-illuminated');
+                });
               }
             }
           }

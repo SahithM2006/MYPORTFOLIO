@@ -99,6 +99,9 @@ export default function Contact() {
       id="contact"
       aria-labelledby="contact-title"
     >
+      {/* Oversized Cinematic Typography Watermark */}
+      <div className="section-bg-watermark watermark-contact" aria-hidden="true">09 // TRANSMIT</div>
+
       {/* Large Kinetic Orbital Aura & Sonar Radar in Background */}
       <div className="contact-kinetic-aura" id="contact-kinetic-aura" aria-hidden="true">
         <div className="aura-orbit aura-orbit-1"></div>

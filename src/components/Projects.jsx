@@ -1748,6 +1748,9 @@ export default function Projects({
 
   return (
     <section className="projects-section is-in-view" id="projects" aria-labelledby="projects-title">
+      {/* Oversized Cinematic Typography Watermark */}
+      <div className="section-bg-watermark watermark-projects" aria-hidden="true">04 // EXHIBITS</div>
+
       <div className="projects-container">
         <div className="projects-header-block">
           <div className="section-kicker-strip">

@@ -10,6 +10,9 @@ export default function Experience() {
       id="experience"
       aria-labelledby="experience-title"
     >
+      {/* Oversized Cinematic Typography Watermark */}
+      <div className="section-bg-watermark watermark-experience" aria-hidden="true">06 // TIMELINE</div>
+
       <div className="experience-container">
         {/* Section Header */}
         <div className="section-header-block">
@@ -131,7 +134,7 @@ export default function Experience() {
                     <li className="exp-resp-item">
                       <span className="exp-resp-bullet" aria-hidden="true">▸</span>
                       <span>
-                        Pursuing B.Tech in AI &amp; Data Science. Formal internships and corporate roles will be indexed here as they commence.
+                        Pursuing B.Tech in AI &amp; DS (3rd Year). Formal internships and corporate roles will be indexed here as they commence.
                       </span>
                     </li>
                     <li className="exp-resp-item">
@@ -152,11 +155,59 @@ export default function Experience() {
                 </div>
               </div>
 
-              {/* Timeline Node 2: Prospective Industry Roles & Availability */}
+              {/* Timeline Node 2: National-Level Hackathons & Competitive Engineering Prototypes */}
               <div className="exp-timeline-item" role="listitem" id="exp-item-02">
                 <div className="exp-timeline-rail" aria-hidden="true">
                   <span className="exp-timeline-index">02</span>
-                  <span className="exp-timeline-node status-active" id="exp-node-02" />
+                  <span className="exp-timeline-node" id="exp-node-02" />
+                  <span className="exp-node-pulse-ring" />
+                </div>
+
+                <div className="exp-timeline-content">
+                  <div className="exp-meta-row">
+                    <span className="exp-period-badge">2024 – 2025</span>
+                    <span className="exp-duration-text">• Hackathon Honors</span>
+                    <span className="exp-type-pill type-hackathon">Competitive Engineering</span>
+                    <span className="exp-location-tag">📍 National Hackathons</span>
+                  </div>
+
+                  <h3 className="exp-role-title">
+                    Hackathon Finalist &amp; Software Winner{' '}
+                    <span className="exp-org-sep">at</span>{' '}
+                    <span className="exp-org-name">National-Level Competitions</span>
+                  </h3>
+
+                  <ul className="exp-resp-list">
+                    {RESUME_DATA.achievements.map((ach, aIdx) => (
+                      <li key={aIdx} className="exp-resp-item">
+                        <span className="exp-resp-bullet" aria-hidden="true">★</span>
+                        <span>{ach}</span>
+                      </li>
+                    ))}
+                    <li className="exp-resp-item">
+                      <span className="exp-resp-bullet" aria-hidden="true">▸</span>
+                      <span>
+                        Architected and prototyped solutions under competitive constraints, including AEGIS-TWIN (Cybersecurity Digital Twin, shortlisted for the next round at VIT Vellore) and Probe360 (Agentless Vulnerability Assessment Platform).
+                      </span>
+                    </li>
+                  </ul>
+
+                  <div className="exp-skills-row" aria-label="Hackathon Technologies">
+                    <span className="exp-skill-chip">Python</span>
+                    <span className="exp-skill-chip">NetworkX</span>
+                    <span className="exp-skill-chip">FastAPI</span>
+                    <span className="exp-skill-chip">WinRM</span>
+                    <span className="exp-skill-chip">MITRE ATT&amp;CK</span>
+                    <span className="exp-skill-chip">Machine Learning</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Timeline Node 3: Prospective Industry Roles & Availability */}
+              <div className="exp-timeline-item" role="listitem" id="exp-item-03">
+                <div className="exp-timeline-rail" aria-hidden="true">
+                  <span className="exp-timeline-index">03</span>
+                  <span className="exp-timeline-node status-active" id="exp-node-03" />
                   <span className="exp-node-pulse-ring" />
                 </div>
 

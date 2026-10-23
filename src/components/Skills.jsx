@@ -265,6 +265,9 @@ export default function Skills({
 
   return (
     <section className="skills-section is-in-view" id="skills" aria-labelledby="skills-title">
+      {/* Oversized Cinematic Typography Watermark */}
+      <div className="section-bg-watermark watermark-skills" aria-hidden="true">03 // SPECTRUM</div>
+
       <div className="skills-container">
         <div className="skills-header">
           <div className="skills-header-top">
