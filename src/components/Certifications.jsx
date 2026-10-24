@@ -2,12 +2,12 @@ import React, { useState, useMemo, useEffect } from 'react';
 import { CERTIFICATIONS } from '../data-store.js';
 
 export default function Certifications() {
-  const [activeFilter, setActiveFilter] = useState('all');
+  const [activeCategory, setActiveCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [previewCert, setPreviewCert] = useState(null);
   const [copiedId, setCopiedId] = useState(null);
 
-  // Close modal on Escape key
+  // Close modal on Escape
   useEffect(() => {
     if (!previewCert) return;
     const handleKeyDown = (e) => {
@@ -18,257 +18,217 @@ export default function Certifications() {
   }, [previewCert]);
 
   const categories = [
-    { id: 'all', label: 'All Certifications', count: CERTIFICATIONS.length },
-    { id: 'coursera', label: 'Coursera', count: CERTIFICATIONS.filter((c) => c.category === 'coursera').length },
-    { id: 'skillup', label: 'Simplilearn SkillUp', count: CERTIFICATIONS.filter((c) => c.category === 'skillup').length },
-    { id: 'ai', label: 'Deep Learning & AI', count: CERTIFICATIONS.filter((c) => c.discipline === 'ai').length },
-    { id: 'cloud-db', label: 'Cloud & Database', count: CERTIFICATIONS.filter((c) => ['security', 'data'].includes(c.discipline)).length }
+    { id: 'all', label: 'All Credentials', count: CERTIFICATIONS.length },
+    {
+      id: 'ai',
+      label: 'Deep Learning & AI',
+      count: CERTIFICATIONS.filter((c) => c.discipline === 'ai').length
+    },
+    {
+      id: 'coursera',
+      label: 'Coursera (Packt)',
+      count: CERTIFICATIONS.filter((c) => c.category === 'coursera').length
+    },
+    {
+      id: 'security',
+      label: 'Cloud & Security',
+      count: CERTIFICATIONS.filter((c) => c.discipline === 'security').length
+    },
+    {
+      id: 'data-prog',
+      label: 'Databases & Programming',
+      count: CERTIFICATIONS.filter((c) => ['data', 'programming'].includes(c.discipline)).length
+    }
   ];
 
   const filteredCerts = useMemo(() => {
     return CERTIFICATIONS.filter((cert) => {
-      const matchesFilter =
-        activeFilter === 'all' ||
-        cert.category === activeFilter ||
-        cert.discipline === activeFilter ||
-        (activeFilter === 'cloud-db' && ['security', 'data'].includes(cert.discipline));
+      let matchesCat = activeCategory === 'all';
+      if (activeCategory === 'ai') matchesCat = cert.discipline === 'ai';
+      else if (activeCategory === 'coursera') matchesCat = cert.category === 'coursera';
+      else if (activeCategory === 'security') matchesCat = cert.discipline === 'security';
+      else if (activeCategory === 'data-prog') matchesCat = ['data', 'programming'].includes(cert.discipline);
 
-      const query = searchQuery.trim().toLowerCase();
+      const q = searchQuery.trim().toLowerCase();
       const matchesQuery =
-        !query ||
-        cert.title.toLowerCase().includes(query) ||
-        cert.platform.toLowerCase().includes(query) ||
-        cert.issuer.toLowerCase().includes(query) ||
-        (cert.credentialId && cert.credentialId.toLowerCase().includes(query));
+        !q ||
+        cert.title.toLowerCase().includes(q) ||
+        cert.platform.toLowerCase().includes(q) ||
+        cert.issuer.toLowerCase().includes(q) ||
+        (cert.credentialId && cert.credentialId.toLowerCase().includes(q));
 
-      return matchesFilter && matchesQuery;
+      return matchesCat && matchesQuery;
     });
-  }, [activeFilter, searchQuery]);
+  }, [activeCategory, searchQuery]);
 
-  const handleCopy = (text, id) => {
+  const handleCopyId = (text, id) => {
     if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).then(() => {
-        setCopiedId(id);
-        setTimeout(() => setCopiedId(null), 2000);
-      });
+      navigator.clipboard.writeText(text);
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2000);
     }
   };
 
   return (
     <section className="certifications-section" id="certifications" aria-labelledby="certifications-title">
-      {/* Oversized Cinematic Typography Watermark */}
-      <div className="section-bg-watermark watermark-certifications" aria-hidden="true">07 // CREDENTIALS</div>
-
-      {/* Moving Ambient Technical Circuit Motif & Telemetry Stream */}
-      <div className="cert-ambient-circuit" aria-hidden="true">
-        <svg viewBox="0 0 1200 600" className="cert-ambient-svg" preserveAspectRatio="none">
-          <defs>
-            <linearGradient id="certGradTeal" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#C6A45A" stopOpacity="0.45" />
-              <stop offset="50%" stopColor="#7596C8" stopOpacity="0.65" />
-              <stop offset="100%" stopColor="#C6A45A" stopOpacity="0.45" />
-            </linearGradient>
-          </defs>
-          <path d="M0,100 L300,100 L380,180 L820,180 L900,260 L1200,260" stroke="rgba(198, 164, 90, 0.2)" strokeWidth="1.2" strokeDasharray="6 6" fill="none" />
-          <path d="M0,100 L300,100 L380,180 L820,180 L900,260 L1200,260" stroke="url(#certGradTeal)" strokeWidth="1.8" strokeDasharray="16 120" fill="none" className="circuit-path-stream-1" />
-          <path d="M0,450 L250,450 L320,380 L700,380 L780,300 L1200,300" stroke="rgba(38, 59, 96, 0.28)" strokeWidth="1.2" strokeDasharray="8 8" fill="none" />
-          <path d="M0,450 L250,450 L320,380 L700,380 L780,300 L1200,300" stroke="#C6A45A" strokeWidth="1.6" strokeDasharray="14 110" fill="none" className="circuit-path-stream-2" />
-        </svg>
-      </div>
-
       <div className="certifications-container">
         {/* Section Header */}
         <div className="section-header-block">
           <div className="section-kicker-strip">
             <span className="section-kicker-dot" />
-            <span className="section-kicker">ACADEMIC &amp; INDUSTRY CREDENTIALS</span>
+            <span className="section-kicker">STAGE 04 // EVOLUTION &bull; VERIFIED CREDENTIALS</span>
           </div>
-          <h2 className="section-title" id="certifications-title">Certifications &amp; Courses</h2>
+          <h2 className="section-title" id="certifications-title">
+            Certifications &amp; <span className="accent-text">Technical Credentials</span>
+          </h2>
           <p className="section-subtitle">
-            A chronological timeline of verified course completions and technical credentials across PyTorch deep learning, cloud security architectures, and relational database systems.
+            Verified course completions and specializations across PyTorch deep learning,
+            enterprise cloud security, relational databases, and sequential neural architectures.
           </p>
+        </div>
 
-          {/* Minimal Filter & Search Toolbar */}
-          <div className="cert-timeline-toolbar">
-            <div className="cert-timeline-filters" role="tablist" aria-label="Filter certifications">
-              {categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  type="button"
-                  className={`cert-timeline-filter-btn ${activeFilter === cat.id ? 'active' : ''}`}
-                  role="tab"
-                  aria-selected={activeFilter === cat.id}
-                  onClick={() => setActiveFilter(cat.id)}
-                >
-                  <span>{cat.label}</span>
-                  <span className="filter-count">{cat.count}</span>
-                </button>
-              ))}
-            </div>
+        {/* Toolbar: Category Filters & Search */}
+        <div className="cert-toolbar">
+          <div className="cert-filter-tabs" role="tablist" aria-label="Filter certifications">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                type="button"
+                className={`cert-filter-btn ${activeCategory === cat.id ? 'active' : ''}`}
+                role="tab"
+                aria-selected={activeCategory === cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+              >
+                <span>{cat.label}</span>
+                <span className="cert-count-badge">{cat.count}</span>
+              </button>
+            ))}
+          </div>
 
-            <div className="cert-timeline-search">
-              <span className="search-glyph" aria-hidden="true">⌕</span>
-              <input
-                type="text"
-                className="cert-timeline-input"
-                placeholder="Search credential or issuer..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                aria-label="Search certifications"
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  className="search-clear-btn"
-                  onClick={() => setSearchQuery('')}
-                  aria-label="Clear search"
-                >
-                  ×
-                </button>
-              )}
-            </div>
+          <div className="cert-search-wrap">
+            <span className="search-icon" aria-hidden="true">🔍</span>
+            <input
+              type="text"
+              className="cert-search-input"
+              placeholder="Search title, platform, credential ID..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              aria-label="Filter credentials by keyword"
+            />
+            {searchQuery && (
+              <button
+                type="button"
+                className="cert-search-clear"
+                onClick={() => setSearchQuery('')}
+                aria-label="Clear keyword search"
+              >
+                &times;
+              </button>
+            )}
           </div>
         </div>
 
-        {/* Vertically Arranged Timeline / Numbered Entries */}
-        <div className="cert-timeline-list" role="list">
-          {/* Continuous Animated Timeline Spine Track */}
-          <div className="cert-timeline-spine-track" aria-hidden="true">
-            <div className="cert-timeline-spine-fill" id="cert-timeline-spine-fill"></div>
-          </div>
-
-          {filteredCerts.map((cert, index) => {
-            const itemNumber = String(index + 1).padStart(2, '0');
-            const hasVerifyLink = Boolean(cert.verifyUrl);
-            const isSpecialization = cert.badge && cert.badge.includes('Specialization');
+        {/* Credentials Grid */}
+        <div className="cert-cards-grid" role="list">
+          {filteredCerts.map((cert) => {
+            const hasVerifyUrl = Boolean(cert.verifyUrl);
+            const hasFile = Boolean(cert.fileUrl);
 
             return (
-              <article
-                key={cert.id}
-                className={`cert-timeline-row ${cert.highlight ? 'highlighted-entry' : ''} ${isSpecialization ? 'specialization-entry' : ''}`}
-                role="listitem"
-                id={`cert-row-${itemNumber}`}
-              >
-                {/* Timeline Column: Numbered Entry & Slim Node Track */}
-                <div className="cert-timeline-rail" aria-hidden="true">
-                  <span className="cert-timeline-index">{itemNumber}</span>
-                  <div className="cert-timeline-node-wrap">
-                    <span className="cert-timeline-node" id={`cert-node-${itemNumber}`} />
-                    <span className="cert-timeline-line" />
+              <article key={cert.id} className="cert-card" role="listitem">
+                <div className="cert-card-topbar">
+                  <div className="cert-platform-wrap">
+                    <span className="cert-platform-tag">{cert.platform}</span>
+                    <span className="cert-issuer-dot">&bull;</span>
+                    <span className="cert-issuer-name">{cert.issuer}</span>
                   </div>
+                  <span className="cert-badge-tag">{cert.badge}</span>
                 </div>
 
-                {/* Primary Content Container */}
-                <div className="cert-timeline-main">
-                  {/* Top Row: Meta Tags & Date */}
-                  <div className="cert-timeline-meta-header">
-                    <div className="cert-timeline-badges">
-                      <span className={`cert-platform-pill platform-${cert.category}`}>
-                        {cert.platform}
-                      </span>
-                      <span className="cert-issuer-badge">
-                        {cert.issuer}
-                      </span>
-                      {cert.badge && (
-                        <span className="cert-type-badge">
-                          {cert.badge}
-                        </span>
-                      )}
-                    </div>
+                <h3 className="cert-card-title">{cert.title}</h3>
+                <p className="cert-card-desc">{cert.desc}</p>
 
-                    <div className="cert-timeline-date-block">
-                      <span className="cert-date-icon" aria-hidden="true">📅</span>
-                      <span className="cert-date-text">{cert.date}</span>
-                    </div>
+                {/* Metadata Strip */}
+                <div className="cert-meta-strip">
+                  <div className="cert-date-info">
+                    <span className="meta-icon" aria-hidden="true">&#128197;</span>
+                    <span>Completed: <strong>{cert.date}</strong></span>
                   </div>
 
-                  {/* Course Name with High-Contrast Typography */}
-                  <div className="cert-timeline-heading-wrap">
-                    <h3 className="cert-timeline-course-title">
-                      {cert.title}
-                    </h3>
-                  </div>
-
-                  {/* Course Abstract / Description */}
-                  <p className="cert-timeline-description">
-                    {cert.desc}
-                  </p>
-
-                  {/* Bottom Strip: Credential Verification & Document Actions */}
-                  <div className="cert-timeline-footer-row">
-                    <div className="cert-credential-id-wrap">
-                      {cert.credentialId && (
-                        <div className="cert-id-tag">
-                          <span className="cert-id-label">Credential ID:</span>
-                          <code>{cert.credentialId}</code>
-                          <button
-                            type="button"
-                            className="cert-id-copy"
-                            onClick={() => handleCopy(cert.credentialId, cert.id)}
-                            title="Copy credential ID to clipboard"
-                          >
-                            {copiedId === cert.id ? 'Copied ✓' : 'Copy'}
-                          </button>
-                        </div>
-                      )}
+                  {cert.credentialId && (
+                    <div className="cert-id-info">
+                      <span className="meta-lbl">ID:</span>
+                      <code className="cert-code">{cert.credentialId}</code>
+                      <button
+                        type="button"
+                        className="btn-cert-copy"
+                        onClick={() => handleCopyId(cert.credentialId, cert.id)}
+                        title="Copy Credential ID"
+                      >
+                        {copiedId === cert.id ? 'Copied ✓' : 'Copy'}
+                      </button>
                     </div>
+                  )}
+                </div>
 
-                    <div className="cert-timeline-links">
-                      {hasVerifyLink && (
-                        <a
-                          href={cert.verifyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="cert-link-action verify-link"
-                          title="Verify credential on issuing platform"
-                        >
-                          <span>Verify Credential</span>
-                          <span className="cert-link-arrow">↗</span>
-                        </a>
-                      )}
+                {/* Verified Action Buttons */}
+                <div className="cert-actions-bar">
+                  {hasVerifyUrl ? (
+                    <a
+                      href={cert.verifyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-cert-action verify"
+                      title="Verify credential on issuing platform"
+                    >
+                      <span>Verify Credential</span>
+                      <span className="btn-arrow" aria-hidden="true">↗</span>
+                    </a>
+                  ) : (
+                    <span className="cert-offline-badge" title="Verification verified via local certificate file">
+                      <span>Offline Verified</span>
+                    </span>
+                  )}
 
-                      {cert.fileUrl && (
-                        <button
-                          type="button"
-                          className="cert-link-action view-link"
-                          onClick={() => setPreviewCert(cert)}
-                          title="View certificate preview"
-                        >
-                          <span>View Certificate</span>
-                          <span className="cert-link-arrow">↗</span>
-                        </button>
-                      )}
+                  {hasFile && (
+                    <button
+                      type="button"
+                      className="btn-cert-action view"
+                      onClick={() => setPreviewCert(cert)}
+                      title="View certificate document preview"
+                    >
+                      <span>View Document</span>
+                      <span className="btn-arrow" aria-hidden="true">↗</span>
+                    </button>
+                  )}
 
-                      {cert.fileUrl && (
-                        <a
-                          href={cert.fileUrl}
-                          download
-                          className="cert-link-action download-link"
-                          title={cert.fileUrl.endsWith('.png') ? 'Download certificate Image' : 'Download certificate PDF'}
-                        >
-                          <span>{cert.fileUrl.endsWith('.png') ? 'Download Image' : 'Download PDF'}</span>
-                          <span className="cert-link-arrow">↓</span>
-                        </a>
-                      )}
-                    </div>
-                  </div>
+                  {hasFile && (
+                    <a
+                      href={cert.fileUrl}
+                      download
+                      className="btn-cert-action download"
+                      title="Download verified certificate file"
+                    >
+                      <span>Download</span>
+                      <span className="btn-arrow" aria-hidden="true">↓</span>
+                    </a>
+                  )}
                 </div>
               </article>
             );
           })}
         </div>
 
-        {/* Empty State */}
         {filteredCerts.length === 0 && (
-          <div className="cert-timeline-empty">
-            <span className="empty-glyph" aria-hidden="true">🛡️</span>
-            <h4>No credentials match your filter</h4>
-            <p>Try resetting the search query or selecting "All Certifications".</p>
+          <div className="cert-empty-state">
+            <span className="empty-icon" aria-hidden="true">&empty;</span>
+            <h4>No credentials match &ldquo;{searchQuery}&rdquo;</h4>
+            <p>Try resetting the category filter or searching for another term.</p>
             <button
               type="button"
-              className="btn-reset-timeline-filter"
+              className="btn-cert-reset"
               onClick={() => {
-                setActiveFilter('all');
+                setActiveCategory('all');
                 setSearchQuery('');
               }}
             >
@@ -290,7 +250,7 @@ export default function Certifications() {
           <div className="cert-modal-container" onClick={(e) => e.stopPropagation()}>
             <div className="cert-modal-header">
               <div className="cert-modal-title-wrap">
-                <span className="cert-platform-badge">{previewCert.platform}</span>
+                <span className="cert-modal-platform">{previewCert.platform}</span>
                 <h3 id="cert-modal-title" className="cert-modal-title">
                   {previewCert.title}
                 </h3>
@@ -299,16 +259,21 @@ export default function Certifications() {
                 type="button"
                 className="cert-modal-close"
                 onClick={() => setPreviewCert(null)}
-                aria-label="Close certificate preview"
+                aria-label="Close document preview"
               >
-                ✕
+                &times;
               </button>
             </div>
 
             <div className="cert-modal-body">
               {previewCert.fileUrl.endsWith('.png') ? (
-                <div className="cert-modal-img-wrap">
-                  <img src={previewCert.fileUrl} alt={previewCert.title} className="cert-modal-img" loading="lazy" decoding="async" />
+                <div className="cert-modal-image-wrap">
+                  <img
+                    src={previewCert.fileUrl}
+                    alt={previewCert.title}
+                    className="cert-modal-image"
+                    loading="lazy"
+                  />
                 </div>
               ) : (
                 <iframe

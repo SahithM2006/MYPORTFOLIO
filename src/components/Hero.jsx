@@ -1,192 +1,184 @@
-import React, { useState, useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useState, useEffect } from 'react';
 
-gsap.registerPlugin(ScrollTrigger);
-
-const KINETIC_WORDS = ['ENGINEER', 'PROTECT', 'ANALYZE', 'DISCOVER', 'ORCHESTRATE'];
+const DIRECTIVE_VERBS = ['ENGINEER', 'EXPLORE', 'ANALYZE', 'ARCHITECT', 'EVOLVE'];
 
 export default function Hero() {
-  const [wordIdx, setWordIdx] = useState(0);
-  const [isWordTransitioning, setIsWordTransitioning] = useState(false);
-  const heroRef = useRef(null);
-  const typographyRef = useRef(null);
-  const subjectRef = useRef(null);
-  const cornersRef = useRef(null);
+  const [verbIdx, setVerbIdx] = useState(0);
+  const [isFading, setIsFading] = useState(false);
 
-  // Kinetic Word auto-cycle
   useEffect(() => {
-    const interval = setInterval(() => {
-      cycleWord();
-    }, 3800);
-    return () => clearInterval(interval);
-  }, [wordIdx]);
+    const timer = setInterval(() => {
+      cycleVerb();
+    }, 3600);
+    return () => clearInterval(timer);
+  }, [verbIdx]);
 
-  const cycleWord = () => {
-    if (document.hidden) return;
-    setIsWordTransitioning(true);
+  const cycleVerb = () => {
+    setIsFading(true);
     setTimeout(() => {
-      setWordIdx((prev) => (prev + 1) % KINETIC_WORDS.length);
-      setIsWordTransitioning(false);
-    }, 200);
+      setVerbIdx((prev) => (prev + 1) % DIRECTIVE_VERBS.length);
+      setIsFading(false);
+    }, 220);
   };
 
-  // Cinematic scroll-driven scene transition (Inspired by Reference Video Image 1 -> 2)
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion || !heroRef.current || !typographyRef.current) return;
-
-    const ctx = gsap.context(() => {
-      const topRow = typographyRef.current.querySelector('.monumental-row-top');
-      const bottomRow = typographyRef.current.querySelector('.monumental-row-bottom');
-      const subject = subjectRef.current;
-      const corners = cornersRef.current?.children;
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 0.6,
-          invalidateOnRefresh: true
-        }
-      });
-
-      // Typography expands slightly and fades with cinematic depth
-      if (topRow) {
-        tl.to(topRow, { y: -60, opacity: 0.1, scale: 1.04, ease: 'power1.inOut' }, 0);
-      }
-      if (bottomRow) {
-        tl.to(bottomRow, { y: -40, opacity: 0.12, scale: 1.02, ease: 'power1.inOut' }, 0.05);
-      }
-
-      // Central subject portrait softly sinks and dissolves into the gate
-      if (subject) {
-        tl.to(subject, { y: 60, scale: 0.94, opacity: 0.2, ease: 'power1.inOut' }, 0);
-      }
-
-      // Corner editorial metadata fades quickly to clear stage
-      if (corners && corners.length) {
-        tl.to(corners, { y: -20, opacity: 0, ease: 'power1.out', stagger: 0.04 }, 0);
-      }
-    }, heroRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section className="hero-monumental-scene" id="hero" ref={heroRef} aria-label="Introduction">
-      {/* Background Volumetric Ambient Lighting */}
-      <div className="hero-atmospheric-backdrop" aria-hidden="true">
-        <div className="hero-radial-beam-center" />
-        <div className="hero-noise-overlay" />
-        <div className="section-bg-watermark watermark-hero">01 // ORIGIN</div>
+    <section className="hero-scene" id="hero" aria-label="Introduction to Sahith M.">
+      {/* Background Atmosphere */}
+      <div className="hero-atmosphere" aria-hidden="true">
+        <div className="hero-ambient-glow-left" />
+        <div className="hero-ambient-glow-right" />
+        <div className="hero-grid-underlay" />
       </div>
 
-      {/* Screen-Spanning Oversized Monumental Typography (Image 1 Reference) */}
-      <div className="hero-monumental-typography" ref={typographyRef}>
-        <div className="monumental-row monumental-row-top">
-          <div className="monumental-kicker-badge">
-            <span className="badge-pulse-dot" />
-            <span>AI &amp; DS UNDERGRADUATE &bull; EST 2024</span>
+      <div className="hero-container">
+        {/* Top Kicker Pill */}
+        <div className="hero-kicker-strip">
+          <div className="hero-kicker-badge">
+            <span className="hero-kicker-dot" />
+            <span className="hero-kicker-theme">AN INDEPENDENT MIND, ALWAYS EVOLVING</span>
           </div>
-          <h1 className="monumental-title-top">
-            EXPLORE MY
-          </h1>
+          <span className="hero-kicker-academic">
+            B.TECH IN AI &amp; DS &bull; SAVEETHA ENGINEERING COLLEGE
+          </span>
         </div>
 
-        <div className="monumental-row monumental-row-bottom">
-          <div className="monumental-title-bottom">
-            PORTFOLIO
-            <span className="monumental-period">.</span>
+        {/* Main Hero Content Grid */}
+        <div className="hero-split-grid">
+          {/* Left Column: Personal & Professional Identity */}
+          <div className="hero-intro-col">
+            <div className="hero-eyebrow">
+              <span className="hero-eyebrow-num">01 // ORIGIN</span>
+              <span className="hero-eyebrow-sep">&bull;</span>
+              <span className="hero-eyebrow-tag">APPLIED AI &bull; SYSTEMS TELEMETRY</span>
+            </div>
+
+            <h1 className="hero-title">
+              <span className="hero-title-greeting">Hello, I&apos;m</span>
+              <span className="hero-title-name">Sahith M.</span>
+            </h1>
+
+            <div className="hero-directive-bar">
+              <span className="hero-directive-label">DIRECTIVE:</span>
+              <button
+                type="button"
+                className={`hero-verb-pill ${isFading ? 'fading' : ''}`}
+                onClick={cycleVerb}
+                title="Click to advance directive"
+              >
+                <span className="verb-text">{DIRECTIVE_VERBS[verbIdx]}</span>
+                <span className="verb-icon">↺</span>
+              </button>
+              <span className="hero-directive-caption">
+                Turning computational theory into resilient systems.
+              </span>
+            </div>
+
+            <p className="hero-statement">
+              Undergraduate in Artificial Intelligence &amp; Data Science at Saveetha Engineering
+              College (Autonomous), Chennai. I engineer software systems from memory primitives
+              up &mdash; bridging applied machine learning, agentless Windows telemetry, and temporal
+              graph intelligence to solve real operational problems.
+            </p>
+
+            {/* Discipline Badges */}
+            <div className="hero-disciplines-row" aria-label="Core disciplines">
+              <span className="hero-discipline-tag">
+                <span className="tag-dot gold" />
+                <span>Agentless WinRM Telemetry</span>
+              </span>
+              <span className="hero-discipline-tag">
+                <span className="tag-dot steel" />
+                <span>Applied Machine Learning</span>
+              </span>
+              <span className="hero-discipline-tag">
+                <span className="tag-dot gold" />
+                <span>Temporal Graph Analytics</span>
+              </span>
+              <span className="hero-discipline-tag">
+                <span className="tag-dot steel" />
+                <span>FastAPI Microservices</span>
+              </span>
+            </div>
+
+            {/* Action Group */}
+            <div className="hero-cta-group">
+              <a href="#about" className="btn-hero-primary" id="hero-cta-journey">
+                <span>Explore Journey</span>
+                <span className="btn-arrow" aria-hidden="true">↓</span>
+              </a>
+              <a href="#projects" className="btn-hero-secondary" id="hero-cta-projects">
+                <span>View Systems &amp; Projects</span>
+                <span className="btn-arrow" aria-hidden="true">→</span>
+              </a>
+              <a href="#resume" className="btn-hero-ghost" id="hero-cta-resume">
+                <span>Curriculum Vitae</span>
+                <span className="btn-arrow" aria-hidden="true">↗</span>
+              </a>
+            </div>
+
+            {/* Real-time Status Capsule */}
+            <div className="hero-status-strip">
+              <div className="hero-status-indicator">
+                <span className="status-beacon-pulse" />
+                <span className="status-text">
+                  3rd Year Undergraduate (2024–2028) &bull; Open for Summer/Fall Technical Internships
+                </span>
+              </div>
+            </div>
           </div>
 
-          <div className="hero-kinetic-pill">
-            <span className="kinetic-pill-label">DIRECTIVE:</span>
-            <button
-              type="button"
-              className={`kinetic-pill-btn ${isWordTransitioning ? 'transitioning' : ''}`}
-              onClick={cycleWord}
-              title="Click to cycle verbs"
-            >
-              {KINETIC_WORDS[wordIdx]}
-            </button>
+          {/* Right Column: Portrait Composition with Technical Depth */}
+          <div className="hero-portrait-col">
+            <div className="hero-portrait-card">
+              <div className="portrait-frame-halo" aria-hidden="true" />
+              <div className="portrait-inner-frame">
+                <img
+                  src="/user_photo.jpg"
+                  alt="Sahith M. — AI & Data Science Undergraduate"
+                  className="hero-portrait-image"
+                  loading="eager"
+                  decoding="async"
+                  width="440"
+                  height="560"
+                />
+                <div className="portrait-vignette-overlay" aria-hidden="true" />
+                <div className="portrait-corner-bracket top-left" aria-hidden="true" />
+                <div className="portrait-corner-bracket top-right" aria-hidden="true" />
+                <div className="portrait-corner-bracket bottom-left" aria-hidden="true" />
+                <div className="portrait-corner-bracket bottom-right" aria-hidden="true" />
+              </div>
+
+              {/* Technical Caption Box (Below Portrait, Never Covering Face) */}
+              <div className="portrait-caption-box">
+                <div className="portrait-caption-header">
+                  <span className="caption-badge">AUTONOMOUS RESEARCHER</span>
+                  <span className="caption-coords">13.08°N &bull; 80.27°E</span>
+                </div>
+                <div className="portrait-caption-body">
+                  <strong className="caption-name">Sahith M.</strong>
+                  <span className="caption-desc">
+                    AI &amp; Data Science &bull; Saveetha Engineering College (Autonomous)
+                  </span>
+                </div>
+                <div className="portrait-caption-footer">
+                  <span className="footer-status-pill">CGPA: 7.5 / 10</span>
+                  <span className="footer-status-pill">Chennai, India</span>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+
+        {/* Scroll Cue at Bottom */}
+        <div className="hero-bottom-cue">
+          <a href="#about" className="hero-scroll-cue-link" aria-label="Scroll to explore the story">
+            <span className="scroll-track">
+              <span className="scroll-thumb" />
+            </span>
+            <span className="scroll-cue-text">SCROLL TO EXPLORE THE JOURNEY</span>
+          </a>
         </div>
       </div>
-
-      {/* Center Subject Portrait Emerging from Bottom (Image 1 Reference) */}
-      <div className="hero-subject-silhouette" ref={subjectRef} aria-hidden="true">
-        <div className="hero-subject-halo" />
-        <div className="hero-subject-rim-light" />
-        <div className="hero-subject-mask">
-          <img
-            src="./user_photo.jpg"
-            alt="Sahith M. Portrait Silhouette"
-            className="hero-subject-img"
-            loading="eager"
-            decoding="async"
-            width="520"
-            height="680"
-          />
-        </div>
-      </div>
-
-      {/* Editorial Corner Anchors (Image 1 Reference) */}
-      <div className="hero-editorial-corners" ref={cornersRef}>
-        {/* Bottom Left Corner: Circular Badge & Credentials */}
-        <div className="hero-corner hero-corner-left">
-          <div className="corner-badge-rotating" aria-hidden="true">
-            <svg viewBox="0 0 100 100" className="corner-rotate-svg">
-              <path
-                id="heroCirclePath"
-                d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"
-                fill="none"
-              />
-              <text fontSize="8.2" letterSpacing="2.5" fill="#C6A45A">
-                <textPath href="#heroCirclePath">SAHITH M • AI &amp; DS • 2024–2028 •</textPath>
-              </text>
-            </svg>
-            <span className="corner-center-arrow">&darr;</span>
-          </div>
-          <div className="corner-info-text">
-            <span className="corner-title">B.TECH IN AI &amp; DS (3RD YEAR)</span>
-            <span className="corner-sub">Saveetha Engineering College (Autonomous), Chennai</span>
-          </div>
-        </div>
-
-        {/* Bottom Right Corner: Discipline Lead & Direct CTA */}
-        <div className="hero-corner hero-corner-right">
-          <p className="corner-lead-statement">
-            Engineering practical software systems, intelligent applications, and security-oriented solutions that bridge analytical models with real-world infrastructure.
-          </p>
-          <div className="corner-chips-row" aria-label="Core disciplines">
-            <span className="corner-chip">AI &amp; DS</span>
-            <span className="corner-chip-sep">&bull;</span>
-            <span className="corner-chip">SYSTEMS TELEMETRY</span>
-            <span className="corner-chip-sep">&bull;</span>
-            <span className="corner-chip">GRAPH ANALYTICS</span>
-          </div>
-          <div className="corner-actions-group">
-            <a href="#projects" className="btn-hero-primary" id="hero-btn-work">
-              <span>Explore Exhibits</span>
-              <span className="btn-arrow" aria-hidden="true">&rarr;</span>
-            </a>
-            <a href="#contact" className="btn-hero-ghost" id="hero-btn-contact">
-              <span>Get in Touch</span>
-            </a>
-          </div>
-        </div>
-      </div>
-
-      {/* Minimalist Bottom Scroll Indicator */}
-      <a href="#about-gate" className="hero-scroll-indicator" id="hero-scroll-cue" aria-label="Scroll to explore portfolio">
-        <span className="scroll-pill-track">
-          <span className="scroll-pill-thumb" />
-        </span>
-        <span className="scroll-cue-label">SCROLL TO EXPLORE</span>
-      </a>
     </section>
   );
 }
-

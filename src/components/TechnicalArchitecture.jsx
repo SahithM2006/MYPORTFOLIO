@@ -103,7 +103,7 @@ function FlowDetail({ project }) {
             <div key={i} className="ca-conn-row">
               <span className="ca-conn-num">{String(i + 1).padStart(2, "0")}</span>
               <span className="ca-conn-from">{fromNode?.title}</span>
-              <span className="ca-conn-arrow">&#8594;</span>
+              <span className="ca-conn-arrow">→</span>
               <span className="ca-conn-to">{toNode?.title}</span>
               <span className="ca-conn-label">[{link.label}]</span>
               <span className="ca-conn-protocol">{link.protocol}</span>
@@ -157,7 +157,7 @@ function DetailPanel({ tabId, project }) {
           </div>
           <ul className="ca-audit-list">
             {audit.implemented.map((item, i) => (
-              <li key={i}><span className="ca-audit-check">&#10003;</span>{item}</li>
+              <li key={i}><span className="ca-audit-check">✓</span>{item}</li>
             ))}
           </ul>
         </div>
@@ -168,14 +168,14 @@ function DetailPanel({ tabId, project }) {
           </div>
           <ul className="ca-audit-list">
             {audit.planned.map((item, i) => (
-              <li key={i}><span className="ca-audit-arrow">&#8594;</span>{item}</li>
+              <li key={i}><span className="ca-audit-arrow">→</span>{item}</li>
             ))}
           </ul>
         </div>
       </div>
       {audit.reviewerNotes && audit.reviewerNotes.length > 0 && (
         <div className="ca-reviewer-notes">
-          <span className="ca-reviewer-label">&#x1F4DD; Reviewer Notes</span>
+          <span className="ca-reviewer-label">📝 Reviewer Notes</span>
           <ul className="ca-reviewer-list">
             {audit.reviewerNotes.map((note, i) => (
               <li key={i}>{note}</li>
@@ -261,7 +261,7 @@ export default function TechnicalArchitecture() {
         <div className="ca-project-selector" role="region" aria-label="Select project architecture">
           <div className="ca-selector-hint">
             <span className="ca-hint-kicker">PROJECT EXPLORER</span>
-            <span className="ca-hint-keys">Press <kbd>1</kbd>&#8211;<kbd>4</kbd> to switch</span>
+            <span className="ca-hint-keys">Press <kbd>1</kbd>–<kbd>4</kbd> to switch</span>
           </div>
           <div className="ca-selector-grid" role="tablist">
             {ARCHITECTURE_PROJECTS.map((proj, idx) => {
@@ -319,11 +319,11 @@ export default function TechnicalArchitecture() {
                   <p className="ca-card-summary">{compact.frontendLayers[0]?.roleSummary}</p>
                 </>
               ) : (
-                <p className="ca-card-summary ca-card-none">CLI / script interface &#8212; no browser frontend in this project.</p>
+                <p className="ca-card-summary ca-card-none">CLI / script interface — no browser frontend in this project.</p>
               )}
             </div>
 
-            <div className="ca-flow-arrow" aria-hidden="true">&#8594;</div>
+            <div className="ca-flow-arrow" aria-hidden="true">→</div>
 
             <div className="ca-overview-card ca-card-backend">
               <div className="ca-card-label">
@@ -338,11 +338,11 @@ export default function TechnicalArchitecture() {
                   <p className="ca-card-summary">{compact.backendLayers[0]?.roleSummary}</p>
                 </>
               ) : (
-                <p className="ca-card-summary ca-card-none">No dedicated web API layer &#8212; processing runs in-process / CLI.</p>
+                <p className="ca-card-summary ca-card-none">No dedicated web API layer — processing runs in-process / CLI.</p>
               )}
             </div>
 
-            <div className="ca-flow-arrow" aria-hidden="true">&#8594;</div>
+            <div className="ca-flow-arrow" aria-hidden="true">→</div>
 
             <div className="ca-overview-card ca-card-supporting">
               <div className="ca-card-label">
@@ -364,7 +364,7 @@ export default function TechnicalArchitecture() {
             <div className="ca-tabs-header-row">
               <span className="ca-tabs-heading">IMPLEMENTATION DETAILS</span>
               {openTabId && (
-                <button type="button" className="ca-tabs-collapse-all" onClick={() => setOpenTabId(null)}>Collapse &#9652;</button>
+                <button type="button" className="ca-tabs-collapse-all" onClick={() => setOpenTabId(null)}>Collapse ▴</button>
               )}
             </div>
             <div className="ca-tabs-accordion">

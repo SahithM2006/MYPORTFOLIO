@@ -22,10 +22,10 @@ export default function App() {
   const [activeProjectId, setActiveProjectId] = useState('prj-probe360');
   const [selectedSkillId, setSelectedSkillId] = useState('python');
 
-  // Derive highlighted skills for the currently active project
+  // Derive highlighted skills for active project
   const highlightedSkillIds = getSkillsForProject(activeProjectId).map((s) => s.id);
 
-  // Derive highlighted projects for the selected skill
+  // Derive highlighted projects for selected skill
   const highlightedProjectIds = getProjectsForSkill(selectedSkillId).map((p) => `prj-${p.id}`);
 
   useEffect(() => {
@@ -73,31 +73,31 @@ export default function App() {
       <Header />
       <main className="page-main" id="main-content">
         <Hero />
-        <SectionBridge tag="01 ORIGIN &bull; 02 MINDSET" />
+        <SectionBridge tag="CURIOSITY • 01 ORIGIN → 02 UNDERSTANDING" />
         <About onSelectSkill={setSelectedSkillId} onSelectProject={setActiveProjectId} />
-        <SectionBridge tag="02 MINDSET &bull; 03 SPECTRUM" />
+        <SectionBridge tag="UNDERSTANDING • 02 MINDSET → 03 SPECTRUM" />
         <Skills
           selectedSkillId={selectedSkillId}
           onSelectSkill={setSelectedSkillId}
           highlightedSkillIds={highlightedSkillIds}
           onJumpToProject={handleJumpToProject}
         />
-        <SectionBridge tag="03 SPECTRUM &bull; 04 EXHIBITS" />
+        <SectionBridge tag="CREATION • 03 SPECTRUM → 04 SYSTEMS" />
         <Projects
           activeProjectId={activeProjectId}
           onSelectProject={setActiveProjectId}
           selectedSkillId={selectedSkillId}
           onSelectSkill={setSelectedSkillId}
         />
-        <SectionBridge tag="04 EXHIBITS &bull; 05 SYSTEMS" />
+        <SectionBridge tag="CREATION • 04 SYSTEMS → 05 ARCHITECTURE" />
         <TechnicalArchitecture />
-        <SectionBridge tag="05 SYSTEMS &bull; 06 TIMELINE" />
+        <SectionBridge tag="EVOLUTION • 05 ARCHITECTURE → 06 TRAJECTORY" />
         <Experience />
-        <SectionBridge tag="06 TIMELINE &bull; 07 CREDENTIALS" />
+        <SectionBridge tag="EVOLUTION • 06 TRAJECTORY → 07 CREDENTIALS" />
         <Certifications />
-        <SectionBridge tag="07 CREDENTIALS &bull; 08 DOSSIER" />
+        <SectionBridge tag="EVOLUTION • 07 CREDENTIALS → 08 DOSSIER" />
         <Resume />
-        <SectionBridge tag="08 DOSSIER &bull; 09 TRANSMIT" />
+        <SectionBridge tag="EVOLUTION • 08 DOSSIER → 09 TRANSMIT" />
         <Contact />
         <Footer />
       </main>
