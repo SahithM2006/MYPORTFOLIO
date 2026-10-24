@@ -3,162 +3,200 @@ import { CAREER_STATUS, MINDSET_PILLARS, RESUME_DATA } from '../data-store.js';
 
 export default function About({ onSelectSkill, onSelectProject }) {
   const [activePillarKey, setActivePillarKey] = useState('systems');
+  const [activeWaypoint, setActiveWaypoint] = useState(0);
 
   const activePillar = MINDSET_PILLARS[activePillarKey] || MINDSET_PILLARS.systems;
 
+  const EXPLORATION_WAYPOINTS = [
+    {
+      step: '01',
+      title: 'Procedural C & Memory Primitives',
+      subtitle: 'The Solitude of Low-Level Mechanics',
+      desc: 'Before touching deep learning or asynchronous web frameworks, I immersed myself in procedural C — understanding memory addresses, stack frames, heap fragmentation, and OS syscalls. This discipline taught me that systems are not abstract magic; every abstraction carries an electrical and architectural cost.',
+      primitive: 'Pointers • Dynamic Allocation • Syscalls • Cache Line Locality'
+    },
+    {
+      step: '02',
+      title: 'Agentless Windows Telemetry',
+      subtitle: 'Questioning Conventional Security Postures',
+      desc: 'Observing enterprise IT deploying intrusive binary daemons that consume memory and introduce attack surfaces, I explored native OS capabilities. Windows already provides WinRM over TLS 5986 and CIM/WMI namespaces. Why deploy an agent when the operating system can be queried natively with zero endpoint footprint?',
+      primitive: 'WinRM • TLS 5986 • CIM/WMI Classes • CredSSP Authentication'
+    },
+    {
+      step: '03',
+      title: 'Temporal Graphs as Reality',
+      subtitle: 'From Data Points to Lineage Flow',
+      desc: 'Real-world operations — whether money-mule transactions laundering stolen digital rupees or adversaries executing lateral movement across enterprise subnets — are directed graphs evolving across time. Seeing data as graphs unlocked the ability to compute minimum-cut interventions and sever malicious paths mathematically.',
+      primitive: 'NetworkX • Directed DAGs • Minimum-Cut Algorithms • Token Lineage'
+    }
+  ];
+
   return (
-    <section className="about-section" id="about" aria-labelledby="about-title">
+    <section className="about-section is-in-view" id="about" aria-labelledby="about-title">
       <div className="about-container">
-        {/* Section Header */}
-        <div className="section-header-block">
-          <div className="section-kicker-strip">
-            <span className="section-kicker-dot" />
-            <span className="section-kicker">STAGE 01 &bull; 02 // CURIOSITY &amp; UNDERSTANDING</span>
-          </div>
-          <h2 className="section-title" id="about-title">
-            The Path of an <span className="accent-text">Independent Mind</span>
-          </h2>
-          <p className="section-subtitle">
-            Grounded in low-level procedural fundamentals and driven to understand how systems
-            behave at the metal before layering machine learning models or distributed services.
-          </p>
-        </div>
-
-        {/* Narrative & Academic Overview Grid */}
-        <div className="about-overview-grid">
-          {/* Narrative Column */}
-          <div className="about-narrative-card">
-            <div className="about-card-badge">ENGINEERING BACKGROUND</div>
-            <h3 className="about-narrative-heading">
-              Building From First Principles, Not Framework Defaults
-            </h3>
-            <p className="about-narrative-p">
-              I am <strong>Sahith M.</strong>, an Artificial Intelligence &amp; Data Science
-              undergraduate at <strong>Saveetha Engineering College (Autonomous), Chennai</strong>.
-              My work centers on designing real engineering systems where applied machine learning,
-              agentless telemetry, and temporal graph intelligence converge.
-            </p>
-            <p className="about-narrative-p">
-              Rather than treating models as opaque predictors or relying on bloated third-party
-              client daemons, I prioritize architectural clarity: understanding memory layouts and
-              syscalls in C, exploiting native protocols like WinRM for zero-footprint endpoint audits,
-              and tracing complex fraud or lateral attack paths through mathematical graph algorithms.
-            </p>
-
-            {/* Coursework Tags */}
-            <div className="about-coursework-box">
-              <span className="coursework-label">CORE RIGOR &bull; VERIFIED COURSEWORK:</span>
-              <div className="coursework-chips">
-                {RESUME_DATA.coursework.map((course, i) => (
-                  <span key={i} className="coursework-chip">
-                    {course}
-                  </span>
-                ))}
-              </div>
+        {/* =========================================================================
+            STAGE 02: SOLITUDE & INDEPENDENT EXPLORATION
+           ========================================================================= */}
+        <div className="journey-stage-block" id="exploration">
+          <div className="section-header-block">
+            <div className="section-kicker-strip">
+              <span className="section-kicker-dot" />
+              <span className="section-kicker">STAGE 02 // EXPLORATION • SOLITUDE &amp; INDEPENDENT THOUGHT</span>
             </div>
+            <h2 className="section-title" id="about-title">
+              The Discipline of an <span className="accent-text">Independent Mind</span>
+            </h2>
+            <p className="section-subtitle">
+              True understanding is not gathered from framework tutorials. It begins in quiet solitude — questioning defaults, tracing memory at the metal, and asking why systems behave the way they do.
+            </p>
           </div>
 
-          {/* Academic & Verification Column */}
-          <div className="about-academic-card">
-            <div className="about-card-badge">ACADEMIC STANDING</div>
-            <h3 className="about-academic-inst">
-              Saveetha Engineering College
-              <span className="inst-sub">(Autonomous) &bull; Chennai, Tamil Nadu</span>
-            </h3>
+          {/* Solitude & Exploration Visual Split */}
+          <div className="exploration-layout-grid">
+            {/* Left: Narrative & Background */}
+            <div className="exploration-narrative-col">
+              <div className="narrative-editorial-card">
+                <span className="editorial-kicker">PHILOSOPHICAL GROUNDING</span>
+                <h3 className="editorial-heading">
+                  Building From First Principles, Not Framework Presets
+                </h3>
+                <p className="editorial-p">
+                  I am <strong>Sahith M.</strong>, an undergraduate in Artificial Intelligence &amp; Data Science at <strong>Saveetha Engineering College (Autonomous), Chennai</strong>. My technical journey is shaped by a relentless drive to understand the computational layer underneath high-level frameworks.
+                </p>
+                <p className="editorial-p">
+                  While modern software development often encourages stacking opaque dependencies, my independent exploration led me the other way: inward. How does an operating system kernel dispatch IO? How does a packet traverse an encrypted WinRM session? How does a fraud network conceal capital flow across multi-hop directed graphs?
+                </p>
 
-            <div className="about-stats-list">
-              <div className="about-stat-row">
-                <span className="stat-label">Degree</span>
-                <strong className="stat-val">B.Tech in Artificial Intelligence &amp; Data Science</strong>
-              </div>
-              <div className="about-stat-row">
-                <span className="stat-label">Academic Standing</span>
-                <strong className="stat-val highlight-gold">3rd Year (Class of 2024–2028)</strong>
-              </div>
-              <div className="about-stat-row">
-                <span className="stat-label">Cumulative GPA</span>
-                <strong className="stat-val highlight-gold">{CAREER_STATUS.cgpa}</strong>
-              </div>
-              <div className="about-stat-row">
-                <span className="stat-label">Higher Secondary (Class XII)</span>
-                <strong className="stat-val">{RESUME_DATA.education.schooling[0].score}</strong>
-              </div>
-              <div className="about-stat-row">
-                <span className="stat-label">Secondary School (Class X)</span>
-                <strong className="stat-val">{RESUME_DATA.education.schooling[1].score}</strong>
-              </div>
-              <div className="about-stat-row">
-                <span className="stat-label">Current Availability</span>
-                <strong className="stat-val highlight-steel">{CAREER_STATUS.availability}</strong>
+                {/* Academic Context Strip */}
+                <div className="exploration-academic-badge">
+                  <div className="academic-badge-dot" />
+                  <div className="academic-badge-info">
+                    <strong>Saveetha Engineering College (Autonomous)</strong>
+                    <span>Class of 2024–2028 (3rd Year) • B.Tech AI &amp; DS • CGPA {CAREER_STATUS.cgpa}</span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="about-links-row">
-              <a href="#projects" className="btn-about-link">
-                <span>View Projects →</span>
-              </a>
-              <a href="#resume" className="btn-about-link secondary">
-                <span>Official Dossier ↗</span>
-              </a>
+            {/* Right: Interactive Exploration Waypoints */}
+            <div className="exploration-waypoints-col">
+              <div className="waypoints-container">
+                <span className="waypoints-kicker">INDEPENDENT EXPLORATION MILESTONES:</span>
+
+                <div className="waypoints-interactive-list">
+                  {EXPLORATION_WAYPOINTS.map((wp, idx) => {
+                    const isSelected = activeWaypoint === idx;
+                    return (
+                      <div
+                        key={wp.step}
+                        className={`waypoint-card ${isSelected ? 'active' : ''}`}
+                        onClick={() => setActiveWaypoint(idx)}
+                        tabIndex={0}
+                        role="button"
+                        aria-pressed={isSelected}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') setActiveWaypoint(idx);
+                        }}
+                      >
+                        <div className="waypoint-card-top">
+                          <span className="waypoint-step-num">{wp.step}</span>
+                          <strong className="waypoint-step-title">{wp.title}</strong>
+                          <span className="waypoint-chevron">{isSelected ? '▾' : '▸'}</span>
+                        </div>
+                        <span className="waypoint-subtitle">{wp.subtitle}</span>
+
+                        {isSelected && (
+                          <div className="waypoint-expanded-content">
+                            <p className="waypoint-desc">{wp.desc}</p>
+                            <div className="waypoint-primitives-tag">
+                              <span className="tag-label">CORE PRIMITIVES:</span>
+                              <span className="tag-val">{wp.primitive}</span>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Interactive Mindset Pillars (The Philosophy of Curiosity & Understanding) */}
-        <div className="about-pillars-container">
-          <div className="about-pillars-header">
-            <div className="pillars-kicker-strip">
-              <span className="pillars-kicker-num">02 // MINDSET</span>
-              <span className="pillars-kicker-sep">&bull;</span>
-              <span className="pillars-kicker-title">CORE ENGINEERING PILLARS</span>
+        {/* =========================================================================
+            STAGE 03: UNDERSTANDING — CONNECTIONS EMERGE
+           ========================================================================= */}
+        <div className="journey-stage-block stage-understanding" id="understanding">
+          <div className="section-header-block">
+            <div className="section-kicker-strip">
+              <span className="section-kicker-dot" />
+              <span className="section-kicker">STAGE 03 // UNDERSTANDING • CONNECTIONS EMERGE</span>
             </div>
-            <p className="pillars-caption">
-              Select any pillar to examine how foundational principles translate into system architecture.
+            <h2 className="section-title">
+              From Primitives to <span className="accent-text">Architectural Clarity</span>
+            </h2>
+            <p className="section-subtitle">
+              As independent exploration matures, isolated insights connect into an overarching engineering philosophy: four core pillars that guide every system I build.
             </p>
           </div>
 
-          {/* Pillar Selector Tabs */}
-          <div className="pillars-tab-row" role="tablist" aria-label="Mindset Pillars">
-            {Object.values(MINDSET_PILLARS).map((p, idx) => (
-              <button
-                key={p.key}
-                type="button"
-                className={`pillar-tab-btn ${activePillarKey === p.key ? 'active' : ''}`}
-                role="tab"
-                aria-selected={activePillarKey === p.key}
-                onClick={() => setActivePillarKey(p.key)}
-              >
-                <span className="tab-idx">0{idx + 1}</span>
-                <span className="tab-label">{p.tag}</span>
-              </button>
-            ))}
-          </div>
-
-          {/* Active Pillar Card */}
-          <div className="pillar-detail-card">
-            <div className="pillar-card-topbar">
-              <div className="pillar-tag-badge">
-                <span className="tag-dot" />
-                <span>{activePillar.tag}</span>
-              </div>
-              <span className="pillar-tools-pill">
-                <strong>PRIMITIVES:</strong> {activePillar.tools}
-              </span>
+          {/* Interactive Mindset Pillars */}
+          <div className="about-pillars-container">
+            {/* Pillar Selector Tabs */}
+            <div className="pillars-tab-row" role="tablist" aria-label="Mindset Pillars">
+              {Object.values(MINDSET_PILLARS).map((p, idx) => (
+                <button
+                  key={p.key}
+                  type="button"
+                  className={`pillar-tab-btn ${activePillarKey === p.key ? 'active' : ''}`}
+                  role="tab"
+                  aria-selected={activePillarKey === p.key}
+                  onClick={() => setActivePillarKey(p.key)}
+                >
+                  <span className="tab-idx">0{idx + 1}</span>
+                  <span className="tab-label">{p.tag}</span>
+                </button>
+              ))}
             </div>
 
-            <h3 className="pillar-detail-title">{activePillar.title}</h3>
-            <p className="pillar-detail-desc">{activePillar.desc}</p>
+            {/* Active Pillar Card */}
+            <div className="pillar-detail-card">
+              <div className="pillar-card-topbar">
+                <div className="pillar-tag-badge">
+                  <span className="tag-dot" />
+                  <span>{activePillar.tag}</span>
+                </div>
+                <span className="pillar-tools-pill">
+                  <strong>FOUNDATIONAL PRIMITIVES:</strong> {activePillar.tools}
+                </span>
+              </div>
 
-            <div className="pillar-principles-block">
-              <h4 className="principles-heading">OPERATIONAL PRINCIPLES:</h4>
-              <ul className="principles-list">
-                {activePillar.principles.map((pr, idx) => (
-                  <li key={idx} className="principle-item">
-                    <span className="principle-bullet">&bull;</span>
-                    <span>{pr}</span>
-                  </li>
-                ))}
-              </ul>
+              <h3 className="pillar-detail-title">{activePillar.title}</h3>
+              <p className="pillar-detail-desc">{activePillar.desc}</p>
+
+              <div className="pillar-principles-block">
+                <h4 className="principles-heading">OPERATIONAL PRINCIPLES:</h4>
+                <ul className="principles-list">
+                  {activePillar.principles.map((pr, idx) => (
+                    <li key={idx} className="principle-item">
+                      <span className="principle-bullet">•</span>
+                      <span>{pr}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Coursework Rigor Verification */}
+              <div className="about-coursework-footer">
+                <span className="coursework-label">VERIFIED ACADEMIC COURSEWORK:</span>
+                <div className="coursework-chips">
+                  {RESUME_DATA.coursework.map((course, i) => (
+                    <span key={i} className="coursework-chip">
+                      {course}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>

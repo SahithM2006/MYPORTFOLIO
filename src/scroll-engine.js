@@ -23,6 +23,8 @@ export function initScrollEngine() {
 
   const heroSec = document.getElementById('hero');
   const aboutSec = document.getElementById('about');
+  const explorationSec = document.getElementById('exploration');
+  const understandingSec = document.getElementById('understanding');
   const skillsSec = document.getElementById('skills');
   const projectsSec = document.getElementById('projects');
   const archSec = document.getElementById('architecture');
@@ -35,14 +37,11 @@ export function initScrollEngine() {
     winH: window.innerHeight || 800,
     docH: 5000,
     hero: { top: 0, height: 800 },
-    about: { top: 900, height: 1000 },
-    skills: { top: 2000, height: 1000 },
-    projects: { top: 3100, height: 1800 },
-    architecture: { top: 4400, height: 1600 },
-    experience: { top: 6000, height: 1000 },
-    certifications: { top: 7500, height: 1200 },
-    resume: { top: 8700, height: 1200 },
-    contact: { top: 9900, height: 800 },
+    exploration: { top: 900, height: 800 },
+    understanding: { top: 1700, height: 900 },
+    skills: { top: 2600, height: 1000 },
+    projects: { top: 3700, height: 2600 },
+    evolution: { top: 6400, height: 2800 },
     cards: []
   };
 
@@ -60,16 +59,13 @@ export function initScrollEngine() {
     };
 
     cachedGeometry.hero = getMetrics(heroSec);
-    cachedGeometry.about = getMetrics(aboutSec);
+    cachedGeometry.exploration = getMetrics(explorationSec || aboutSec);
+    cachedGeometry.understanding = getMetrics(understandingSec);
     cachedGeometry.skills = getMetrics(skillsSec);
     cachedGeometry.projects = getMetrics(projectsSec);
-    cachedGeometry.architecture = getMetrics(archSec);
-    cachedGeometry.experience = getMetrics(expSec);
-    cachedGeometry.certifications = getMetrics(certSec);
-    cachedGeometry.resume = getMetrics(resumeSec);
-    cachedGeometry.contact = getMetrics(contactSec);
+    cachedGeometry.evolution = getMetrics(expSec);
 
-    const projectCards = document.querySelectorAll('.project-narrative-entry, .project-card');
+    const projectCards = document.querySelectorAll('.project-feature-card, .project-card');
     cachedGeometry.cards = Array.from(projectCards).map((card) => {
       const rect = card.getBoundingClientRect();
       const top = rect.top + (window.scrollY || window.pageYOffset || 0);
@@ -142,17 +138,14 @@ export function initScrollEngine() {
     const winH = cachedGeometry.winH;
     const focusY = scrollTop + winH * 0.45;
 
-    // Determine current section in viewport focus for Scroll Spine Indicator
+    // Determine current stage in viewport focus for Journey Indicator
     const sections = [
-      { id: 'hero', num: '01', name: 'ORIGIN', color: '#C6A45A', top: cachedGeometry.hero.top, height: cachedGeometry.hero.height },
-      { id: 'about', num: '02', name: 'MINDSET', color: '#7596C8', top: cachedGeometry.about.top, height: cachedGeometry.about.height },
-      { id: 'skills', num: '03', name: 'SPECTRUM', color: '#7596C8', top: cachedGeometry.skills.top, height: cachedGeometry.skills.height },
-      { id: 'projects', num: '04', name: 'EXHIBITS', color: '#C6A45A', top: cachedGeometry.projects.top, height: cachedGeometry.projects.height },
-      { id: 'architecture', num: '05', name: 'SYSTEMS', color: '#7596C8', top: cachedGeometry.architecture.top, height: cachedGeometry.architecture.height },
-      { id: 'experience', num: '06', name: 'TIMELINE', color: '#C6A45A', top: cachedGeometry.experience.top, height: cachedGeometry.experience.height },
-      { id: 'certifications', num: '07', name: 'CREDENTIALS', color: '#C6A45A', top: cachedGeometry.certifications.top, height: cachedGeometry.certifications.height },
-      { id: 'resume', num: '08', name: 'DOSSIER', color: '#A9B1BF', top: cachedGeometry.resume.top, height: cachedGeometry.resume.height },
-      { id: 'contact', num: '09', name: 'TRANSMIT', color: '#C6A45A', top: cachedGeometry.contact.top, height: cachedGeometry.contact.height },
+      { id: 'hero', num: '01', name: 'CURIOSITY', color: '#C6A45A', top: cachedGeometry.hero.top, height: cachedGeometry.hero.height },
+      { id: 'exploration', num: '02', name: 'EXPLORATION', color: '#7596C8', top: cachedGeometry.exploration.top, height: cachedGeometry.exploration.height },
+      { id: 'understanding', num: '03', name: 'UNDERSTANDING', color: '#7596C8', top: cachedGeometry.understanding.top, height: cachedGeometry.understanding.height },
+      { id: 'skills', num: '04', name: 'EXPERIMENTATION', color: '#C6A45A', top: cachedGeometry.skills.top, height: cachedGeometry.skills.height },
+      { id: 'projects', num: '05', name: 'CREATION', color: '#7596C8', top: cachedGeometry.projects.top, height: cachedGeometry.projects.height },
+      { id: 'experience', num: '06', name: 'EVOLUTION', color: '#C6A45A', top: cachedGeometry.evolution.top, height: cachedGeometry.evolution.height },
     ];
 
     let currentSection = sections[0];
@@ -237,62 +230,7 @@ export function initScrollEngine() {
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!prefersReduced) {
     gsapCtx = gsap.context(() => {
-      // 0A. Oversized Background Typography Watermarks: Scroll-Linked Horizontal Parallax
-      const watermarks = document.querySelectorAll('.section-bg-watermark');
-      const isMobileScreen = window.innerWidth <= 900;
-      watermarks.forEach((wm, idx) => {
-        const parent = wm.closest('section') || wm.parentElement;
-        if (!parent) return;
-        const isEven = idx % 2 === 0;
-        const driftDistance = isMobileScreen ? 4 : 10;
-        gsap.fromTo(
-          wm,
-          { xPercent: isEven ? -driftDistance : driftDistance },
-          {
-            xPercent: isEven ? driftDistance : -driftDistance,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: parent,
-              start: 'top bottom',
-              end: 'bottom top',
-              scrub: 0.8
-            }
-          }
-        );
-      });
-
-      // 0B. Section Bridges: Progressive Conduit Wire Expansion & Waypoint Illumination
-      const bridges = document.querySelectorAll('.section-bridge');
-      bridges.forEach((bridge) => {
-        const pill = bridge.querySelector('.bridge-waypoint-pill');
-        const lines = bridge.querySelectorAll('.bridge-track-line');
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: bridge,
-            start: 'top 90%',
-            toggleActions: 'play none none none',
-            once: true
-          }
-        });
-
-        if (lines.length) {
-          tl.fromTo(
-            lines,
-            { scaleX: 0.2, opacity: 0.2 },
-            { scaleX: 1, opacity: 1, duration: 0.7, ease: 'power2.out' },
-            0
-          );
-        }
-
-        if (pill) {
-          tl.fromTo(
-            pill,
-            { y: 14, opacity: 0.35, scale: 0.96 },
-            { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(1.4)' },
-            0.1
-          );
-        }
-      });
+      // Clean entrance for exploration narrative and cards
 
       // 1. About section: directional bio entrance & lifted focus column
       const bioCol = document.querySelector('.about-bio-column');

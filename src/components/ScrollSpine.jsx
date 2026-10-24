@@ -1,15 +1,12 @@
 import React from 'react';
 
 const CHAPTERS = [
-  { id: 'hero', num: '01', name: 'ORIGIN' },
-  { id: 'about', num: '02', name: 'MINDSET' },
-  { id: 'skills', num: '03', name: 'SPECTRUM' },
-  { id: 'projects', num: '04', name: 'EXHIBITS' },
-  { id: 'architecture', num: '05', name: 'SYSTEMS' },
-  { id: 'experience', num: '06', name: 'TIMELINE' },
-  { id: 'certifications', num: '07', name: 'CREDENTIALS' },
-  { id: 'resume', num: '08', name: 'DOSSIER' },
-  { id: 'contact', num: '09', name: 'TRANSMIT' }
+  { id: 'hero', num: '01', name: 'CURIOSITY' },
+  { id: 'exploration', num: '02', name: 'EXPLORATION' },
+  { id: 'understanding', num: '03', name: 'UNDERSTANDING' },
+  { id: 'skills', num: '04', name: 'EXPERIMENTATION' },
+  { id: 'projects', num: '05', name: 'CREATION' },
+  { id: 'experience', num: '06', name: 'EVOLUTION' }
 ];
 
 export default function ScrollSpine() {
@@ -21,7 +18,7 @@ export default function ScrollSpine() {
   };
 
   return (
-    <nav className="scroll-spine-track" id="scroll-spine-track" aria-label="Chapter Navigator">
+    <nav className="scroll-spine-track" id="scroll-spine-track" aria-label="Journey Navigator">
       <div className="scroll-spine-rail" aria-hidden="true">
         <div className="scroll-spine-thumb" id="scroll-spine-thumb" />
       </div>
@@ -33,7 +30,7 @@ export default function ScrollSpine() {
             className="spine-chapter-item"
             id={`spine-chapter-${ch.id}`}
             onClick={() => scrollTo(ch.id)}
-            aria-label={`Jump to ${ch.num} ${ch.name}`}
+            aria-label={`Jump to Stage ${ch.num}: ${ch.name}`}
           >
             <span className="spine-dot" />
             <span className="spine-tag">

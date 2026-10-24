@@ -13,7 +13,6 @@ import Certifications from './components/Certifications.jsx';
 import Resume from './components/Resume.jsx';
 import Contact from './components/Contact.jsx';
 import Footer from './components/Footer.jsx';
-import SectionBridge from './components/SectionBridge.jsx';
 import { initScrollEngine } from './scroll-engine.js';
 import { initMobileReadiness } from './mobile-readiness.js';
 import { getSkillsForProject, getProjectsForSkill } from './data-store.js';
@@ -72,33 +71,35 @@ export default function App() {
       <AmbientBackground />
       <Header />
       <main className="page-main" id="main-content">
+        {/* Stage 01: Opening — Curiosity */}
         <Hero />
-        <SectionBridge tag="CURIOSITY • 01 ORIGIN → 02 UNDERSTANDING" />
+
+        {/* Stage 02: Exploration (Solitude & Independent Thought) & Stage 03: Understanding */}
         <About onSelectSkill={setSelectedSkillId} onSelectProject={setActiveProjectId} />
-        <SectionBridge tag="UNDERSTANDING • 02 MINDSET → 03 SPECTRUM" />
+
+        {/* Stage 04: Experimentation — The Interactive Skill Constellation */}
         <Skills
           selectedSkillId={selectedSkillId}
           onSelectSkill={setSelectedSkillId}
           highlightedSkillIds={highlightedSkillIds}
           onJumpToProject={handleJumpToProject}
         />
-        <SectionBridge tag="CREATION • 03 SPECTRUM → 04 SYSTEMS" />
+
+        {/* Stage 05: Creation — Flagship Projects Take Shape & Technical Architecture */}
         <Projects
           activeProjectId={activeProjectId}
           onSelectProject={setActiveProjectId}
           selectedSkillId={selectedSkillId}
           onSelectSkill={setSelectedSkillId}
         />
-        <SectionBridge tag="CREATION • 04 SYSTEMS → 05 ARCHITECTURE" />
         <TechnicalArchitecture />
-        <SectionBridge tag="EVOLUTION • 05 ARCHITECTURE → 06 TRAJECTORY" />
+
+        {/* Stage 06: Evolution — Milestones, Credentials, Dossier & Transmit */}
         <Experience />
-        <SectionBridge tag="EVOLUTION • 06 TRAJECTORY → 07 CREDENTIALS" />
         <Certifications />
-        <SectionBridge tag="EVOLUTION • 07 CREDENTIALS → 08 DOSSIER" />
         <Resume />
-        <SectionBridge tag="EVOLUTION • 08 DOSSIER → 09 TRANSMIT" />
         <Contact />
+
         <Footer />
       </main>
     </>
